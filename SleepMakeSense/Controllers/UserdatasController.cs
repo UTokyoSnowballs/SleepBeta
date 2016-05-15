@@ -59,7 +59,7 @@ namespace SleepMakeSense.Controllers
 
         // POST: Userdatas/Create
         // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
+        // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserdataId,DateStamp,MinutesAsleep,MinutesAwake,AwakeningsCount,TimeInBed,MinutesToFallAsleep,MinutesAfterWakeup,SleepEfficiency,CaloriesIn,Water,CaloriesOut,Steps,Distance,MinutesSedentary,MinutesLightlyActive,MinutesFairlyActive,MinutesVeryActive,ActivityCalories,Floors,TimeEnteredBed,Weight,BMI,Fat")] Userdata userdata)
@@ -90,8 +90,8 @@ namespace SleepMakeSense.Controllers
         }
 
         // POST: Userdatas/Edit/5
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
-        // 詳細については、http://go.microsoft.com/fwlink/?LinkId=317598 を参照してください。
+        // To prevent excessive posting attack , please enable the specific property to be bound to 
+        // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserdataId,DateStamp,MinutesAsleep,MinutesAwake,AwakeningsCount,TimeInBed,MinutesToFallAsleep,MinutesAfterWakeup,SleepEfficiency,CaloriesIn,Water,CaloriesOut,Steps,Distance,MinutesSedentary,MinutesLightlyActive,MinutesFairlyActive,MinutesVeryActive,ActivityCalories,Floors,TimeEnteredBed,Weight,BMI,Fat")] Userdata userdata)

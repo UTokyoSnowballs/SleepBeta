@@ -18,7 +18,7 @@ namespace SleepMakeSense
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // 電子メールを送信するには、電子メール サービスをここにプラグインします。
+            // To send an e-mail , you can plug-in the e-mail service here .
             return Task.FromResult(0);
         }
     }
@@ -27,12 +27,12 @@ namespace SleepMakeSense
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // テキスト メッセージを送信するための SMS サービスをここにプラグインします。
+            // This is where you plug in the SMS service for sending text messages .
             return Task.FromResult(0);
         }
     }
 
-    // このアプリケーションで使用されるアプリケーション ユーザー マネージャーを設定します。UserManager は ASP.NET Identity の中で定義されており、このアプリケーションで使用されます。
+    // Set the application User Manager , which is used in this application . UserManager is defined in the ASP.NET Identity, it will be used in this application .
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
@@ -43,14 +43,14 @@ namespace SleepMakeSense
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-            // ユーザー名の検証ロジックを設定します
+            // Set the user name of the validation logic
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
-            // パスワードの検証ロジックを設定します
+            // Set the password validation logic
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
@@ -60,21 +60,21 @@ namespace SleepMakeSense
                 RequireUppercase = true,
             };
 
-            // ユーザー ロックアウトの既定値を設定します。
+            // Set the default value for the user lockout
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-            // 2 要素認証プロバイダーを登録します。このアプリケーションでは、Phone and Emails をユーザー検証用コード受け取りのステップとして使用します。
-            // 独自のプロバイダーをプログラミングしてここにプラグインできます。
-            manager.RegisterTwoFactorProvider("電話コード", new PhoneNumberTokenProvider<ApplicationUser>
+            // Register the two-factor authentication provider . In this application , you can use the Phone and Emails as a step of receiving user verification code.
+            // You can plug in here and programming your own provider 
+            manager.RegisterTwoFactorProvider("Mobile Number", new PhoneNumberTokenProvider<ApplicationUser>
             {
-                MessageFormat = "あなたのセキュリティ コードは {0} です。"
+                MessageFormat = "Your security code is { 0 }"
             });
-            manager.RegisterTwoFactorProvider("電子メール コード", new EmailTokenProvider<ApplicationUser>
+            manager.RegisterTwoFactorProvider("E-mail code", new EmailTokenProvider<ApplicationUser>
             {
-                Subject = "セキュリティ コード",
-                BodyFormat = "あなたのセキュリティ コードは {0} です。"
+                Subject = "security code",
+                BodyFormat = "Your security code is { 0 }."
             });
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
@@ -88,7 +88,7 @@ namespace SleepMakeSense
         }
     }
 
-    // このアプリケーションで使用されるアプリケーション サインイン マネージャーを構成します。
+    // Configure the application sign -in Manager , which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)

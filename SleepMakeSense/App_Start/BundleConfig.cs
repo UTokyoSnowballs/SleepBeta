@@ -5,7 +5,7 @@ namespace SleepMakeSense
 {
     public class BundleConfig
     {
-        // バンドルの詳細については、http://go.microsoft.com/fwlink/?LinkId=301862  を参照してください
+        // For more information about the bundle , http:? //go.microsoft.com/fwlink/ Please refer to the LinkId = 301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -14,8 +14,8 @@ namespace SleepMakeSense
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // 開発と学習には、Modernizr の開発バージョンを使用します。次に、実稼働の準備が
-            // できたら、http://modernizr.com にあるビルド ツールを使用して、必要なテストのみを選択します。
+            // Development and the learning , use the development version of Modernizr. Then , ready for production
+            // Can Once , http: using the build tool in the //modernizr.com, choose the only test required .
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 

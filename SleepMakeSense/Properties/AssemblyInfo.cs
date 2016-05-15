@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// アセンブリに関する一般的情報は、以下の属性セットによって
-// 制御されます。アセンブリに関連付けられている情報を変更するには、
-// これらの属性値を変更します。
+// General information about the assembly , by the following set of attributes
+// It is controlled . To change the information associated with the assembly , general information about the assembly , by the following set of attributes
+// Change these attribute values ​​.。
 [assembly: AssemblyTitle("SleepMakeSense")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -14,22 +14,22 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// ComVisible を false に設定すると、このアセンブリ内の型は
-// COM コンポーネントから参照できなくなります。
-// COM からこのアセンブリ内の型にアクセスする必要がある場合は、その型の ComVisible 属性を true に設定してください。
+// If you set the ComVisible to false, type in this assembly
+// You will not be able to see from the COM component .
+// If you need to access a type in this assembly from the COM , please set the ComVisible attributes of the type to true.
 [assembly: ComVisible(false)]
 
-// このプロジェクトが COM に公開される場合、次の GUID が typelib の ID になります。
+// If this project is exposed to COM, the following GUID will be the ID of the typelib.
 [assembly: Guid("d2bc3d45-8b64-4141-931f-885bea5e8fa4")]
 
-// アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
+// Version information of the assembly is composed of the following four values ​​:
 //
-//      メジャー バージョン
-//      マイナー バージョン
-//      ビルド番号
-//      リビジョン
+//      Major version
+//      Minor version
+//      Build number
+//      Revision
 //
-// すべての値を指定するか、以下のように "*" を使用してリビジョンとビルド番号を
-// 既定値にすることができます:
+// You can specify all the values ​​, the use the "*" as the following revision and build number
+// You can be the default value :
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

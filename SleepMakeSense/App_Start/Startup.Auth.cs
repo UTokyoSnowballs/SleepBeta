@@ -11,25 +11,25 @@ namespace SleepMakeSense
 {
     public partial class Startup
     {
-        // 認証設定の詳細については、http://go.microsoft.com/fwlink/?LinkId=301864 を参照してください
+        //For more information about the authentication settings , http:? //go.microsoft.com/fwlink/ Please refer to the LinkId = 301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // 1 要求につき 1 インスタンスのみを使用するように DB コンテキスト、ユーザー マネージャー、サインイン マネージャーを構成します。
+            // DB context to use only one request per instance , user manager , and configure the sign-in Manager .
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
-            // アプリケーションが Cookie を使用して、サインインしたユーザーの情報を格納できるようにします
-            // また、サードパーティのログイン プロバイダーを使用してログインするユーザーに関する情報を、Cookie を使用して一時的に保存できるようにします
-            // サインイン Cookie の設定
+            // Application uses a Cookie, so that you can store the user's information who sign in
+            // In addition , the information about the user to log in using a third-party login provider , so that you can temporarily saved using the Cookie
+            // Set of sign -in Cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
-                    // ユーザーがログインするときにセキュリティ スタンプを検証するように設定します。
-                    // これはセキュリティ機能の 1 つであり、パスワードを変更するときやアカウントに外部ログインを追加するときに使用されます。
+                    // Set to validate the security stamp when the user logs in .
+                    // This is one of the security features , will be used to add an external login to and account when you change the password .
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
@@ -37,15 +37,15 @@ namespace SleepMakeSense
             });            
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // 2 要素認証プロセスの中で 2 つ目の要素を確認するときにユーザー情報を一時的に保存するように設定します。
+            // Set to temporarily save the user information at the time to confirm the second element in the two-factor authentication process
             app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
 
-            // 2 つ目のログイン確認要素 (電話や電子メールなど) を記憶するように設定します。
-            // このオプションをオンにすると、ログイン プロセスの中の確認の第 2 ステップは、ログインに使用されたデバイスに保存されます。
-            // これは、ログイン時の「このアカウントを記憶する」オプションに似ています。
+            // Set to store a second login verification elements (such as telephone and e-mail ) .
+            // When this option is turned on , the second step of the confirmation in the login process , will be stored on the device that was used to log in .
+            // This is , "remember this account " at the time of login is similar to the option .
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // 次の行のコメントを解除して、サード パーティのログイン プロバイダーを使用したログインを有効にします
+            // Uncomment the following line to enable the login you use a third-party login provider
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
             //    clientSecret: "");

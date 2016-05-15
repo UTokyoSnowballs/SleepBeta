@@ -73,8 +73,8 @@ namespace SleepMakeSense.Controllers
                 return View(model);
             }
 
-            // これは、アカウント ロックアウトの基準となるログイン失敗回数を数えません。
-            // パスワード入力失敗回数に基づいてアカウントがロックアウトされるように設定するには、shouldLockout: true に変更してください。
+            // This does not count the number of failed logins the account lock-out of the standard .
+            // To set the account is locked out based on the password input number of failures, shouldLockout: Please change to true.
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -96,7 +96,7 @@ namespace SleepMakeSense.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
-            // ユーザーがユーザー名/パスワードまたは外部ログイン経由でログイン済みであることが必要です。
+            // It requires a user is already logged in via username / password or external login
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
                 return View("Error");
@@ -116,10 +116,10 @@ namespace SleepMakeSense.Controllers
                 return View(model);
             }
 
-            // 次のコードは、2 要素コードに対するブルート フォース攻撃を防ぎます。
-            // ユーザーが誤ったコードを入力した回数が指定の回数に達すると、ユーザー アカウントは
-            // 指定の時間が経過するまでロックアウトされます。
-            // アカウント ロックアウトの設定は IdentityConfig の中で構成できます。
+            // The following code will prevent the brute-force attack against the two-element code.
+            // When the number of times you have entered the code the user has accidentally reach the specified number of times, the user account
+            // It will be locked out until the specified time has elapsed.
+            // Setting the account lockout can be configured in IdentityConfig.
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
@@ -156,19 +156,19 @@ namespace SleepMakeSense.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // アカウント確認とパスワード リセットを有効にする方法の詳細については、http://go.microsoft.com/fwlink/?LinkID=320771 を参照してください
-                    // このリンクを含む電子メールを送信します
+
+                    // For more information about how to enable the account verification and password reset , http:? //go.microsoft.com/fwlink/ Please refer to the LinkID = 320771
+                    // Send an e-mail containing the link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "アカウントの確認", "このリンクをクリックすることによってアカウントを確認してください <a href=\"" + callbackUrl + "\">こちら</a>");
+                    // It awaits UserManager.SendEmailAsync (user.Id, " verify your account " , "Please verify your account by clicking on this link <a href=\"" + callbackUrl + "\"> here </a>") ;
 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
-            // ここで問題が発生した場合はフォームを再表示します
+            // If you have problems here and re- display the form
             return View(model);
         }
 
@@ -205,19 +205,19 @@ namespace SleepMakeSense.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // ユーザーが存在しないことや未確認であることを公開しません。
+                    // It does not expose that it and is unconfirmed that user does not exist .
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // アカウント確認とパスワード リセットを有効にする方法の詳細については、http://go.microsoft.com/fwlink/?LinkID=320771 を参照してください
-                // このリンクを含む電子メールを送信します
+                // For more information about how to enable the account verification and password reset , http:? //go.microsoft.com/fwlink/ Please refer to the LinkID = 320771
+                // Send an e- mail containing the link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "パスワード", "のリセット <a href=\"" + callbackUrl + "\">こちら</a> をクリックして、パスワードをリセットしてください");
+                // await UserManager.SendEmailAsync (user.Id, " password " , " click on the reset <a href=\"" + callbackUrl + "\"> here </a> , please reset the password ");
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
-            // ここで問題が発生した場合はフォームを再表示します
+            // If you have problems here and re- display the form
             return View(model);
         }
 
@@ -251,7 +251,7 @@ namespace SleepMakeSense.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
-                // ユーザーが存在しないことを公開しません。
+                // It does not expose that the user does not exist .
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
@@ -278,7 +278,7 @@ namespace SleepMakeSense.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            // 外部ログイン プロバイダーへのリダイレクトを要求します
+            // To request a redirect to external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
@@ -309,7 +309,7 @@ namespace SleepMakeSense.Controllers
                 return View();
             }
 
-            // トークンを生成して送信します。
+            // It generates and sends a token.
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
                 return View("Error");
@@ -328,7 +328,7 @@ namespace SleepMakeSense.Controllers
                 return RedirectToAction("Login");
             }
 
-            // ユーザーが既にログインを持っている場合、この外部ログイン プロバイダーを使用してユーザーをサインインします
+            // If a user already has a login , and then sign in users using this external login provider
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
@@ -340,7 +340,7 @@ namespace SleepMakeSense.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
                 default:
-                    // ユーザーがアカウントを持っていない場合、ユーザーにアカウントを作成するよう求めます
+                    // If the user does not have an account , we ask you to create an account to the user
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
@@ -361,7 +361,7 @@ namespace SleepMakeSense.Controllers
 
             if (ModelState.IsValid)
             {
-                // 外部ログイン プロバイダーからユーザーに関する情報を取得します
+                // From external login provider to get the information about the user
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
@@ -423,8 +423,8 @@ namespace SleepMakeSense.Controllers
             base.Dispose(disposing);
         }
 
-        #region ヘルパー
-        // 外部ログインの追加時に XSRF の防止に使用します
+        #region Helper
+        // You used to prevent XSRF when additional external login
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager

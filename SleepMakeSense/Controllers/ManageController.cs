@@ -116,7 +116,7 @@ namespace SleepMakeSense.Controllers
             {
                 return View(model);
             }
-            // トークンを生成して送信します。
+            // It generates and sends a token .。
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             if (UserManager.SmsService != null)
             {
@@ -165,7 +165,7 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // 電話番号を確認するために SMS プロバイダー経由で SMS を送信します。
+            // Send SMS via SMS provider to verify your phone number.
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
@@ -189,8 +189,8 @@ namespace SleepMakeSense.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
-            // ここに到達した場合は何らかの問題が発生しているので、フォームを再表示します。
-            ModelState.AddModelError("", "電話番号を確認できませんでした");
+            // Since the problem has occurred in the case has been reached here , and re- display the form.
+            ModelState.AddModelError("", "We were unable to verify your phone number");
             return View(model);
         }
 
@@ -270,7 +270,7 @@ namespace SleepMakeSense.Controllers
                 AddErrors(result);
             }
 
-            // ここに到達した場合は何らかの問題が発生しているので、フォームを再表示します。
+            // Since the problem has occurred in the case has been reached here , and re- display the form.
             return View(model);
         }
 
@@ -279,8 +279,8 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "外部ログインが削除されました。"
-                : message == ManageMessageId.Error ? "エラーが発生しました。"
+                message == ManageMessageId.RemoveLoginSuccess ? "External login has been removed."
+                : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
@@ -303,7 +303,7 @@ namespace SleepMakeSense.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
-            // 現在のユーザーのログインをリンクするために外部ログイン プロバイダーへのリダイレクトを要求します。
+            // To request a redirect to external login provider to link the login of the current user .
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
@@ -331,8 +331,8 @@ namespace SleepMakeSense.Controllers
             base.Dispose(disposing);
         }
 
-#region ヘルパー
-        // 外部ログインの追加時に XSRF の防止に使用します
+        #region helper
+        // You used to prevent XSRF when additional external login
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager

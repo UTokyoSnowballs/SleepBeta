@@ -119,9 +119,9 @@ namespace SleepMakeSense.Controllers
         {
             FitbitClient client = GetFitbitClient();
 
-            // 这个是取过去7天的数据，如何实现自动更新呢？或者取过去所有数据？
+            // This is to take the last seven days of data , how to automatically update it ? Or take over all the data ?
             var results = client.GetTimeSeries(TimeSeriesResourceType.DistanceTracker, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow);
-            // results是个什么结构？
+            // What results is a structure ?
 
             string sOutput = "";
             foreach (var result in results.DataList)
@@ -206,7 +206,7 @@ namespace SleepMakeSense.Controllers
                 fat.FatLogs = new List<FatLog>();
             }
             return View(fat);
-            // Pandita: 这句的意思是tap MonthFat后数据被取出然后再View里显示出来？可否直接把数据取到DB？
+            // Pandita: Phrase mean tap MonthFat data has been taken out and then displayed in the View ? Can I get the data directly to the DB?
             // answer: now the solution is to pass the data to view and then update database from view; seems not a good idea to update database from controller
             // you pollute the code in controller. LOL.  2015/07/10. Fuck, i feel so upset! nothing works.
 

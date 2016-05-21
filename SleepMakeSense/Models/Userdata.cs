@@ -15,7 +15,7 @@ namespace SleepMakeSense.Models
 {
     public class Userdata
     {
-        //  public string UserName { get; set; } // will set later to identify the user to the item
+        public string UserName { get; set; } // will set later to identify the user to the item
         public int UserdataId { get; set; }
         public DateTime DateStamp { get; set; }
 

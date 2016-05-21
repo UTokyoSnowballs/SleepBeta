@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-Visual Studio Web プロジェクトに Microsoft Azure Web サイトを作成して配置します。
+Visual Studio Web Place to create a Microsoft Azure Web site to the project .
 詳細については、次を参照してください: http://go.microsoft.com/fwlink/?LinkID=394471 
 
 .EXAMPLE

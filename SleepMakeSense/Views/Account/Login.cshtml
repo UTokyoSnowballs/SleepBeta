@@ -1,7 +1,7 @@
 ﻿@using SleepMakeSense.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "ログイン";
+    ViewBag.Title = "Login";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -11,7 +11,7 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>ローカル アカウントを使用してログインします。</h4>
+                <h4>Log in using the local account.</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -42,11 +42,11 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("新しいユーザーとして登録する", "Register")
+                    @Html.ActionLink("To register as a new user", "Register")
                 </p>
-                @* これを有効にする前に、パスワード リセット機能に対するアカウント確認を有効にしてください。
+                @* Before you enable this , please activate your account confirmation to the password reset function
                     <p>
-                        @Html.ActionLink("パスワードを忘れた場合", "ForgotPassword")
+                        @Html.ActionLink("If you forget your password", "ForgotPassword")
                     </p>*@
             }
         </section>

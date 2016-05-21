@@ -86,7 +86,7 @@ namespace SleepMakeSense.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "無効なログイン試行です。");
+                    ModelState.AddModelError("", "Invalid login attempts.");
                     return View(model);
             }
         }
@@ -129,7 +129,7 @@ namespace SleepMakeSense.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "無効なコード。");
+                    ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
         }

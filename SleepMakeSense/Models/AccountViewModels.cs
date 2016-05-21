@@ -6,7 +6,7 @@ namespace SleepMakeSense.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "電子メール")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
     }
 
@@ -42,23 +42,23 @@ namespace SleepMakeSense.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "電子メール")]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "電子メール")]
+        [Display(Name = "E-Mail")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "パスワード")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "このアカウントを記憶する")]
+        [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
     }
 
@@ -66,18 +66,18 @@ namespace SleepMakeSense.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "電子メール")]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} の長さは {2} 文字以上である必要があります。", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The length of {0} must be at {2} or more characters.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "パスワード")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "パスワードの確認入力")]
-        [Compare("Password", ErrorMessage = "パスワードと確認のパスワードが一致しません。")]
+        [Display(Name = "Password")]
+        [Compare("Password", ErrorMessage = "Password and confirmation of the password does not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -85,18 +85,18 @@ namespace SleepMakeSense.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "電子メール")]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} の長さは {2} 文字以上である必要があります。", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The length of {0} must be at {2} or more characters.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "パスワード")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "パスワードの確認入力")]
-        [Compare("Password", ErrorMessage = "パスワードと確認のパスワードが一致しません。")]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "Password and confirmation of the password does not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -106,7 +106,7 @@ namespace SleepMakeSense.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "電子メール")]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
     }
 }

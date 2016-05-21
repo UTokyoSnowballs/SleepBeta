@@ -3,13 +3,26 @@
 }
 
 <!-- Pandita:If user is already logged in, direct to Devices.cshtml; else, direct to log in page -->
+@*
+    Updated to be a login/regrestration screen. 
+    If the uers is logged in, they will be propted to either create and account or log in
 
+    If they are logged in, they will be propted to sync there data and load the next page
+    Done By Sean - 21/5/16
+    *@
 
 <div class="jumbotron">
     <h1 style="color:#3376bf" font="Arial">SleepExplorer</h1>
     <p class="lead">Do you want to sleep better? SleepExplorer helps you improve sleep within your lifestyle context.</p>
-    <p><a href="/Account/Login" class="btn btn-primary btn-lg">Login &raquo;</a></p> 
-    <p><a href="/Account/Register" class="btn btn-primary btn-lg">Create an Account &raquo;</a></p> 
+    @if (Request.IsAuthenticated == false)
+    {
+        <p><a href="/Account/Login" class="btn btn-primary btn-lg">Login &raquo;</a></p>
+        <p><a href="/Account/Register" class="btn btn-primary btn-lg">Create an Account &raquo;</a></p>
+    }
+    else
+    {
+    <p><a href="/Userdatas/Sync" class="btn btn-primary">See Your Stats &raquo;</a></p>
+    }
 
 </div>
 

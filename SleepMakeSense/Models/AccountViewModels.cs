@@ -29,11 +29,11 @@ namespace SleepMakeSense.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "コード")]
+        [Display(Name = "Code")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "認証情報をこのブラウザーに保存しますか?")]
+        [Display(Name = "Do you want to save the authentication information in this browser?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }

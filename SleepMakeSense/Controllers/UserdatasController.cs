@@ -58,7 +58,7 @@ namespace SleepMakeSense.Controllers
         }
 
         // POST: Userdatas/Create
-        // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
+        // To prevent excessive posting attack , please enable the specific property to be bound to.
         // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]

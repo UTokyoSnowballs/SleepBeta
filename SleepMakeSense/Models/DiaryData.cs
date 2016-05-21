@@ -7,6 +7,8 @@ namespace SleepMakeSense.Models
 {
     public class DiaryData
     {
+
+        public string UserName { get; set; }
         public DateTime DateTime { get; set; }
         public string WakeUpFreshness { get; set; }
 

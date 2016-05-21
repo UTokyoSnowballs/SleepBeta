@@ -28,14 +28,14 @@ namespace SleepMakeSense.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "{0} の長さは {2} 文字以上である必要があります。", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} The length of the must be at {2} or more characters.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "新しいパスワード")]
+        [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "新しいパスワードの確認入力")]
-        [Compare("NewPassword", ErrorMessage = "新しいパスワードと確認のパスワードが一致しません。")]
+        [Display(Name = "Confirmation of the new password input")]
+        [Compare("NewPassword", ErrorMessage = "New password and confirmation of the password does not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,18 +43,18 @@ namespace SleepMakeSense.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "現在のパスワード")]
+        [Display(Name = "Current password")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} の長さは {2} 文字以上である必要があります。", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0}The length of the must be at {2} or more characters.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "新しいパスワード")]
+        [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "新しいパスワードの確認入力")]
-        [Compare("NewPassword", ErrorMessage = "新しいパスワードと確認のパスワードが一致しません。")]
+        [Display(Name = "Confirmation of the new password input")]
+        [Compare("NewPassword", ErrorMessage = "New password and confirmation of the password does not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -62,19 +62,19 @@ namespace SleepMakeSense.Models
     {
         [Required]
         [Phone]
-        [Display(Name = "電話番号")]
+        [Display(Name = "phone number")]
         public string Number { get; set; }
     }
 
     public class VerifyPhoneNumberViewModel
     {
         [Required]
-        [Display(Name = "コード")]
+        [Display(Name = "Code")]
         public string Code { get; set; }
 
         [Required]
         [Phone]
-        [Display(Name = "電話番号")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
     }
 

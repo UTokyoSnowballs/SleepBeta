@@ -2,12 +2,13 @@
     ViewBag.Title = "Home Page";
 }
 
+
 <!-- Pandita:If user is already logged in, direct to Devices.cshtml; else, direct to log in page -->
 @*
     Updated to be a login/regrestration screen. 
     If the uers is logged in, they will be propted to either create and account or log in
-
     If they are logged in, they will be propted to sync there data and load the next page
+    If the user has not connected their FitBit, it will prompt, however this is broken
     Done By Sean - 21/5/16
     *@
 
@@ -21,9 +22,23 @@
     }
     else
     {
-    <p><a href="/Userdatas/Sync" class="btn btn-primary">See Your Stats &raquo;</a></p>
+        <p><a class="btn btn-default" href="/Fitbit/Devices"> Sync Data &raquo;</a></p>
     }
-
+    @*
+        Work in progress
+    else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected == false)
+    {
+        <p><a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
+    }
+    else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected)
+    {
+        <p><a href="/Userdatas/Sync" class="btn btn-primary">See Your Stats &raquo;</a></p>
+    }
+    else
+    {
+        <p class="lead">Error: Viewbag (FitBit not being Checked)</p>
+    }
+        *@
 </div>
 
 @*

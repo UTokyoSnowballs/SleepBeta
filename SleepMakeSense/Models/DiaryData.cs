@@ -8,7 +8,7 @@ namespace SleepMakeSense.Models
     public class DiaryData
     {
 
-        public string UserName { get; set; } //used to link the users email with the link. Null if not logged in
+    //    public string UserName { get; set; } //used to link the users email with the link. Null if not logged in
         public DateTime DateTime { get; set; }
         public string WakeUpFreshness { get; set; }
 

@@ -22,8 +22,22 @@
     }
     else
     {
-        <p><a class="btn btn-default" href="/Fitbit/Devices"> Sync Data &raquo;</a></p>
+        <p>@Html.ActionLink("Connect", "Authorize", "Fitbit", new { }, new { @class = "btn btn-success" })</p>
     }
+    @*testing only*@
+    @if (ViewBag.AccessToken != null)
+    {
+        <p>Token -- @ViewBag.Token</p>
+        <p>Token type -- @ViewBag.TokenType</p>
+        <p>Expires In -- @ViewBag.ExpiresIn</p>
+        <p>Refresh token -- @ViewBag.RefreshToken</p>
+
+    }
+    else
+    {
+        <p>The current session has not been authenticated with fitbit</p>
+    }
+
     @*
         Work in progress
     else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected == false)

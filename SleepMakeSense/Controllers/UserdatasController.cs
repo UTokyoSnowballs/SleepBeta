@@ -21,6 +21,7 @@ using MathNet.Numerics.Statistics;
 
 namespace SleepMakeSense.Controllers
 {
+    /*
     public class UserdatasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -215,7 +216,7 @@ namespace SleepMakeSense.Controllers
             }
 
             List<DiaryData> diaryData = new List<DiaryData>(); 
-
+            */
             // Manually integrated diary data. Should automate it!!
             // Mandi
             /*
@@ -271,7 +272,7 @@ namespace SleepMakeSense.Controllers
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), Coffee = "2", CoffeeTime = "10.00", DigitalDev = "2", Tiredness = "4", Alcohol = "260" });
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "11.00", DigitalDev = "2", Tiredness = "4", Alcohol = "0" });
             */
-
+            /*
             // Retrieve data for the past 40 days. Is there a smarter way that allows user to set the number of days? 
             TimeSeriesDataList minutesAwake = client.GetTimeSeries(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             TimeSeriesDataList awakeningsCount = client.GetTimeSeries(TimeSeriesResourceType.AwakeningsCount, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
@@ -3599,6 +3600,10 @@ namespace SleepMakeSense.Controllers
             return View(model);
 
         }
+        
     }
+
+    */
+
 }
 

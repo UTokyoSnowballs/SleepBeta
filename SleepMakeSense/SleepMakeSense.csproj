@@ -252,6 +252,7 @@
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SyncController.cs" />
     <Compile Include="Controllers\UserdatasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -352,9 +353,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IntradayData.cs" />
     <Compile Include="Models\IntradayResourceType.cs" />
-    <Compile Include="Models\LifetimeStats.cs" />
-    <Compile Include="Models\LifetimeTotals.cs" />
-    <Compile Include="Models\LoggedFood.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MinuteData.cs" />
     <Compile Include="Models\MyViewModel.cs" />
@@ -459,6 +457,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Sync\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -485,9 +484,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507200358202_tst.resx">
       <DependentUpon>201507200358202_tst.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507200425233_test5.resx">
       <DependentUpon>201507200425233_test5.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507200729307_test6.resx">
       <DependentUpon>201507200729307_test6.cs</DependentUpon>
@@ -503,9 +504,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508230208213_tst1.resx">
       <DependentUpon>201508230208213_tst1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508231101235_test10.resx">
       <DependentUpon>201508231101235_test10.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

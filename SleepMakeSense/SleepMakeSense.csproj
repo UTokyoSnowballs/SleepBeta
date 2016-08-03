@@ -164,9 +164,10 @@
       <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>F:\Downloads\Fitbit.NET-async-portable\Fitbit.NET-async-portable\SampleWebMVCOAuth2\bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PicNetML">
       <HintPath>..\packages\PicNetML.0.0.16\lib\net45\PicNetML.dll</HintPath>
@@ -250,10 +251,31 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FitbitController.cs" />
+    <Compile Include="Controllers\FitbitControllerOld.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SyncController.cs" />
     <Compile Include="Controllers\UserdatasController.cs" />
+    <Compile Include="FitBitPortable\Constants.cs" />
+    <Compile Include="FitBitPortable\EmptyDateToMinDateConverter.cs" />
+    <Compile Include="FitBitPortable\FitbitAppCredentials.cs" />
+    <Compile Include="FitBitPortable\FitbitClient.cs" />
+    <Compile Include="FitBitPortable\FitbitClientHelper.cs" />
+    <Compile Include="FitBitPortable\FitbitClientHelperExtensions.cs" />
+    <Compile Include="FitBitPortable\FitbitException.cs" />
+    <Compile Include="FitBitPortable\FitbitHttpMessageHandler.cs" />
+    <Compile Include="FitBitPortable\FitbitRateLimitException.cs" />
+    <Compile Include="FitBitPortable\FitbitRequestException.cs" />
+    <Compile Include="FitBitPortable\FitbitTokenException.cs" />
+    <Compile Include="FitBitPortable\HttpRequestMessageExtensionMethods.cs" />
+    <Compile Include="FitBitPortable\IFitbitClient.cs" />
+    <Compile Include="FitBitPortable\IFitbitInterceptor.cs" />
+    <Compile Include="FitBitPortable\ITokenStore.cs" />
+    <Compile Include="FitBitPortable\JsonDotNetSerializer.cs" />
+    <Compile Include="FitBitPortable\JsonDotNetSerializerExtensions.cs" />
+    <Compile Include="FitBitPortable\StringAttributeExtensions.cs" />
+    <Compile Include="FitBitPortable\StringValueAttribute.cs" />
+    <Compile Include="FitBitPortable\SubscriptionManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -353,9 +375,11 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IntradayData.cs" />
     <Compile Include="Models\IntradayResourceType.cs" />
+    <Compile Include="Models\LifetimeStats.cs" />
+    <Compile Include="Models\LifetimeTotals.cs" />
+    <Compile Include="Models\LoggedFood.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MinuteData.cs" />
-    <Compile Include="Models\MyViewModel.cs" />
     <Compile Include="Models\NutritionalValues.cs" />
     <Compile Include="Models\RequestToken.cs" />
     <Compile Include="Models\ResourceOwnerType.cs" />
@@ -376,6 +400,17 @@
     <Compile Include="Models\WaterSummary.cs" />
     <Compile Include="Models\Weight.cs" />
     <Compile Include="Models\WeightLog.cs" />
+    <Compile Include="OAuth2\DefaultTokenManager.cs" />
+    <Compile Include="OAuth2\ITokenManager.cs" />
+    <Compile Include="OAuth2\OAuth2AccessToken.cs" />
+    <Compile Include="OAuth2\OAuth2AutoRefreshInterceptor.cs" />
+    <Compile Include="OAuth2\OAuth2Helper.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -389,8 +424,168 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\Fitbit.Portable.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache" />
+    <Content Include="obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\CSAutoParameterize\original\Views\Web.config" />
+    <Content Include="obj\Release\CSAutoParameterize\original\Web.config" />
+    <Content Include="obj\Release\CSAutoParameterize\transformed\Views\Web.config" />
+    <Content Include="obj\Release\CSAutoParameterize\transformed\Web.config" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferences.cache" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\InsertEFCodeFirstDeploy\original\Web.config" />
+    <Content Include="obj\Release\InsertEFCodeFirstDeploy\transformed\Web.config" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="obj\Release\Package\PackageTmp\packages.config" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.min.map" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\Login.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\Register.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ResetPassword.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\SendCode.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\VerifyCode.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Fitbit\Devices.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Fitbit\SleepIntraday.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Fitbit\StepIntraday.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Fitbit\Tablero.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\About.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\Contact.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\Index.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Manage\Index.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Manage\ManageLogins.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Manage\SetPassword.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Shared\Error.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Shared\Lockout.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\Create.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\Delete.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\Details.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\Edit.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\FactorList.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\Index.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Userdatas\Sync.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Web.config" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\_ViewStart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Web.config" />
+    <Content Include="obj\Release\SleepMakeSense.csproj.GenerateResource.Cache" />
+    <Content Include="obj\Release\SleepMakeSense.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
     <None Include="Properties\PublishProfiles\SleepMakeSense.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Fitbit.Portable.dll" />
+    <Content Include="obj\Debug\Fitbit.Portable.pdb" />
+    <Content Include="obj\Debug\SleepMakeSense.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\SleepMakeSense.dll" />
+    <Content Include="obj\Debug\SleepMakeSense.pdb" />
+    <Content Include="obj\Release\CSAutoParameterize.parameters.xml" />
+    <Content Include="obj\Release\Package\FilePreviewParameter.xml" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Antlr3.Runtime.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Ceka.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\EntityFramework.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\EntityFramework.SqlServer.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Fitbit.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.Beans.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.Core.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.Remoting.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.SwingAWT.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.Text.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.Util.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.XML.API.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.XML.Bind.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.XML.Parse.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.XML.Transform.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.XML.WebServices.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.OpenJDK.XML.XPath.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\IKVM.Runtime.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\EntityFramework.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\EntityFramework.SqlServer.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.AspNet.Identity.Core.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.AspNet.Identity.EntityFramework.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.AspNet.Identity.Owin.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.Host.SystemWeb.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.Security.Facebook.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.Security.Google.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.Security.MicrosoftAccount.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.Security.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\Microsoft.Owin.Security.Twitter.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.Helpers.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.Mvc.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.Optimization.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.Razor.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.WebPages.Deployment.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.WebPages.Razor.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ja\System.Web.WebPages.resources.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\LumenWorks.Framework.IO.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\MathNet.Numerics.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\MySql.Data.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Newtonsoft.Json.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Owin.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\PicNetML.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\RestSharp.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\SleepMakeSense.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Helpers.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Mvc.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Optimization.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Razor.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.WebPages.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\WebGrease.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\weka.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.min.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\Site.css" />
+    <Content Include="obj\Release\Package\PackageTmp\favicon.ico" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="obj\Release\Package\PackageTmp\Global.asax" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\modernizr-2.6.2.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\respond.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\respond.min.js" />
+    <None Include="obj\Release\Package\PackageTmp\Scripts\_references.js" />
+    <Content Include="obj\Release\Package\SleepMakeSense.SourceManifest.xml" />
+    <Content Include="obj\Release\SleepMakeSense.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\SleepMakeSense.dll" />
+    <Content Include="obj\Release\SleepMakeSense.pdb" />
+    <Content Include="obj\Release\_WPPLastBuildInfo.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
@@ -457,6 +652,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Interceptors\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Debug\__testMsDeployConnection__\" />
+    <Folder Include="obj\Debug\__TestProfilesForFilePreview__\" />
+    <Folder Include="obj\Release\Database\" />
+    <Folder Include="obj\Release\ProfileTransformWebConfig\transformed\Views\" />
+    <Folder Include="obj\Release\TempPE\" />
+    <Folder Include="obj\Release\TransformWebConfig\transformed\Views\" />
+    <Folder Include="obj\Release\__testMsDeployConnection__\" />
     <Folder Include="Views\Sync\" />
   </ItemGroup>
   <ItemGroup>
@@ -510,6 +714,34 @@
       <DependentUpon>201508231101235_test10.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.Initial.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test1.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test10.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test2.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test3.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test4.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test5.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test6.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test7.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test8.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test9.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.tst.resources" />
+    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.tst1.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.Initial.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test1.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test10.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test2.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test3.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test4.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test5.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test6.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test7.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test8.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test9.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.tst.resources" />
+    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.tst1.resources" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

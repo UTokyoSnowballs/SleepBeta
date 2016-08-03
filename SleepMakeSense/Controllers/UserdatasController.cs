@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using SleepMakeSense.Models;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -15,15 +14,22 @@ using Fitbit;
 using Fitbit.Api;
 using System.Configuration;
 using Fitbit.Models;
+
+using Fitbit.Api.Portable;
+using Fitbit.Api.Portable.Models;
+using Fitbit.Api.Portable.Interceptors;
+using Fitbit.Api.Portable.OAuth2;
+
 //Refer to MathNet.Numerics Library for statistical analysis
 using MathNet.Numerics.Statistics;
 
 
 namespace SleepMakeSense.Controllers
 {
-    /*
+    
     public class UserdatasController : Controller
     {
+        /*
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Userdatas
@@ -142,7 +148,7 @@ namespace SleepMakeSense.Controllers
         }
 
         // Pandita: retrieve data, pass it to view and insert data to DB on the view. 
-
+        /*
         private FitbitClient GetFitbitClient()
         {
             FitbitClient client = new FitbitClient(ConfigurationManager.AppSettings["FitbitConsumerKey"],
@@ -152,6 +158,37 @@ namespace SleepMakeSense.Controllers
 
             return client;
         }
+        */
+
+         /*
+
+        /// <summary>
+        /// HttpClient and hence FitbitClient are designed to be long-lived for the duration of the session. This method ensures only one client is created for the duration of the session.
+        /// More info at: http://stackoverflow.com/questions/22560971/what-is-the-overhead-of-creating-a-new-httpclient-per-call-in-a-webapi-client
+        /// </summary>
+        /// <returns></returns>
+        public FitbitClient GetFitbitClient(OAuth2AccessToken accessToken = null)
+        {
+            if (Session["FitbitClient"] == null)
+            {
+                if (accessToken != null)
+                {
+                    var appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
+                    FitbitClient client = new FitbitClient(appCredentials, accessToken);
+                    Session["FitbitClient"] = client;
+                    return client;
+                }
+                else
+                {
+                    throw new Exception("First time requesting a FitbitClient from the session you must pass the AccessToken.");
+                }
+
+            }
+            else
+            {
+                return (FitbitClient)Session["FitbitClient"];
+            }
+        }
 
         public ActionResult Sync()
         {
@@ -159,10 +196,14 @@ namespace SleepMakeSense.Controllers
 
             FitbitClient client = GetFitbitClient(); //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
+
             List<Userdata> results = new List<Userdata>();
 
-            TimeSeriesDataList minutesAsleep = client.GetTimeSeries(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            //TimeSeriesDataList minutesAsleep = client.GetTimeSeries(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
 
+
+            TimeSeriesDataList minutesAsleep = client.GetSleepAsync(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow, DateTime.UtcNow.AddDays(-40), client.ToString());
+            
 
             foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
             {
@@ -216,7 +257,7 @@ namespace SleepMakeSense.Controllers
             }
 
             List<DiaryData> diaryData = new List<DiaryData>(); 
-            */
+            
             // Manually integrated diary data. Should automate it!!
             // Mandi
             /*
@@ -272,9 +313,15 @@ namespace SleepMakeSense.Controllers
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), Coffee = "2", CoffeeTime = "10.00", DigitalDev = "2", Tiredness = "4", Alcohol = "260" });
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "11.00", DigitalDev = "2", Tiredness = "4", Alcohol = "0" });
             */
+            
+            /// <summary>
+            /// /////////
+            /// </summary>
             /*
+
+
             // Retrieve data for the past 40 days. Is there a smarter way that allows user to set the number of days? 
-            TimeSeriesDataList minutesAwake = client.GetTimeSeries(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            TimeSeriesDataList minutesAwake = client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow, DateTime.UtcNow.AddDays(40), client.AccessToken.ToString());
             TimeSeriesDataList awakeningsCount = client.GetTimeSeries(TimeSeriesResourceType.AwakeningsCount, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             TimeSeriesDataList timeInBed = client.GetTimeSeries(TimeSeriesResourceType.TimeInBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             TimeSeriesDataList minutesToFallAsleep = client.GetTimeSeries(TimeSeriesResourceType.MinutesToFallAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
@@ -3600,10 +3647,10 @@ namespace SleepMakeSense.Controllers
             return View(model);
 
         }
-        
+        */
     }
 
-    */
+    
 
 }
 

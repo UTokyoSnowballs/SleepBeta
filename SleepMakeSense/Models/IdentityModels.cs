@@ -6,14 +6,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SleepMakeSense.Models
 {
-    // ApplicationUser You can add a user's profile data by adding a property to the class . For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkID = 317594?.
+    // ApplicationUser クラスにプロパティを追加することでユーザーのプロファイル データを追加できます。詳細については、http://go.microsoft.com/fwlink/?LinkID=317594 を参照してください。
     public class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // authenticationType must be consistent with those that are defined in the CookieAuthenticationOptions.AuthenticationType
+            // authenticationType が CookieAuthenticationOptions.AuthenticationType で定義されているものと一致している必要があります
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // This is where you add a custom user claims
+            // ここにカスタム ユーザー クレームを追加します
             return userIdentity;
         }
     }

@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Mvc;//
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -22,14 +22,14 @@ using Fitbit.Api.Portable.OAuth2;
 
 //Refer to MathNet.Numerics Library for statistical analysis
 using MathNet.Numerics.Statistics;
-
+using SleepMakeSense.Models;
 
 namespace SleepMakeSense.Controllers
 {
     
     public class UserdatasController : Controller
     {
-        /*
+        
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Userdatas
@@ -160,7 +160,7 @@ namespace SleepMakeSense.Controllers
         }
         */
 
-         /*
+         
 
         /// <summary>
         /// HttpClient and hence FitbitClient are designed to be long-lived for the duration of the session. This method ensures only one client is created for the duration of the session.
@@ -190,7 +190,7 @@ namespace SleepMakeSense.Controllers
             }
         }
 
-        public ActionResult Sync()
+        public async System.Threading.Tasks.Task<ActionResult> Sync()
         {
             ViewBag.FitbitSynced = true;
 
@@ -201,9 +201,28 @@ namespace SleepMakeSense.Controllers
 
             //TimeSeriesDataList minutesAsleep = client.GetTimeSeries(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
 
+            var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesToFallAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesToFallAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesAfterWakeup = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAfterWakeup, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var sleepEfficiency = await client.GetTimeSeriesAsync(TimeSeriesResourceType.SleepEfficiency, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var caloriesIn = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesIn, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var water = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Water, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var caloriesOut = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesOut, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var steps = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Steps, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var distance = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Distance, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesSedentary = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesSedentary, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesLightlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesLightlyActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesFairlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesFairlyActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var minutesVeryActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesVeryActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var activityCalories = await client.GetTimeSeriesAsync(TimeSeriesResourceType.ActivityCalories, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
 
-            TimeSeriesDataList minutesAsleep = client.GetSleepAsync(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow, DateTime.UtcNow.AddDays(-40), client.ToString());
-            
 
             foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
             {
@@ -231,7 +250,7 @@ namespace SleepMakeSense.Controllers
                         Light = null,
                         NapDuration = null,
                         NapTime = null,
-                        SocialActivity = null, 
+                        SocialActivity = null,
                         DinnerTime = null,
                         AmbientTemp = null,
                         AmbientHumd = null,
@@ -256,8 +275,8 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            List<DiaryData> diaryData = new List<DiaryData>(); 
-            
+            List<DiaryData> diaryData = new List<DiaryData>();
+
             // Manually integrated diary data. Should automate it!!
             // Mandi
             /*
@@ -277,7 +296,7 @@ namespace SleepMakeSense.Controllers
             */
 
             // Mary
-           
+
             /*
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/10/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "10.00", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/11/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "9.30", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
@@ -293,34 +312,35 @@ namespace SleepMakeSense.Controllers
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "10.00", DigitalDev = "0", Tiredness = "4", Alcohol = "500" });
             diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "9.00", DigitalDev = "1", Tiredness = "3", Alcohol = "300" });
             */
-             
+
             // Rosana
-             /*
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/8/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "11.07", DigitalDev = "3", Tiredness = "4", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/9/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "9.07", DigitalDev = "3", Tiredness = "5", Alcohol = "180" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/10/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "15.00", DigitalDev = "1", Tiredness = "5", Alcohol = "120" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/11/2015"), WakeUpFreshness = "4", Coffee = "0", DigitalDev = "3", Tiredness = "5", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/12/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "3", Tiredness = "5", Alcohol = "120" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/13/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/14/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "2", Tiredness = "4", Alcohol = "120" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/15/2015"), Coffee = "1", CoffeeTime = "10.10", DigitalDev = "3", Tiredness = "5", Alcohol = "300" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/16/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "14.00", DigitalDev = "4", Tiredness = "3", Alcohol = "240" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/17/2015"), WakeUpFreshness = "4", Coffee = "3", CoffeeTime = "11.00", DigitalDev = "3", Tiredness = "4", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/18/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "15.40", DigitalDev = "3", Tiredness = "4", Alcohol = "250" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/19/2015"), WakeUpFreshness = "5", Coffee = "1", CoffeeTime = "14.17", DigitalDev = "3", Tiredness = "5", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/20/2015"), WakeUpFreshness = "4", Coffee = "0", DigitalDev = "2", Tiredness = "3", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/21/2015"), Coffee = "1.5", CoffeeTime = "11.01", DigitalDev = "4", Tiredness = "3", Alcohol = "240" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), Coffee = "2", CoffeeTime = "10.00", DigitalDev = "2", Tiredness = "4", Alcohol = "260" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "11.00", DigitalDev = "2", Tiredness = "4", Alcohol = "0" });
-            */
-            
+            /*
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/8/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "11.07", DigitalDev = "3", Tiredness = "4", Alcohol = "0" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/9/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "9.07", DigitalDev = "3", Tiredness = "5", Alcohol = "180" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/10/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "15.00", DigitalDev = "1", Tiredness = "5", Alcohol = "120" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/11/2015"), WakeUpFreshness = "4", Coffee = "0", DigitalDev = "3", Tiredness = "5", Alcohol = "0" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/12/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "3", Tiredness = "5", Alcohol = "120" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/13/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/14/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "2", Tiredness = "4", Alcohol = "120" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/15/2015"), Coffee = "1", CoffeeTime = "10.10", DigitalDev = "3", Tiredness = "5", Alcohol = "300" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/16/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "14.00", DigitalDev = "4", Tiredness = "3", Alcohol = "240" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/17/2015"), WakeUpFreshness = "4", Coffee = "3", CoffeeTime = "11.00", DigitalDev = "3", Tiredness = "4", Alcohol = "0" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/18/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "15.40", DigitalDev = "3", Tiredness = "4", Alcohol = "250" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/19/2015"), WakeUpFreshness = "5", Coffee = "1", CoffeeTime = "14.17", DigitalDev = "3", Tiredness = "5", Alcohol = "0" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/20/2015"), WakeUpFreshness = "4", Coffee = "0", DigitalDev = "2", Tiredness = "3", Alcohol = "0" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/21/2015"), Coffee = "1.5", CoffeeTime = "11.01", DigitalDev = "4", Tiredness = "3", Alcohol = "240" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), Coffee = "2", CoffeeTime = "10.00", DigitalDev = "2", Tiredness = "4", Alcohol = "260" });
+           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "11.00", DigitalDev = "2", Tiredness = "4", Alcohol = "0" });
+           */
+
             /// <summary>
             /// /////////
             /// </summary>
-            /*
+
 
 
             // Retrieve data for the past 40 days. Is there a smarter way that allows user to set the number of days? 
+            /*
             TimeSeriesDataList minutesAwake = client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow, DateTime.UtcNow.AddDays(40), client.AccessToken.ToString());
             TimeSeriesDataList awakeningsCount = client.GetTimeSeries(TimeSeriesResourceType.AwakeningsCount, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             TimeSeriesDataList timeInBed = client.GetTimeSeries(TimeSeriesResourceType.TimeInBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
@@ -341,6 +361,7 @@ namespace SleepMakeSense.Controllers
             TimeSeriesDataList weight = client.GetTimeSeries(TimeSeriesResourceType.Weight, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             TimeSeriesDataList bmi = client.GetTimeSeries(TimeSeriesResourceType.BMI, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             TimeSeriesDataList fat = client.GetTimeSeries(TimeSeriesResourceType.Fat, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
+            */
 
             int CNTcaloriesIn = 0, CNTwater = 0, CNTcaloriesOut = 0, CNTsteps = 0, CNTweight = 0, CNTfat = 0;
             int CNTwakeUpFreshness = 0, CNTcoffee = 0, CNTcoffeeTime = 0, CNTalcohol = 0, CNTmood = 0, CNTstress = 0,
@@ -372,7 +393,7 @@ namespace SleepMakeSense.Controllers
                     item.BodyTemp = data.BodyTemp;
                     item.Hormone = data.Hormone;
 
-                    if(Convert.ToDouble(data.WakeUpFreshness) >= 0) CNTwakeUpFreshness++;
+                    if (Convert.ToDouble(data.WakeUpFreshness) >= 0) CNTwakeUpFreshness++;
                     if (Convert.ToDouble(data.Coffee) >= 0) CNTcoffee++;
                     if (Convert.ToDouble(data.CoffeeTime) > 0) CNTcoffeeTime++;
                     if (Convert.ToDouble(data.Alcohol) >= 0) CNTalcohol++;
@@ -582,7 +603,7 @@ namespace SleepMakeSense.Controllers
             double[] tmpAmbientTemp = new double[CNTwakeUpFreshness];
             double[] tmpAmbientHumd = new double[CNTwakeUpFreshness];
             double[] tmpBodyTemp = new double[CNTwakeUpFreshness];
-            double[] tmpHormone = new double[CNTwakeUpFreshness];          
+            double[] tmpHormone = new double[CNTwakeUpFreshness];
 
             //double[] Floors = new double[len];
             //double[] TimeEnteredBed = new double[len];
@@ -593,8 +614,8 @@ namespace SleepMakeSense.Controllers
             int iAwakeningsCount = 0;
             int iMinutesToFallAsleep = 0;
             int iSleepEfficiency = 0;
-            int iWakeUpFreshnessCaloriesIn = 0, iWakeUpFreshnessWater = 0, iWakeUpFreshnessCaloriesOut = 0, 
-                iWakeUpFreshnessSteps = 0,iWakeUpFreshnessMinutesSedentary = 0, iWakeUpFreshnessMinutesLightlyActive = 0,
+            int iWakeUpFreshnessCaloriesIn = 0, iWakeUpFreshnessWater = 0, iWakeUpFreshnessCaloriesOut = 0,
+                iWakeUpFreshnessSteps = 0, iWakeUpFreshnessMinutesSedentary = 0, iWakeUpFreshnessMinutesLightlyActive = 0,
                 iWakeUpFreshnessMinutesFairlyActive = 0, iWakeUpFreshnessMinutesVeryActive = 0, iWakeUpFreshnessWeight = 0,
                 iWakeUpFreshnessFat = 0, iWakeUpFreshnessCoffee = 0, iWakeUpFreshnessCoffeeTime = 0, iWakeUpFreshnessAlcohol = 0, iWakeUpFreshnessMood = 0,
                 iWakeUpFreshnessStress = 0, iWakeUpFreshnessTiredness = 0, iWakeUpFreshnessDream = 0, iWakeUpFreshnessDigitalDev = 0, iWakeUpFreshnessLight = 0,
@@ -618,7 +639,7 @@ namespace SleepMakeSense.Controllers
                 //System.Diagnostics.Trace.Write(item); // didnt work!!!!
 
                 // ******** Add entry to DB !!! *************
-                db.Userdatas.Add(item); 
+                db.Userdatas.Add(item);
 
                 MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(item.MinutesAsleep);
                 MinutesAwake[iMinutesAwake++] = Convert.ToDouble(item.MinutesAwake);
@@ -631,12 +652,14 @@ namespace SleepMakeSense.Controllers
                 MinutesFairlyActive[iMinutesFairlyActive++] = Convert.ToDouble(item.MinutesFairlyActive);
                 MinutesVeryActive[iMinutesVeryActive++] = Convert.ToDouble(item.MinutesVeryActive);
 
-                if (Convert.ToDouble(item.WakeUpFreshness) > 0){ 
-                    
-                    if(Convert.ToDouble(item.CaloriesIn) > 0) {
+                if (Convert.ToDouble(item.WakeUpFreshness) > 0)
+                {
+
+                    if (Convert.ToDouble(item.CaloriesIn) > 0)
+                    {
                         WakeUpFreshnessCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(item.WakeUpFreshness);
                         tmpCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(item.CaloriesIn);
-                        iWakeUpFreshnessCaloriesIn++;                                  
+                        iWakeUpFreshnessCaloriesIn++;
                     }
                     if (Convert.ToDouble(item.Water) > 0)
                     {
@@ -807,7 +830,8 @@ namespace SleepMakeSense.Controllers
             // WakeUpFreshness
             double rWakeUpFreshness = 0;
 
-            if (iWakeUpFreshnessCaloriesIn > 4) {
+            if (iWakeUpFreshnessCaloriesIn > 4)
+            {
                 rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCaloriesIn, tmpCaloriesIn);
                 if (Math.Abs(rWakeUpFreshness) >= 0.3)
                 {
@@ -1485,7 +1509,7 @@ namespace SleepMakeSense.Controllers
                 {
                     CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Note = "The more moderate exercise you did, the worse you sleep efficiency was." });
                 }
-           }
+            }
 
             rMinutesVeryActive = Correlation.Pearson(SleepEfficiency, MinutesVeryActive);
             if (Math.Abs(rMinutesVeryActive) >= 0.3)
@@ -1501,7 +1525,7 @@ namespace SleepMakeSense.Controllers
             }
 
             //********** Save changes to DB!!!! ***************
-            db.SaveChanges();
+           // db.SaveChanges();
 
             int temp = 0, identifier = 0;
             double pearson = 0, tempValue = 0;
@@ -2067,7 +2091,7 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            
+
 
             // Coffee -- DONE YEAH!!
 
@@ -2172,7 +2196,7 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            
+
 
             // CoffeeTime -- DONE YEAH!!
 
@@ -2191,20 +2215,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.CoffeeTime != null) {
-                    tempValue = Convert.ToDouble(item.CoffeeTime);
-                    if (tempValue > 0)
+                    if (item.CoffeeTime != null)
                     {
-                        CoffeeTime[temp] = tempValue;
-                        tempMinutesAsleepCoffeeTime[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeCoffeeTime[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountCoffeeTime[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepCoffeeTime[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyCoffeeTime[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.CoffeeTime);
+                        if (tempValue > 0)
+                        {
+                            CoffeeTime[temp] = tempValue;
+                            tempMinutesAsleepCoffeeTime[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeCoffeeTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountCoffeeTime[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepCoffeeTime[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyCoffeeTime[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -2296,20 +2321,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Alcohol != null){
-                        tempValue = Convert.ToDouble(item.Alcohol);
-                    if (tempValue >= 0)
+                    if (item.Alcohol != null)
                     {
-                        Alcohol[temp] = tempValue;
-                        tempMinutesAsleepAlcohol[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeAlcohol[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountAlcohol[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepAlcohol[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyAlcohol[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Alcohol);
+                        if (tempValue >= 0)
+                        {
+                            Alcohol[temp] = tempValue;
+                            tempMinutesAsleepAlcohol[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeAlcohol[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAlcohol[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepAlcohol[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyAlcohol[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
 
                     identifier++;
                 }
@@ -2400,20 +2426,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Mood != null){
-                    tempValue = Convert.ToDouble(item.Mood);
-                    if (tempValue >= 0)
+                    if (item.Mood != null)
                     {
-                        Mood[temp] = tempValue;
-                        tempMinutesAsleepMood[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeMood[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountMood[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepMood[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyMood[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Mood);
+                        if (tempValue >= 0)
+                        {
+                            Mood[temp] = tempValue;
+                            tempMinutesAsleepMood[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeMood[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountMood[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepMood[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyMood[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -2503,20 +2530,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Stress != null){
-                    tempValue = Convert.ToDouble(item.Stress);
-                    if (tempValue >= 0)
+                    if (item.Stress != null)
                     {
-                        Stress[temp] = tempValue;
-                        tempMinutesAsleepStress[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeStress[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountStress[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepStress[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyStress[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Stress);
+                        if (tempValue >= 0)
+                        {
+                            Stress[temp] = tempValue;
+                            tempMinutesAsleepStress[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeStress[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountStress[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepStress[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyStress[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -2576,10 +2604,12 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempSleepEfficiencyStress, Stress);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    if (pearson > 0) {
+                    if (pearson > 0)
+                    {
                         CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Stress", Coefficient = pearson, Note = "The more stressed you were, the better your sleep efficiency was." });
                     }
-                    else if (pearson < 0) {
+                    else if (pearson < 0)
+                    {
                         CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Stress", Coefficient = pearson, Note = "The less stressed you were, the better your sleep efficiency was." });
                     }
                 }
@@ -2603,20 +2633,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Tiredness != null){
-                    tempValue = Convert.ToDouble(item.Tiredness);
-                    if (tempValue >= 0)
+                    if (item.Tiredness != null)
                     {
-                        Tiredness[temp] = tempValue;
-                        tempMinutesAsleepTiredness[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeTiredness[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountTiredness[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepTiredness[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyTiredness[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Tiredness);
+                        if (tempValue >= 0)
+                        {
+                            Tiredness[temp] = tempValue;
+                            tempMinutesAsleepTiredness[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeTiredness[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountTiredness[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepTiredness[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyTiredness[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -2688,7 +2719,7 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            
+
 
             // Dream -- DONE YEAH!!
 
@@ -2707,19 +2738,20 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Dream != null){
-                    tempValue = Convert.ToDouble(item.Dream);
-                    if (tempValue >= 0)
+                    if (item.Dream != null)
                     {
-                        Dream[temp] = tempValue;
-                        tempMinutesAsleepDream[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeDream[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountDream[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepDream[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyDream[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Dream);
+                        if (tempValue >= 0)
+                        {
+                            Dream[temp] = tempValue;
+                            tempMinutesAsleepDream[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeDream[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountDream[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepDream[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyDream[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
+                        }
                     }
                     identifier++;
                 }
@@ -2809,19 +2841,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.DigitalDev != null){
-                    tempValue = Convert.ToDouble(item.DigitalDev);
-                    if (tempValue >= 0)
+                    if (item.DigitalDev != null)
                     {
-                        DigitalDev[temp] = tempValue;
-                        tempMinutesAsleepDigitalDev[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeDigitalDev[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountDigitalDev[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepDigitalDev[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyDigitalDev[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.DigitalDev);
+                        if (tempValue >= 0)
+                        {
+                            DigitalDev[temp] = tempValue;
+                            tempMinutesAsleepDigitalDev[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeDigitalDev[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountDigitalDev[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepDigitalDev[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyDigitalDev[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }}
+                            temp++;
+                        }
+                    }
                     identifier++;
                 }
 
@@ -2911,20 +2945,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Light != null){
-                    tempValue = Convert.ToDouble(item.Light);
-                    if (tempValue >= 0)
+                    if (item.Light != null)
                     {
-                        Light[temp] = tempValue;
-                        tempMinutesAsleepLight[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeLight[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountLight[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepLight[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyLight[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Light);
+                        if (tempValue >= 0)
+                        {
+                            Light[temp] = tempValue;
+                            tempMinutesAsleepLight[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeLight[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountLight[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepLight[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyLight[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3014,20 +3049,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.NapDuration != null){
-                    tempValue = Convert.ToDouble(item.NapDuration);
-                    if (tempValue >= 0)
+                    if (item.NapDuration != null)
                     {
-                        NapDuration[temp] = tempValue;
-                        tempMinutesAsleepNapDuration[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeNapDuration[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountNapDuration[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepNapDuration[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyNapDuration[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.NapDuration);
+                        if (tempValue >= 0)
+                        {
+                            NapDuration[temp] = tempValue;
+                            tempMinutesAsleepNapDuration[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeNapDuration[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountNapDuration[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepNapDuration[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyNapDuration[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3082,20 +3118,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.NapTime != null){
-                    tempValue = Convert.ToDouble(item.NapTime);
-                    if (tempValue > 0)
+                    if (item.NapTime != null)
                     {
-                        NapTime[temp] = tempValue;
-                        tempMinutesAsleepNapTime[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeNapTime[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountNapTime[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepNapTime[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyNapTime[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.NapTime);
+                        if (tempValue > 0)
+                        {
+                            NapTime[temp] = tempValue;
+                            tempMinutesAsleepNapTime[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeNapTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountNapTime[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepNapTime[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyNapTime[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3149,20 +3186,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.SocialActivity != null){
-                    tempValue = Convert.ToDouble(item.SocialActivity);
-                    if (tempValue >= 0)
+                    if (item.SocialActivity != null)
                     {
-                        SocialActivity[temp] = tempValue;
-                        tempMinutesAsleepSocialActivity[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeSocialActivity[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountSocialActivity[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepSocialActivity[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencySocialActivity[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.SocialActivity);
+                        if (tempValue >= 0)
+                        {
+                            SocialActivity[temp] = tempValue;
+                            tempMinutesAsleepSocialActivity[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeSocialActivity[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountSocialActivity[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepSocialActivity[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencySocialActivity[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3216,20 +3254,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.DinnerTime != null){
-                    tempValue = Convert.ToDouble(item.DinnerTime);
-                    if (tempValue > 0)
+                    if (item.DinnerTime != null)
                     {
-                        DinnerTime[temp] = tempValue;
-                        tempMinutesAsleepDinnerTime[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeDinnerTime[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountDinnerTime[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepDinnerTime[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyDinnerTime[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.DinnerTime);
+                        if (tempValue > 0)
+                        {
+                            DinnerTime[temp] = tempValue;
+                            tempMinutesAsleepDinnerTime[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeDinnerTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountDinnerTime[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepDinnerTime[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyDinnerTime[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3283,20 +3322,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.ExerciseTime != null){
-                    tempValue = Convert.ToDouble(item.ExerciseTime);
-                    if (tempValue > 0)
+                    if (item.ExerciseTime != null)
                     {
-                        ExerciseTime[temp] = tempValue;
-                        tempMinutesAsleepExerciseTime[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeExerciseTime[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountExerciseTime[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepExerciseTime[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyExerciseTime[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.ExerciseTime);
+                        if (tempValue > 0)
+                        {
+                            ExerciseTime[temp] = tempValue;
+                            tempMinutesAsleepExerciseTime[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeExerciseTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountExerciseTime[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepExerciseTime[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyExerciseTime[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3351,19 +3391,20 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.AmbientTemp != null){
-                    tempValue = Convert.ToDouble(item.AmbientTemp);
-                    if (tempValue > 0)
+                    if (item.AmbientTemp != null)
                     {
-                        AmbientTemp[temp] = tempValue;
-                        tempMinutesAsleepAmbientTemp[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeAmbientTemp[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountAmbientTemp[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepAmbientTemp[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyAmbientTemp[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.AmbientTemp);
+                        if (tempValue > 0)
+                        {
+                            AmbientTemp[temp] = tempValue;
+                            tempMinutesAsleepAmbientTemp[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeAmbientTemp[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAmbientTemp[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepAmbientTemp[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyAmbientTemp[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
+                        }
                     }
                     identifier++;
                 }
@@ -3419,20 +3460,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.AmbientHumd != null){
-                    tempValue = Convert.ToDouble(item.AmbientHumd);
-                    if (tempValue > 0)
+                    if (item.AmbientHumd != null)
                     {
-                        AmbientHumd[temp] = tempValue;
-                        tempMinutesAsleepAmbientHumd[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeAmbientHumd[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountAmbientHumd[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepAmbientHumd[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyAmbientHumd[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.AmbientHumd);
+                        if (tempValue > 0)
+                        {
+                            AmbientHumd[temp] = tempValue;
+                            tempMinutesAsleepAmbientHumd[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeAmbientHumd[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAmbientHumd[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepAmbientHumd[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyAmbientHumd[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3487,20 +3529,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.BodyTemp != null){
-                    tempValue = Convert.ToDouble(item.BodyTemp);
-                    if (tempValue > 0)
+                    if (item.BodyTemp != null)
                     {
-                        BodyTemp[temp] = tempValue;
-                        tempMinutesAsleepBodyTemp[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeBodyTemp[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountBodyTemp[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepBodyTemp[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyBodyTemp[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.BodyTemp);
+                        if (tempValue > 0)
+                        {
+                            BodyTemp[temp] = tempValue;
+                            tempMinutesAsleepBodyTemp[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeBodyTemp[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountBodyTemp[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepBodyTemp[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyBodyTemp[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3555,20 +3598,21 @@ namespace SleepMakeSense.Controllers
 
                 foreach (SleepMakeSense.Models.Userdata item in results)
                 {
-                    if(item.Hormone != null){
-                    tempValue = Convert.ToDouble(item.Hormone);
-                    if (tempValue > 0)
+                    if (item.Hormone != null)
                     {
-                        Hormone[temp] = tempValue;
-                        tempMinutesAsleepHormone[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeHormone[temp] = MinutesAwake[identifier];
-                        tempAwakeningsCountHormone[temp] = AwakeningsCount[identifier];
-                        tempMinutesToFallAsleepHormone[temp] = MinutesToFallAsleep[identifier];
-                        tempSleepEfficiencyHormone[temp] = SleepEfficiency[identifier];
+                        tempValue = Convert.ToDouble(item.Hormone);
+                        if (tempValue > 0)
+                        {
+                            Hormone[temp] = tempValue;
+                            tempMinutesAsleepHormone[temp] = MinutesAsleep[identifier];
+                            tempMinutesAwakeHormone[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountHormone[temp] = AwakeningsCount[identifier];
+                            tempMinutesToFallAsleepHormone[temp] = MinutesToFallAsleep[identifier];
+                            tempSleepEfficiencyHormone[temp] = SleepEfficiency[identifier];
 
-                        temp++;
-                    }
+                            temp++;
                         }
+                    }
                     identifier++;
                 }
 
@@ -3647,7 +3691,7 @@ namespace SleepMakeSense.Controllers
             return View(model);
 
         }
-        */
+        
     }
 
     

@@ -1,0 +1,279 @@
+﻿@model IEnumerable<SleepExplorer.Models.FitbitData>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateStamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesAsleep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesAwake)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AwakeningsCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeInBed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesToFallAsleep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesAfterWakeup)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SleepEfficiency)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WakeUpFreshness)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CaloriesIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Water)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Coffee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoffeeTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Alcohol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mood)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tiredness)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dream)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeEnteredBed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DigitalDev)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Light)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NapDuration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NapTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SocialActivity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DinnerTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmbientTemp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmbientHumd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CaloriesOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Steps)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Distance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesSedentary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesLightlyActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesFairlyActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinutesVeryActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivityCalories)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExerciseTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BMI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BodyTemp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hormone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesAsleep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesAwake)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AwakeningsCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeInBed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesToFallAsleep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesAfterWakeup)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SleepEfficiency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WakeUpFreshness)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CaloriesIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Water)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Coffee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoffeeTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Alcohol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mood)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tiredness)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dream)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeEnteredBed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DigitalDev)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Light)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NapDuration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NapTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SocialActivity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DinnerTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmbientTemp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmbientHumd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CaloriesOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Steps)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Distance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesSedentary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesLightlyActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesFairlyActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinutesVeryActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityCalories)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExerciseTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Weight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BMI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BodyTemp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Hormone)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FitbitDataId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FitbitDataId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FitbitDataId })
+        </td>
+    </tr>
+}
+
+</table>

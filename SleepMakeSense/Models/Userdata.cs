@@ -15,8 +15,14 @@ namespace SleepMakeSense.Models
 {
     public class Userdata
     {
-        public int UserdataId { get; set; }
+        public int Id { get; set; }
         public DateTime DateStamp { get; set; }
+
+
+        //Added For Database Upgrade
+        public string UserId { get; set;}
+        public bool FitbitData { get; set; }
+        public bool DiaryData { get; set; }
 
         // ******* Sleep Structure = 8 attributes ****************
         public string MinutesAsleep { get; set; }

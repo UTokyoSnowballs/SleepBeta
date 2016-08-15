@@ -380,6 +380,7 @@
     <Compile Include="Models\LoggedFood.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MinuteData.cs" />
+    <Compile Include="Models\MyViewModel.cs" />
     <Compile Include="Models\NutritionalValues.cs" />
     <Compile Include="Models\RequestToken.cs" />
     <Compile Include="Models\ResourceOwnerType.cs" />

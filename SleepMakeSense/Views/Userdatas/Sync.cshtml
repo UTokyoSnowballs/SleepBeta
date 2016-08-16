@@ -85,17 +85,17 @@
                 } else if (@d.Belong == "MinutesAwake"){
                     var temp = 0 - d.Coefficient;
                     @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                } else if (@d.Belong == "AwakeningsCount"){
+                            } else if (@d.Belong == "AwakeningsCount"){
                     var temp = 0 - d.Coefficient;
                     @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                } else if (@d.Belong == "MinutesToFallAsleep"){
+                            } else if (@d.Belong == "MinutesToFallAsleep"){
                     var temp = 0 - d.Coefficient;
                     @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                } else if (@d.Belong == "SleepEfficiency"){
+                            } else if (@d.Belong == "SleepEfficiency"){
                     @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                } else if (@d.Belong == "WakeUpFreshness") {
+                            } else if (@d.Belong == "WakeUpFreshness") {
                     @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                }
+                            }
             }
 
             @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
@@ -104,11 +104,11 @@
                     var weekday = d.DateStamp.DayOfWeek;
 
                     @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAsleep" });
-                                        @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
-                                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
-                                        @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
-                                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
-                                        @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
+                                                    @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
+                                                    @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
+                                                    @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
+                                                    @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
+                                                    @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
 
              }
 
@@ -185,11 +185,11 @@
                         div.html("<h4><center>" + d.Name + "</h4>" + d.Note)
                               .style("left", d.x + "px")
                               .style("top", d.y + "px");
-                              //.style("top", function (d) {
-                              //return (this.y - 300) + "px";
-                              //return this.y + "px";
-                              //})
-                        })
+                        //.style("top", function (d) {
+                        //return (this.y - 300) + "px";
+                        //return this.y + "px";
+                        //})
+                    })
                         .on("mouseout", function (d) {
                             d3.select(this)
                                .style("stroke", "white")
@@ -236,6 +236,8 @@
             function PlotTimeseries(myData, section, mark, sFeature) {
 
                 d3.select(section).selectAll("*").remove();
+                var red = "#ff0505";
+                var blue = "#6F6FFF";
 
                 var w = 500;
                 var h = 300;
@@ -303,13 +305,13 @@
                      .attr("width", xRange.rangeBand())
                      .attr("y", function (d) { return yRange(d.Value); })
                      .attr("height", function (d) { return (height - yRange(d.Value)); })
-                     //.attr("fill", "#bdbdbd")
+                     //.attr("fill", "#0000ff")
                      .attr("fill", function (d) {
-                         if (mark == "SleepEfficiency" && (d.Value < 95)) { return "red"; }
-                         else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return "red"; }
-                         else if (mark == "MinutesAsleep" && (d.Value > 9 || (d.Value < 6))) { return "red"; }
-                         else if (mark == "MinutesAwake" && (d.Value > 27)) { return "red"; } // 0.05*540 min
-                         else return "#bdbdbd";
+                         if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                             //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                         else if (mark == "MinutesAsleep" && ((d.Value >= 8) || (d.Value <= 10))) { return red; }
+                         else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
+                         else return blue;
                      })
                      .on("mouseover", function (d) {
                          d3.select(this)
@@ -320,7 +322,7 @@
                             .style("opacity", 0.9);
 
                          if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                         else if (mark == "MinutesToFallAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
+                             //else if (mark == "MinutesToFallAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
                          else if (mark == "MinutesAwake") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
                          else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings/restlessness"; }
                          else if (mark == "MinutesAsleep") {
@@ -341,12 +343,12 @@
                          d3.select(this)
                            //.attr("fill", "#bdbdbd");
                            .attr("fill", function (d) {
-                             if (mark == "SleepEfficiency" && (d.Value < 95)) { return "red"; }
-                             else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return "red"; }
-                             else if (mark == "MinutesAsleep" && (d.Value > 9 || (d.Value < 6))) { return "red"; }
-                             else if (mark == "MinutesAwake" && (d.Value > 27)) { return "red"; } // 0.05*540 min
-                             else return "#bdbdbd";
-                         });
+                               if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                                   //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                               else if (mark == "MinutesAsleep" && ((d.Value > 10) || (d.Value < 8))) { return red; }
+                               else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
+                               else return blue;
+                           });
                          div.transition()
                             .duration(500)
                             .style("opacity", 0);
@@ -361,11 +363,11 @@
     </div>
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Minutes Asleep </b> </h4> </div>
+        <div style="color:#3376bf"> <h4> <b> My Hours Asleep </b> </h4> </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My minutes asleep during the past 40 days </b></h5>
+            <h5><b> My hours asleep during the past 40 days </b></h5>
             <div id="MinutesAsleepTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
@@ -404,9 +406,9 @@
         </div>
     </div> <hr />
 
-    <div class="row">
+    <!--div class="row">
         <div style="color:#3376bf"> <h4> <b> My Awakening Count </b> </h4> </div>
-    </div>
+    </!--div>
     <div class="row">
         <div class="col-md-6">
             <h5><b> My awakening count during the past 40 days </b></h5>
@@ -446,7 +448,7 @@
                 </script>
             </div>
         </div>
-    </div> <hr />
+    </div> <hr /-->
 
     <div class="row">
         <div style="color:#3376bf"> <h4> <b> Sleep Efficiency </b> </h4> (The percentage of minutes asleep versus total minutes in bed) </div>

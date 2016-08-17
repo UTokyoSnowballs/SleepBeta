@@ -62,6 +62,7 @@
     <div id="DataProcessing">
         <script type="text/javascript">
 
+            var factorList = [];
             var cMinutesAsleep = [];
             var cMinutesAwake = [];
             var cAwakeningsCount = [];
@@ -76,26 +77,32 @@
             var SleepEfficiency = [];
             var WakeUpFresh = [];
 
+            factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
+            factorList.push({ Name: "Exercise", Coefficient: 1, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
+            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Note: "Try to listen to more soothing music before sleeping" });
+            factorList.push({ Name: "test", Coefficient: 0.5, Note: "testing 1" });
+            factorList.push({ Name: "test 2", Coefficient: 1, Note: "testing 2" });
+            //1 = green , 0.5 = 2nd red
 
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
             {
-
+                
                 if (@d.Belong == "MinutesAsleep") {
                     @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                } else if (@d.Belong == "MinutesAwake"){
+                            } else if (@d.Belong == "MinutesAwake"){
                     var temp = 0 - d.Coefficient;
                     @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                            } else if (@d.Belong == "AwakeningsCount"){
+                                        } else if (@d.Belong == "AwakeningsCount"){
                     var temp = 0 - d.Coefficient;
                     @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                            } else if (@d.Belong == "MinutesToFallAsleep"){
+                                        } else if (@d.Belong == "MinutesToFallAsleep"){
                     var temp = 0 - d.Coefficient;
                     @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                            } else if (@d.Belong == "SleepEfficiency"){
+                                        } else if (@d.Belong == "SleepEfficiency"){
                     @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                            } else if (@d.Belong == "WakeUpFreshness") {
+                                        } else if (@d.Belong == "WakeUpFreshness") {
                     @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                            }
+                                        }
             }
 
             @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
@@ -104,11 +111,11 @@
                     var weekday = d.DateStamp.DayOfWeek;
 
                     @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAsleep" });
-                                                    @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
-                                                    @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
-                                                    @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
-                                                    @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
-                                                    @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
+                                                                @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
+                                                                @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
+                                                                @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
+                                                                @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
+                                                                @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
 
              }
 
@@ -129,12 +136,12 @@
                   .attr("class", "bubble");
 
                 var legend_data = [
-                { "color": "#00CC66", "text": "Very strong positive relationship" },
-                { "color": "#99FF99", "text": "Strong positive relationship" },
+                { "color": "#00CC66", "text": "Positive relationship" }, //Very strong positive relationship
+               /* { "color": "#99FF99", "text": "Strong positive relationship" },
                 { "color": "#CCFFCC", "text": "Moderate positive relationship" },
                 { "color": "#F6CED8", "text": "Moderate negative relationship" },
-                { "color": "#F7819F", "text": "Strong negative relationship" },
-                { "color": "#FF0040", "text": "Very strong negative relationship" }];
+                { "color": "#F7819F", "text": "Strong negative relationship" },*/
+                { "color": "#FF0040", "text": "Negative relationship" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
                     document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
@@ -162,15 +169,15 @@
                     .style("fill", function (d) {
                         coeff = d.Coefficient;
                         console.log(coeff);
-                        if (coeff < 0) {
+                        /*if (coeff < 0) {
                             temp = Math.abs(coeff);
                             if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
                             else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
-                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#F6CED8"; }
-                        } else if (coeff >= 0) {
+                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#FF0040"; }
+                        } else */if (coeff >= 0) {
                             if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#00CC66"; }
-                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#99FF99"; }
-                            else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
+                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#FF0040"; }  //#99FF99
+                            //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
                         }
                     })
                     .style("stroke", "white")
@@ -378,7 +385,7 @@
             <h5><b> Factors related to my minutes asleep </b></h5>
             <div id="AffectingFactorsMinutesAsleep">
                 <script type="text/javascript">
-                    testVis(cMinutesAsleep, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
+                    testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
                 </script>
             </div>
         </div>

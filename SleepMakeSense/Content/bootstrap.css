@@ -2018,8 +2018,7 @@ textarea.input-lg {
 
 .btn:hover,
 .btn:focus {
-    color: #333;
-    text-decoration: none
+    
 }
 
 .btn:active,
@@ -2042,8 +2041,9 @@ fieldset[disabled] .btn {
 }
 
 .btn-default {
-    color: #373E4F;
-    background-color: #fff;
+    color: #fff;
+    border: 0px;
+    background: -webkit-linear-gradient(right, #CD5C5B, #459EE8);
 }
 
 .btn-default:hover,
@@ -2051,9 +2051,7 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
-    color: #333;
-    background-color: #ebebeb;
-    border-color: #adadad
+    
 }
 
 .btn-default:active,
@@ -2092,8 +2090,7 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-    color: #fff;
-    background-color: #3276b1;
+    
     
 }
 
@@ -4930,15 +4927,15 @@ a.list-group-item.active>.badge,
 }
 
 .jumbotron {
-    padding: 30px;
     margin-bottom: 30px;
     font-size: 21px;
-    text-align: center;;
+    text-align: center;
     font-weight: 200;
     line-height: 2.1428571435;
     color: inherit;
-    background-image: url("../images/unsplash_sleep.jpg");
+    background: url("../images/unsplash_sleep.jpg") center center;
     background-size: cover;
+    height: 450px;
 
 }
 
@@ -6826,8 +6823,7 @@ body {
 }
 
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px
+    max-width: 100%;
 }
 
 .dl-horizontal dt {

@@ -2042,9 +2042,8 @@ fieldset[disabled] .btn {
 }
 
 .btn-default {
-    color: #333;
+    color: #373E4F;
     background-color: #fff;
-    border-color: #ccc
 }
 
 .btn-default:hover,
@@ -4944,7 +4943,7 @@ a.list-group-item.active>.badge,
 }
 
 .jumbotron h1 {
-    line-height: 1;
+    line-height: 2;
     color: inherit
 }
 
@@ -4966,7 +4965,7 @@ a.list-group-item.active>.badge,
         padding-left: 60px
     }
     .jumbotron h1 {
-        font-size: 63px
+        font-size: 72px
     }
 }
 

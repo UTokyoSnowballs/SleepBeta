@@ -23,6 +23,7 @@ using Fitbit.Api.Portable.OAuth2;
 //Refer to MathNet.Numerics Library for statistical analysis
 using MathNet.Numerics.Statistics;
 using SleepMakeSense.Models;
+using Microsoft.AspNet.Identity;
 
 namespace SleepMakeSense.Controllers
 {
@@ -45,7 +46,7 @@ namespace SleepMakeSense.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Userdata userdata = db.Userdatas.Find(id);
+            var userdata = db.Userdatas.Find(id);
             if (userdata == null)
             {
                 return HttpNotFound();
@@ -71,9 +72,10 @@ namespace SleepMakeSense.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserdataId,DateStamp,MinutesAsleep,MinutesAwake,AwakeningsCount,TimeInBed,MinutesToFallAsleep,MinutesAfterWakeup,SleepEfficiency,CaloriesIn,Water,CaloriesOut,Steps,Distance,MinutesSedentary,MinutesLightlyActive,MinutesFairlyActive,MinutesVeryActive,ActivityCalories,Floors,TimeEnteredBed,Weight,BMI,Fat")] Userdata userdata)
         {
+            var data = userdata;
             if (ModelState.IsValid)
             {
-                db.Userdatas.Add(userdata);
+                db.Userdatas.Add(data);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -88,7 +90,7 @@ namespace SleepMakeSense.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Userdata userdata = db.Userdatas.Find(id);
+            var userdata = db.Userdatas.Find(id);
             if (userdata == null)
             {
                 return HttpNotFound();
@@ -119,7 +121,7 @@ namespace SleepMakeSense.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Userdata userdata = db.Userdatas.Find(id);
+            var userdata = db.Userdatas.Find(id);
             if (userdata == null)
             {
                 return HttpNotFound();
@@ -132,7 +134,7 @@ namespace SleepMakeSense.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Userdata userdata = db.Userdatas.Find(id);
+            var userdata = db.Userdatas.Find(id);
             db.Userdatas.Remove(userdata);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -189,6 +191,80 @@ namespace SleepMakeSense.Controllers
                 return (FitbitClient)Session["FitbitClient"];
             }
         }
+        
+        /// <summary>
+        /// Updates the Fitbit data in the Userdata on the database
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="item"></param>
+
+        private void UpdateFitbitData (int queryId, bool queryFitbitData, Userdata item)
+        {
+            if(!queryFitbitData){
+            Userdata updateQuery = (from a in db.Userdatas
+                                    where a.Id == queryId
+                                    select a).First();
+            //Update database
+            updateQuery.MinutesAsleep = item.MinutesAsleep;
+            updateQuery.MinutesAwake = item.MinutesAwake;
+            updateQuery.AwakeningsCount = item.AwakeningsCount;
+            updateQuery.TimeInBed = item.TimeInBed;
+            updateQuery.MinutesToFallAsleep = item.MinutesToFallAsleep;
+            updateQuery.MinutesAfterWakeup = item.MinutesAfterWakeup;
+            updateQuery.SleepEfficiency = item.SleepEfficiency;
+            updateQuery.CaloriesIn = item.CaloriesIn;
+            updateQuery.Water = item.Water;
+            updateQuery.CaloriesOut = item.CaloriesOut;
+            updateQuery.Steps = item.Steps;
+            updateQuery.Distance = item.Distance;
+            updateQuery.MinutesSedentary = item.MinutesSedentary;
+            updateQuery.MinutesLightlyActive = item.MinutesLightlyActive;
+            updateQuery.MinutesFairlyActive = item.MinutesFairlyActive;
+            updateQuery.MinutesVeryActive = item.MinutesVeryActive;
+            updateQuery.ActivityCalories = item.ActivityCalories;
+            updateQuery.TimeEnteredBed = item.TimeEnteredBed;
+            updateQuery.Weight = item.Weight;
+            updateQuery.BMI = item.BMI;
+            updateQuery.Fat = item.Fat;
+            updateQuery.FitbitData = true;
+            db.SaveChangesAsync();
+            }
+        }
+
+        private void UpdateDiaryData(int queryId, bool queryDairyData, Userdata item)
+        {
+            if (!queryDairyData)
+            {
+                Userdata updateQuery = (from a in db.Userdatas
+                                        where a.Id == queryId
+                                        select a).First();
+                //Update database
+                updateQuery.WakeUpFreshness = item.WakeUpFreshness;
+                updateQuery.Coffee = item.Coffee;
+                updateQuery.CoffeeTime = item.CoffeeTime;
+                updateQuery.Alcohol = item.Alcohol;
+                updateQuery.Mood = item.Mood;
+                updateQuery.Stress = item.Stress;
+                updateQuery.Tiredness = item.Tiredness;
+                updateQuery.Dream = item.Dream;
+                updateQuery.DigitalDev = item.DigitalDev;
+                updateQuery.Light = item.Light;
+                updateQuery.NapDuration = item.NapDuration;
+                updateQuery.NapTime = item.NapTime;
+                updateQuery.SocialActivity = item.SocialActivity;
+                updateQuery.DinnerTime = item.DinnerTime;
+                updateQuery.AmbientTemp = item.AmbientTemp;
+                updateQuery.AmbientHumd = item.AmbientHumd;
+                updateQuery.ExerciseTime = item.ExerciseTime;
+                updateQuery.BodyTemp = item.BodyTemp;
+                updateQuery.Hormone = item.Hormone;
+                updateQuery.DiaryData = true;
+                db.SaveChangesAsync();
+            }
+        }
+
+
+
 
         public async System.Threading.Tasks.Task<ActionResult> Sync()
         {
@@ -196,6 +272,24 @@ namespace SleepMakeSense.Controllers
 
             FitbitClient client = GetFitbitClient(); //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
+            string userId = null;
+            bool userLogedIn = false;
+            Models.Database Db = new Models.Database();
+            List<Userdata> queryList = new List<Userdata>();
+
+
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                userLogedIn = true;
+                userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                var dataQuery = from a in Db.Userdatas
+                                where a.AspNetUserId.Equals(userId) && a.DateStamp >= DateTime.UtcNow.AddDays(-40)
+                                select a;
+                foreach (Userdata data in dataQuery)
+                {
+                    queryList.Add(data);
+                }
+            }
 
             List<Userdata> results = new List<Userdata>();
 
@@ -223,6 +317,8 @@ namespace SleepMakeSense.Controllers
             var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
             var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
 
+
+            
 
             foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
             {
@@ -270,12 +366,17 @@ namespace SleepMakeSense.Controllers
                         TimeEnteredBed = null,
                         Weight = null,
                         BMI = null,
-                        Fat = null
+                        Fat = null,
+                        AspNetUserId = userId,
+                        FitbitData = true
                     });
                 }
             }
 
             List<DiaryData> diaryData = new List<DiaryData>();
+          
+
+
 
             // Manually integrated diary data. Should automate it!!
             // Mandi
@@ -631,6 +732,7 @@ namespace SleepMakeSense.Controllers
             //int iTimeEnteredBed = 0;
 
 
+
             foreach (SleepMakeSense.Models.Userdata item in results)
             {
 
@@ -639,7 +741,26 @@ namespace SleepMakeSense.Controllers
                 //System.Diagnostics.Trace.Write(item); // didnt work!!!!
 
                 // ******** Add entry to DB !!! *************
-                db.Userdatas.Add(item);
+                if (userLogedIn)
+                {
+                    bool entryAdded = false;
+                    foreach (SleepMakeSense.Models.Userdata query in queryList)
+                    {
+                        if (query.DateStamp == item.DateStamp)
+                        {
+                            entryAdded = true;
+                            UpdateFitbitData(query.Id, query.FitbitData, item); 
+                        }
+                    }
+                    if (entryAdded == false)
+                    {
+                        //add entry
+                        db.Userdatas.Add(item);
+                    }
+                    db.SaveChangesAsync();
+                }
+
+               
 
                 MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(item.MinutesAsleep);
                 MinutesAwake[iMinutesAwake++] = Convert.ToDouble(item.MinutesAwake);

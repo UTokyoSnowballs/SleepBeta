@@ -13,12 +13,13 @@
     *@
 
 <div class="jumbotron">
-    <h1 style="color:#3376bf" font="Arial">SleepExplorer</h1>
-    <p class="lead">Do you want to sleep better? SleepExplorer helps you improve sleep within your lifestyle context.</p>
+    <h1>SleepBeta</h1>
+    <p class="lead">Sleep better with Sleepbeta</p>
     @if (Request.IsAuthenticated == false)
     {
-        <p><a href="/Account/Login" class="btn btn-primary btn-lg">Login &raquo;</a></p>
-        <p><a href="/Account/Register" class="btn btn-primary btn-lg">Create an Account &raquo;</a></p>
+        
+        <p><a href="/Account/Register" class="btn btn-primary btn-lg">Create an Account</a></p>
+        <p><a href="/Account/Login" class="loginbtn">Login</a></p>
     }
     else
     {

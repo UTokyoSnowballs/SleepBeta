@@ -178,7 +178,8 @@ html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
     cursor: pointer;
-    -webkit-appearance: button
+    -webkit-appearance: button;
+    border: 0px;
 }
 
 button[disabled],
@@ -1649,8 +1650,9 @@ legend {
 
 label {
     display: inline-block;
+    max-width: 100%;
     margin-bottom: 5px;
-    font-weight: bold
+    font-weight: normal;
 }
 
 input[type="search"] {
@@ -1720,7 +1722,7 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #555;
     vertical-align: middle;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #373E4F;
     border-radius: 4px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
@@ -1729,10 +1731,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .form-control:focus {
-    border-color: #66afe9;
+    border-color: #459EE8;
     outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(69, 158, 232, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(69, 158, 232, .6)
 }
 
 .form-control[disabled],
@@ -1753,6 +1755,7 @@ textarea.form-control {
 .radio,
 .checkbox {
     display: block;
+    position: relative;
     min-height: 20px;
     padding-left: 20px;
     margin-top: 10px;
@@ -1955,9 +1958,8 @@ textarea.input-lg {
 .form-horizontal .checkbox,
 .form-horizontal .radio-inline,
 .form-horizontal .checkbox-inline {
-    padding-top: 7px;
-    margin-top: 0;
-    margin-bottom: 0
+    padding-top: 5px;
+    
 }
 
 .form-horizontal .form-group {
@@ -2043,7 +2045,7 @@ fieldset[disabled] .btn {
 .btn-default {
     color: #fff;
     border: 0px;
-    background: -webkit-linear-gradient(right, #CD5C5B, #459EE8);
+    background: -webkit-linear-gradient(right, #F74657, #459EE8);
 }
 
 .btn-default:hover,
@@ -2081,7 +2083,7 @@ fieldset[disabled] .btn-default.active {
 
 .btn-primary {
     color: #fff;
-    background: -webkit-linear-gradient(right, #CD5C5B, #459EE8);
+    background: -webkit-linear-gradient(right, #F74657, #459EE8);
     
 }
 
@@ -6849,4 +6851,31 @@ text {
 .im-centered{
     margin: auto;
     max-width: 500px;
+}
+.form-signin{
+    max-width: 500px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.signin-heading{
+    margin-bottom: 10px;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+.control-label{
+    color:#747F97;
 }

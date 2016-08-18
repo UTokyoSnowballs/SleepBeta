@@ -6846,3 +6846,7 @@ text {
     font-size: 16px;
     line-height: 1.33;
 }
+.im-centered{
+    margin: auto;
+    max-width: 500px;
+}

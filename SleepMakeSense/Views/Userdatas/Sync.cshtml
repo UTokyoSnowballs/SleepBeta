@@ -243,8 +243,8 @@
             function PlotTimeseries(myData, section, mark, sFeature) {
 
                 d3.select(section).selectAll("*").remove();
-                var red = "#ff0505";
-                var blue = "#6F6FFF";
+                var red = "#CD5C5B";
+                var blue = "#459EE8";
 
                 var w = 500;
                 var h = 300;
@@ -368,37 +368,42 @@
             <h2> Sleep Structure </h2>
             <h4> Your sleep structure is characterized by the following 5 aspects.</h4><hr/>
     </div>
-
+  <div class="im-centered">
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Hours Asleep </b> </h4> </div>
+        <h4> Hours Asleep </h4>
+        <h5> My hours asleep during the past 40 days</h5>
     </div>
+  </div>
+  <div class="im-centered">
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My hours asleep during the past 40 days </b></h5>
             <div id="MinutesAsleepTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
                 </script>   
             </div>
         </div>
+    </div>    
+  </div>
+  <div class="im-centered">
     <div class="row">
-      <div class="col-md-6">
-            <h5><b> Factors related to my minutes asleep </b></h5>
-            <div id="AffectingFactorsMinutesAsleep">
-                <script type="text/javascript">
-                    testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
-                </script>
-            </div>
-      </div>
+          <div class="col-md-6">
+                <div id="AffectingFactorsMinutesAsleep">
+                    <script type="text/javascript">
+                        testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
+                    </script>
+                </div>
+          </div>
     </div>
-    </div> <hr />
+  </div>
+    <hr />
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Minutes Awake </b> </h4> </div>
+        <h4> Minutes Awake </h4>
+        <h5> My minutes awake during the past 40 days</h5>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My minutes awake during the past 40 days </b></h5>
             <div id="MinutesAwakeTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
@@ -406,7 +411,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my minutes awake </b></h5>
             <div id="AffectingFactorsMinutesAwake">
                 <script type="text/javascript">
                     testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
@@ -416,11 +420,11 @@
     </div> <hr />
 
     <!--div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Awakening Count </b> </h4> </div>
+        <h4> Awakening Count </h4>
+        <h5> My awakening count during the past 40 days</h5>
     </!--div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My awakening count during the past 40 days </b></h5>
             <div id="AwakeningsCountTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(AwakeningsCount, "#AwakeningsCountTimeseries", "AwakeningsCount", "Awakenings Count");
@@ -428,7 +432,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my awakenings count </b></h5>
             <div id="AffectingFactorsAwakeningsCount">
                 <script type="text/javascript">
                     testVis(cAwakeningsCount, "#AffectingFactorsAwakeningsCount", "AffectingFactorsAwakeningsCount", "AwakeningsCount");
@@ -438,11 +441,11 @@
     </div> <hr />
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> Minutes To Fall Asleep </b> </h4> </div>
+        <h4>Minutes To Fall Asleep </h4>
+        <h5> My time to fall asleep during the past 40 days </h5>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My time to fall asleep during the past 40 days </b></h5>
             <div id="MinutesToFallAsleepTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesToFallAsleep, "#MinutesToFallAsleepTimeseries", "MinutesToFallAsleep", "Time to fall asleep (min)");
@@ -450,7 +453,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my time to fall asleep </b></h5>
             <div id="AffectingFactorsMinutesToFallAsleep">
                 <script type="text/javascript">
                     testVis(cMinutesToFallAsleep, "#AffectingFactorsMinutesToFallAsleep", "AffectingFactorsMinutesToFallAsleep", "MinutesToFallAsleep");
@@ -460,11 +462,11 @@
     </div> <hr /-->
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> Sleep Efficiency </b> </h4> (The percentage of minutes asleep versus total minutes in bed) </div>
+        <h4> Sleep Efficiency </h4>
+        <h5>My sleep efficiency during the past 40 days</h5>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My sleep efficiency during the past 40 days </b></h5>
             <div id="SleepEfficiencyTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
@@ -472,7 +474,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my sleep efficiency </b></h5>
             <div id="AffectingFactorsSleepEfficiency">
                 <script type="text/javascript">
                     testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");

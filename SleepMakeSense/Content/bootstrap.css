@@ -6823,7 +6823,8 @@ body {
 }
 
 .body-content {
-    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .dl-horizontal dt {

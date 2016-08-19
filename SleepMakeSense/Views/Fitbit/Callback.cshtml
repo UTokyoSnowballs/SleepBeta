@@ -5,10 +5,7 @@
 <div class="row">
     @if (ViewBag.AccessToken != null)
     {
-        <p>Token -- <a id="accessTokenId">@ViewBag.AccessToken.Token</a></p>
-        <p>Token type --    <a id="accessTokenType"> @ViewBag.AccessToken.TokenType</a> </p>
-        <p>Expires In --    <a id="accessTokenExpiration"> @ViewBag.AccessToken.ExpiresIn</a> </p>
-        <p>Refresh token -- <a id="RefreshToken"> @ViewBag.AccessToken.RefreshToken</a> </p>
+
 
         <p><a href="/Userdatas/Sync" class="btn btn-primary">Upload My Fitbit Data &raquo;</a></p>
 

@@ -277,13 +277,15 @@ namespace SleepMakeSense.Controllers
             Models.Database Db = new Models.Database();
             List<Userdata> queryList = new List<Userdata>();
 
+            DateTime date = DateTime.UtcNow.AddDays(-40);
+
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 userLogedIn = true;
                 userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 var dataQuery = from a in Db.Userdatas
-                                where a.AspNetUserId.Equals(userId) && a.DateStamp >= DateTime.UtcNow.AddDays(-40)
+                                where a.AspNetUserId.Equals(userId) && a.DateStamp >= date
                                 select a;
                 foreach (Userdata data in dataQuery)
                 {
@@ -757,7 +759,7 @@ namespace SleepMakeSense.Controllers
                         //add entry
                         db.Userdatas.Add(item);
                     }
-                    db.SaveChangesAsync();
+                    db.SaveChanges();
                 }
 
                

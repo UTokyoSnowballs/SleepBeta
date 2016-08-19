@@ -383,7 +383,7 @@ hr {
     margin-top: 20px;
     margin-bottom: 20px;
     border: 0;
-    border-top: 1px solid #eee
+    border-top: 0.5px solid #747F97;
 }
 
 .sr-only {
@@ -398,7 +398,9 @@ hr {
 }
 
 p {
-    margin: 0 0 10px
+    margin: 0 0 10px;
+    font-family: "Lato";
+    font-weight: lighter;
 }
 
 .lead {
@@ -1719,10 +1721,10 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.428571429;
-    color: #555;
+    color: #fff;
     vertical-align: middle;
-    background-color: #fff;
-    border: 1px solid #373E4F;
+    background-color: #2C3041;
+    border: 1px solid #2C3041;
     border-radius: 4px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
@@ -2045,6 +2047,7 @@ fieldset[disabled] .btn {
 .btn-default {
     color: #fff;
     border: 0px;
+    font-family: "Lato";
     background: -webkit-linear-gradient(right, #F74657, #459EE8);
 }
 
@@ -2326,6 +2329,7 @@ fieldset[disabled] .btn-link:focus {
 .btn-lg {
     padding: 10px 16px;
     font-size: 16px;
+    font-family: "Lato";
     line-height: 1.33;
     border-radius: 25px
 }
@@ -4083,10 +4087,10 @@ textarea.input-group-sm>.input-group-btn>.btn {
     padding-right: 15px;
     padding-left: 15px;
     overflow-x: visible;
-    background: -webkit-linear-gradient(top, #CD5C5B , #459EE8); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(top, #CD5C5B, #459EE8); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(top, #CD5C5B, #459EE8); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(top, #CD5C5B , #459EE8);
+    background: -webkit-linear-gradient(top, #F74657 , #459EE8); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(top, #F74657, #459EE8); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(top, #F74657, #459EE8); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(top, #F74657 , #459EE8);
     
     
 }
@@ -4218,7 +4222,6 @@ textarea.input-group-sm>.input-group-btn>.btn {
     margin-right: 15px;
     margin-bottom: 8px;
     background-color: transparent;
-    border: 1px solid transparent;
     border-radius: 4px
 }
 
@@ -4545,12 +4548,12 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 .navbar-inverse .navbar-toggle {
-    border-color: #333
+    border-color: #2C3041;
 }
 
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-    background-color: #333
+    
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
@@ -6846,6 +6849,8 @@ text {
 }
 .loginbtn{
     font-size: 16px;
+    font-family: "Lato";
+    font-weight: normal;
     line-height: 1.33;
 }
 .im-centered{
@@ -6877,5 +6882,9 @@ text {
     border: 0;
 }
 .control-label{
-    color:#747F97;
+    color:#fff;
 }
+footer{
+    text-align: center;
+}
+

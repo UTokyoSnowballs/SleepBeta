@@ -1,20 +1,20 @@
 ﻿@model SleepMakeSense.Models.ExternalLoginConfirmationViewModel
 @{
-    ViewBag.Title = "登録";
+    ViewBag.Title = "Registration";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.LoginProvider アカウントを関連付けます。</h3>
+<h3>@ViewBag.LoginProvider Associate the account.</h3>
 
 @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
-    <h4>関連付けフォーム</h4>
+    <h4>Associated form</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <p class="text-info">
-        この <strong>@ViewBag.LoginProvider</strong> での認証に成功しました。
-        ログインを完了するには、このサイトでのユーザー名を下の欄に入力して [登録] ボタンを
+        This <strong>@ViewBag.LoginProvider</strong> Authentication successful in
+        To complete the login , enter the user name of this site in the column under the [Register] button
         クリックしてください。
     </p>
     <div class="form-group">
@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="登録" />
+            <input type="submit" class="btn btn-default" value="Registration" />
         </div>
     </div>
 }

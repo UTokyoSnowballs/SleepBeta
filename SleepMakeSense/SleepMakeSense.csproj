@@ -705,6 +705,7 @@
     <Content Include="Views\Fitbit\SleepIntraday.cshtml" />
     <Content Include="Views\Fitbit\Callback.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Userdatas\FactorQuestions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

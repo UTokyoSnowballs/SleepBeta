@@ -2048,7 +2048,11 @@ fieldset[disabled] .btn {
     color: #fff;
     border: 0px;
     font-family: "Lato";
-    background: -webkit-linear-gradient(right, #F74657, #459EE8);
+    background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+    background: linear-gradient(141deg, #F74657, #459EE8);
+    background: -o-linear-gradient(141deg, #F74657, #459EE8);
+    background: -moz-linear-gradient(141deg, #F74657, #459EE8);
+
 }
 
 .btn-default:hover,
@@ -2086,7 +2090,10 @@ fieldset[disabled] .btn-default.active {
 
 .btn-primary {
     color: #fff;
-    background: -webkit-linear-gradient(right, #F74657, #459EE8);
+    background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+    background: linear-gradient(141deg, #F74657, #459EE8);
+    background: -o-linear-gradient(141deg, #F74657, #459EE8);
+    background: -moz-linear-gradient(141deg, #F74657, #459EE8);
     
 }
 
@@ -4933,14 +4940,16 @@ a.list-group-item.active>.badge,
 
 .jumbotron {
     margin-bottom: 30px;
+    padding-bottom: 30px;
+    padding-top: 30px;
     font-size: 21px;
     text-align: center;
     font-weight: 200;
     line-height: 2.1428571435;
     color: inherit;
-    background: url("../images/unsplash_sleep.jpg") center center;
+    background: url("../images/photo-14.jpg") center center;
     background-size: cover;
-    height: 450px;
+    
 
 }
 
@@ -4955,6 +4964,7 @@ a.list-group-item.active>.badge,
 
 .container .jumbotron {
     border-radius: 0px
+    max-width: 100%;
 }
 
 @media screen and (min-width:768px) {
@@ -6845,7 +6855,7 @@ textarea {
     width: 15px;
 }
 text {
-    color: #fff;
+    fill: #fff;
 }
 .loginbtn{
     font-size: 16px;
@@ -6886,5 +6896,10 @@ text {
 }
 footer{
     text-align: center;
+    
+}
+
+.text-muted{
+    color: #747F97;
 }
 

@@ -139,10 +139,7 @@ namespace SleepMakeSense.Controllers
                     UtcExpirationDate = userToken.DateChanged.AddSeconds(userToken.ExpiresIn)
                 };
                 GetFitbitClient(accessToken);
-                if (!accessToken.IsFresh())
-                {
-                    RefreshToken();
-                }
+
             }
             return View("Callback");
         }

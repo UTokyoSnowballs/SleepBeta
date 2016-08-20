@@ -51,5 +51,11 @@ namespace SleepMakeSense.Models
         public bool? Question20 { get; set; }
 
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(128)]
+        public string AspNetUserId { get; set; }
+
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

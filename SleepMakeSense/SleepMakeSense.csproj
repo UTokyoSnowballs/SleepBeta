@@ -601,7 +601,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Interceptors\" />
-    <Folder Include="Views\Sync\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

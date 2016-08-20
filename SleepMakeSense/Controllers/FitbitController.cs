@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using MathNet.Numerics.Statistics;
+using Microsoft.AspNet.Identity;
 
 namespace SleepMakeSense.Controllers
 {
@@ -53,12 +54,16 @@ namespace SleepMakeSense.Controllers
 
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
 
+            
+
+
             return Redirect(authUrl);
         }
 
         //Final step. Take this authorization information and use it in the app
         public async Task<ActionResult> Callback()
         {
+            
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
 
             var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
@@ -68,12 +73,80 @@ namespace SleepMakeSense.Controllers
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
 
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
-            var fitbitClient = GetFitbitClient(accessToken);
+            FitbitClient fitbitClient = GetFitbitClient(accessToken);
 
-            ViewBag.AccessToken = accessToken;
+            syncFitbitCred(accessToken);
+
             return View();
 
         }
+
+        private void syncFitbitCred(OAuth2AccessToken accessToken)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+
+                Models.Database Db = new Models.Database();
+
+                string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                TokenManagement userToken = (from a in Db.TokenManagements
+                                             where a.AspNetUserId.Equals(userId)
+                                             select a).FirstOrDefault();
+
+
+                if (userToken == null)
+                {
+                    userToken = new TokenManagement();
+                    userToken.AspNetUserId = userId;
+                    Db.TokenManagements.Add(userToken);
+                }
+
+                userToken.DateChanged = DateTime.UtcNow;
+                userToken.Token = accessToken.Token;
+                userToken.TokenType = accessToken.TokenType;
+                userToken.ExpiresIn = accessToken.ExpiresIn;
+                userToken.RefreshToken = accessToken.RefreshToken;
+
+                Db.SaveChanges();
+
+            }
+        }
+
+        public async Task<ActionResult> ConnectFitbit()
+        {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                throw new Exception("You Must be Loged in to sync Fitbit Data");
+            }
+            Models.Database Db = new Models.Database();
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var userToken = (from a in Db.TokenManagements
+                             where a.AspNetUserId.Equals(userId)
+                             select a).First();
+            if (userToken == null)
+            {
+                Authorize();
+            }
+            else
+            {
+                OAuth2AccessToken accessToken = new OAuth2AccessToken()
+                {
+                    Token = userToken.Token,
+                    TokenType = userToken.TokenType,
+                    ExpiresIn = userToken.ExpiresIn,
+                    RefreshToken = userToken.RefreshToken,
+                    UserId = userToken.UserId,
+                    UtcExpirationDate = userToken.DateChanged.AddSeconds(userToken.ExpiresIn)
+                };
+                GetFitbitClient(accessToken);
+                if (!accessToken.IsFresh())
+                {
+                    await RefreshToken();
+                }
+            }
+            return View("Callback");
+        }
+
 
         /// <summary>
         /// In this example we show how to explicitly request a token refresh. However, FitbitClient V2 on its default implementation provide an OOB automatic token refresh.

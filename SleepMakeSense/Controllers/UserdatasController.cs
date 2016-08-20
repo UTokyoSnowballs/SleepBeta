@@ -56,9 +56,17 @@ namespace SleepMakeSense.Controllers
 
         public ActionResult FactorQuestions()
         {
-            ViewBag.Message = "";
-
-            return View();
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                Models.Database Db = new Models.Database();
+                string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                var dataQuery = (from a in Db.UserQuestions
+                                 where a.AspNetUserId.Equals(userId)
+                                 select a).First();
+                ViewBag.Message = "Enter Your Daily Habits";
+                return View(dataQuery);
+            }
+            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: Userdatas/Create
@@ -240,6 +248,7 @@ namespace SleepMakeSense.Controllers
 
         private void UpdateDiaryData(int queryId, bool queryDairyData, Userdata item)
         {
+
             if (!queryDairyData)
             {
                 Userdata updateQuery = (from a in db.Userdatas
@@ -268,6 +277,12 @@ namespace SleepMakeSense.Controllers
                 updateQuery.DiaryData = true;
                 db.SaveChangesAsync();
             }
+            else
+            {
+                db.Userdatas.Add(item);
+                db.SaveChanges();
+            }
+
         }
 
 

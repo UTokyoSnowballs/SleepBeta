@@ -17,9 +17,20 @@ namespace SleepMakeSense.Models
         public string TokenType { get; set; }
 
         [Required]
-        public string ExpiresIn { get; set; }
+        public int ExpiresIn { get; set; }
 
         [Required]
         public string RefreshToken { get; set; }
+
+        public string UserId { get; set; }
+
+        [Required]
+        [StringLength(128)]
+        public string AspNetUserId { get; set; }
+
+        [Required]
+        public DateTime DateChanged { get; set; }
+
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -54,6 +54,13 @@ namespace SleepMakeSense.Controllers
             return View(userdata);
         }
 
+        public ActionResult FactorQuestions()
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
         // GET: Userdatas/Create
         public ActionResult Create()
         {

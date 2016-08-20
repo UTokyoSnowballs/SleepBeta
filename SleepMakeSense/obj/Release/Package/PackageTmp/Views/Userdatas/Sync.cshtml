@@ -62,6 +62,7 @@
     <div id="DataProcessing">
         <script type="text/javascript">
 
+            var factorList = [];
             var cMinutesAsleep = [];
             var cMinutesAwake = [];
             var cAwakeningsCount = [];
@@ -76,26 +77,32 @@
             var SleepEfficiency = [];
             var WakeUpFresh = [];
 
+            factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
+            factorList.push({ Name: "Exercise", Coefficient: 1, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
+            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Note: "Try to listen to more soothing music before sleeping" });
+            factorList.push({ Name: "test", Coefficient: 0.5, Note: "testing 1" });
+            factorList.push({ Name: "test 2", Coefficient: 1, Note: "testing 2" });
+            //1 = green , 0.5 = 2nd red
 
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
             {
-
+                
                 if (@d.Belong == "MinutesAsleep") {
                     @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                } else if (@d.Belong == "MinutesAwake"){
+                            } else if (@d.Belong == "MinutesAwake"){
                     var temp = 0 - d.Coefficient;
                     @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                } else if (@d.Belong == "AwakeningsCount"){
+                                        } else if (@d.Belong == "AwakeningsCount"){
                     var temp = 0 - d.Coefficient;
                     @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                } else if (@d.Belong == "MinutesToFallAsleep"){
+                                        } else if (@d.Belong == "MinutesToFallAsleep"){
                     var temp = 0 - d.Coefficient;
                     @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                } else if (@d.Belong == "SleepEfficiency"){
+                                        } else if (@d.Belong == "SleepEfficiency"){
                     @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                } else if (@d.Belong == "WakeUpFreshness") {
+                                        } else if (@d.Belong == "WakeUpFreshness") {
                     @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                }
+                                        }
             }
 
             @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
@@ -104,11 +111,11 @@
                     var weekday = d.DateStamp.DayOfWeek;
 
                     @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAsleep" });
-                                        @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
-                                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
-                                        @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
-                                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
-                                        @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
+                                                                @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
+                                                                @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
+                                                                @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
+                                                                @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
+                                                                @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
 
              }
 
@@ -129,25 +136,26 @@
                   .attr("class", "bubble");
 
                 var legend_data = [
-                { "color": "#00CC66", "text": "Very strong positive relationship" },
-                { "color": "#99FF99", "text": "Strong positive relationship" },
+                { "color": "#00CC66", "text": "Positive relationship" }, //Very strong positive relationship
+               /* { "color": "#99FF99", "text": "Strong positive relationship" },
                 { "color": "#CCFFCC", "text": "Moderate positive relationship" },
                 { "color": "#F6CED8", "text": "Moderate negative relationship" },
-                { "color": "#F7819F", "text": "Strong negative relationship" },
-                { "color": "#FF0040", "text": "Very strong negative relationship" }];
+                { "color": "#F7819F", "text": "Strong negative relationship" },*/
+                { "color": "#FF0040", "text": "Negative relationship" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
                     document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
                 } else {
-
+                    
                     var div = d3.select(section).append("div")
                          .attr("class", "tooltip-bubble")
                         .style("opacity", 0);
 
-                    var bubble = d3.layout.pack()
+                    var bubble = d3.layout.treemap()
+                    .round(false)
                     .size([width - 100, height - 10])
                     .value(function (d) { temp = Math.abs(d.Coefficient); if (temp >= 0) { return temp; } })
-                    .padding(15); // padding between adjacent bubbles
+                    .sticky(true); // padding between adjacent bubbles
 
                     var nodes = bubble.nodes(processData(mydata)).filter(function (d) { return !d.children; });
                     var vis = svg.selectAll("g.node").data(nodes);
@@ -162,15 +170,16 @@
                     .style("fill", function (d) {
                         coeff = d.Coefficient;
                         console.log(coeff);
-                        if (coeff < 0) {
-                            temp = Math.abs(coeff);
-                            if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
-                            else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
-                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#F6CED8"; }
-                        } else if (coeff >= 0) {
+                        //if (coeff < 0) {
+                          //  temp = Math.abs(coeff);
+                          //  if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
+                          //  else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
+                          //  else if ((temp < 0.5) && (temp >= 0.3)) { return "#FF0040"; }
+                          // } else
+                        if (coeff >= 0) {
                             if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#00CC66"; }
-                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#99FF99"; }
-                            else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
+                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#FF0040"; }  //#99FF99
+                            //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
                         }
                     })
                     .style("stroke", "white")
@@ -185,11 +194,11 @@
                         div.html("<h4><center>" + d.Name + "</h4>" + d.Note)
                               .style("left", d.x + "px")
                               .style("top", d.y + "px");
-                              //.style("top", function (d) {
-                              //return (this.y - 300) + "px";
-                              //return this.y + "px";
-                              //})
-                        })
+                        //.style("top", function (d) {
+                        //return (this.y - 300) + "px";
+                        //return this.y + "px";
+                        //})
+                    })
                         .on("mouseout", function (d) {
                             d3.select(this)
                                .style("stroke", "white")
@@ -203,7 +212,55 @@
                     .attr("dy", ".3em")
                     .style("text-anchor", "middle")
                     .text(function (d) { return d.Name; });
+                
+     /*               var margin = { top: 40, right: 10, bottom: 10, left: 10 },
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
+                    var color = d3.scale.category20c();
+
+                    var treemap = d3.layout.treemap()
+                        .size([width, height])
+                        .sticky(true)
+                        .value(function (d) { return d.size; });
+
+                    var div = d3.select("body").append("div")
+                        .style("position", "relative")
+                        .style("width", (width + margin.left + margin.right) + "px")
+                        .style("height", (height + margin.top + margin.bottom) + "px")
+                        .style("left", margin.left + "px")
+                        .style("top", margin.top + "px");
+
+                    d3.json("flare.json", function (error, root) {
+                        if (error) throw error;
+
+                        var node = div.datum(root).selectAll(".node")
+                            .data(treemap.nodes)
+                          .enter().append("div")
+                            .attr("class", "node")
+                            .call(position)
+                            .style("background", function (d) { return d.children ? color(d.name) : null; })
+                            .text(function (d) { return d.children ? null : d.name; });
+
+                        d3.selectAll("input").on("change", function change() {
+                            var value = this.value === "count"
+                                ? function () { return 1; }
+                                : function (d) { return d.size; };
+
+                            node
+                                .data(treemap.value(value).nodes)
+                              .transition()
+                                .duration(1500)
+                                .call(position);
+                        });
+                    });
+                    
+                    function position() {
+                        this.style("left", function (d) { return d.x + "px"; })
+                            .style("top", function (d) { return d.y + "px"; })
+                            .style("width", function (d) { return Math.max(0, d.dx - 1) + "px"; })
+                            .style("height", function (d) { return Math.max(0, d.dy - 1) + "px"; });
+                    }*/
 
                     var legend = svg.selectAll(".legend")
                         .data(legend_data)
@@ -236,6 +293,8 @@
             function PlotTimeseries(myData, section, mark, sFeature) {
 
                 d3.select(section).selectAll("*").remove();
+                var red = "#F74657";
+                var blue = "#459EE8";
 
                 var w = 500;
                 var h = 300;
@@ -303,13 +362,13 @@
                      .attr("width", xRange.rangeBand())
                      .attr("y", function (d) { return yRange(d.Value); })
                      .attr("height", function (d) { return (height - yRange(d.Value)); })
-                     //.attr("fill", "#bdbdbd")
+                     //.attr("fill", "#0000ff")
                      .attr("fill", function (d) {
-                         if (mark == "SleepEfficiency" && (d.Value < 95)) { return "red"; }
-                         else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return "red"; }
-                         else if (mark == "MinutesAsleep" && (d.Value > 9 || (d.Value < 6))) { return "red"; }
-                         else if (mark == "MinutesAwake" && (d.Value > 27)) { return "red"; } // 0.05*540 min
-                         else return "#bdbdbd";
+                         if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                             //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                         else if (mark == "MinutesAsleep" && ((d.Value >= 8) || (d.Value <= 10))) { return red; }
+                         else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
+                         else return blue;
                      })
                      .on("mouseover", function (d) {
                          d3.select(this)
@@ -320,7 +379,7 @@
                             .style("opacity", 0.9);
 
                          if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                         else if (mark == "MinutesToFallAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
+                             //else if (mark == "MinutesToFallAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
                          else if (mark == "MinutesAwake") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
                          else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings/restlessness"; }
                          else if (mark == "MinutesAsleep") {
@@ -341,12 +400,12 @@
                          d3.select(this)
                            //.attr("fill", "#bdbdbd");
                            .attr("fill", function (d) {
-                             if (mark == "SleepEfficiency" && (d.Value < 95)) { return "red"; }
-                             else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return "red"; }
-                             else if (mark == "MinutesAsleep" && (d.Value > 9 || (d.Value < 6))) { return "red"; }
-                             else if (mark == "MinutesAwake" && (d.Value > 27)) { return "red"; } // 0.05*540 min
-                             else return "#bdbdbd";
-                         });
+                               if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                                   //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                               else if (mark == "MinutesAsleep" && ((d.Value > 10) || (d.Value < 8))) { return red; }
+                               else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
+                               else return blue;
+                           });
                          div.transition()
                             .duration(500)
                             .style("opacity", 0);
@@ -359,35 +418,42 @@
             <h2> Sleep Structure </h2>
             <h4> Your sleep structure is characterized by the following 5 aspects.</h4><hr/>
     </div>
-
+  <div class="im-centered">
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Minutes Asleep </b> </h4> </div>
+        <h4> Hours Asleep </h4>
+        <h5> My hours asleep during the past 40 days</h5>
     </div>
+  </div>
+  <div class="im-centered">
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My minutes asleep during the past 40 days </b></h5>
             <div id="MinutesAsleepTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
                 </script>   
             </div>
         </div>
-        <div class="col-md-6">
-            <h5><b> Factors related to my minutes asleep </b></h5>
-            <div id="AffectingFactorsMinutesAsleep">
-                <script type="text/javascript">
-                    testVis(cMinutesAsleep, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
-                </script>
-            </div>
-        </div>
-    </div> <hr />
+    </div>    
+  </div>
+  <div class="im-centered">
+    <div class="row">
+          <div class="col-md-6">
+                <div id="AffectingFactorsMinutesAsleep">
+                    <script type="text/javascript">
+                        testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
+                    </script>
+                </div>
+          </div>
+    </div>
+  </div>
+    <hr />
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Minutes Awake </b> </h4> </div>
+        <h4> Minutes Awake </h4>
+        <h5> My minutes awake during the past 40 days</h5>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My minutes awake during the past 40 days </b></h5>
             <div id="MinutesAwakeTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
@@ -395,7 +461,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my minutes awake </b></h5>
             <div id="AffectingFactorsMinutesAwake">
                 <script type="text/javascript">
                     testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
@@ -404,12 +469,12 @@
         </div>
     </div> <hr />
 
-    <div class="row">
-        <div style="color:#3376bf"> <h4> <b> My Awakening Count </b> </h4> </div>
-    </div>
+    <!--div class="row">
+        <h4> Awakening Count </h4>
+        <h5> My awakening count during the past 40 days</h5>
+    </!--div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My awakening count during the past 40 days </b></h5>
             <div id="AwakeningsCountTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(AwakeningsCount, "#AwakeningsCountTimeseries", "AwakeningsCount", "Awakenings Count");
@@ -417,7 +482,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my awakenings count </b></h5>
             <div id="AffectingFactorsAwakeningsCount">
                 <script type="text/javascript">
                     testVis(cAwakeningsCount, "#AffectingFactorsAwakeningsCount", "AffectingFactorsAwakeningsCount", "AwakeningsCount");
@@ -427,11 +491,11 @@
     </div> <hr />
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> Minutes To Fall Asleep </b> </h4> </div>
+        <h4>Minutes To Fall Asleep </h4>
+        <h5> My time to fall asleep during the past 40 days </h5>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My time to fall asleep during the past 40 days </b></h5>
             <div id="MinutesToFallAsleepTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(MinutesToFallAsleep, "#MinutesToFallAsleepTimeseries", "MinutesToFallAsleep", "Time to fall asleep (min)");
@@ -439,21 +503,20 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my time to fall asleep </b></h5>
             <div id="AffectingFactorsMinutesToFallAsleep">
                 <script type="text/javascript">
                     testVis(cMinutesToFallAsleep, "#AffectingFactorsMinutesToFallAsleep", "AffectingFactorsMinutesToFallAsleep", "MinutesToFallAsleep");
                 </script>
             </div>
         </div>
-    </div> <hr />
+    </div> <hr /-->
 
     <div class="row">
-        <div style="color:#3376bf"> <h4> <b> Sleep Efficiency </b> </h4> (The percentage of minutes asleep versus total minutes in bed) </div>
+        <h4> Sleep Efficiency </h4>
+        <h5>My sleep efficiency during the past 40 days</h5>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h5><b> My sleep efficiency during the past 40 days </b></h5>
             <div id="SleepEfficiencyTimeseries">
                 <script type="text/javascript">
                     PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
@@ -461,7 +524,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h5><b> Factors related to my sleep efficiency </b></h5>
             <div id="AffectingFactorsSleepEfficiency">
                 <script type="text/javascript">
                     testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");

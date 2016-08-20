@@ -112,7 +112,7 @@ namespace SleepMakeSense.Controllers
             }
         }
 
-        public async Task<ActionResult> ConnectFitbit()
+        public ActionResult ConnectFitbit()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {

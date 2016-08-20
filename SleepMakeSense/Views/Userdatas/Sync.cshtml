@@ -136,12 +136,12 @@
                   .attr("class", "bubble");
 
                 var legend_data = [
-                { "color": "#00CC66", "text": "Positive relationship" }, //Very strong positive relationship
+                { "color": "#459EE9", "text": "Positive relationship" }, //Very strong positive relationship
                /* { "color": "#99FF99", "text": "Strong positive relationship" },
                 { "color": "#CCFFCC", "text": "Moderate positive relationship" },
                 { "color": "#F6CED8", "text": "Moderate negative relationship" },
                 { "color": "#F7819F", "text": "Strong negative relationship" },*/
-                { "color": "#FF0040", "text": "Negative relationship" }]; //Very strong negative relationship
+                { "color": "#F74657", "text": "Negative relationship" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
                     document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
@@ -349,6 +349,9 @@
                      .append("text")
                     .text(sFeature);
 
+                
+
+
                 var div = d3.select(section).append("div")
                             .attr("class", "tooltip-timeseries")
                             .style("opacity", 0);
@@ -413,7 +416,7 @@
             }
         </script>
     </div>
-
+<div class="container">
     <div class="row">
             <h2> Sleep Structure </h2>
             <h4> Your sleep structure is characterized by the following 5 aspects.</h4><hr/>
@@ -437,7 +440,7 @@
   </div>
   <div class="im-centered">
     <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
                 <div id="AffectingFactorsMinutesAsleep">
                     <script type="text/javascript">
                         testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
@@ -540,6 +543,6 @@
             </b>
         </h5>
      </div>
-
+</div>
 </body>
 </html>

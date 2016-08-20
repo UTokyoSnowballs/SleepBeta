@@ -141,7 +141,7 @@ namespace SleepMakeSense.Controllers
                 GetFitbitClient(accessToken);
                 if (!accessToken.IsFresh())
                 {
-                    await RefreshToken();
+                    RefreshToken();
                 }
             }
             return View("Callback");

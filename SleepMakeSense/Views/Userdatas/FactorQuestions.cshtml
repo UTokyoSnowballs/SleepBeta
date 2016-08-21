@@ -37,14 +37,9 @@
                 <tbody>
                     <tr>
                         <td>Watch TV</td>
-                        <td>
-                            <script type="text/javascript">
-                                getID();
-                            </script>
-                        </td>
                         <td>How many hours did you watch TV after 6pm last night?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByTV">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -385,6 +380,14 @@
                     </tr>
                 </tbody>
             </table>
+        <input type="button" onclick="myfunc()" value="Submit">
         </div>
+    <script>
+        function myFunc() {
+            var e = document.getElementById("ddlViewByTV");
+            var strUser = e.options[e.selectedIndex].value;
+            return strUser;
+        }
+    </script>
 </body>
 </html>

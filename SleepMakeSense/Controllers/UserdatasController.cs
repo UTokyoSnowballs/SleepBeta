@@ -62,7 +62,7 @@ namespace SleepMakeSense.Controllers
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 var dataQuery = (from a in Db.UserQuestions
                                  where a.AspNetUserId.Equals(userId)
-                                 select a).First();
+                                 select a).FirstOrDefault();
                 ViewBag.Message = "Enter Your Daily Habits";
                 return View(dataQuery);
             }

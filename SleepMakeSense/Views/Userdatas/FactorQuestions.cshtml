@@ -17,9 +17,10 @@
 <body>
     <div id="DataProcessing">
         <script type="text/javascript">
-            function getID() { 
-                return System.Web.HttpContext.Current.User.Identity.GetUserId(); 
-            }
+        function myFunc() {
+            var e = document.getElementById("ddlViewByTV");
+            var strUser = e.options[e.selectedIndex].value;
+        }
         </script>
     </div>
     <div class="container">
@@ -380,14 +381,7 @@
                     </tr>
                 </tbody>
             </table>
-        <input type="button" onclick="myfunc()" value="Submit">
+        <input type="button" onclick="myFunc()" value="Submit">
         </div>
-    <script>
-        function myFunc() {
-            var e = document.getElementById("ddlViewByTV");
-            var strUser = e.options[e.selectedIndex].value;
-            return strUser;
-        }
-    </script>
 </body>
 </html>

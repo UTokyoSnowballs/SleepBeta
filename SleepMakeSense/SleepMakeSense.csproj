@@ -468,6 +468,8 @@
     <Compile Include="Models\UpgradeInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Userdata.cs" />
+    <Compile Include="Models\UserDataCounter.cs" />
+    <Compile Include="Models\UserDataDouble.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UserQuestion.cs" />
     <Compile Include="Models\UserToken.cs" />

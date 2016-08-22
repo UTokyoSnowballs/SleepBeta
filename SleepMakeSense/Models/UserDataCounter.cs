@@ -7,31 +7,87 @@ namespace SleepMakeSense.Models
 {
     public class UserDataCounter
     {
-        public int CNTcaloriesIn { get; set; }
-        public int CNTwater { get; set; }
-        public int CNTcaloriesOut { get; set; }
-        public int CNTsteps { get; set; }
-        public int CNTweight { get; set; }
-        public int CNTfat { get; set; }
-        public int CNTwakeUpFreshness { get; set; }
-        public int CNTcoffee { get; set; }
-        public int CNTcoffeeTime { get; set; }
-        public int CNTalcohol { get; set; }
-        public int CNTmood { get; set; }
-        public int CNTstress { get; set; }
-        public int CNTtiredness { get; set; }
-        public int CNTdream { get; set; }
-        public int CNTdigitalDev { get; set; },
-        public int CNTlight { get; set; }
-        public int CNTnapDuration { get; set; }
-        public int CNTnapTime { get; set; }
-        public int CNTsocialActivity { get; set; }
-        public int CNTdinnerTime { get; set; }
-        public int CNTexerciseTime { get; set; }
-        public int CNTambientTemp { get; set; }
-        public int CNTambientHumd { get; set; }
-        public int CNTbodyTemp { get; set; }
-        public int CNThormone { get; set; }
+        public int TotalCNT { get; set; } = 0;
 
+        public int CNTSteps { get; set; } = 0;
+
+        public int CNTMinutesAsleep { get; set; } = 0;
+
+
+        public int CNTWater { get; set; } = 0;
+
+        public int CNTDistance { get; set; } = 0;
+
+        public int CNTMinutesSedentary { get; set; } = 0;
+
+        public int CNTMinutesVeryActive { get; set; } = 0;
+
+        public int CNTAwakeningsCount { get; set; } = 0;
+
+        public int CNTTimeEnteredBed { get; set; } = 0;
+
+        public int CNTWeight { get; set; } = 0;
+
+        public int CNTMinutesAwake { get; set; } = 0;
+
+        public int CNTTimeInBed { get; set; } = 0;
+
+        public int CNTMinutesToFallAsleep { get; set; } = 0;
+
+        public int CNTMinutesAfterWakeup { get; set; } = 0;
+
+        public int CNTCaloriesIn { get; set; } = 0;
+
+        public int CNTCaloriesOut { get; set; } = 0;
+
+        public int CNTMinutesLightlyActive { get; set; } = 0;
+
+        public int CNTMinutesFairlyActive { get; set; } = 0;
+
+        public int CNTActivityCalories { get; set; } = 0;
+
+        public int CNTBMI { get; set; } = 0;
+
+        public int CNTFat { get; set; } = 0;
+
+        public int CNTSleepEfficiency { get; set; } = 0;
+
+        public int CNTWakeUpFreshness { get; set; } = 0;
+
+        public int CNTCoffee { get; set; } = 0;
+
+        public int CNTCoffeeTime { get; set; } = 0;
+
+        public int CNTAlcohol { get; set; } = 0;
+
+        public int CNTMood { get; set; } = 0;
+
+        public int CNTStress { get; set; } = 0;
+
+        public int CNTTiredness { get; set; } = 0;
+
+        public int CNTDream { get; set; } = 0;
+
+        public int CNTDigitalDev { get; set; } = 0;
+
+        public int CNTLight { get; set; } = 0;
+
+        public int CNTNapDuration { get; set; } = 0;
+
+        public int CNTNapTime { get; set; } = 0;
+
+        public int CNTSocialActivity { get; set; } = 0;
+
+        public int CNTDinnerTime { get; set; } = 0;
+
+        public int CNTAmbientTemp { get; set; } = 0;
+
+        public int CNTAmbientHumd { get; set; } = 0;
+
+        public int CNTExerciseTime { get; set; } = 0;
+
+        public int CNTBodyTemp { get; set; } = 0;
+
+        public int CNTHormone { get; set; } = 0;
     }
 }

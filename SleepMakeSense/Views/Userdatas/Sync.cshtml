@@ -70,6 +70,7 @@
             var cSleepEfficiency = [];
             var cWakeUpFresh = [];
 
+
             var MinutesAsleep = [];
             var MinutesAwake = [];
             var AwakeningsCount = [];
@@ -77,11 +78,11 @@
             var SleepEfficiency = [];
             var WakeUpFresh = [];
 
-            factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
-            factorList.push({ Name: "Exercise", Coefficient: 1, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
-            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Note: "Try to listen to more soothing music before sleeping" });
-            factorList.push({ Name: "test", Coefficient: 0.5, Note: "testing 1" });
-            factorList.push({ Name: "test 2", Coefficient: 1, Note: "testing 2" });
+            factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Width: 0, Height: 0, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
+            factorList.push({ Name: "Exercise", Coefficient: 1, Width: 100, Height: 0, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
+            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Width: 200, Height: 0, Note: "Try to listen to more soothing music before sleeping" });
+            factorList.push({ Name: "test", Coefficient: 0.5, Width: 0, Height: 50, Note: "testing 1" });
+            factorList.push({ Name: "test 2", Coefficient: 1, Width: 100, Height: 50, Note: "testing 2" });
             //1 = green , 0.5 = 2nd red
 
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
@@ -179,8 +180,8 @@
                     var circles = visEnter.append("rect")
                     //.attr("r", function (d) { return d.r; })
                     //.attr("r", 60)
-                    .attr("x", 100)
-                    .attr("y", 50)
+                    .attr("x", function (d) { return d.Width })
+                    .attr("y", function (d) { return d.Height })
                     //.transition().duration(500)
                     .attr('width', 150)
                     .attr('height', 100)
@@ -228,7 +229,6 @@
                     .attr("dy", ".3em")
                     .style("text-anchor", "middle")
                     .text(function (d) { return d.Name; });
-
 
                     var legend = svg.selectAll(".legend")
                         .data(legend_data)

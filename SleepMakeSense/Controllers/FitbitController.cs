@@ -50,7 +50,7 @@ namespace SleepMakeSense.Controllers
             var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
             string[] scopes = new string[] { "profile", "activity", "sleep", "weight", "nutrition" };
 
-
+            
 
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
 
@@ -107,6 +107,12 @@ namespace SleepMakeSense.Controllers
                 userToken.ExpiresIn = accessToken.ExpiresIn;
                 userToken.RefreshToken = accessToken.RefreshToken;
 
+
+                AspNetUser user = (from a in Db.AspNetUsers
+                                   where a.Id.Equals(userId)
+                                   select a).FirstOrDefault();
+                user.FitbitConnected = true;
+
                 Db.SaveChanges();
 
             }
@@ -120,15 +126,19 @@ namespace SleepMakeSense.Controllers
             }
             Models.Database Db = new Models.Database();
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = (from a in Db.TokenManagements
-                             where a.AspNetUserId.Equals(userId)
-                             select a).First();
-            if (userToken == null)
+            AspNetUser user = (from a in Db.AspNetUsers
+                               where a.Id.Equals(userId)
+                               select a).First();
+
+            if (!user.FitbitConnected)
             {
                 Authorize();
             }
             else
             {
+                var userToken = (from a in Db.TokenManagements
+                                 where a.AspNetUserId.Equals(userId)
+                                 select a).First();
                 OAuth2AccessToken accessToken = new OAuth2AccessToken()
                 {
                     Token = userToken.Token,

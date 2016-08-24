@@ -40,6 +40,8 @@ namespace SleepMakeSense.Models
 
         public int AccessFailedCount { get; set; }
 
+        public bool FitbitConnected { get; set; }
+
         [Required]
         [StringLength(256)]
         public string UserName { get; set; }

@@ -6919,6 +6919,10 @@ footer{
     float: none;
     margin: 0 auto;
 }
+.col-fixed {
+    /* custom width */
+    width:390px;
+}
 .reg-btn{
     margin-top: 25px;
     margin-bottom: 25px;

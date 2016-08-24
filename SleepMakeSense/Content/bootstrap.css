@@ -1,4 +1,4 @@
-Pushing this branch would result in a non-fast-forward update on the branch in the remote repositorynav-/* NUGET: BEGIN LICENSE TEXT
+/* NUGET: BEGIN LICENSE TEXT
  *
  * Microsoft grants you the right to use these script files for the sole
  * purpose of either: (i) interacting through your browser with the Microsoft
@@ -860,19 +860,24 @@ pre code {
     padding-right: 15px;
     padding-left: 15px
 }
+@media (min-width: 544px){
+    .container {
+    max-width: 576px;
+}
+}
 @media (min-width: 768px) {
   .container {
-    width: 750px;
+    max-width: 750px;
   }
 }
 @media (min-width: 992px) {
   .container {
-    width: 970px;
+    max-width: 970px;
   }
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
+    max-width: 1170px;
   }
 }
 
@@ -4952,12 +4957,9 @@ a.list-group-item.active>.badge,
 }
 
 .jumbotron {
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-    padding-top: 30px;
-    font-size: 21px;
+    margin-bottom: 2em;
+    padding: 2em 1em;
     text-align: center;
-    font-weight: 200;
     line-height: 2.1428571435;
     color: inherit;
     background: url("../images/photo-14.jpg") center center;
@@ -4968,7 +4970,8 @@ a.list-group-item.active>.badge,
 
 .jumbotron h1 {
     line-height: 2;
-    color: inherit
+    color: inherit;
+    font-size: 5em;
 }
 
 .jumbotron p {
@@ -4980,18 +4983,11 @@ a.list-group-item.active>.badge,
     max-width: 100%;
 }
 
-@media screen and (min-width:768px) {
+@media (min-width:544px) {
     .jumbotron {
-        padding-top: 48px;
-        padding-bottom: 48px
+        padding: 4em 2em;
     }
-    .container .jumbotron {
-        padding-right: 60px;
-        padding-left: 60px
-    }
-    .jumbotron h1 {
-        font-size: 72px
-    }
+    
 }
 
 .thumbnail {
@@ -6865,7 +6861,7 @@ textarea {
     max-width: 280px
 }
 .bar {
-    width: 15px;
+    width: 14px;
 }
 text {
     fill: #fff;
@@ -6909,6 +6905,7 @@ text {
 }
 footer{
     text-align: center;
+    padding-top: 40px;
     
 }
 

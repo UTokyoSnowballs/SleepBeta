@@ -11,7 +11,7 @@ namespace SleepMakeSense.Controllers
     public class DataMining
     {
 
-
+        /*
 
 
         private FitbitClient GetFitbitClient(OAuth2AccessToken accessToken = null)
@@ -157,6 +157,6 @@ namespace SleepMakeSense.Controllers
         }
 
 
-        
+        */
     }
 }

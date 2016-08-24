@@ -86,7 +86,7 @@
 
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
             {
-                
+
                 if (@d.Belong == "MinutesAsleep") {
                     @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
                             } else if (@d.Belong == "MinutesAwake"){
@@ -125,6 +125,19 @@
                 return { children: data };
             }
 
+            function testRect() {
+                var svgContainer = d3.select("body").append("svg")
+                     .attr("width", 200)
+                     .attr("height", 200);
+                
+                //Draw the Rectangle
+                var rectangle = svgContainer.append("rect")
+                     .attr("x", 10)
+                     .attr("y", 10)
+                     .attr("width", 50)
+                     .attr("height", 100);
+            }
+
             function testVis(mydata, section, textp, sfeature) {
 
                 var width = 550, height = 300;
@@ -136,26 +149,25 @@
                   .attr("class", "bubble");
 
                 var legend_data = [
-                { "color": "#459EE9", "text": "Positive relationship" }, //Very strong positive relationship
+                { "color": "#00CC66", "text": "Positive relationship" }, //Very strong positive relationship
                /* { "color": "#99FF99", "text": "Strong positive relationship" },
                 { "color": "#CCFFCC", "text": "Moderate positive relationship" },
                 { "color": "#F6CED8", "text": "Moderate negative relationship" },
                 { "color": "#F7819F", "text": "Strong negative relationship" },*/
-                { "color": "#F74657", "text": "Negative relationship" }]; //Very strong negative relationship
+                { "color": "#FF0040", "text": "Negative relationship" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
                     document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
                 } else {
-                    
+
                     var div = d3.select(section).append("div")
                          .attr("class", "tooltip-bubble")
                         .style("opacity", 0);
 
-                    var bubble = d3.layout.treemap()
-                    .round(false)
-                    .size([width - 100, height - 10])
-                    .value(function (d) { temp = Math.abs(d.Coefficient); if (temp >= 0) { return temp; } })
-                    .sticky(true); // padding between adjacent bubbles
+                    var bubble = d3.layout.pack()
+                    .size(100,50)
+                    //.value(function (d) { temp = Math.abs(d.Coefficient); if (temp >= 0) { return temp; } })
+                    //.padding(50); // padding between adjacent bubbles
 
                     var nodes = bubble.nodes(processData(mydata)).filter(function (d) { return !d.children; });
                     var vis = svg.selectAll("g.node").data(nodes);
@@ -164,19 +176,23 @@
                     .attr("class", "node")
                     .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; })
 
-                    var circles = visEnter.append("circle")
+                    var circles = visEnter.append("rect")
                     //.attr("r", function (d) { return d.r; })
-                    .attr("r", 60)
+                    //.attr("r", 60)
+                    .attr("x", 100)
+                    .attr("y", 50)
+                    //.transition().duration(500)
+                    .attr('width', 150)
+                    .attr('height', 100)
                     .style("fill", function (d) {
                         coeff = d.Coefficient;
                         console.log(coeff);
-                        //if (coeff < 0) {
-                          //  temp = Math.abs(coeff);
-                          //  if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
-                          //  else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
-                          //  else if ((temp < 0.5) && (temp >= 0.3)) { return "#FF0040"; }
-                          // } else
-                        if (coeff >= 0) {
+                        /*if (coeff < 0) {
+                            temp = Math.abs(coeff);
+                            if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
+                            else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
+                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#FF0040"; }
+                        } else */if (coeff >= 0) {
                             if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#00CC66"; }
                             else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#FF0040"; }  //#99FF99
                             //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
@@ -212,55 +228,7 @@
                     .attr("dy", ".3em")
                     .style("text-anchor", "middle")
                     .text(function (d) { return d.Name; });
-                
-     /*               var margin = { top: 40, right: 10, bottom: 10, left: 10 },
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
 
-                    var color = d3.scale.category20c();
-
-                    var treemap = d3.layout.treemap()
-                        .size([width, height])
-                        .sticky(true)
-                        .value(function (d) { return d.size; });
-
-                    var div = d3.select("body").append("div")
-                        .style("position", "relative")
-                        .style("width", (width + margin.left + margin.right) + "px")
-                        .style("height", (height + margin.top + margin.bottom) + "px")
-                        .style("left", margin.left + "px")
-                        .style("top", margin.top + "px");
-
-                    d3.json("flare.json", function (error, root) {
-                        if (error) throw error;
-
-                        var node = div.datum(root).selectAll(".node")
-                            .data(treemap.nodes)
-                          .enter().append("div")
-                            .attr("class", "node")
-                            .call(position)
-                            .style("background", function (d) { return d.children ? color(d.name) : null; })
-                            .text(function (d) { return d.children ? null : d.name; });
-
-                        d3.selectAll("input").on("change", function change() {
-                            var value = this.value === "count"
-                                ? function () { return 1; }
-                                : function (d) { return d.size; };
-
-                            node
-                                .data(treemap.value(value).nodes)
-                              .transition()
-                                .duration(1500)
-                                .call(position);
-                        });
-                    });
-                    
-                    function position() {
-                        this.style("left", function (d) { return d.x + "px"; })
-                            .style("top", function (d) { return d.y + "px"; })
-                            .style("width", function (d) { return Math.max(0, d.dx - 1) + "px"; })
-                            .style("height", function (d) { return Math.max(0, d.dy - 1) + "px"; });
-                    }*/
 
                     var legend = svg.selectAll(".legend")
                         .data(legend_data)

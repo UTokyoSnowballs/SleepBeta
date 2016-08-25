@@ -79,10 +79,10 @@
             var WakeUpFresh = [];
 
             factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Width: 0, Height: 0, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
-            factorList.push({ Name: "Exercise", Coefficient: 1, Width: 150, Height: 0, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
-            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Width: 300, Height: 0, Note: "Try to listen to more soothing music before sleeping" });
-            factorList.push({ Name: "test", Coefficient: 0.5, Width: 0, Height: 100, Note: "testing 1" });
-            factorList.push({ Name: "test 2", Coefficient: 1, Width: 150, Height: 100, Note: "testing 2" });
+            factorList.push({ Name: "Exercise", Coefficient: 1, Width: 160, Height: 0, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
+            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Width: 320, Height: 0, Note: "Try to listen to more soothing music before sleeping" });
+            factorList.push({ Name: "test", Coefficient: 0.5, Width: 0, Height: 110, Note: "testing 1" });
+            factorList.push({ Name: "test 2", Coefficient: 1, Width: 160, Height: 110, Note: "testing 2" });
             //1 = green , 0.5 = 2nd red
 
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
@@ -213,10 +213,18 @@
                         });
 
                     visEnter.append("text")
-                    .attr("x", function (d) { return d.Width })
+                    .attr("x", function (d) {
+                        if (d.Width == 0) {
+                            return 75;
+                        } else if(d.Width == 160){
+                            return 235;
+                        } else {
+                            return 395;
+                        }
+                    })
                     .attr("y", function (d) {
                         if (d.Height != 0) {
-                            return 150;
+                            return 160;
                         } else {
                             return 50;
                         }
@@ -235,15 +243,15 @@
                         .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
 
                     legend.append("rect")
-                        .attr("x", width - 200)
-                        .attr("y", 110)
+                        .attr("x", width - 170)
+                        .attr("y", 135)
                         .attr("width", 18)
                         .attr("height", 18)
                         .style("fill", function (d) { return d.color; });
 
                     legend.append("text")
                         .attr("x", width - 170)
-                        .attr("y", 110)
+                        .attr("y", 135)
                         .attr("dy", ".35em")
                         .style("text-anchor", "start")
                         .text(function (d) { return d.text; });

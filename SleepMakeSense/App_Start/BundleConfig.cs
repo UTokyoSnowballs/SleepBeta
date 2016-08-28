@@ -24,8 +24,9 @@ namespace SleepMakeSense
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Layout.css",
-                      "~/Content/Site.css"));
+                      "~/CSSfiles/Layout.css",
+                      "~/CSSfiles/Site.css",
+                      "~/CSSfiles/font-awesome.css"));
 
             ;
         }

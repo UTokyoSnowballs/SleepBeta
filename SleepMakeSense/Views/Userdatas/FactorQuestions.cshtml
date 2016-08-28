@@ -17,10 +17,26 @@
 <body>
     <div id="DataProcessing">
         <script type="text/javascript">
-        function myFunc() {
-            var e = document.getElementById("ddlViewByTV");
-            var strUser = e.options[e.selectedIndex].value;
-        }
+
+            //need unique names for each drop down.
+            function myFunc() {
+                var e = document.getElementById("ddlViewByTV");
+                var strUser = e.options[e.selectedIndex].value;
+                if (strUser === strUser) {
+                    window.alert(strUser);
+                }
+            }
+
+            function account() {
+                //var userID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                if ("8" === "475f9d63-0e90-418f-9920-0cd90c7795dd") {
+                    window.alert("oo bby");
+                } else {
+                    window.alert("FAILED");
+                }
+               // window.alert(6);
+            }
+
         </script>
     </div>
     <div class="container">
@@ -59,7 +75,7 @@
                         <td>Drink Caffiene</td>
                         <td>How many coffees and/or energy drinks did you drink yesterday?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByCaffiene">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -78,7 +94,7 @@
                         <td>Exercise Often</td>
                         <td>How many hours did you exercise yesterday?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByExercise">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -97,7 +113,7 @@
                         <td> </td>
                         <td>How intense did you work out on a scale of 1-10 (1 being easy workout, 10 being your body was in a lot of pain afterwards)</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByExercise2">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -116,7 +132,7 @@
                         <td>Late Night Snacking</td>
                         <td>How many hours before bed did you snack last night?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewBySnack">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -135,7 +151,7 @@
                         <td> </td>
                         <td>What types of food did you snack on?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewBySnack2">
                                 <option value="1" selected="selected">Healthy Food</option>
                                 <option value="2">Unhealthy Food</option>
                             </select>
@@ -145,7 +161,7 @@
                         <td>Take Naps</td>
                         <td>How long did you nap for yesterday?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByNap">
                                 <option value="0" selected="selected">0 - 10 minutes</option>
                                 <option value="1">11 - 20 minutes</option>
                                 <option value="2">21 - 30 minutes</option>
@@ -164,7 +180,7 @@
                         <td> </td>
                         <td>Was your nap before 12pm or after?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByNap2">
                                 <option value="0" selected="selected">Before 12PM</option>
                                 <option value="1">After 12PM</option>
                             </select>
@@ -174,7 +190,7 @@
                         <td>Drink Alcohol</td>
                         <td>How many drinks did you have yesterday?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByAlcohol">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -193,7 +209,7 @@
                         <td>Part Time Job</td>
                         <td>When did your shift start last night?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByJob">
                                 <option value="0" selected="selected">No Shift</option>
                                 <option value="1">Before 6PM</option>
                                 <option value="2">7PM</option>
@@ -212,7 +228,7 @@
                         <td> </td>
                         <td>How many hours did you work for?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByJob2">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -231,7 +247,7 @@
                         <td>Texting/Using Your Phone Before Bed</td>
                         <td>How many hours did you spend on your phone after 6pm yesterday?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByPhone">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -250,7 +266,7 @@
                         <td>Write A Diary/Journal</td>
                         <td>Did you write in your diary before bed last night?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByDiary">
                                 <option value="0" selected="selected">No</option>
                                 <option value="1">Yes</option>
                             </select>
@@ -260,7 +276,7 @@
                         <td>Listen To Music Before Bed</td>
                         <td>How long did you listen to music to before sleeping last night?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByMusic">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -279,7 +295,7 @@
                         <td> </td>
                         <td>What genre of music did you listen to?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByMusic2">
                                 <option value="0" selected="selected">Didn't listen to music</option>
                                 <option value="1">Electronic</option>
                                 <option value="2">Hip Hop</option>
@@ -296,7 +312,7 @@
                         <td>Use Social Media</td>
                         <td>How long were you on social media for after 6pm last night?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewBySocial">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -315,7 +331,7 @@
                         <td>Play Video Games</td>
                         <td>How long did you play video games for after 6pm?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByGames">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -334,7 +350,7 @@
                         <td>Upcoming Examination</td>
                         <td>How long did you play video games for after 6pm?</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByExam">
                                 <option value="0" selected="selected">No</option>
                                 <option value="1">Yes</option>
 
@@ -345,7 +361,7 @@
                         <td> </td>
                         <td>How stressed about your exams / assignments (1 not at all - 10 a lot)</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByExam2">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -364,7 +380,7 @@
                         <td>Anxious/Stressed</td>
                         <td>How anxious/stressed were you yesterday? (1 not at all - 10 a lot)</td>
                         <td>
-                            <select id="ddlViewBy">
+                            <select id="ddlViewByStress">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -381,7 +397,7 @@
                     </tr>
                 </tbody>
             </table>
-        <input type="button" onclick="myFunc()" value="Submit">
+        <input type="button" onclick="account()" value="Submit">
         </div>
 </body>
 </html>

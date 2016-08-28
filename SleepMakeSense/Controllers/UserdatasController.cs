@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;//
+
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -58,6 +59,8 @@ namespace SleepMakeSense.Controllers
                 var dataQuery = (from a in Db.UserQuestions
                                  where a.AspNetUserId.Equals(userId)
                                  select a).FirstOrDefault();
+                //just used to test and print userID to see what it was
+                //System.Windows.Forms.MessageBox.Show(System.Web.HttpContext.Current.User.Identity.GetUserId());
                 ViewBag.Message = "Enter Your Daily Habits";
                 ViewBag.Question1 = dataQuery.Question1;
                 ViewBag.Question2 = dataQuery.Question2;

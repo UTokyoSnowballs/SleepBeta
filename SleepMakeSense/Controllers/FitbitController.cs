@@ -112,23 +112,43 @@ namespace SleepMakeSense.Controllers
             }
         }
 
+        private TokenManagement GetToken()
+        {
+            Models.Database Db = new Models.Database();
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            TokenManagement userToken = new TokenManagement();
+            userToken =     (from a in Db.TokenManagements
+                             where a.AspNetUserId.Equals(userId)
+                             select a).FirstOrDefault();
+            return userToken;
+        }
+
+        private bool FitbitConnectedToAccount()
+        {
+            Models.Database Db = new Models.Database();
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var userToken = from a in Db.TokenManagements
+                            select a;
+
+            //bool has = list.Any(cus => cus.FirstName == "John");
+            bool has = false;
+
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                has = userToken.Any(data => data.AspNetUserId == userId);
+            }
+
+            return has;
+        }
+
         public ActionResult ConnectFitbit()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
-            Models.Database Db = new Models.Database();
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = (from a in Db.TokenManagements
-                             where a.AspNetUserId.Equals(userId)
-                             select a).First();
-            if (userToken == null)
-            {
-                Authorize();
-            }
-            else
-            {
+            TokenManagement userToken = GetToken();
+
                 OAuth2AccessToken accessToken = new OAuth2AccessToken()
                 {
                     Token = userToken.Token,
@@ -138,9 +158,10 @@ namespace SleepMakeSense.Controllers
                     UserId = userToken.UserId,
                     UtcExpirationDate = userToken.DateChanged.AddSeconds(userToken.ExpiresIn)
                 };
+
                 GetFitbitClient(accessToken);
 
-            }
+
             return View("Callback");
         }
 

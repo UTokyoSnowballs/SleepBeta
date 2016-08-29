@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
 </head>
 
-<body>
+<body  onload="account()">
     <div id="DataProcessing">
         <script type="text/javascript">
 
@@ -28,13 +28,9 @@
             }
 
             function account() {
-                //var userID = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                if ("8" === "475f9d63-0e90-418f-9920-0cd90c7795dd") {
-                    window.alert("oo bby");
-                } else {
-                    window.alert("FAILED");
-                }
-               // window.alert(6);
+                var string = "<td>Watch TV</td><td>How many hours did you watch TV after 6pm last night?</td>";
+                document.getElementById("tv").innerHTML = string;
+                return string;
             }
 
         </script>
@@ -52,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr id="tv">
                         <td>Watch TV</td>
                         <td>How many hours did you watch TV after 6pm last night?</td>
                         <td>
@@ -91,6 +87,28 @@
                         </td>
                     </tr>
                     <tr>
+                        <td> </td>
+                        <td>When did you have caffiene? (energy drink, coffee, etc.)</td>
+                        <td>
+                            <select id="ddlViewByCaffiene2">
+                                <option value="0" selected="selected">No Coffee</option>
+                                <option value="1">6AM</option>
+                                <option value="2">7AM</option>
+                                <option value="3">8AM</option>
+                                <option value="4">9AM</option>
+                                <option value="5">10AM</option>
+                                <option value="6">11AM</option>
+                                <option value="7">12PM</option>
+                                <option value="8">1PM</option>
+                                <option value="9">2PM</option>
+                                <option value="10">3PM</option>
+                                <option value="11">4PM</option>
+                                <option value="12">5PM</option>
+                                <option value="13">6PM</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Exercise Often</td>
                         <td>How many hours did you exercise yesterday?</td>
                         <td>
@@ -125,6 +143,25 @@
                                 <option value="8">8</option>
                                 <option value="9">9</option>
                                 <option value="10">10</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td>What type of exercise did you do? (e.g. football, basketball, yoga, jogging, swimming)</td>
+                        <td>
+                            <select id="ddlViewByExercise3">
+                                <option value="0" selected="selected">0</option>
+                                <option value="1">Running</option>
+                                <option value="2">Swimming</option>
+                                <option value="3">Jogging</option>
+                                <option value="4">Gym</option>
+                                <option value="5">Yoga</option>
+                                <option value="6">Gymnastics</option>
+                                <option value="7">Rugby</option>
+                                <option value="8">Soccer</option>
+                                <option value="9">AFL</option>
+                                <option value="10">Other</option>
                             </select>
                         </td>
                     </tr>
@@ -217,7 +254,7 @@
                                 <option value="4">9PM</option>
                                 <option value="5">10PM</option>
                                 <option value="6">11PM</option>
-                                <option value="7">12PM</option>
+                                <option value="7">12AM</option>
                                 <option value="8">1AM</option>
                                 <option value="9">2AM</option>
                                 <option value="10">3AM</option>

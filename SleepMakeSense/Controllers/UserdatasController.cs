@@ -61,7 +61,7 @@ namespace SleepMakeSense.Controllers
                                  select a).FirstOrDefault();
                 //just used to test and print userID to see what it was
                 //System.Windows.Forms.MessageBox.Show(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                ViewBag.Message = "Enter Your Daily Habits";
+                /*ViewBag.Message = "Enter Your Daily Habits";
                 ViewBag.Question1 = dataQuery.Question1;
                 ViewBag.Question2 = dataQuery.Question2;
                 ViewBag.Question3 = dataQuery.Question3;
@@ -81,7 +81,7 @@ namespace SleepMakeSense.Controllers
                 ViewBag.Question17 = dataQuery.Question17;
                 ViewBag.Question18 = dataQuery.Question18;
                 ViewBag.Question19 = dataQuery.Question19;
-                ViewBag.Question20 = dataQuery.Question20;
+                ViewBag.Question20 = dataQuery.Question20;*/
 
                 return View();
             }

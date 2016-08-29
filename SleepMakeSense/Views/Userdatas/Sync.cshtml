@@ -162,7 +162,8 @@
 
                     var visEnter = vis.enter().append("g")
                     .attr("class", "node")
-                    .attr("transform", function (d) { return "translate(" + d.width + "," + d.height + ")"; })
+                    .attr('width', 150)
+                    .attr('height', 100);
 
                     var circles = visEnter.append("rect")
                     //.attr("r", function (d) { return d.r; })
@@ -349,6 +350,9 @@
                          else return blue;
                      })
                      .on("mouseover", function (d) {
+                         var matrix = this.getScreenCTM()
+                            .translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
+                         
                          d3.select(this)
                            .attr("fill", "#3376bf");
 
@@ -370,8 +374,8 @@
                          div.html(tooltiptext)
                             //.style("left", (d3.event.pageX - 64) + "px")
                             //.style("top", (d3.event.pageY - 12) + "px");
-                            .style("left", (d.x - 64) + "px")
-                            .style("top", (d.y - 20) + "px");
+                            .style("left", (window.pageXOffset + matrix.e + 15) + "px")
+                            .style("top", (window.pageYOffset + matrix.f - 30) + "px");
                          // Need a better solution here!!
                      })
                      .on("mouseout", function (d) {

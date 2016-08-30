@@ -112,34 +112,6 @@ namespace SleepMakeSense.Controllers
             }
         }
 
-        private TokenManagement GetToken()
-        {
-            Models.Database Db = new Models.Database();
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            TokenManagement userToken = new TokenManagement();
-            userToken =     (from a in Db.TokenManagements
-                             where a.AspNetUserId.Equals(userId)
-                             select a).FirstOrDefault();
-            return userToken;
-        }
-
-        private bool FitbitConnectedToAccount()
-        {
-            Models.Database Db = new Models.Database();
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = from a in Db.TokenManagements
-                            select a;
-
-            //bool has = list.Any(cus => cus.FirstName == "John");
-            bool has = false;
-
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                has = userToken.Any(data => data.AspNetUserId == userId);
-            }
-
-            return has;
-        }
 
         public ActionResult ConnectFitbit()
         {
@@ -147,20 +119,36 @@ namespace SleepMakeSense.Controllers
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
-            TokenManagement userToken = GetToken();
-
-                OAuth2AccessToken accessToken = new OAuth2AccessToken()
+            Models.Database Db = new Models.Database();
+            bool fitbitConnected = false;
+            OAuth2AccessToken accessToken = new OAuth2AccessToken();
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var userToken = from a in Db.TokenManagements
+                             where a.AspNetUserId.Equals(userId)
+                             select a;
+            foreach (TokenManagement data in userToken)
+            {
+                if (data.AspNetUserId == userId)
                 {
-                    Token = userToken.Token,
-                    TokenType = userToken.TokenType,
-                    ExpiresIn = userToken.ExpiresIn,
-                    RefreshToken = userToken.RefreshToken,
-                    UserId = userToken.UserId,
-                    UtcExpirationDate = userToken.DateChanged.AddSeconds(userToken.ExpiresIn)
-                };
+                    fitbitConnected = true;
+                    accessToken.Token = data.Token;
+                    accessToken.TokenType = data.TokenType;
+                    accessToken.ExpiresIn = data.ExpiresIn;
+                    accessToken.RefreshToken = data.RefreshToken;
+                    accessToken.UserId = data.UserId;
+                    accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
 
+                }
+            }
+
+            if (fitbitConnected)
+            {
                 GetFitbitClient(accessToken);
-
+            }
+            else
+            {
+                Authorize();
+            }
 
             return View("Callback");
         }

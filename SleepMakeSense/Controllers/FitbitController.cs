@@ -128,7 +128,7 @@ namespace SleepMakeSense.Controllers
                              select a;
             foreach (TokenManagement data in userToken)
             {
-                if (data.AspNetUserId == userId)
+                if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
                 {
                     fitbitConnected = true;
                     accessToken.Token = data.Token;
@@ -141,16 +141,14 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            if (fitbitConnected)
+            if (fitbitConnected == true)
             {
                 GetFitbitClient(accessToken);
-            }
-            else
-            {
-                Authorize();
+                syncFitbitCred(accessToken);
+                return View("Callback");
             }
 
-            return View("Callback");
+            return Authorize();
         }
 
 
@@ -178,156 +176,7 @@ namespace SleepMakeSense.Controllers
             return View("TestToken");
         }
 
-        /*
-        public string TestTimeSeries()
-        {
-            FitbitClient client = GetFitbitClient();
-
-            var results = client.GetTimeSeries(TimeSeriesResourceType.DistanceTracker, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow);
-
-            string sOutput = "";
-            foreach (var result in results.DataList)
-            {
-                sOutput += result.DateTime.ToString() + " - " + result.Value.ToString();
-            }
-
-            return sOutput;
-
-        }
-        
-        public ActionResult LastWeekDistance()
-        {
-            FitbitClient client = GetFitbitClient();
-
-            TimeSeriesDataList results = client.GetTimeSeries(TimeSeriesResourceType.Distance, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow);
-
-            return View(results);
-        }
-        */
-
-        /*
-        public async Task<ActionResult> LastWeekSteps()
-        {
-
-            FitbitClient client = GetFitbitClient();
-
-            var response = await client.GetTimeSeriesIntAsync(TimeSeriesResourceType.Steps, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow);
-
-            return View(response);
-        
-        }
-
-            */
-        /*
-        //example using the direct API call getting all the individual logs
-        public async Task<string> DayFat(DateTime date)
-        {
-
-            FitbitClient client = GetFitbitClient();
-             
-            var fat = await client.GetFatAsync(date, DateRangePeriod.OneDay);
-            String fatString = fat.ToString();
-
-            if (fatString == null || fatString == " ") //succeeded but no records
-            {
-                return null;
-            }
-            return fatString;
-        }
-
-        public async Task<string> DayWater(DateTime date)
-        {
-            FitbitClient client = GetFitbitClient();
-
-            var water = await client.GetWaterAsync(date, DateRangePeriod.OneDay);
-            String waterString = water.ToString();
-            if (waterString == null || waterString == " ")
-            {
-                return null;
-            }
-
-            return waterString;
-        }
-        
-        public async Task<string[]> DaySteps(DateTime date)
-        {
-            FitbitClient client = GetFitbitClient();
-            var steps = await client.GetDayActivityAsync(date, client.ToString());
-
-
-            if ()
-
-        }
-
-
-        //example using the time series, one per day
-        public ActionResult LastYearFat()
-        {
-            FitbitClient client = GetFitbitClient();
-
-            TimeSeriesDataList fatSeries = client.GetTimeSeries(TimeSeriesResourceType.Fat, DateTime.UtcNow, DateRangePeriod.OneYear);
-
-            return View(fatSeries);
-
-        }
-
-        //example using the direct API call getting all the individual logs
-        public ActionResult MonthWeight(string id)
-        {
-            DateTime dateStart = Convert.ToDateTime(id);
-
-            FitbitClient client = GetFitbitClient();
-
-            Weight weight = client.GetWeight(dateStart, DateRangePeriod.OneMonth);
-
-            if (weight == null || weight.Weights == null) //succeeded but no records
-            {
-                weight = new Weight();
-                weight.Weights = new List<WeightLog>();
-            }
-            return View(weight);
-
-        }
-
-        //example using the time series, one per day
-        public ActionResult LastYearWeight()
-        {
-            FitbitClient client = GetFitbitClient();
-
-            TimeSeriesDataList weightSeries = client.GetTimeSeries(TimeSeriesResourceType.Weight, DateTime.UtcNow, DateRangePeriod.OneYear);
-
-            return View(weightSeries);
-
-        }
-
-        /*
-
-        /// <summary>
-        /// This requires the Fitbit staff approval of your app before it can be called
-        /// </summary>
-        /// <returns></returns>
-        public string TestIntraDay()
-        {
-            FitbitClient client = new FitbitClient(ConfigurationManager.AppSettings["FitbitConsumerKey"],
-                ConfigurationManager.AppSettings["FitbitConsumerSecret"],
-                Session["FitbitAuthToken"].ToString(),
-                Session["FitbitAuthTokenSecret"].ToString());
-
-            IntradayData data = client.GetIntraDayTimeSeries(IntradayResourceType.Steps, new DateTime(2012, 5, 28, 11, 0, 0), new TimeSpan(1, 0, 0));
-
-            string result = "";
-
-            foreach (IntradayDataValues intraData in data.DataSet)
-            {
-                result += intraData.Time.ToShortTimeString() + " - " + intraData.Value + Environment.NewLine;
-            }
-
-            return result;
-
-        }
-        */
-
-
+      
 
 
         /// <summary>

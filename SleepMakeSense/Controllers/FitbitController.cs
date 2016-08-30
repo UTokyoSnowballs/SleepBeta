@@ -144,6 +144,7 @@ namespace SleepMakeSense.Controllers
             if (fitbitConnected == true)
             {
                 GetFitbitClient(accessToken);
+                syncFitbitCred(accessToken);
                 return View("Callback");
             }
 

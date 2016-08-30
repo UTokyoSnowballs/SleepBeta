@@ -128,7 +128,7 @@ namespace SleepMakeSense.Controllers
                              select a;
             foreach (TokenManagement data in userToken)
             {
-                if (data.AspNetUserId == userId)
+                if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
                 {
                     fitbitConnected = true;
                     accessToken.Token = data.Token;
@@ -141,16 +141,13 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            if (fitbitConnected)
+            if (fitbitConnected == true)
             {
                 GetFitbitClient(accessToken);
-            }
-            else
-            {
-                Authorize();
+                return View("Callback");
             }
 
-            return View("Callback");
+            return Authorize();
         }
 
 

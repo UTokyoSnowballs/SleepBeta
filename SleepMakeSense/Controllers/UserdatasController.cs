@@ -307,10 +307,9 @@ namespace SleepMakeSense.Controllers
 
         }
 
-        private async void FitBitDataSync()
+        private async Task<ActionResult> FitbitDataSync(FitbitClient client)
         {
             ViewBag.FitbitSynced = true;
-            FitbitClient client = GetFitbitClient();
 
             string userId = null;
             bool userLogedIn = false;
@@ -319,15 +318,24 @@ namespace SleepMakeSense.Controllers
 
             DateTime dateStop = DateTime.UtcNow.AddDays(-40);
 
+
             userLogedIn = true;
             userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var lastSynced = (from a in Db.Userdatas
-                              where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false)
-                              orderby a.DateStamp
-                              select a).FirstOrDefault();
-            if (lastSynced.DateStamp > dateStop)
+            var lastSynced = from a in Db.Userdatas
+                             where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= dateStop
+                             orderby a.DateStamp
+                             select a;
+
+            foreach (Userdata data in lastSynced)
             {
-                dateStop = lastSynced.DateStamp;
+                if (data.DateStamp > dateStop)
+                {
+                    dateStop = data.DateStamp;
+                }
+                if (data.DateStamp == DateTime.UtcNow.AddDays(-1))
+                {
+                    return View();
+                }
             }
 
             var dataQuery = from a in Db.Userdatas
@@ -551,209 +559,41 @@ namespace SleepMakeSense.Controllers
                     db.SaveChanges();
                 }
             }
-            }
+            return View();
+        }
 
         public async Task<ActionResult> Sync()
         {
-            ViewBag.FitbitSynced = true;
             FitbitClient client = GetFitbitClient();
+            await FitbitDataSync(client);
+            MyViewModel model = DataModelCreation(client);
+
+            return View(model);
+        }
+
+
+        public MyViewModel DataModelCreation(FitbitClient client)
+        {
+            ViewBag.FitbitSynced = true;
             //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
             string userId = null;
             bool userLogedIn = false;
             Models.Database Db = new Models.Database();
-            List<Userdata> queryList = new List<Userdata>();
+
+
 
             DateTime date = DateTime.UtcNow.AddDays(-40);
 
+            userLogedIn = true;
+            userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            List<Userdata> results = (from a in Db.Userdatas
+                                            where a.AspNetUserId.Equals(userId) && a.DateStamp >= date
+                                            select a).ToList();
 
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                userLogedIn = true;
-                userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                var dataQuery = from a in Db.Userdatas
-                                where a.AspNetUserId.Equals(userId) && a.DateStamp >= date
-                                select a;
-                foreach (Userdata data in dataQuery)
-                {
-                    queryList.Add(data);
-                }
-
-
-            }
-
-            List<Userdata> results = new List<Userdata>();
-
-            //TimeSeriesDataList minutesAsleep = client.GetTimeSeries(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-
-            var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesToFallAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesToFallAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesAfterWakeup = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAfterWakeup, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var sleepEfficiency = await client.GetTimeSeriesAsync(TimeSeriesResourceType.SleepEfficiency, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var caloriesIn = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesIn, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var water = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Water, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var caloriesOut = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesOut, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var steps = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Steps, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var distance = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Distance, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesSedentary = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesSedentary, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesLightlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesLightlyActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesFairlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesFairlyActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var minutesVeryActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesVeryActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var activityCalories = await client.GetTimeSeriesAsync(TimeSeriesResourceType.ActivityCalories, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-
-
-            
-
-            foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
-            {
-                if (Convert.ToDouble(data.Value) > 0)  // Remove entries with no sleep log (e.g. due to battery issue)
-                {
-                    results.Add(new Userdata()
-                    {
-                        DateStamp = data.DateTime.AddDays(-1),
-                        MinutesAsleep = data.Value,
-                        MinutesAwake = null,
-                        AwakeningsCount = null,
-                        TimeInBed = null,
-                        MinutesToFallAsleep = null,
-                        MinutesAfterWakeup = null,
-                        SleepEfficiency = null,
-                        WakeUpFreshness = null,
-                        Coffee = null,
-                        CoffeeTime = null,
-                        Alcohol = null,
-                        Mood = null,
-                        Stress = null,
-                        Tiredness = null,
-                        Dream = null,
-                        DigitalDev = null,
-                        Light = null,
-                        NapDuration = null,
-                        NapTime = null,
-                        SocialActivity = null,
-                        DinnerTime = null,
-                        AmbientTemp = null,
-                        AmbientHumd = null,
-                        ExerciseTime = null,
-                        BodyTemp = null,
-                        Hormone = null,
-                        CaloriesIn = null,
-                        Water = null,
-                        CaloriesOut = null,
-                        Steps = null,
-                        Distance = null,
-                        MinutesSedentary = null,
-                        MinutesLightlyActive = null,
-                        MinutesFairlyActive = null,
-                        MinutesVeryActive = null,
-                        ActivityCalories = null,
-                        TimeEnteredBed = null,
-                        Weight = null,
-                        BMI = null,
-                        Fat = null,
-                        AspNetUserId = userId,
-                        FitbitData = true
-                    });
-                }
-            }
 
             List<DiaryData> diaryData = new List<DiaryData>();
-          
-
-
-
-            // Manually integrated diary data. Should automate it!!
-            // Mandi
-            /*
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("7/28/2015"), WakeUpFreshness = "2", Mood = "5", Stress = "4", DigitalDev = "6", Hormone = "15" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("7/29/2015"), WakeUpFreshness = "3", Mood = "5", Stress = "2", DigitalDev = "6", Hormone = "16" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("7/30/2015"), WakeUpFreshness = "3", Mood = "5", Stress = "3", DigitalDev = "5", Hormone = "17" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("7/31/2015"), WakeUpFreshness = "3", Mood = "5", Stress = "4", DigitalDev = "6", Hormone = "18" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/1/2015"), WakeUpFreshness = "4", Mood = "5", Stress = "4", DigitalDev = "4", Hormone = "19" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/2/2015"), WakeUpFreshness = "3", Mood = "5", Stress = "4", DigitalDev = "5", Hormone = "20" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/4/2015"), WakeUpFreshness = "3", Mood = "3", Stress = "2", DigitalDev = "2", Hormone = "21" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/5/2015"), WakeUpFreshness = "2", Mood = "5", Stress = "4", DigitalDev = "6", Hormone = "22" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/6/2015"), WakeUpFreshness = "4", Mood = "5", Stress = "4", DigitalDev = "3", Hormone = "1" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/7/2015"), WakeUpFreshness = "4", Mood = "5", Stress = "4", DigitalDev = "6", Hormone = "2" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/8/2015"), WakeUpFreshness = "3", Mood = "5", Stress = "4", DigitalDev = "6", Hormone = "3" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/9/2015"), WakeUpFreshness = "2", Mood = "4", Stress = "5", DigitalDev = "6", Hormone = "4" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/10/2015"), WakeUpFreshness = "3", Mood = "5", Stress = "4", DigitalDev = "5", Hormone = "5" });
-            */
-
-            // Mary
-
-            /*
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/10/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "10.00", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/11/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "9.30", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/12/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "9.00", DigitalDev = "1", Tiredness = "3", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/13/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "10.30", DigitalDev = "1", Tiredness = "4", Alcohol = "100" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/14/2015"), WakeUpFreshness = "5", Coffee = "2", CoffeeTime = "9.00", DigitalDev = "1", Tiredness = "3", Alcohol = "300" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/15/2015"), WakeUpFreshness = "5", Coffee = "2", CoffeeTime = "8.30", DigitalDev = "0", Tiredness = "4", Alcohol = "400" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/16/2015"), WakeUpFreshness = "5", Coffee = "2", CoffeeTime = "10.00", DigitalDev = "0", Tiredness = "4", Alcohol = "400" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/17/2015"), WakeUpFreshness = "3", Coffee = "3", CoffeeTime = "11.30", DigitalDev = "0", Tiredness = "5", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/19/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "9.00", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/20/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "10.30", DigitalDev = "0", Tiredness = "4", Alcohol = "300" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/21/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "9.00", DigitalDev = "0", Tiredness = "3", Alcohol = "300" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "10.00", DigitalDev = "0", Tiredness = "4", Alcohol = "500" });
-            diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "9.00", DigitalDev = "1", Tiredness = "3", Alcohol = "300" });
-            */
-
-            // Rosana
-            /*
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/8/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "11.07", DigitalDev = "3", Tiredness = "4", Alcohol = "0" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/9/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "9.07", DigitalDev = "3", Tiredness = "5", Alcohol = "180" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/10/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "15.00", DigitalDev = "1", Tiredness = "5", Alcohol = "120" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/11/2015"), WakeUpFreshness = "4", Coffee = "0", DigitalDev = "3", Tiredness = "5", Alcohol = "0" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/12/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "3", Tiredness = "5", Alcohol = "120" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/13/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "1", Tiredness = "4", Alcohol = "0" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/14/2015"), WakeUpFreshness = "5", Coffee = "0", DigitalDev = "2", Tiredness = "4", Alcohol = "120" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/15/2015"), Coffee = "1", CoffeeTime = "10.10", DigitalDev = "3", Tiredness = "5", Alcohol = "300" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/16/2015"), WakeUpFreshness = "4", Coffee = "2", CoffeeTime = "14.00", DigitalDev = "4", Tiredness = "3", Alcohol = "240" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/17/2015"), WakeUpFreshness = "4", Coffee = "3", CoffeeTime = "11.00", DigitalDev = "3", Tiredness = "4", Alcohol = "0" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/18/2015"), WakeUpFreshness = "4", Coffee = "1", CoffeeTime = "15.40", DigitalDev = "3", Tiredness = "4", Alcohol = "250" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/19/2015"), WakeUpFreshness = "5", Coffee = "1", CoffeeTime = "14.17", DigitalDev = "3", Tiredness = "5", Alcohol = "0" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/20/2015"), WakeUpFreshness = "4", Coffee = "0", DigitalDev = "2", Tiredness = "3", Alcohol = "0" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/21/2015"), Coffee = "1.5", CoffeeTime = "11.01", DigitalDev = "4", Tiredness = "3", Alcohol = "240" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/22/2015"), Coffee = "2", CoffeeTime = "10.00", DigitalDev = "2", Tiredness = "4", Alcohol = "260" });
-           diaryData.Add(new DiaryData() { DateTime = Convert.ToDateTime("8/23/2015"), WakeUpFreshness = "3", Coffee = "2", CoffeeTime = "11.00", DigitalDev = "2", Tiredness = "4", Alcohol = "0" });
-           */
-
-            /// <summary>
-            /// /////////
-            /// </summary>
-
-
-
-            // Retrieve data for the past 40 days. Is there a smarter way that allows user to set the number of days? 
-            /*
-            TimeSeriesDataList minutesAwake = client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, DateTime.UtcNow, DateTime.UtcNow.AddDays(40), client.AccessToken.ToString());
-            TimeSeriesDataList awakeningsCount = client.GetTimeSeries(TimeSeriesResourceType.AwakeningsCount, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList timeInBed = client.GetTimeSeries(TimeSeriesResourceType.TimeInBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList minutesToFallAsleep = client.GetTimeSeries(TimeSeriesResourceType.MinutesToFallAsleep, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList minutesAfterWakeup = client.GetTimeSeries(TimeSeriesResourceType.MinutesAfterWakeup, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList sleepEfficiency = client.GetTimeSeries(TimeSeriesResourceType.SleepEfficiency, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList caloriesIn = client.GetTimeSeries(TimeSeriesResourceType.CaloriesIn, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList water = client.GetTimeSeries(TimeSeriesResourceType.Water, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList caloriesOut = client.GetTimeSeries(TimeSeriesResourceType.CaloriesOut, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList steps = client.GetTimeSeries(TimeSeriesResourceType.Steps, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList distance = client.GetTimeSeries(TimeSeriesResourceType.Distance, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList minutesSedentary = client.GetTimeSeries(TimeSeriesResourceType.MinutesSedentary, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList minutesLightlyActive = client.GetTimeSeries(TimeSeriesResourceType.MinutesLightlyActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList minutesFairlyActive = client.GetTimeSeries(TimeSeriesResourceType.MinutesFairlyActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList minutesVeryActive = client.GetTimeSeries(TimeSeriesResourceType.MinutesVeryActive, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList activityCalories = client.GetTimeSeries(TimeSeriesResourceType.ActivityCalories, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList timeEnteredBed = client.GetTimeSeries(TimeSeriesResourceType.TimeEnteredBed, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList weight = client.GetTimeSeries(TimeSeriesResourceType.Weight, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList bmi = client.GetTimeSeries(TimeSeriesResourceType.BMI, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            TimeSeriesDataList fat = client.GetTimeSeries(TimeSeriesResourceType.Fat, DateTime.UtcNow.AddDays(-40), DateTime.UtcNow);
-            */
+        
 
             int CNTcaloriesIn = 0, CNTwater = 0, CNTcaloriesOut = 0, CNTsteps = 0, CNTweight = 0, CNTfat = 0;
             int CNTwakeUpFreshness = 0, CNTcoffee = 0, CNTcoffeeTime = 0, CNTalcohol = 0, CNTmood = 0, CNTstress = 0,
@@ -763,163 +603,29 @@ namespace SleepMakeSense.Controllers
 
             foreach (Userdata item in results)
             {
-                foreach (DiaryData data in diaryData.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.WakeUpFreshness = data.WakeUpFreshness;
-                    item.Coffee = data.Coffee;
-                    item.CoffeeTime = data.CoffeeTime;
-                    item.Alcohol = data.Alcohol;
-                    item.Mood = data.Mood;
-                    item.Stress = data.Stress;
-                    item.Tiredness = data.Tiredness;
-                    item.Dream = data.Dream;
-                    item.DigitalDev = data.DigitalDev;
-                    item.Light = data.Light;
-                    item.NapDuration = data.NapDuration;
-                    item.NapTime = data.NapTime;
-                    item.SocialActivity = data.SocialActivity;
-                    item.DinnerTime = data.DinnerTime;
-                    item.ExerciseTime = data.ExerciseTime;
-                    item.AmbientTemp = data.AmbientTemp;
-                    item.AmbientHumd = data.AmbientHumd;
-                    item.BodyTemp = data.BodyTemp;
-                    item.Hormone = data.Hormone;
-
-                    if (Convert.ToDouble(data.WakeUpFreshness) >= 0) CNTwakeUpFreshness++;
-                    if (Convert.ToDouble(data.Coffee) >= 0) CNTcoffee++;
-                    if (Convert.ToDouble(data.CoffeeTime) > 0) CNTcoffeeTime++;
-                    if (Convert.ToDouble(data.Alcohol) >= 0) CNTalcohol++;
-                    if (Convert.ToDouble(data.Mood) >= 0) CNTmood++;
-                    if (Convert.ToDouble(data.Stress) >= 0) CNTstress++;
-                    if (Convert.ToDouble(data.Tiredness) >= 0) CNTtiredness++;
-                    if (Convert.ToDouble(data.Dream) >= 0) CNTdream++;
-                    if (Convert.ToDouble(data.DigitalDev) >= 0) CNTdigitalDev++;
-                    if (Convert.ToDouble(data.Light) >= 0) CNTlight++;
-                    if (Convert.ToDouble(data.NapDuration) > 0) CNTnapDuration++;
-                    if (Convert.ToDouble(data.NapTime) > 0) CNTnapTime++;
-                    if (Convert.ToDouble(data.SocialActivity) >= 0) CNTsocialActivity++;
-                    if (Convert.ToDouble(data.DinnerTime) > 0) CNTdinnerTime++;
-                    if (Convert.ToDouble(data.ExerciseTime) > 0) CNTexerciseTime++;
-                    if (Convert.ToDouble(data.AmbientTemp) > 0) CNTambientTemp++;
-                    if (Convert.ToDouble(data.AmbientHumd) > 0) CNTambientHumd++;
-                    if (Convert.ToDouble(data.BodyTemp) > 0) CNTbodyTemp++;
-                    if (Convert.ToDouble(data.Hormone) > 0) CNThormone++;
-
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAwake.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                {
-                    item.MinutesAwake = data.Value;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in awakeningsCount.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                {
-                    item.AwakeningsCount = data.Value;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeInBed.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                {
-                    item.TimeInBed = data.Value;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesToFallAsleep.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                {
-                    item.MinutesToFallAsleep = data.Value;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAfterWakeup.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                {
-                    item.MinutesAfterWakeup = data.Value;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in sleepEfficiency.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                {
-                    item.SleepEfficiency = data.Value;
-                }
-
-                // Potential impacting factors; need filter out untracked factors.
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesIn.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.CaloriesIn = data.Value;
-                    if (Convert.ToDouble(item.CaloriesIn) > 0) { CNTcaloriesIn++; }
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in water.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.Water = data.Value;
-                    if (Convert.ToDouble(item.Water) > 0) { CNTwater++; }
-                }
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesOut.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.CaloriesOut = data.Value;
-                    if (Convert.ToDouble(item.CaloriesOut) > 0) { CNTcaloriesOut++; }
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in steps.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.Steps = data.Value;
-                    if (Convert.ToDouble(item.Steps) > 0) CNTsteps++;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in distance.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.Distance = data.Value;
-                }
 
 
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesSedentary.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.MinutesSedentary = data.Value;
-                    //if (Convert.ToDouble(item.MinutesSedentary) > 0) CNTminutesSedentary++; 
-                }
+                    if (Convert.ToDouble(item.WakeUpFreshness) >= 0) CNTwakeUpFreshness++;
+                    if (Convert.ToDouble(item.Coffee) >= 0) CNTcoffee++;
+                    if (Convert.ToDouble(item.CoffeeTime) > 0) CNTcoffeeTime++;
+                    if (Convert.ToDouble(item.Alcohol) >= 0) CNTalcohol++;
+                    if (Convert.ToDouble(item.Mood) >= 0) CNTmood++;
+                    if (Convert.ToDouble(item.Stress) >= 0) CNTstress++;
+                    if (Convert.ToDouble(item.Tiredness) >= 0) CNTtiredness++;
+                    if (Convert.ToDouble(item.Dream) >= 0) CNTdream++;
+                    if (Convert.ToDouble(item.DigitalDev) >= 0) CNTdigitalDev++;
+                    if (Convert.ToDouble(item.Light) >= 0) CNTlight++;
+                    if (Convert.ToDouble(item.NapDuration) > 0) CNTnapDuration++;
+                    if (Convert.ToDouble(item.NapTime) > 0) CNTnapTime++;
+                    if (Convert.ToDouble(item.SocialActivity) >= 0) CNTsocialActivity++;
+                    if (Convert.ToDouble(item.DinnerTime) > 0) CNTdinnerTime++;
+                    if (Convert.ToDouble(item.ExerciseTime) > 0) CNTexerciseTime++;
+                    if (Convert.ToDouble(item.AmbientTemp) > 0) CNTambientTemp++;
+                    if (Convert.ToDouble(item.AmbientHumd) > 0) CNTambientHumd++;
+                    if (Convert.ToDouble(item.BodyTemp) > 0) CNTbodyTemp++;
+                    if (Convert.ToDouble(item.Hormone) > 0) CNThormone++;
 
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesLightlyActive.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.MinutesLightlyActive = data.Value;
-                    //if (Convert.ToDouble(item.MinutesLightlyActive) > 0) CNTminutesLightlyActive++; 
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesFairlyActive.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.MinutesFairlyActive = data.Value;
-                    //if (Convert.ToDouble(item.MinutesFairlyActive) > 0) CNTminutesFairlyActive++; 
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesVeryActive.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.MinutesVeryActive = data.Value;
-                    //if (Convert.ToDouble(item.MinutesVeryActive) > 0) CNTminutesVeryActive++; 
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in activityCalories.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.ActivityCalories = data.Value;
-                    //if (Convert.ToDouble(item.ActivityCalories) > 0) CNTactivityCalories++; 
-                }
-
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeEnteredBed.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.TimeEnteredBed = data.Value;
-                    //if (Convert.ToDouble(item.TimeEnteredBed) > 0) CNTtimeEnteredBed++; 
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in weight.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.Weight = data.Value;
-                    if (Convert.ToDouble(item.Weight) > 0) CNTweight++;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in bmi.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.BMI = data.Value;
-                }
-
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in fat.DataList.Where(data => data.DateTime == item.DateStamp))
-                {
-                    item.Fat = data.Value;
-                    if (Convert.ToDouble(item.Fat) > 0) CNTfat++;
-                }
+                
             }
 
 
@@ -1031,27 +737,7 @@ namespace SleepMakeSense.Controllers
                 // System.Diagnostics.Debug.Write(item.MinutesAsleep); // didnt work!!!!
                 //System.Diagnostics.Trace.Write(item); // didnt work!!!!
 
-                // ******** Add entry to DB !!! *************
-                if (userLogedIn)
-                {
-                    bool entryAdded = false;
-                    foreach (SleepMakeSense.Models.Userdata query in queryList)
-                    {
-                        if (query.DateStamp == item.DateStamp)
-                        {
-                            entryAdded = true;
-                            UpdateFitbitData(query.Id, query.FitbitData, item); 
-                        }
-                    }
-                    if (entryAdded == false)
-                    {
-                        //add entry
-                        db.Userdatas.Add(item);
-                    }
-                    db.SaveChanges();
-                }
-
-               
+                // ******** Add entry to DB !!! *************         
 
                 MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(item.MinutesAsleep);
                 MinutesAwake[iMinutesAwake++] = Convert.ToDouble(item.MinutesAwake);
@@ -4100,13 +3786,9 @@ namespace SleepMakeSense.Controllers
             model.AllData = results;
             model.CorrCoefficient = CoefficientList;
 
-            return View(model);
+            return model;
 
-        }
-        
-    }
-
-    
-
+        }   
+    }    
 }
 

@@ -61,7 +61,18 @@ namespace SleepMakeSense.Controllers
                                  select a).FirstOrDefault();
                 //just used to test and print userID to see what it was
                 //System.Windows.Forms.MessageBox.Show(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                /*ViewBag.Message = "Enter Your Daily Habits";
+                                //successfully grabs data from table
+                /*String test = "";
+                if(dataQuery.Question8 == true)
+                {
+                    test = "true";
+                }
+                else
+                {
+                    test = "false";
+                }
+                System.Windows.Forms.MessageBox.Show(test);*/
+                ViewBag.Message = "Enter Your Daily Habits";
                 ViewBag.Question1 = dataQuery.Question1;
                 ViewBag.Question2 = dataQuery.Question2;
                 ViewBag.Question3 = dataQuery.Question3;

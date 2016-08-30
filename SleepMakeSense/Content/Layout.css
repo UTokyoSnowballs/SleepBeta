@@ -6929,3 +6929,10 @@ footer{
     margin-top: 25px;
     margin-bottom: 25px;
 }
+.node {
+    cursor: pointer;
+}
+.bubble {
+    padding-right: 15px;
+    padding-left: 15px;
+}

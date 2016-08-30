@@ -22,7 +22,7 @@
     <style type="text/css">
         .axis path, .axis line {
             fill: none;
-            stroke: #bdbdbd;
+            stroke: #747F97;
             shape-rendering: crispEdges;
             font-size: x-small;
         }
@@ -54,6 +54,11 @@
             border: 6px;
             border-radius: 8px;
             pointer-events: none;
+        }
+        svg.bubble {
+            padding-right: 15px;
+            padding-left: 15px;
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -137,12 +142,12 @@
                   .attr("class", "bubble");
 
                 var legend_data = [
-                { "color": "#00CC66", "text": "Positive relationship" }, //Very strong positive relationship
+                { "color": "#459EE8", "text": "good" }, //Very strong positive relationship
                /* { "color": "#99FF99", "text": "Strong positive relationship" },
                 { "color": "#CCFFCC", "text": "Moderate positive relationship" },
                 { "color": "#F6CED8", "text": "Moderate negative relationship" },
                 { "color": "#F7819F", "text": "Strong negative relationship" },*/
-                { "color": "#FF0040", "text": "Negative relationship" }]; //Very strong negative relationship
+                { "color": "#F74657", "text": "bad" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
                     document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
@@ -172,26 +177,14 @@
                     .attr("y", function (d) { return d.Height })
                     //.transition().duration(500)
                     .attr('width', 150)
-                    .attr('height', 100)
-                    .style("fill", function (d) {
-                        coeff = d.Coefficient;
-                        console.log(coeff);
-                        /*if (coeff < 0) {
-                            temp = Math.abs(coeff);
-                            if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
-                            else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
-                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#FF0040"; }
-                        } else */if (coeff >= 0) {
-                            if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#00CC66"; }
-                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#FF0040"; }  //#99FF99
-                            //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
-                        }
-                    })
-                    .style("stroke", "white")
+                    .attr('height', 110)
+                    .style("fill", "#2C3041")
+                    
                     .on("mouseover", function (d) {
                         d3.select(this)
-                            .style("stroke", "gray")
-                            .style("stroke-width", 6);
+                            .style("stroke", "#373E4F")
+                            .style("stroke-width", 3)
+                            .style("cursor", "pointer");
                         div.transition()
                             .duration(100)
                             .style("opacity", 0.9);
@@ -206,7 +199,7 @@
                     })
                         .on("mouseout", function (d) {
                             d3.select(this)
-                               .style("stroke", "white")
+                               .style("stroke", "#373E4F")
                                .style("stroke-width", 1);
                             div.transition()
                                 .duration(100)
@@ -222,6 +215,20 @@
                             return 235;
                         } else {
                             return 395;
+                        }
+                    })
+                    .style("fill", function (d) {
+                        coeff = d.Coefficient;
+                        console.log(coeff);
+                        /*if (coeff < 0) {
+                            temp = Math.abs(coeff);
+                            if ((temp >= 0.8) && (temp <= 1.0)) { return "#F74657"; }
+                            else if ((temp < 0.8) && (temp >= 0.5)) { return "#F74657"; }
+                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#F74657"; }
+                        } else */if (coeff >= 0) {
+                            if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#459EE8"; }
+                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#F74657"; }  //#99FF99
+                            //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
                         }
                     })
                     .attr("y", function (d) {
@@ -355,7 +362,7 @@
                             .translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
                          
                          d3.select(this)
-                           .attr("fill", "#3376bf");
+                           .attr("fill", "#747F97");
 
                          div.transition()
                             .duration(200)

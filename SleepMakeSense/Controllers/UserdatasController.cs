@@ -92,7 +92,7 @@ namespace SleepMakeSense.Controllers
                 ViewBag.Question17 = dataQuery.Question17;
                 ViewBag.Question18 = dataQuery.Question18;
                 ViewBag.Question19 = dataQuery.Question19;
-                ViewBag.Question20 = dataQuery.Question20;*/
+                ViewBag.Question20 = dataQuery.Question20;
 
                 return View();
             }

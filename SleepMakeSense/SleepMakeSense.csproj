@@ -495,11 +495,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Layout.css" />
-    <Content Include="Content\Layout.min.css" />
+    <Content Include="CSSfiles\bootstrap-theme.css" />
+    <Content Include="CSSfiles\bootstrap-theme.min.css" />
+    <Content Include="CSSfiles\font-awesome.css" />
+    <Content Include="CSSfiles\Layout.css" />
+    <Content Include="CSSfiles\Layout.min.css" />
+    <Content Include="CSSfiles\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -508,8 +512,8 @@
     <Content Include="images\GoogleFit_logo.jpg" />
     <Content Include="images\Jawbone_logo.jpg" />
     <Content Include="images\MyfitnessPal_logo.png" />
+    <Content Include="images\photo-14.jpg" />
     <Content Include="images\SleepAsAndroid_logo.jpg" />
-    <Content Include="images\unsplash_sleep.jpg" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\Fitbit.Portable.csprojResolveAssemblyReference.cache" />
@@ -524,7 +528,10 @@
     <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
-    <None Include="Properties\PublishProfiles\SleepBeta - Web Deploy.pubxml" />
+    <Content Include="CSSfiles\bootstrap-theme.css.map" />
+    <Content Include="CSSfiles\bootstrap-theme.min.css.map" />
+    <Content Include="CSSfiles\bootstrap.css.map" />
+    <Content Include="CSSfiles\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Fitbit.Portable.dll" />
@@ -604,6 +611,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

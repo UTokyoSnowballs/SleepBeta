@@ -1,4 +1,4 @@
-Pushing this branch would result in a non-fast-forward update on the branch in the remote repositorynav-/* NUGET: BEGIN LICENSE TEXT
+/* NUGET: BEGIN LICENSE TEXT
  *
  * Microsoft grants you the right to use these script files for the sole
  * purpose of either: (i) interacting through your browser with the Microsoft
@@ -860,6 +860,24 @@ pre code {
     padding-right: 15px;
     padding-left: 15px
 }
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+
+
 
 .col-xs-1,
 .col-xs-2,
@@ -923,10 +941,9 @@ pre code {
     width: 100%
 }
 
+
 @media(min-width:768px) {
-    .container {
-        max-width: 750px
-    }
+    
     .col-sm-1,
     .col-sm-2,
     .col-sm-3,
@@ -1077,10 +1094,9 @@ pre code {
     }
 }
 
+
 @media(min-width:992px) {
-    .container {
-        max-width: 970px
-    }
+
     .col-md-1,
     .col-md-2,
     .col-md-3,
@@ -1241,9 +1257,6 @@ pre code {
 }
 
 @media(min-width:1200px) {
-    .container {
-        max-width: 1170px
-    }
     .col-lg-1,
     .col-lg-2,
     .col-lg-3,
@@ -2048,7 +2061,11 @@ fieldset[disabled] .btn {
     color: #fff;
     border: 0px;
     font-family: "Lato";
-    background: -webkit-linear-gradient(right, #F74657, #459EE8);
+    background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+    background: linear-gradient(141deg, #F74657, #459EE8);
+    background: -o-linear-gradient(141deg, #F74657, #459EE8);
+    background: -moz-linear-gradient(141deg, #F74657, #459EE8);
+
 }
 
 .btn-default:hover,
@@ -2086,7 +2103,10 @@ fieldset[disabled] .btn-default.active {
 
 .btn-primary {
     color: #fff;
-    background: -webkit-linear-gradient(right, #F74657, #459EE8);
+    background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+    background: linear-gradient(141deg, #F74657, #459EE8);
+    background: -o-linear-gradient(141deg, #F74657, #459EE8);
+    background: -moz-linear-gradient(141deg, #F74657, #459EE8);
     
 }
 
@@ -4087,10 +4107,10 @@ textarea.input-group-sm>.input-group-btn>.btn {
     padding-right: 15px;
     padding-left: 15px;
     overflow-x: visible;
-    background: -webkit-linear-gradient(top, #F74657 , #459EE8); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(top, #F74657, #459EE8); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(top, #F74657, #459EE8); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(top, #F74657 , #459EE8);
+    background: -webkit-linear-gradient(-420deg, #F74657 , #459EE8); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(-420deg, #F74657, #459EE8); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(-420deg, #F74657, #459EE8); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(-420deg, #F74657 , #459EE8);
     
     
 }
@@ -4933,14 +4953,16 @@ a.list-group-item.active>.badge,
 
 .jumbotron {
     margin-bottom: 30px;
+    padding-bottom: 30px;
+    padding-top: 30px;
     font-size: 21px;
     text-align: center;
     font-weight: 200;
     line-height: 2.1428571435;
     color: inherit;
-    background: url("../images/unsplash_sleep.jpg") center center;
+    background: url("../images/photo-14.jpg") center center;
     background-size: cover;
-    height: 450px;
+    
 
 }
 
@@ -4955,6 +4977,7 @@ a.list-group-item.active>.badge,
 
 .container .jumbotron {
     border-radius: 0px
+    max-width: 100%;
 }
 
 @media screen and (min-width:768px) {
@@ -6842,10 +6865,10 @@ textarea {
     max-width: 280px
 }
 .bar {
-    width: 15px;
+    width: 13px;
 }
 text {
-    color: #fff;
+    fill: #fff;
 }
 .loginbtn{
     font-size: 16px;
@@ -6886,5 +6909,23 @@ text {
 }
 footer{
     text-align: center;
+    padding-top: 50px;
+    width: inherit;
+    
 }
 
+.text-muted{
+    color: #747F97;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+.col-fixed {
+    /* custom width */
+    width:390px;
+}
+.reg-btn{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}

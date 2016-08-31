@@ -50,15 +50,25 @@ namespace SleepMakeSense.Controllers
             return View(userdata);
         }
 
-        public ActionResult FactorQuestions()
+        public async Task<ActionResult> FactorQuestions()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 Models.Database Db = new Models.Database();
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                var dataQuery = (from a in Db.UserQuestions
+                var dataQuery = from a in Db.UserQuestions
                                  where a.AspNetUserId.Equals(userId)
-                                 select a).FirstOrDefault();
+                                 select a;
+
+                foreach (UserQuestion data in dataQuery)
+                {
+                    if(data.AspNetUserId == userId)
+                    {
+                        ViewBag.Message = "Enter Your Daily Habits";
+
+                        return View(data);
+                    }
+                }
                 //just used to test and print userID to see what it was
                 //System.Windows.Forms.MessageBox.Show(System.Web.HttpContext.Current.User.Identity.GetUserId());
                                 //successfully grabs data from table
@@ -72,7 +82,7 @@ namespace SleepMakeSense.Controllers
                     test = "false";
                 }
                 System.Windows.Forms.MessageBox.Show(test);*/
-                ViewBag.Message = "Enter Your Daily Habits";
+                /*
                 ViewBag.Question1 = dataQuery.Question1;
                 ViewBag.Question2 = dataQuery.Question2;
                 ViewBag.Question3 = dataQuery.Question3;
@@ -93,8 +103,8 @@ namespace SleepMakeSense.Controllers
                 ViewBag.Question18 = dataQuery.Question18;
                 ViewBag.Question19 = dataQuery.Question19;
                 ViewBag.Question20 = dataQuery.Question20;
-
-                return View();
+                */
+                return await Sync();
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
@@ -193,19 +203,6 @@ namespace SleepMakeSense.Controllers
             }
             base.Dispose(disposing);
         }
-
-        // Pandita: retrieve data, pass it to view and insert data to DB on the view. 
-        /*
-        private FitbitClient GetFitbitClient()
-        {
-            FitbitClient client = new FitbitClient(ConfigurationManager.AppSettings["FitbitConsumerKey"],
-                ConfigurationManager.AppSettings["FitbitConsumerSecret"],
-                Session["FitbitAuthToken"].ToString(),
-                Session["FitbitAuthTokenSecret"].ToString());
-
-            return client;
-        }
-        */
 
         /// <summary>
         /// HttpClient and hence FitbitClient are designed to be long-lived for the duration of the session. This method ensures only one client is created for the duration of the session.
@@ -581,7 +578,6 @@ namespace SleepMakeSense.Controllers
 
             return View(model);
         }
-
 
         public MyViewModel DataModelCreation(FitbitClient client)
         {

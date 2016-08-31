@@ -22,7 +22,7 @@ namespace SleepMakeSense.Models
         [Required]
         public string RefreshToken { get; set; }
 
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null;
 
         [Required]
         [StringLength(128)]

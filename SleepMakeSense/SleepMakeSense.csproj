@@ -394,6 +394,7 @@
     <Content Include="CSSfiles\Layout.min.css" />
     <Content Include="CSSfiles\Site.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -416,7 +417,6 @@
     <Content Include="obj\Release\InsertEFCodeFirstDeploy\original\Web.config" />
     <Content Include="obj\Release\InsertEFCodeFirstDeploy\transformed\Web.config" />
     <Content Include="obj\Release\SleepMakeSense.csproj.GenerateResource.Cache" />
-    <Content Include="obj\Release\SleepMakeSense.csprojResolveAssemblyReference.cache" />
     <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
@@ -424,6 +424,13 @@
     <Content Include="CSSfiles\bootstrap-theme.min.css.map" />
     <Content Include="CSSfiles\bootstrap.css.map" />
     <Content Include="CSSfiles\bootstrap.min.css.map" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\SleepBeta - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Fitbit.Portable.dll" />
@@ -503,7 +510,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -65,8 +65,10 @@ namespace SleepMakeSense.Controllers
                     if(data.AspNetUserId == userId)
                     {
                         ViewBag.Message = "Enter Your Daily Habits";
+                        MyViewModel viewModel = new MyViewModel();
 
-                        return View(data);
+                        viewModel.UserQuestion = data;
+                        return View(viewModel);
                     }
                 }
                 //just used to test and print userID to see what it was

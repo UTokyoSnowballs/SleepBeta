@@ -1,6 +1,6 @@
 ﻿@using SleepMakeSense.Models
 
-@model UserQuestion
+@model MyViewModel
 
 <!DOCTYPE html>
 
@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Question1 == true)
+                    @if (Model.UserQuestion.Question1 == true)
                     {
                         <tr>
                                 <td>Watch TV</td>
@@ -65,7 +65,7 @@
                                 </tr>
 
                     }
-                            @if (Model.Question2 == true)
+                            @if (Model.UserQuestion.Question2 == true)
                             {
                                 <tr>
                                     <td>Drink Caffiene</td>
@@ -88,7 +88,7 @@
                                 </tr>
                             }
                       
-                        @if (Model.Question3 == true)
+                        @if (Model.UserQuestion.Question3 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -113,7 +113,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question4 == true)
+                        @if (Model.UserQuestion.Question4 == true)
                         {
                             <tr>
                                 <td>Exercise Often</td>
@@ -135,7 +135,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question5 == true)
+                        @if (Model.UserQuestion.Question5 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -157,7 +157,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question6 == true)
+                        @if (Model.UserQuestion.Question6 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -179,7 +179,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question7 == true)
+                        @if (Model.UserQuestion.Question7 == true)
                         {
                             <tr>
                                 <td>Late Night Snacking</td>
@@ -201,7 +201,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question8 == true)
+                        @if (Model.UserQuestion.Question8 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -214,7 +214,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question9 == true)
+                        @if (Model.UserQuestion.Question9 == true)
                         {
                             <tr>
                                 <td>Take Naps</td>
@@ -236,7 +236,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question10 == true)
+                        @if (Model.UserQuestion.Question10 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -249,7 +249,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question11 == true)
+                        @if (Model.UserQuestion.Question11 == true)
                         {
                             <tr>
                                 <td>Drink Alcohol</td>
@@ -271,7 +271,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question12 == true)
+                        @if (Model.UserQuestion.Question12 == true)
                         {
                             <tr>
                                 <td>Part Time Job</td>
@@ -293,7 +293,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question13 == true)
+                        @if (Model.UserQuestion.Question13 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -315,7 +315,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question14 == true)
+                        @if (Model.UserQuestion.Question14 == true)
                         {
                             <tr>
                                 <td>Texting/Using Your Phone Before Bed</td>
@@ -337,7 +337,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question15 == true)
+                        @if (Model.UserQuestion.Question15 == true)
                         {
                             <tr>
                                 <td>Write A Diary/Journal</td>
@@ -350,7 +350,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question16 == true)
+                        @if (Model.UserQuestion.Question16 == true)
                         {
                             <tr>
                                 <td>Listen To Music Before Bed</td>
@@ -372,7 +372,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question17 == true)
+                        @if (Model.UserQuestion.Question17 == true)
                         {
                             <tr>
                                 <td> </td>
@@ -392,7 +392,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question18 == true)
+                        @if (Model.UserQuestion.Question18 == true)
                         {
                             <tr>
                                 <td>Use Social Media</td>
@@ -414,7 +414,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question19 == true)
+                        @if (Model.UserQuestion.Question19 == true)
                         {
                             <tr>
                                 <td>Play Video Games</td>
@@ -436,7 +436,7 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.Question20 == true)
+                        @if (Model.UserQuestion.Question20 == true)
                         {
                             <tr>
                                 <td>Upcoming Examination</td>
@@ -491,7 +491,7 @@
                         </tr>
                     <td></td>
                     <td></td>
-                    <td><input type="button" onclick="account()" value="Submit"></td>
+                    <td><p>@Html.ActionLink("Connect", "ConnectFitbit", "Fitbit", new { }, new { @class = "btn btn-success" })</p></td>
 </tbody>
             </table>
 

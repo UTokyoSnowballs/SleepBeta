@@ -9,5 +9,7 @@ namespace SleepMakeSense.Models
     {
         public List<Userdata> AllData { get; set; }
         public List<CorrList> CorrCoefficient { get; set; }
+
+        public UserQuestion UserQuestion { get; set; }
     }
 }

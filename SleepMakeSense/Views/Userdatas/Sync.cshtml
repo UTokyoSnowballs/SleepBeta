@@ -150,7 +150,7 @@
                 { "color": "#F74657", "text": "bad" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
-                    document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
+                    document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". We havn't found any connections in your data, please give us more infomation.";
                 } else {
 
                     var div = d3.select(section).append("div")
@@ -405,13 +405,13 @@
     </div>
 <div class="container">
     <div class="row">
-            <h2> Sleep Structure </h2>
+            <h2> My Sleep Data </h2>
             <h4> Your sleep structure is characterized by the following 5 aspects.</h4><hr/>
     </div>
   <div class="im-centered">
     <div class="row">
         <h4> Hours Asleep </h4>
-        <h5> My hours asleep during the past 40 days</h5>
+        <h5> My hours asleep </h5>
     </div>
   </div>
   <div class="im-centered">
@@ -439,8 +439,8 @@
     <hr />
     <div class="im-centered">
         <div class="row">
-            <h4> Minutes Awake </h4>
-            <h5> My minutes awake during the past 40 days</h5>
+            <h4> Minutes Restless </h4>
+            <h5> My minutes restless/awake during the night </h5>
         </div>
     </div>
     <div class="im-centered">
@@ -468,7 +468,7 @@
 
     <!--div class="row">
         <h4> Awakening Count </h4>
-        <h5> My awakening count during the past 40 days</h5>
+        <h5> My awakening count </h5>
     </!--div>
     <div class="row">
         <div class="col-md-6">
@@ -489,7 +489,7 @@
     <div class="im-centered">
         <div class="row">
             <h4>Minutes To Fall Asleep </h4>
-            <h5> My time to fall asleep during the past 40 days </h5>
+            <h5> My time to fall asleep </h5>
         </div>
     </div>
     <div class="im-centered">
@@ -517,7 +517,7 @@
     <div class="im-centered">
         <div class="row">
             <h4> Sleep Efficiency </h4>
-            <h5>My sleep efficiency during the past 40 days</h5>
+            <h5>My Sleep efficiency, time asleep / (total time in bed - time to fall asleep) </h5>
         </div>
     </div>
     <div class="im-centered">

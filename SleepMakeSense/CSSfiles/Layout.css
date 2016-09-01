@@ -6865,7 +6865,7 @@ textarea {
     max-width: 280px
 }
 .bar {
-    width: 14px;
+    width: 13px;
 }
 text {
     fill: #fff;
@@ -6928,4 +6928,36 @@ footer{
 .reg-btn{
     margin-top: 25px;
     margin-bottom: 25px;
+}
+.node {
+    cursor: pointer;
+}
+.bubble {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.legend {
+    list-style: none;
+    float: right;
+    margin-bottom: 0;
+    margin-top: 10px;
+    color: #747F97;
+}
+.legend li {
+    float: left;
+    margin-right: 10px;
+}
+.legend span {
+    float: left;
+    width: 25px;
+    height: 12px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.legend .good {
+    background-color: #459EE8;
+}
+.legend .bad{
+    background-color: #F74657;
 }

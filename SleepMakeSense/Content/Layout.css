@@ -6936,3 +6936,24 @@ footer{
     padding-right: 15px;
     padding-left: 15px;
 }
+.legend {
+    list-style: none;
+}
+.legend li {
+    float: left;
+    margin-right: 10px;
+}
+.legend span {
+    border: 1px solid #ccc;
+    float: left;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin: 2px;
+}
+.legend .good {
+    background-color: #459EE8;
+}
+.legend .bad{
+    background-color: #F74657;
+}

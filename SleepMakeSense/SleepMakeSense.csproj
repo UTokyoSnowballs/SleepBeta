@@ -271,7 +271,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataMining.cs" />
     <Compile Include="Controllers\FitbitController.cs" />
-    <Compile Include="Controllers\FitbitControllerOld.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SyncController.cs" />

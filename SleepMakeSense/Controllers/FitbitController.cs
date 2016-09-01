@@ -50,12 +50,7 @@ namespace SleepMakeSense.Controllers
             var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
             string[] scopes = new string[] { "profile", "activity", "sleep", "weight", "nutrition" };
 
-
-
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
-
-            
-
 
             return Redirect(authUrl);
         }
@@ -143,6 +138,13 @@ namespace SleepMakeSense.Controllers
 
             if (fitbitConnected == true)
             {
+                //Loading Session data when the user has does not have Key creds in their session
+                var appCredentials = new FitbitAppCredentials()
+                {
+                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
+                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
+                };
+
                 GetFitbitClient(accessToken);
                 syncFitbitCred(accessToken);
                 return View("Callback");

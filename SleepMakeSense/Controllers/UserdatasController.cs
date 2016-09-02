@@ -68,44 +68,13 @@ namespace SleepMakeSense.Controllers
                         MyViewModel viewModel = new MyViewModel();
 
                         viewModel.UserQuestion = data;
+                        viewModel.Morning = false;
+                        if (DateTime.UtcNow.AddHours(10).ToString("tt") == "AM") viewModel.Morning = true;
+
                         return View(viewModel);
                     }
                 }
-                //just used to test and print userID to see what it was
-                //System.Windows.Forms.MessageBox.Show(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                                //successfully grabs data from table
-                /*String test = "";
-                if(dataQuery.Question8 == true)
-                {
-                    test = "true";
-                }
-                else
-                {
-                    test = "false";
-                }
-                System.Windows.Forms.MessageBox.Show(test);*/
-                /*
-                ViewBag.Question1 = dataQuery.Question1;
-                ViewBag.Question2 = dataQuery.Question2;
-                ViewBag.Question3 = dataQuery.Question3;
-                ViewBag.Question4 = dataQuery.Question4;
-                ViewBag.Question5 = dataQuery.Question5;
-                ViewBag.Question6 = dataQuery.Question6;
-                ViewBag.Question7 = dataQuery.Question7;
-                ViewBag.Question8 = dataQuery.Question8;
-                ViewBag.Question9 = dataQuery.Question9;
-                ViewBag.Question10 = dataQuery.Question10;
-                ViewBag.Question11 = dataQuery.Question11;
-                ViewBag.Question12 = dataQuery.Question12;
-                ViewBag.Question13 = dataQuery.Question13;
-                ViewBag.Question14 = dataQuery.Question14;
-                ViewBag.Question15 = dataQuery.Question15;
-                ViewBag.Question16 = dataQuery.Question16;
-                ViewBag.Question17 = dataQuery.Question17;
-                ViewBag.Question18 = dataQuery.Question18;
-                ViewBag.Question19 = dataQuery.Question19;
-                ViewBag.Question20 = dataQuery.Question20;
-                */
+
                 return await Sync();
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

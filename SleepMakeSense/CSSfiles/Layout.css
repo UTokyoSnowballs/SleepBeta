@@ -4982,8 +4982,8 @@ a.list-group-item.active>.badge,
 
 @media screen and (min-width:768px) {
     .jumbotron {
-        padding-top: 48px;
-        padding-bottom: 48px
+        padding-top: 80px;
+        padding-bottom: 80px
     }
     .container .jumbotron {
         padding-right: 60px;
@@ -6960,4 +6960,10 @@ footer{
 }
 .legend .bad{
     background-color: #F74657;
+}
+.h-center {
+    text-align: center;
+}
+.p-center {
+    text-align: center;
 }

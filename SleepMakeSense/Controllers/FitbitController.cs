@@ -70,13 +70,13 @@ namespace SleepMakeSense.Controllers
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             FitbitClient fitbitClient = GetFitbitClient(accessToken);
 
-            SyncFitbitCred(accessToken);
+            syncFitbitCred(accessToken);
 
             return View();
 
         }
 
-        private void SyncFitbitCred(OAuth2AccessToken accessToken)
+        private void syncFitbitCred(OAuth2AccessToken accessToken)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -87,6 +87,7 @@ namespace SleepMakeSense.Controllers
                 TokenManagement userToken = (from a in Db.TokenManagements
                                              where a.AspNetUserId.Equals(userId)
                                              select a).FirstOrDefault();
+
 
                 if (userToken == null)
                 {
@@ -107,28 +108,23 @@ namespace SleepMakeSense.Controllers
         }
 
 
-        public async Task<ActionResult> ConnectFitbit()
+        public ActionResult ConnectFitbit()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
-
-            //Getting Needed Varibles from the session
+            Models.Database Db = new Models.Database();
             bool fitbitConnected = false;
             OAuth2AccessToken accessToken = new OAuth2AccessToken();
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-
-            //Database Connection and retrieval of data
-            Models.Database Db = new Models.Database();
             var userToken = from a in Db.TokenManagements
-                            where a.AspNetUserId.Equals(userId)
-                            select a;
+                             where a.AspNetUserId.Equals(userId)
+                             select a;
             foreach (TokenManagement data in userToken)
             {
                 if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
                 {
-                    //Key is found, Making a tokenmanagement into a OAuth2AccessToken
                     fitbitConnected = true;
                     accessToken.Token = data.Token;
                     accessToken.TokenType = data.TokenType;
@@ -136,10 +132,10 @@ namespace SleepMakeSense.Controllers
                     accessToken.RefreshToken = data.RefreshToken;
                     accessToken.UserId = data.UserId;
                     accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
+
                 }
             }
 
-            //Key is found
             if (fitbitConnected == true)
             {
                 //Loading Session data when the user has does not have Key creds in their session
@@ -148,22 +144,15 @@ namespace SleepMakeSense.Controllers
                     ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
                     ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
                 };
-                Session["AppCredentials"] = appCredentials;
-                string code = Request.Params["code"];
 
-
-                //Wanting to refreash the token here then saving the changes.
-                var fitbitClient = GetFitbitClient(accessToken);
-                accessToken = await fitbitClient.RefreshOAuth2TokenAsync();
-                ViewBag.AccessToken = accessToken;
-
-                SyncFitbitCred(accessToken);
-
+                GetFitbitClient(accessToken);
+                syncFitbitCred(accessToken);
                 return View("Callback");
             }
 
             return Authorize();
         }
+
 
         /// <summary>
         /// In this example we show how to explicitly request a token refresh. However, FitbitClient V2 on its default implementation provide an OOB automatic token refresh.
@@ -171,7 +160,6 @@ namespace SleepMakeSense.Controllers
         /// <returns>A refreshed token</returns>
         public async Task<ActionResult> RefreshToken()
         {
-         
             var fitbitClient = GetFitbitClient();
 
             ViewBag.AccessToken = await fitbitClient.RefreshOAuth2TokenAsync();
@@ -189,6 +177,9 @@ namespace SleepMakeSense.Controllers
 
             return View("TestToken");
         }
+
+      
+
 
         /// <summary>
         /// HttpClient and hence FitbitClient are designed to be long-lived for the duration of the session. This method ensures only one client is created for the duration of the session.

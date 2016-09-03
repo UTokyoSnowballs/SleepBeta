@@ -72,7 +72,9 @@ namespace SleepMakeSense.Controllers
 
             syncFitbitCred(accessToken);
 
-            return View();
+             return View();
+            //return RedirectToAction("Sync", "UserDatas");
+
 
         }
 
@@ -147,11 +149,60 @@ namespace SleepMakeSense.Controllers
 
                 GetFitbitClient(accessToken);
                 syncFitbitCred(accessToken);
-                return View("Callback");
+             return View("Callback");
+              //  return RedirectToAction("Sync", "UserDatas");
             }
 
             return Authorize();
         }
+
+        public ActionResult DirectToSync()
+        {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                throw new Exception("You Must be Loged in to sync Fitbit Data");
+            }
+            Models.Database Db = new Models.Database();
+            bool fitbitConnected = false;
+            OAuth2AccessToken accessToken = new OAuth2AccessToken();
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var userToken = from a in Db.TokenManagements
+                            where a.AspNetUserId.Equals(userId)
+                            select a;
+            foreach (TokenManagement data in userToken)
+            {
+                if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
+                {
+                    fitbitConnected = true;
+                    accessToken.Token = data.Token;
+                    accessToken.TokenType = data.TokenType;
+                    accessToken.ExpiresIn = data.ExpiresIn;
+                    accessToken.RefreshToken = data.RefreshToken;
+                    accessToken.UserId = data.UserId;
+                    accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
+
+                }
+            }
+
+            if (fitbitConnected == true)
+            {
+                //Loading Session data when the user has does not have Key creds in their session
+                var appCredentials = new FitbitAppCredentials()
+                {
+                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
+                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
+                };
+
+                GetFitbitClient(accessToken);
+                syncFitbitCred(accessToken);
+                //     return View("Callback");
+                return RedirectToAction("Sync", "UserDatas");
+            }
+
+            return Authorize();
+        }
+
+
 
 
         /// <summary>

@@ -286,11 +286,11 @@ namespace SleepMakeSense.Controllers
 
         }
 
-        private async Task<ActionResult> FitbitDataSync(FitbitClient client)
+        private async Task<ActionResult> FitbitDataSync(FitbitClient client, String userId)
         {
             ViewBag.FitbitSynced = true;
 
-            string userId = null;
+
             bool userLogedIn = false;
             Models.Database Db = new Models.Database();
             List<Userdata> queryList = new List<Userdata>();
@@ -298,8 +298,7 @@ namespace SleepMakeSense.Controllers
             DateTime dateStop = DateTime.UtcNow.AddDays(-40);
 
 
-            userLogedIn = true;
-            userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            userLogedIn = true; 
             var lastSynced = from a in Db.Userdatas
                              where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= dateStop
                              orderby a.DateStamp
@@ -543,30 +542,27 @@ namespace SleepMakeSense.Controllers
 
         public async Task<ActionResult> Sync()
         {
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             FitbitClient client = GetFitbitClient();
-            await FitbitDataSync(client);
-            MyViewModel model = DataModelCreation(client);
+            await FitbitDataSync(client, userId);
+            MyViewModel model = DataModelCreation(client, userId);
 
             return View(model);
         }
 
-        public MyViewModel DataModelCreation(FitbitClient client)
+        public MyViewModel DataModelCreation(FitbitClient client,string userId)
         {
             ViewBag.FitbitSynced = true;
             //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
-            string userId = null;
             bool userLogedIn = false;
             Models.Database Db = new Models.Database();
-
-
 
             DateTime date = DateTime.UtcNow.AddDays(-40);
 
             userLogedIn = true;
-            userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             List<Userdata> results = (from a in Db.Userdatas
-                                            where a.AspNetUserId.Equals(userId) && a.DateStamp >= date
+                                      where a.AspNetUserId == userId && a.DateStamp >= date && a.FitbitData == true
                                             select a).ToList();
 
 

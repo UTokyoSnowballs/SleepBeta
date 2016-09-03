@@ -23,11 +23,6 @@
                 @Html.ActionLink("SleepBeta", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
-                    <li><a href="@Url.Action("About", "Home")"><i class="fa fa-info fa-fw" aria-hidden="true"></i>&nbsp; About</a></li>
-                    
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -41,7 +36,7 @@
         <footer>
             
             
-            <p class="text-muted">&copy; @DateTime.Now.Year - SleepMakeSense. All Rights Reserved.</p>
+            <p class="text-muted">&copy; @DateTime.Now.Year - SleepBeta. All Rights Reserved.</p>
             
         </footer>
     </div>

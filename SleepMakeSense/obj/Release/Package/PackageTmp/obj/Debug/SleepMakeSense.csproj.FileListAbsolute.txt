@@ -747,118 +747,118 @@ C:\Users\camer\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.We
 C:\Users\camer\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.Deployment.xml
 C:\Users\camer\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.Razor.xml
 C:\Users\camer\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Optimization.xml
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.Initial.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test1.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test2.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test3.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test4.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.tst.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test5.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test6.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test7.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test8.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test9.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.tst1.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test10.resources
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.dll
-C:\Uni Dev\SleepMakeSense\obj\Debug\SleepMakeSense.pdb
-C:\Uni Dev\SleepMakeSense\bin\SleepMakeSense.dll.config
-C:\Uni Dev\SleepMakeSense\bin\SleepMakeSense.dll
-C:\Uni Dev\SleepMakeSense\bin\SleepMakeSense.pdb
-C:\Uni Dev\SleepMakeSense\bin\Antlr3.Runtime.dll
-C:\Uni Dev\SleepMakeSense\bin\Ceka.dll
-C:\Uni Dev\SleepMakeSense\bin\EntityFramework.dll
-C:\Uni Dev\SleepMakeSense\bin\EntityFramework.SqlServer.dll
-C:\Uni Dev\SleepMakeSense\bin\Fitbit.Portable.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.Beans.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.Core.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.Remoting.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.SwingAWT.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.Text.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.Util.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.XML.API.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.XML.Bind.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.XML.Parse.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.XML.Transform.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.XML.WebServices.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.OpenJDK.XML.XPath.dll
-C:\Uni Dev\SleepMakeSense\bin\IKVM.Runtime.dll
-C:\Uni Dev\SleepMakeSense\bin\LumenWorks.Framework.IO.dll
-C:\Uni Dev\SleepMakeSense\bin\MathNet.Numerics.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Google.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Web.Infrastructure.dll
-C:\Uni Dev\SleepMakeSense\bin\MySql.Data.dll
-C:\Uni Dev\SleepMakeSense\bin\Newtonsoft.Json.dll
-C:\Uni Dev\SleepMakeSense\bin\Owin.dll
-C:\Uni Dev\SleepMakeSense\bin\PicNetML.dll
-C:\Uni Dev\SleepMakeSense\bin\RestSharp.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Helpers.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Mvc.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Optimization.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Razor.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.WebPages.Deployment.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.WebPages.dll
-C:\Uni Dev\SleepMakeSense\bin\System.Web.WebPages.Razor.dll
-C:\Uni Dev\SleepMakeSense\bin\WebGrease.dll
-C:\Uni Dev\SleepMakeSense\bin\weka.dll
-C:\Uni Dev\SleepMakeSense\bin\Antlr3.Runtime.pdb
-C:\Uni Dev\SleepMakeSense\bin\Ceka.xml
-C:\Uni Dev\SleepMakeSense\bin\EntityFramework.xml
-C:\Uni Dev\SleepMakeSense\bin\EntityFramework.SqlServer.xml
-C:\Uni Dev\SleepMakeSense\bin\Fitbit.Portable.pdb
-C:\Uni Dev\SleepMakeSense\bin\MathNet.Numerics.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Google.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Uni Dev\SleepMakeSense\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Uni Dev\SleepMakeSense\bin\Newtonsoft.Json.xml
-C:\Uni Dev\SleepMakeSense\bin\PicNetML.xml
-C:\Uni Dev\SleepMakeSense\bin\RestSharp.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Helpers.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Mvc.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Razor.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.WebPages.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.WebPages.Deployment.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.WebPages.Razor.xml
-C:\Uni Dev\SleepMakeSense\bin\System.Web.Optimization.xml
-C:\Uni Dev\SleepMakeSense\bin\ja\EntityFramework.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\EntityFramework.SqlServer.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Core.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Owin.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.Host.SystemWeb.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.Security.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.Security.Facebook.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.Security.Google.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\Microsoft.Owin.Security.Twitter.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.Helpers.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.Mvc.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.Razor.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.WebPages.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.WebPages.Deployment.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.WebPages.Razor.resources.dll
-C:\Uni Dev\SleepMakeSense\bin\ja\System.Web.Optimization.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\SleepMakeSense.dll.config
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\SleepMakeSense.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\SleepMakeSense.pdb
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Antlr3.Runtime.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Ceka.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\EntityFramework.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\EntityFramework.SqlServer.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Fitbit.Portable.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.Beans.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.Core.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.Remoting.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.SwingAWT.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.Text.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.Util.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.XML.API.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.XML.Bind.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.XML.Parse.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.XML.Transform.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.XML.WebServices.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.OpenJDK.XML.XPath.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\IKVM.Runtime.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\LumenWorks.Framework.IO.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\MathNet.Numerics.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\MySql.Data.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Newtonsoft.Json.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Owin.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\PicNetML.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\RestSharp.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Helpers.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Mvc.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Optimization.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Razor.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.Razor.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\WebGrease.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\weka.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Antlr3.Runtime.pdb
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Ceka.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\EntityFramework.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\EntityFramework.SqlServer.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Fitbit.Portable.pdb
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\MathNet.Numerics.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\Newtonsoft.Json.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\PicNetML.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\RestSharp.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Helpers.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Mvc.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Razor.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.WebPages.Razor.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\System.Web.Optimization.xml
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\EntityFramework.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\EntityFramework.SqlServer.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Core.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Owin.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.Host.SystemWeb.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.Security.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.Security.Facebook.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.Security.Google.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\Microsoft.Owin.Security.Twitter.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.Helpers.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.Mvc.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.Razor.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.WebPages.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.WebPages.Deployment.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.WebPages.Razor.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.Optimization.resources.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.Initial.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test1.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test2.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test3.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test4.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.tst.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test5.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test6.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test7.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test8.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test9.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.tst1.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test10.resources
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.dll
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.pdb

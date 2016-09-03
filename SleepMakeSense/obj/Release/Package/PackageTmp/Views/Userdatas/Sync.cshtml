@@ -22,7 +22,7 @@
     <style type="text/css">
         .axis path, .axis line {
             fill: none;
-            stroke: #bdbdbd;
+            stroke: #747F97;
             shape-rendering: crispEdges;
             font-size: x-small;
         }
@@ -54,6 +54,11 @@
             border: 6px;
             border-radius: 8px;
             pointer-events: none;
+        }
+        svg.bubble {
+            padding-right: 15px;
+            padding-left: 15px;
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -137,15 +142,15 @@
                   .attr("class", "bubble");
 
                 var legend_data = [
-                { "color": "#00CC66", "text": "Positive relationship" }, //Very strong positive relationship
+                { "color": "#459EE8", "text": "good" }, //Very strong positive relationship
                /* { "color": "#99FF99", "text": "Strong positive relationship" },
                 { "color": "#CCFFCC", "text": "Moderate positive relationship" },
                 { "color": "#F6CED8", "text": "Moderate negative relationship" },
                 { "color": "#F7819F", "text": "Strong negative relationship" },*/
-                { "color": "#FF0040", "text": "Negative relationship" }]; //Very strong negative relationship
+                { "color": "#F74657", "text": "bad" }]; //Very strong negative relationship
 
                 if (mydata.length == 0) {
-                    document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". Maybe you should track more factors.";
+                    document.getElementById(textp).innerText = "None of the tracked factors seems to impact your " + sfeature + ". We havn't found any connections in your data, please give us more infomation.";
                 } else {
 
                     var div = d3.select(section).append("div")
@@ -171,27 +176,15 @@
                     .attr("x", function (d) { return d.Width })
                     .attr("y", function (d) { return d.Height })
                     //.transition().duration(500)
-                    .attr('width', 150)
-                    .attr('height', 100)
-                    .style("fill", function (d) {
-                        coeff = d.Coefficient;
-                        console.log(coeff);
-                        /*if (coeff < 0) {
-                            temp = Math.abs(coeff);
-                            if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
-                            else if ((temp < 0.8) && (temp >= 0.5)) { return "#F7819F"; }
-                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#FF0040"; }
-                        } else */if (coeff >= 0) {
-                            if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#00CC66"; }
-                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#FF0040"; }  //#99FF99
-                            //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
-                        }
-                    })
-                    .style("stroke", "white")
+                    .attr('width', 155)
+                    .attr('height', 105)
+                    .style("fill", "#2C3041")
+                    
                     .on("mouseover", function (d) {
                         d3.select(this)
-                            .style("stroke", "gray")
-                            .style("stroke-width", 6);
+                            .style("stroke", "#373E4F")
+                            .style("stroke-width", 3)
+                            .style("cursor", "pointer");
                         div.transition()
                             .duration(100)
                             .style("opacity", 0.9);
@@ -206,7 +199,7 @@
                     })
                         .on("mouseout", function (d) {
                             d3.select(this)
-                               .style("stroke", "white")
+                               .style("stroke", "#373E4F")
                                .style("stroke-width", 1);
                             div.transition()
                                 .duration(100)
@@ -224,6 +217,20 @@
                             return 395;
                         }
                     })
+                    .style("fill", function (d) {
+                        coeff = d.Coefficient;
+                        console.log(coeff);
+                        /*if (coeff < 0) {
+                            temp = Math.abs(coeff);
+                            if ((temp >= 0.8) && (temp <= 1.0)) { return "#F74657"; }
+                            else if ((temp < 0.8) && (temp >= 0.5)) { return "#F74657"; }
+                            else if ((temp < 0.5) && (temp >= 0.3)) { return "#F74657"; }
+                        } else */if (coeff >= 0) {
+                            if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#459EE8"; }
+                            else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#F74657"; }  //#99FF99
+                            //else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#CCFFCC"; }
+                        }
+                    })
                     .attr("y", function (d) {
                         if (d.Height != 0) {
                             return 160;
@@ -238,7 +245,7 @@
                     //.attr("x", function (d) { return d.width / 2 })
                     //.attr("y", function (d) { return d.height / 2 });
 
-                    var legend = svg.selectAll(".legend")
+                   /* var legend = svg.selectAll(".legend")
                         .data(legend_data)
                       .enter().append("g")
                         .attr("class", "legend")
@@ -256,7 +263,7 @@
                         .attr("y", 135)
                         .attr("dy", ".35em")
                         .style("text-anchor", "start")
-                        .text(function (d) { return d.text; });
+                        .text(function (d) { return d.text; }); */
                 }
             }
 
@@ -355,7 +362,7 @@
                             .translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
                          
                          d3.select(this)
-                           .attr("fill", "#3376bf");
+                           .attr("fill", "#747F97");
 
                          div.transition()
                             .duration(200)
@@ -398,13 +405,20 @@
     </div>
 <div class="container">
     <div class="row">
-            <h2> Sleep Structure </h2>
-            <h4> Your sleep structure is characterized by the following 5 aspects.</h4><hr/>
+            <h2> My Sleep Data </h2>
+            <hr/>
     </div>
   <div class="im-centered">
     <div class="row">
-        <h4> Hours Asleep </h4>
-        <h5> My hours asleep during the past 40 days</h5>
+        <div class="col-md-6">
+            <h4> Hours Asleep </h4>
+        </div>
+        <div class="col-md-6">
+            <ul class="legend">
+                <li><span class="good"></span>good</li>
+                <li><span class="bad"></span>bad</li>
+            </ul>
+        </div>
     </div>
   </div>
   <div class="im-centered">
@@ -432,8 +446,16 @@
     <hr />
     <div class="im-centered">
         <div class="row">
-            <h4> Minutes Awake </h4>
-            <h5> My minutes awake during the past 40 days</h5>
+            <div class="col-md-6">
+                <h4> Minutes Restless </h4>
+                <h6> minutes restless/awake during the night </h6>
+            </div>
+            <div class="col-md-6">
+            <ul class="legend">
+                <li><span class="good"></span>good</li>
+                <li><span class="bad"></span>bad</li>
+            </ul>
+        </div>
         </div>
     </div>
     <div class="im-centered">
@@ -461,7 +483,7 @@
 
     <!--div class="row">
         <h4> Awakening Count </h4>
-        <h5> My awakening count during the past 40 days</h5>
+        <h6> My awakening count </h6>
     </!--div>
     <div class="row">
         <div class="col-md-6">
@@ -481,8 +503,16 @@
     </div> <hr />
     <div class="im-centered">
         <div class="row">
+        <div class="col-md-6">
             <h4>Minutes To Fall Asleep </h4>
-            <h5> My time to fall asleep during the past 40 days </h5>
+            <h6> time to fall asleep </h6>
+        </div>
+        <div class="col-md-6">
+            <ul class="legend">
+                <li><span class="good"></span>good</li>
+                <li><span class="bad"></span>bad</li>
+            </ul>
+        </div>
         </div>
     </div>
     <div class="im-centered">
@@ -509,8 +539,16 @@
     </div> <hr /-->
     <div class="im-centered">
         <div class="row">
-            <h4> Sleep Efficiency </h4>
-            <h5>My sleep efficiency during the past 40 days</h5>
+            <div class="col-md-6">
+                <h4> Sleep Efficiency </h4>
+                <h6>Time asleep / (total time in bed - time to fall asleep) </h6>
+            </div>
+            <div class="col-md-6">
+                <ul class="legend">
+                    <li><span class="good"></span>good</li>
+                    <li><span class="bad"></span>bad</li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="im-centered">

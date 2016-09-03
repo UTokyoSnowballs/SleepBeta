@@ -13,8 +13,8 @@
         {
             <p>The current session has not been authenticated with fitbit</p>
         }
-        <p>
-        <p><a href="/Userdatas/Sync" class="btn btn-primary">Upload My Fitbit Data &raquo;</a></p>
+        <p>@Html.ActionLink("Upload My Fitbit Data", "DataSync", "UserDatas", new { }, new { @class = "btn btn-primary" })</p>
+
         <p><a href="/Userdatas/FactorQuestions" class="btn btn-primary">Testing Factor Questions &raquo;</a></p>
 
     </div>

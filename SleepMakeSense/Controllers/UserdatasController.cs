@@ -547,11 +547,22 @@ namespace SleepMakeSense.Controllers
         {
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             FitbitClient client = GetFitbitClient();
+       //     await FitbitDataSync(client, userId);
+            MyViewModel model = DataModelCreation(client, userId);
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> DataSync()
+        {
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
+            FitbitClient client = GetFitbitClient();
             await FitbitDataSync(client, userId);
             MyViewModel model = DataModelCreation(client, userId);
 
             return View(model);
         }
+
 
         public MyViewModel DataModelCreation(FitbitClient client,string userId)
         {

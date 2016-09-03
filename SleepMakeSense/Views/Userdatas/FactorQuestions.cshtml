@@ -21,9 +21,8 @@
             }
 
             function account() {
-                var string = "<td>Watch TV</td><td>How many hours did you watch TV after 6pm last night?</td>";
-                document.getElementById("tv").innerHTML = string;
-
+                //document.getElementById("tv").innerHTML;
+                window.alert(document.getElementById("ddlViewByTV").selectedIndex);
                 return string;
             }
 
@@ -490,7 +489,7 @@
                             </td>
                         </tr>
                     <td></td>
-                    <td></td>
+                    <td><button type="button" onclick="account()">Click Me!</button></td>
                     <td><p>@Html.ActionLink("Connect", "ConnectFitbit", "Fitbit", new { }, new { @class = "btn btn-success" })</p></td>
 </tbody>
             </table>

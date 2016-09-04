@@ -75,7 +75,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                return  Sync();
+                return await Sync();
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }

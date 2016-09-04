@@ -414,6 +414,7 @@
                 <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Minutes Asleep</a></li>
                 <li><a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Minutes Restless</a></li>
                 <li><a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a></li>
+
             </ul>
             <div class="im-centered">
                 <div class="tab-content">
@@ -423,21 +424,66 @@
                                 PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
                             </script>
                         </div>
+                        <div class="col-md-6">
+                            <ul class="legend">
+                                <li><span class="good"></span>good</li>
+                                <li><span class="bad"></span>bad</li>
+                            </ul>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="AffectingFactorsMinutesAsleep">
+                                    <script type="text/javascript">
+                        testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+</div>
                     </div>
                     <div class="tab-pane" id="MinutesAwakeTimeseries">
                         <div id="MinutesAwakeTimeseries">
                             <script type="text/javascript">
                                 PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
                             </script>
-                            <h6> minutes restless/awake during the night </h6>
                         </div>
+                        <div class="col-md-6">
+                            <ul class="legend">
+                                <li><span class="good"></span>good</li>
+                                <li><span class="bad"></span>bad</li>
+                            </ul>
+                            <div class="row">
+                                <div id="AffectingFactorsMinutesAwake">
+                                    <script type="text/javascript">
+                                        testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
+                                    </script>
+                                </div>
+                            </div>
+                            </div>
                     </div>
                     <div class="tab-pane" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
                             <script type="text/javascript">
                         PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
                             </script>
-                            <h6>Time asleep / Total Time in bed </h6>
+                        </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                <h6>Time asleep / Total Time in bed </h6>
+                                </div>
+                                <div class="row">
+                                    <ul class="legend">
+                                        <li><span class="good"></span>good</li>
+                                        <li><span class="bad"></span>bad</li>
+                                    </ul>
+                                </div>
+                                    <div class="col-md-6">
+                                        <div id="AffectingFactorsSleepEfficiency">
+                                            <script type="text/javascript">
+                                                testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
+                                            </script>
+                                        </div>
+                                </div>
                         </div>
                     </div>
             </div>
@@ -445,40 +491,6 @@
             </div>
             </div>
 
-  <div class="im-centered">
-    <div class="row">
-        <div class="col-md-6">
-            <ul class="legend">
-                <li><span class="good"></span>good</li>
-                <li><span class="bad"></span>bad</li>
-            </ul>
-        </div>
-    </div>
-  </div>
-  
-  </div>
-  <div class="im-centered">
-    <div class="row">
-          <div class="col-md-12">
-                <div id="AffectingFactorsMinutesAsleep">
-                    <script type="text/javascript">
-                        testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="im-centered">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="AffectingFactorsMinutesAwake">
-                    <script type="text/javascript">
-                        testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div> <hr />
 
     <!--div class="row">
         <h4> Awakening Count </h4>
@@ -536,18 +548,7 @@
             </div>
         </div>
     </div> <hr /-->
-
-    <div class="im-centered">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="AffectingFactorsSleepEfficiency">
-                    <script type="text/javascript">
-                        testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div> <hr />
+ <hr />
 
     <div style="color:#3376bf">
         <h5> 

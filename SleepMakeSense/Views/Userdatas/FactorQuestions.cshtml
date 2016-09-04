@@ -21,9 +21,72 @@
             }
 
             function account() {
-                //document.getElementById("tv").innerHTML;
-                window.alert(document.getElementById("ddlViewByTV").selectedIndex);
-                return string;
+                //window.alert(document.getElementById("ddlViewByTV").selectedIndex);
+                //var variable = document.getElementById("ddlViewByTV").selectedIndex;
+                /*document.getElementById("Submit").disabled = 'disabled';
+                if (Model.UserQuestion.Question1 == true)
+                {
+                    Model.Userdata.WatchTV = document.getElementById("ddlViewByTV").selectedIndex;
+                }
+                if (Model.UserQuestion.Question2 == true) {
+                    Model.Userdata.Caffiene = document.getElementById("ddlViewByCaffiene").selectedIndex;
+                }
+                if (Model.UserQuestion.Question3 == true) {
+                    Model.Userdata.Caffiene2 = document.getElementById("ddlViewByCaffiene2").selectedIndex;
+                }
+                if (Model.UserQuestion.Question4 == true) {
+                    Model.Userdata.Exercise = document.getElementById("ddlViewByExercise").selectedIndex;
+                }
+                if (Model.UserQuestion.Question5 == true) {
+                    Model.Userdata.Exercise2 = document.getElementById("ddlViewByExercise2").selectedIndex;
+                }
+                if (Model.UserQuestion.Question6 == true) {
+                    Model.Userdata.Exercise3 = document.getElementById("ddlViewByExercise3").selectedIndex;
+                }
+                if (Model.UserQuestion.Question7 == true) {
+                    Model.Userdata.Snack = document.getElementById("ddlViewBySnack").selectedIndex;
+                }
+                if (Model.UserQuestion.Question8 == true) {
+                    Model.Userdata.Snack2 = document.getElementById("ddlViewBySnack2").selectedIndex;
+                }
+                if (Model.UserQuestion.Question9 == true) {
+                    Model.Userdata.Nap = document.getElementById("ddlViewByNap").selectedIndex;
+                }
+                if (Model.UserQuestion.Question10 == true) {
+                    Model.Userdata.Nap2 = document.getElementById("ddlViewByNap2").selectedIndex;
+                }
+                if (Model.UserQuestion.Question11 == true) {
+                    Model.Userdata.Alcohol2 = document.getElementById("ddlViewByAlcohol").selectedIndex;
+                }
+                if (Model.UserQuestion.Question12 == true) {
+                    Model.Userdata.Job = document.getElementById("ddlViewByJob").selectedIndex;
+                }
+                if (Model.UserQuestion.Question13 == true) {
+                    Model.Userdata.Job2 = document.getElementById("ddlViewByJob2").selectedIndex;
+                }
+                if (Model.UserQuestion.Question14 == true) {
+                    Model.Userdata.Phone = document.getElementById("ddlViewByPhone").selectedIndex;
+                }
+                if (Model.UserQuestion.Question15 == true) {
+                    Model.Userdata.Diary = document.getElementById("ddlViewByDiary").selectedIndex;
+                }
+                if (Model.UserQuestion.Question16 == true) {
+                    Model.Userdata.Music = document.getElementById("ddlViewByMusic").selectedIndex;
+                }
+                if (Model.UserQuestion.Question17 == true) {
+                    Model.Userdata.Music2 = document.getElementById("ddlViewByMusic2").selectedIndex;
+                }
+                if (Model.UserQuestion.Question18 == true) {
+                    Model.Userdata.Social = document.getElementById("ddlViewBySocial").selectedIndex;
+                }
+                if (Model.UserQuestion.Question19 == true) {
+                    Model.Userdata.Games = document.getElementById("ddlViewByGames").selectedIndex;
+                }
+                if (Model.UserQuestion.Question20 == true) {
+                    Model.Userdata.Exam = document.getElementById("ddlViewByExam").selectedIndex;
+                }
+                */
+                
             }
 
         </script>
@@ -488,9 +551,11 @@
                                 </select>
                             </td>
                         </tr>
+                    <tr>
                     <td></td>
-                    <td><button type="button" onclick="account()">Click Me!</button></td>
-                    <td><p>@Html.ActionLink("Connect", "ConnectFitbit", "Fitbit", new { }, new { @class = "btn btn-success" })</p></td>
+                    <td><button id="Submit" onclick="account()">Submit!</button></td>
+                    <td>@Html.ActionLink("Connect", "ConnectFitbit", "Fitbit", new { }, new { @class = "btn btn-success" })</td>
+                </tr>
 </tbody>
             </table>
 

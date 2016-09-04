@@ -96,6 +96,46 @@ namespace SleepMakeSense.Models
 
         public bool DiaryData { get; set; }
 
+     /*   public int WatchTV { get; set; }
+
+        public int Caffiene { get; set; }
+
+        public int Caffiene2 { get; set; }
+
+        public int Exercise { get; set; }
+
+        public int Exercise2 { get; set; }
+
+        public int Exercise3 { get; set; }
+
+        public int Snack { get; set; }
+
+        public int Snack2 { get; set; }
+
+        public int Nap { get; set; }
+
+        public int Nap2 { get; set; }
+
+        public int Alcohol2 { get; set; }
+
+        public int Job { get; set; }
+
+        public int Job2 { get; set; }
+
+        public int Phone { get; set; }
+
+        public int Diary { get; set; }
+
+        public int Music { get; set; }
+
+        public int Music2 { get; set; }
+
+        public int Social { get; set; }
+
+        public int Games { get; set; }
+
+        public int Exam { get; set; }*/
+
         [Required]
         [StringLength(128)]
         public string AspNetUserId { get; set; }

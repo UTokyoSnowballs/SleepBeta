@@ -11,6 +11,9 @@ namespace SleepMakeSense.Models
         public List<CorrList> CorrCoefficient { get; set; }
 
         public UserQuestion UserQuestion { get; set; }
+
+        public Userdata Userdata { get; set; }
+
         public bool Morning { get; set; }
     }
 }

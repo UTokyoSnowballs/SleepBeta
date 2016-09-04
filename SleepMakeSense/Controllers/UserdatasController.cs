@@ -75,7 +75,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                return await Sync();
+                return  Sync();
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
@@ -281,10 +281,139 @@ namespace SleepMakeSense.Controllers
 
         }
 
-        private async void DiaryDataSync()
+
+        private ActionResult DiaryDataSync()
         {
+            Userdata data = new Userdata();
+            data.DateStamp = DateTime.UtcNow;
+            //Caffiene
+            data.Coffee = Request["ddlViewByCaffiene"].ToString();
+            //Caffiene2 - will need a switch statement
+           // data.CoffeeTime = Request[""].ToString();
+           int coffeeTime = Convert.ToInt32(Request["ddlViewByCaffiene2"].ToString());
+            //Alcohol2
+            data.Alcohol = Request["ddlViewByAlcohol"].ToString();
+            //Social
+            data.SocialActivity = Request[""].ToString();
+            //Exam/ Stressed
+            data.Stress = Request["ddlViewByStress"].ToString();
+            //Nap durateion
+            data.NapDuration = Request["ddlViewByNap"].ToString();
+            //NapTime - will need a switch statement
+            int napTime = Convert.ToInt32(Request["ddlViewByNap2"].ToString());
+            //Degitial devices 
+            int sum = Convert.ToInt32(Request["ddlViewByGames"].ToString()) + Convert.ToInt32(Request["ddlViewBySocial"].ToString()) + Convert.ToInt32(Request["ddlViewByPhone"].ToString());
+            data.DigitalDev = sum.ToString();
+
+            data.Coffee = Request[""].ToString();
+            data.Coffee = Request[""].ToString();
+            data.Coffee = Request[""].ToString();
+            data.Coffee = Request[""].ToString();
+
+            /*
+
+            Exercise
+            Exercise2
+            Exercise3
+                Snack
+                Snack2
+                Job
+                Job2
+                Diary
+                Music
+                Music2
+                */
+
+
+            //switch statement for naptime
+            switch (napTime)
+            {
+                case 1:
+                    data.NapTime = "09.00";
+                    break;
+                case 2:
+                    data.NapTime = "10.00";
+                    break;
+                case 3:
+                    data.NapTime = "11.00";
+                    break;
+                case 4:
+                    data.NapTime = "12.00";
+                    break;
+                case 5:
+                    data.NapTime = "13.00";
+                    break;
+                case 6:
+                    data.NapTime = "14.00";
+                    break;
+                case 7:
+                    data.NapTime = "15.00";
+                    break;
+                case 8:
+                    data.NapTime = "16.00";
+                    break;
+                case 9:
+                    data.NapTime = "17.00";
+                    break;
+                case 10:
+                    data.NapTime = "18.00";
+                    break;
+                case 11:
+                    data.NapTime = "19.00";
+                    break;
+            }
+
+
+            //switch statement for coffeeTime
+            switch (coffeeTime)
+            {
+                case 1:
+                    data.NapTime = "06.00";
+                    break;
+                case 2:
+                    data.NapTime = "07.00";
+                    break;
+                case 3:
+                    data.NapTime = "08.00";
+                    break;
+                case 4:
+                    data.NapTime = "09.00";
+                    break;
+                case 5:
+                    data.NapTime = "10.00";
+                    break;
+                case 6:
+                    data.NapTime = "11.00";
+                    break;
+                case 7:
+                    data.NapTime = "12.00";
+                    break;
+                case 8:
+                    data.NapTime = "13.00";
+                    break;
+                case 9:
+                    data.NapTime = "14.00";
+                    break;
+                case 10:
+                    data.NapTime = "15.00";
+                    break;
+                case 11:
+                    data.NapTime = "16.00";
+                    break;
+                case 12:
+                    data.NapTime = "17.00";
+                    break;
+                case 13:
+                    data.NapTime = "18.00";
+                    break;
+            }
+
+            return View();
+
+
 
         }
+
 
         private async Task<ActionResult> FitbitDataSync(FitbitClient client, String userId)
         {
@@ -543,12 +672,11 @@ namespace SleepMakeSense.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Sync()
+        public ActionResult Sync()
         {
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
-            FitbitClient client = GetFitbitClient();
-       //     await FitbitDataSync(client, userId);
-            MyViewModel model = DataModelCreation(client, userId);
+            //     await FitbitDataSync(client, userId);
+            MyViewModel model = DataModelCreation(userId);
 
             return View(model);
         }
@@ -558,13 +686,12 @@ namespace SleepMakeSense.Controllers
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             FitbitClient client = GetFitbitClient();
             await FitbitDataSync(client, userId);
-            MyViewModel model = DataModelCreation(client, userId);
 
-            return View(model);
+            return View(Sync());
         }
 
 
-        public MyViewModel DataModelCreation(FitbitClient client,string userId)
+        public MyViewModel DataModelCreation(string userId)
         {
             ViewBag.FitbitSynced = true;
             //Need to define it here. Cannot use the one defined in FitbitController.cs.

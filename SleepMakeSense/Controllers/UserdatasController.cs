@@ -75,7 +75,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                return  Sync();
+                return await Sync();
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
@@ -672,13 +672,13 @@ namespace SleepMakeSense.Controllers
             return View();
         }
 
-        public ActionResult Sync()
+        public async Task<ActionResult> Sync()
         {
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
-            //     await FitbitDataSync(client, userId);
-            MyViewModel model = DataModelCreation(userId);
+            FitbitClient client = GetFitbitClient();
+            await FitbitDataSync(client, userId);
 
-            return View(model);
+            return View(Sync());
         }
 
         public async Task<ActionResult> DataSync()

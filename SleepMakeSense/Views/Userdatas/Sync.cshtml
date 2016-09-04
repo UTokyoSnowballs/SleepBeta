@@ -410,12 +410,26 @@
     </div>
     
         <div class="tabbable">
-            <ul class="nav nav-tabs">
-                <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Minutes Asleep</a></li>
-                <li><a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Minutes Restless</a></li>
-                <li><a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a></li>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Minutes Asleep</a></li>
+                        <li><a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Minutes Restless</a></li>
+                        <li><a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a></li>
 
-            </ul>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-md-offset-6">
+                    <ul class="legend">
+                        <li><span class="good"></span>good</li>
+                        <li><span class="bad"></span>bad</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="im-centered">
                 <div class="tab-content">
                     <div class="tab-pane active" id="MinutesAsleepTimeseries">
@@ -424,11 +438,7 @@
                                 PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
                             </script>
                         </div>
-                        <div class="col-md-6">
-                            <ul class="legend">
-                                <li><span class="good"></span>good</li>
-                                <li><span class="bad"></span>bad</li>
-                            </ul>
+                        
                         
                         <div class="row">
                             <div class="col-md-12">
@@ -439,7 +449,7 @@
                                 </div>
                             </div>
                         </div>
-</div>
+
                     </div>
                     <div class="tab-pane" id="MinutesAwakeTimeseries">
                         <div id="MinutesAwakeTimeseries">
@@ -447,19 +457,17 @@
                                 PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
                             </script>
                         </div>
-                        <div class="col-md-6">
-                            <ul class="legend">
-                                <li><span class="good"></span>good</li>
-                                <li><span class="bad"></span>bad</li>
-                            </ul>
+                        
                             <div class="row">
-                                <div id="AffectingFactorsMinutesAwake">
-                                    <script type="text/javascript">
-                                        testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
-                                    </script>
+                                <div class="col-md-12">
+                                    <div id="AffectingFactorsMinutesAwake">
+                                        <script type="text/javascript">
+                                            testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
+                                        </script>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
+                            
                     </div>
                     <div class="tab-pane" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
@@ -467,29 +475,19 @@
                         PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
                             </script>
                         </div>
-                            <div class="col-md-6">
                                 <div class="row">
-                                <h6>Time asleep / Total Time in bed </h6>
-                                </div>
-                                <div class="row">
-                                    <ul class="legend">
-                                        <li><span class="good"></span>good</li>
-                                        <li><span class="bad"></span>bad</li>
-                                    </ul>
-                                </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div id="AffectingFactorsSleepEfficiency">
                                             <script type="text/javascript">
                                                 testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
                                             </script>
                                         </div>
+                                    </div>
                                 </div>
-                        </div>
                     </div>
+                </div>
             </div>
-
-            </div>
-            </div>
+        </div>
 
 
     <!--div class="row">

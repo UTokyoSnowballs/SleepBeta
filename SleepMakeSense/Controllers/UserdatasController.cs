@@ -75,7 +75,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                return await Sync();
+                return View("Callback");
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
@@ -674,23 +674,35 @@ namespace SleepMakeSense.Controllers
 
         public async Task<ActionResult> Sync()
         {
+
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             FitbitClient client = GetFitbitClient();
-            await FitbitDataSync(client, userId);
-
-            return View(Sync());
+        //    await FitbitDataSync(client, userId);
+            MyViewModel model = DataModelCreation(userId);
+            return View(model);
         }
-
+/*
+        private ActionResult Sync()
+        {
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
+            MyViewModel model = DataModelCreation(userId);
+            return View(model);
+        }
+*/
+        public ActionResult NoDataSync()
+        {
+            return View("Sync");
+        }
+/*
         public async Task<ActionResult> DataSync()
         {
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             FitbitClient client = GetFitbitClient();
             await FitbitDataSync(client, userId);
-
-            return View(Sync());
+            MyViewModel model = DataModelCreation(userId);
+            return Sync();
         }
-
-
+        */
         public MyViewModel DataModelCreation(string userId)
         {
             ViewBag.FitbitSynced = true;

@@ -3870,7 +3870,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 .nav-tabs {
-    border-bottom: 1px solid #ddd
+    
 }
 
 .nav-tabs>li {
@@ -3881,22 +3881,24 @@ textarea.input-group-sm>.input-group-btn>.btn {
 .nav-tabs>li>a {
     margin-right: 2px;
     line-height: 1.428571429;
-    border: 1px solid transparent;
-    border-radius: 4px 4px 0 0
+    color: #747F97;
+    
 }
 
 .nav-tabs>li>a:hover {
-    border-color: #eee #eee #ddd
+    
 }
 
 .nav-tabs>li.active>a,
 .nav-tabs>li.active>a:hover,
 .nav-tabs>li.active>a:focus {
-    color: #555;
+    color: #fff;
     cursor: default;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-bottom-color: transparent
+    background: -webkit-linear-gradient(141deg,#F74657,#459EE8);
+    background: linear-gradient(141deg,#F74657,#459EE8);
+    background: -o-linear-gradient(141deg,#F74657,#459EE8);
+    background: -moz-linear-gradient(141deg,#F74657,#459EE8);
+    border-radius: 25px;
 }
 
 .nav-tabs.nav-justified {
@@ -4093,7 +4095,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
     clear: both
 }
 
-@media(min-width:768px) {
+@media(min-width:992px) {
     .navbar-header {
         float: left
     }
@@ -4136,7 +4138,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
     overflow-y: auto
 }
 
-@media(min-width:768px) {
+@media(min-width:990px) {
     .navbar-collapse {
         width: auto;
         border-top: 0;
@@ -4168,7 +4170,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
     margin-left: -15px
 }
 
-@media(min-width:768px) {
+@media(min-width:992px) {
     .container>.navbar-header,
     .container>.navbar-collapse {
         margin-right: 0;
@@ -4253,7 +4255,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
     margin-top: 4px
 }
 
-@media(min-width:768px) {
+@media(min-width:992px) {
     .navbar-toggle {
         display: none
     }

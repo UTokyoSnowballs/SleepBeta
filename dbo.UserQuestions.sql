@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[UserQuestions] (
+    [PresentInStudy] BIT            NOT NULL,
+    [Question1]      BIT            NOT NULL,
+    [Question2]      BIT            NOT NULL,
+    [Question3]      BIT            NOT NULL,
+    [Question4]      BIT            NOT NULL,
+    [Question5]      BIT            NOT NULL,
+    [Question6]      BIT            NOT NULL,
+    [Question7]      BIT            NOT NULL,
+    [Question8]      BIT            NOT NULL,
+    [Question9]      BIT            NOT NULL,
+    [Question10]     BIT            NOT NULL,
+    [Question11]     BIT            NOT NULL,
+    [Question12]     BIT            NOT NULL,
+    [Question13]     BIT            NOT NULL,
+    [Question14]     BIT            NOT NULL,
+    [Question15]     BIT            NOT NULL,
+    [Question16]     BIT            NOT NULL,
+    [Question17]     BIT            NOT NULL,
+    [Question18]     BIT            NOT NULL,
+    [Question19]     BIT            NOT NULL,
+    [Question20]     BIT            NOT NULL,
+    [Id]             INT            IDENTITY (1, 1) NOT NULL,
+    [AspNetUserId]   NVARCHAR (128) NOT NULL,
+    CONSTRAINT [PK_UserQuestions] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_AspNetUserUserdata] FOREIGN KEY ([AspNetUserId]) REFERENCES [dbo].[AspNetUsers] ([Id])
+);
+

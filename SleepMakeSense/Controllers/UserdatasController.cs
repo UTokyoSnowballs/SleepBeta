@@ -241,124 +241,132 @@ namespace SleepMakeSense.Controllers
             db.SaveChangesAsync();
             }
         }
-
-        private void UpdateDiaryData(int queryId, bool queryDairyData, Userdata item)
-        {
-
-            if (!queryDairyData)
-            {
-                Userdata updateQuery = (from a in db.Userdatas
-                                        where a.Id == queryId
-                                        select a).First();
-                //Update database
-                updateQuery.WakeUpFreshness = item.WakeUpFreshness;
-                updateQuery.Coffee = item.Coffee;
-                updateQuery.CoffeeTime = item.CoffeeTime;
-                updateQuery.Alcohol = item.Alcohol;
-                updateQuery.Mood = item.Mood;
-                updateQuery.Stress = item.Stress;
-                updateQuery.Tiredness = item.Tiredness;
-                updateQuery.Dream = item.Dream;
-                updateQuery.DigitalDev = item.DigitalDev;
-                updateQuery.Light = item.Light;
-                updateQuery.NapDuration = item.NapDuration;
-                updateQuery.NapTime = item.NapTime;
-                updateQuery.SocialActivity = item.SocialActivity;
-                updateQuery.DinnerTime = item.DinnerTime;
-                updateQuery.AmbientTemp = item.AmbientTemp;
-                updateQuery.AmbientHumd = item.AmbientHumd;
-                updateQuery.ExerciseTime = item.ExerciseTime;
-                updateQuery.BodyTemp = item.BodyTemp;
-                updateQuery.Hormone = item.Hormone;
-                updateQuery.DiaryData = true;
-                db.SaveChangesAsync();
-            }
-            else
-            {
-                db.Userdatas.Add(item);
-                db.SaveChanges();
-            }
-
-        }
-
-
+          
         private ActionResult DiaryDataSync()
         {
             Userdata data = new Userdata();
             data.DateStamp = DateTime.UtcNow;
-
+            int temp = 0;
+ 
             //TV - Need to add in Database and Model
-            //ddlViewByTV
-
+            //ddlViewByWatchTV
+            if (Convert.ToInt32(Request["ddlViewByWatchTV"].ToString()) != 0)
+            {
+                data.WatchTV = Convert.ToInt32(Request["ddlViewByWatchTV"].ToString());
+            }
             //Caffiene
-            data.Coffee = Request["ddlViewByCaffiene"].ToString();
+            if (Convert.ToInt32(Request["ddlViewByCoffee"].ToString()) != 0)
+            {
+                data.Coffee = Request["ddlViewByCoffee"].ToString();
+            }
             //Caffiene2 - will need a switch statement
-           // data.CoffeeTime = Request[""].ToString();
-           int coffeeTime = Convert.ToInt32(Request["ddlViewByCaffiene2"].ToString());
+            // data.CoffeeTime = Request[""].ToString();
+            int coffeeTime = Convert.ToInt32(Request["ddlViewByCoffeeTime"].ToString());
             //Exersise time - need to add in database and model
-            //ddlViewByExercise
-
+            //ddlViewByExerciseDuration
+            if (Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString()) != 0)
+            {
+                data.ExerciseDuration = Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString());
+            }
             //Exersise time 2 - need to add in database and model
-            //ddlViewByExercise2
-
+            //ddlViewByExerciseIntensity
+            if (Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString()) != 0)
+            {
+                data.ExerciseIntensity = Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString());
+            }
             //Exersise time 3 -  need to add in database and model
-            //ddlViewByExercise3
-
+            //ddlViewByExerciseType
+            if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
+            {
+                data.ExerciseType = Convert.ToInt32(Request["ddlViewByExerciseType"].ToString());
+            }
             //Snack - need to add in database and model
             //ddlViewBySnack
-
+            int snackTime = Convert.ToInt32(Request["ddlViewBySnack"].ToString());
             //Snack - need to add in database and model
             //ddlViewBySnack2
-
-            //Nap durateion
-            data.NapDuration = Request["ddlViewByNap"].ToString();
+            temp = Convert.ToInt32(Request["ddlViewBySnack2"].ToString());
+            if (temp != 0)
+            {
+                if (temp == 1) data.Snack2 = false;
+                else data.Snack2 = true;
+            }
+            //Nap durateion - will need a switch statement
+            if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
+            {
+                data.NapDuration = Request["ddlViewByExerciseType"].ToString();
+            }
             //NapTime - will need a switch statement
             int napTime = Convert.ToInt32(Request["ddlViewByNap2"].ToString());
-
             //Alcohol2
-            data.Alcohol = Request["ddlViewByAlcohol"].ToString();
-
-            //Work 
-            //ddlViewByJob
-
-            //Work 2
-            //ddlViewByJob2
-
+            if (Convert.ToInt32(Request["ddlViewByAlcohol"].ToString()) != 0)
+            {
+                data.Alcohol = Request["ddlViewByAlcohol"].ToString();
+            }
+            //Job 
+            //ddlViewByJob - will require a switch statement
+            int job = Convert.ToInt32(Request["ddlViewByJob"].ToString());
+            //Job 2
+            //ddlViewByJob2 
+            if (Convert.ToInt32(Request["ddlViewByJob2"].ToString()) != 0)
+            {
+                data.Job2 = Convert.ToInt32(Request["ddlViewByJob2"].ToString());
+            }
             //Time on phone
             //ddlViewByPhone
-
+            if (Convert.ToInt32(Request["ddlViewByPhone"].ToString()) != 0)
+            {
+                data.Phone = Convert.ToInt32(Request["ddlViewByPhone"].ToString());
+            }
             //Sleep Diary
             //ddlViewByDiary
-
+            temp = Convert.ToInt32(Request["ddlViewByDiary"].ToString());
+            if (temp != 0)
+            {
+                if (temp == 1) data.SleepDiary = false;
+                else data.SleepDiary = true;
+            }
             //Music
-            //ddlViewByMusic
+            //ddlViewByMusicDuration
+            if (Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString()) != 0)
+            {
+                data.Music = true;
+                data.MusicDuration = Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString());
+            }
 
             //Type of Music 
-            //ddlViewByMusic2
+            //ddlViewByMusicType
+            if (Convert.ToInt32(Request["ddlViewByMusicType"].ToString()) != 0)
+            {
+                data.Music = true;
+                data.MusicDuration = Convert.ToInt32(Request["ddlViewByMusicType"].ToString());
+            }
 
             //Social Media
-            //ddlViewBySocial
+            //ddlViewBySocialMedia
             //Social
-            data.SocialActivity = Request[""].ToString();
+            if (Convert.ToInt32(Request["ddlViewBySocialMedia"].ToString()) != 0)
+            {
+                data.SocialActivity = Request["ddlViewBySocialMedia"].ToString();
+            }
 
             //Games
             //ddlViewByGames
-
-
-            //Exam/
-            //ddlViewByExam
+            if (Convert.ToInt32(Request["ddlViewByGames"].ToString()) != 0)
+            {
+                data.Games = Convert.ToInt32(Request["ddlViewByGames"].ToString());
+            }
+                //Exam/
+                //ddlViewByAssessment
+                if (Convert.ToInt32(Request["ddlViewByAssessment"].ToString()) == 0) data.Assessment = false;
+                else data.Assessment = true;
 
             // Stressed
-            data.Stress = Request["ddlViewByStress"].ToString();
 
-            //Degitial devices 
-            int sum = Convert.ToInt32(Request["ddlViewByGames"].ToString()) + Convert.ToInt32(Request["ddlViewBySocial"].ToString()) + Convert.ToInt32(Request["ddlViewByPhone"].ToString());
-            data.DigitalDev = sum.ToString();
-
-            data.Coffee = Request[""].ToString();
-            data.Coffee = Request[""].ToString();
-            data.Coffee = Request[""].ToString();
-            data.Coffee = Request[""].ToString();
+            if (Convert.ToInt32(Request["ddlViewByStress"].ToString()) != 0)
+            {
+                data.Stress = Request["ddlViewByStress"].ToString();
+            }
 
             //switch statement for naptime
             switch (napTime)
@@ -442,6 +450,51 @@ namespace SleepMakeSense.Controllers
                     data.NapTime = "18.00";
                     break;
             }
+            switch (snackTime)
+            {
+                case 1:
+                    data.NapTime = "06.00";
+                    break;
+                case 2:
+                    data.NapTime = "07.00";
+                    break;
+                case 3:
+                    data.NapTime = "08.00";
+                    break;
+                case 4:
+                    data.NapTime = "09.00";
+                    break;
+                case 5:
+                    data.NapTime = "10.00";
+                    break;
+                case 6:
+                    data.NapTime = "11.00";
+                    break;
+                case 7:
+                    data.NapTime = "12.00";
+                    break;
+                case 8:
+                    data.NapTime = "13.00";
+                    break;
+                case 9:
+                    data.NapTime = "14.00";
+                    break;
+                case 10:
+                    data.NapTime = "15.00";
+                    break;
+                case 11:
+                    data.NapTime = "16.00";
+                    break;
+                case 12:
+                    data.NapTime = "17.00";
+                    break;
+                case 13:
+                    data.NapTime = "18.00";
+                    break;
+            }
+            job
+                napTime
+                
 
             return View();
 

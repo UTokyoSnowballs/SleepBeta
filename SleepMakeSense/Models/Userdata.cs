@@ -116,7 +116,9 @@ namespace SleepMakeSense.Models
 
         public bool SleepDiary { get; set; }
 
-        public bool MusicDuration { get; set; }
+        public bool Music { get; set; }
+
+        public int MusicDuration { get; set; }
 
         public int MusicType { get; set; }
 

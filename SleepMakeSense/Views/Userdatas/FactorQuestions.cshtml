@@ -101,17 +101,13 @@
         </div>
             
             <table class="table">
-                <thead>
-                    <tr>
-                        <th>Factors</th>
-                        <th>Questions</th>
-                    </tr>
-                </thead>
+                
                 <tbody>
                     @if (Model.UserQuestion.Question1 == true)
                     {
                         <tr>
-                                <td>Watch TV</td>
+                                
+                                <td class="diaryfactor"><i class="fa fa-tv fa-2x"></i><span>Watch TV</span></td>
                                 <td>How many hours did you watch TV after 6pm last night?</td>
                                 <td>
                                     <select id="ddlViewByTV">
@@ -133,8 +129,8 @@
                     }
                             @if (Model.UserQuestion.Question2 == true)
                             {
-                                <tr>
-                                    <td>Drink Caffiene</td>
+                                <tr class="tr-noborder">
+                                    <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
                                     <td>How many coffees and/or energy drinks did you drink yesterday?</td>
                                     <td>
                                         <select id="ddlViewByCaffiene">
@@ -182,7 +178,7 @@
                         @if (Model.UserQuestion.Question4 == true)
                         {
                             <tr>
-                                <td>Exercise Often</td>
+                                <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
                                 <td>How many hours did you exercise yesterday?</td>
                                 <td>
                                     <select id="ddlViewByExercise">
@@ -248,7 +244,7 @@
                         @if (Model.UserQuestion.Question7 == true)
                         {
                             <tr>
-                                <td>Late Night Snacking</td>
+                                <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Snacking</span></td>
                                 <td>How many hours before bed did you snack last night?</td>
                                 <td>
                                     <select id="ddlViewBySnack">
@@ -283,7 +279,7 @@
                         @if (Model.UserQuestion.Question9 == true)
                         {
                             <tr>
-                                <td>Take Naps</td>
+                                <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
                                 <td>How long did you nap for Today?</td>
                                 <td>
                                     <select id="ddlViewByNap">
@@ -328,7 +324,7 @@
                         @if (Model.UserQuestion.Question11 == true)
                         {
                             <tr>
-                                <td>Drink Alcohol</td>
+                                <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol</span></td>
                                 <td>How many drinks did you have today?</td>
                                 <td>
                                     <select id="ddlViewByAlcohol">
@@ -350,7 +346,7 @@
                         @if (Model.UserQuestion.Question12 == true)
                         {
                             <tr>
-                                <td>Part Time Job</td>
+                                <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
                                 <td>When did your shift start last night?</td>
                                 <td>
                                     <select id="ddlViewByJob">
@@ -394,7 +390,7 @@
                         @if (Model.UserQuestion.Question14 == true)
                         {
                             <tr>
-                                <td>Texting/Using Your Phone Before Bed</td>
+                                <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Mobile use</span></td>
                                 <td>How many hours did you spend on your phone after 6pm yesterday?</td>
                                 <td>
                                     <select id="ddlViewByPhone">
@@ -416,8 +412,8 @@
                         @if (Model.UserQuestion.Question15 == true)
                         {
                             <tr>
-                                <td>Write A Diary/Journal</td>
-                                <td>Did you write in your diary before bed last night?</td>
+                                <td class="diaryfactor"><i class="fa fa-book fa-2x"></i><span>Journal</span></td>
+                                <td>Did you write in your journal/diary before bed last night?</td>
                                 <td>
                                     <select id="ddlViewByDiary">
                                         <option value="0" selected="selected">No</option>
@@ -429,7 +425,7 @@
                         @if (Model.UserQuestion.Question16 == true)
                         {
                             <tr>
-                                <td>Listen To Music Before Bed</td>
+                                <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
                                 <td>How long did you listen to music to before sleeping last night?</td>
                                 <td>
                                     <select id="ddlViewByMusic">
@@ -471,7 +467,7 @@
                         @if (Model.UserQuestion.Question18 == true)
                         {
                             <tr>
-                                <td>Use Social Media</td>
+                                <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span></td>
                                 <td>How long were you on social media for after 6pm last night?</td>
                                 <td>
                                     <select id="ddlViewBySocial">
@@ -493,7 +489,7 @@
                         @if (Model.UserQuestion.Question19 == true)
                         {
                             <tr>
-                                <td>Play Video Games</td>
+                                <td class="diaryfactor"><i class="fa fa-gamepad fa-2x"></i><span>Video games</span></td>
                                 <td>How long did you play video games for after 6pm?</td>
                                 <td>
                                     <select id="ddlViewByGames">
@@ -515,8 +511,8 @@
                         @if (Model.UserQuestion.Question20 == true)
                         {
                             <tr>
-                                <td>Upcoming Examination</td>
-                                <td>How long did you play video games for after 6pm?</td>
+                                <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>Assessment</span></td>
+                                <td>Do you have any assessment due or exams this week?</td>
                                 <td>
                                     <select id="ddlViewByExam">
                                         <option value="0" selected="selected">No</option>
@@ -528,8 +524,8 @@
                         }
                 
                         <tr>
-                            <td>Anxious/Stressed</td>
-                            <td>How anxious/stressed were you Today? (1 not at all - 10 a lot)</td>
+                            <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
+                            <td>How anxious/stressed were you Today? (1 not at all - 10 very)</td>
                             <td>
                                 <select id="ddlViewByStress">
                                     <option value="0" selected="selected">0</option>

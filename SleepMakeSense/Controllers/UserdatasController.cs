@@ -286,21 +286,71 @@ namespace SleepMakeSense.Controllers
         {
             Userdata data = new Userdata();
             data.DateStamp = DateTime.UtcNow;
+
+            //TV - Need to add in Database and Model
+            //ddlViewByTV
+
             //Caffiene
             data.Coffee = Request["ddlViewByCaffiene"].ToString();
             //Caffiene2 - will need a switch statement
            // data.CoffeeTime = Request[""].ToString();
            int coffeeTime = Convert.ToInt32(Request["ddlViewByCaffiene2"].ToString());
-            //Alcohol2
-            data.Alcohol = Request["ddlViewByAlcohol"].ToString();
-            //Social
-            data.SocialActivity = Request[""].ToString();
-            //Exam/ Stressed
-            data.Stress = Request["ddlViewByStress"].ToString();
+            //Exersise time - need to add in database and model
+            //ddlViewByExercise
+
+            //Exersise time 2 - need to add in database and model
+            //ddlViewByExercise2
+
+            //Exersise time 3 -  need to add in database and model
+            //ddlViewByExercise3
+
+            //Snack - need to add in database and model
+            //ddlViewBySnack
+
+            //Snack - need to add in database and model
+            //ddlViewBySnack2
+
             //Nap durateion
             data.NapDuration = Request["ddlViewByNap"].ToString();
             //NapTime - will need a switch statement
             int napTime = Convert.ToInt32(Request["ddlViewByNap2"].ToString());
+
+            //Alcohol2
+            data.Alcohol = Request["ddlViewByAlcohol"].ToString();
+
+            //Work 
+            //ddlViewByJob
+
+            //Work 2
+            //ddlViewByJob2
+
+            //Time on phone
+            //ddlViewByPhone
+
+            //Sleep Diary
+            //ddlViewByDiary
+
+            //Music
+            //ddlViewByMusic
+
+            //Type of Music 
+            //ddlViewByMusic2
+
+            //Social Media
+            //ddlViewBySocial
+            //Social
+            data.SocialActivity = Request[""].ToString();
+
+            //Games
+            //ddlViewByGames
+
+
+            //Exam/
+            //ddlViewByExam
+
+            // Stressed
+            data.Stress = Request["ddlViewByStress"].ToString();
+
             //Degitial devices 
             int sum = Convert.ToInt32(Request["ddlViewByGames"].ToString()) + Convert.ToInt32(Request["ddlViewBySocial"].ToString()) + Convert.ToInt32(Request["ddlViewByPhone"].ToString());
             data.DigitalDev = sum.ToString();
@@ -309,21 +359,6 @@ namespace SleepMakeSense.Controllers
             data.Coffee = Request[""].ToString();
             data.Coffee = Request[""].ToString();
             data.Coffee = Request[""].ToString();
-
-            /*
-
-            Exercise
-            Exercise2
-            Exercise3
-                Snack
-                Snack2
-                Job
-                Job2
-                Diary
-                Music
-                Music2
-                */
-
 
             //switch statement for naptime
             switch (napTime)
@@ -708,12 +743,10 @@ namespace SleepMakeSense.Controllers
             ViewBag.FitbitSynced = true;
             //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
-            bool userLogedIn = false;
             Models.Database Db = new Models.Database();
 
             DateTime date = DateTime.UtcNow.AddDays(-40);
 
-            userLogedIn = true;
             List<Userdata> results = (from a in Db.Userdatas
                                       where a.AspNetUserId == userId && a.DateStamp >= date && a.FitbitData == true
                                      orderby  a.DateStamp

@@ -98,10 +98,6 @@ namespace SleepMakeSense.Models
 
      /*   public int WatchTV { get; set; }
 
-        public int Caffiene { get; set; }
-
-        public int Caffiene2 { get; set; }
-
         public int Exercise { get; set; }
 
         public int Exercise2 { get; set; }
@@ -110,13 +106,11 @@ namespace SleepMakeSense.Models
 
         public int Snack { get; set; }
 
-        public int Snack2 { get; set; }
+        public bool Snack2 { get; set; }
 
         public int Nap { get; set; }
 
         public int Nap2 { get; set; }
-
-        public int Alcohol2 { get; set; }
 
         public int Job { get; set; }
 

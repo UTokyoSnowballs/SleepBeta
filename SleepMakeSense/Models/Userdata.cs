@@ -94,23 +94,19 @@ namespace SleepMakeSense.Models
 
         public bool FitbitData { get; set; }
 
-        public bool DiaryData { get; set; }
+        public bool DiaryDataNight { get; set; }
 
-     /*   public int WatchTV { get; set; }
+        public int WatchTV { get; set; }
 
-        public int Exercise { get; set; }
+        public int ExerciseDuration { get; set; }
 
-        public int Exercise2 { get; set; }
+        public int ExerciseIntensity { get; set; }
 
-        public int Exercise3 { get; set; }
+        public int ExerciseType { get; set; }
 
         public int Snack { get; set; }
 
         public bool Snack2 { get; set; }
-
-        public int Nap { get; set; }
-
-        public int Nap2 { get; set; }
 
         public int Job { get; set; }
 
@@ -118,17 +114,19 @@ namespace SleepMakeSense.Models
 
         public int Phone { get; set; }
 
-        public int Diary { get; set; }
+        public bool SleepDiary { get; set; }
 
-        public int Music { get; set; }
+        public bool MusicDuration { get; set; }
 
-        public int Music2 { get; set; }
+        public int MusicType { get; set; }
 
-        public int Social { get; set; }
+        public int SocialMedia { get; set; }
 
         public int Games { get; set; }
 
-        public int Exam { get; set; }*/
+        public bool Assessment { get; set; }
+
+        public bool DiaryDataMorning { get; set; }
 
         [Required]
         [StringLength(128)]

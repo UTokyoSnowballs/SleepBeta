@@ -1418,7 +1418,7 @@ pre code {
 
 table {
     max-width: 100%;
-    background-color: transparent
+    background-color: #2C3041;
 }
 
 th {
@@ -1429,6 +1429,12 @@ th {
     width: 100%;
     margin-bottom: 20px
 }
+tr {
+    border-bottom: 4px solid #373E4F;
+}
+.tr-noborder {
+    border-bottom: 0px;
+}
 
 .table thead>tr>th,
 .table tbody>tr>th,
@@ -1436,10 +1442,10 @@ th {
 .table thead>tr>td,
 .table tbody>tr>td,
 .table tfoot>tr>td {
-    padding: 8px;
+    padding: 20px;
     line-height: 1.428571429;
-    vertical-align: top;
-    border-top: 1px solid #ddd
+    vertical-align: middle;
+    
 }
 
 .table thead>tr>th {
@@ -3870,6 +3876,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 .nav-tabs {
+    margin-bottom: 25px;
     
 }
 
@@ -4525,7 +4532,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 
 .navbar-inverse {
     background-color: #373E4F;
-    border-color: #373E4F;
+    border-color: #2C3041;
 }
 
 .navbar-inverse .navbar-brand {
@@ -6965,4 +6972,14 @@ footer{
 }
 .p-center {
     text-align: center;
+}
+.tabbable {
+    margin-top: 20px;
+}
+.diaryfactor {
+    text-align: center;
+}
+.diaryfactor span {
+    display: block;
+    padding-top: 5px;
 }

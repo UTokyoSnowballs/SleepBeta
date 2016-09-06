@@ -385,7 +385,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Layout.css" />
     <Content Include="CSSfiles\bootstrap-theme.css" />
     <Content Include="CSSfiles\bootstrap-theme.min.css" />
     <Content Include="CSSfiles\font-awesome.css" />
@@ -509,6 +508,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

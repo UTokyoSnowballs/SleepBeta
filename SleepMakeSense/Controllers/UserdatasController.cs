@@ -677,7 +677,7 @@ namespace SleepMakeSense.Controllers
 
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             FitbitClient client = GetFitbitClient();
-        //    await FitbitDataSync(client, userId);
+       //     await FitbitDataSync(client, userId);
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }

@@ -405,14 +405,16 @@
     </div>
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
             <h2> My Sleep Data </h2>
             <hr/>
+        </div>
     </div>
     
         <div class="tabbable">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs" id="mytab">
                         <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Minutes Asleep</a></li>
                         <li><a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Minutes Restless</a></li>
                         <li><a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a></li>
@@ -432,7 +434,7 @@
 
             <div class="im-centered">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="MinutesAsleepTimeseries">
+                    <div class="tab-pane active fade in" id="MinutesAsleepTimeseries">
                         <div id="MinutesAsleepTimeseries">
                             <script type="text/javascript">
                                 PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
@@ -451,7 +453,7 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane" id="MinutesAwakeTimeseries">
+                    <div class="tab-pane fade" id="MinutesAwakeTimeseries">
                         <div id="MinutesAwakeTimeseries">
                             <script type="text/javascript">
                                 PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
@@ -469,7 +471,7 @@
                             </div>
                             
                     </div>
-                    <div class="tab-pane" id="SleepEfficiencyTimeseries">
+                    <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
                             <script type="text/javascript">
                         PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
@@ -557,5 +559,11 @@
         </h5>
      </div>
 </div>
+    <script>
+    $('#mytab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    })
+    </script>
 </body>
 </html>

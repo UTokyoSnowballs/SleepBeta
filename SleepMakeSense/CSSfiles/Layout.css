@@ -3870,6 +3870,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 .nav-tabs {
+    margin-bottom: 25px;
     
 }
 
@@ -6965,4 +6966,7 @@ footer{
 }
 .p-center {
     text-align: center;
+}
+.tabbable {
+    margin-top: 20px;
 }

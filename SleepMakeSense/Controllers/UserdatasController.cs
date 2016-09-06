@@ -244,8 +244,9 @@ namespace SleepMakeSense.Controllers
           
         private ActionResult DiaryDataSync()
         {
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             Userdata data = new Userdata();
-            data.DateStamp = DateTime.UtcNow;
+            data.DateStamp = DateTime.UtcNow.Date;
             int temp = 0;
  
             //TV - Need to add in Database and Model
@@ -282,7 +283,10 @@ namespace SleepMakeSense.Controllers
             }
             //Snack - need to add in database and model
             //ddlViewBySnack
-            int snackTime = Convert.ToInt32(Request["ddlViewBySnack"].ToString());
+            if (Convert.ToInt32(Request["ddlViewBySnack"].ToString()) != 0)
+            {
+                data.Snack = Convert.ToInt32(Request["ddlViewBySnack"].ToString());
+            }
             //Snack - need to add in database and model
             //ddlViewBySnack2
             temp = Convert.ToInt32(Request["ddlViewBySnack2"].ToString());
@@ -405,8 +409,6 @@ namespace SleepMakeSense.Controllers
                     data.NapTime = "19.00";
                     break;
             }
-
-
             //switch statement for coffeeTime
             switch (coffeeTime)
             {
@@ -450,53 +452,71 @@ namespace SleepMakeSense.Controllers
                     data.NapTime = "18.00";
                     break;
             }
-            switch (snackTime)
+            //switch statement for coffeeTime
+            switch (job)
             {
                 case 1:
-                    data.NapTime = "06.00";
-                    break;
-                case 2:
-                    data.NapTime = "07.00";
-                    break;
-                case 3:
-                    data.NapTime = "08.00";
-                    break;
-                case 4:
-                    data.NapTime = "09.00";
-                    break;
-                case 5:
-                    data.NapTime = "10.00";
-                    break;
-                case 6:
-                    data.NapTime = "11.00";
-                    break;
-                case 7:
-                    data.NapTime = "12.00";
-                    break;
-                case 8:
-                    data.NapTime = "13.00";
-                    break;
-                case 9:
-                    data.NapTime = "14.00";
-                    break;
-                case 10:
-                    data.NapTime = "15.00";
-                    break;
-                case 11:
-                    data.NapTime = "16.00";
-                    break;
-                case 12:
-                    data.NapTime = "17.00";
-                    break;
-                case 13:
                     data.NapTime = "18.00";
                     break;
-            }
-            job
-                napTime
-                
+                case 2:
+                    data.NapTime = "19.00";
+                    break;
+                case 3:
+                    data.NapTime = "20.00";
+                    break;
+                case 4:
+                    data.NapTime = "21.00";
+                    break;
+                case 5:
+                    data.NapTime = "22.00";
+                    break;
+                case 6:
+                    data.NapTime = "23.00";
+                    break;
+                case 7:
+                    data.NapTime = "00.00";
+                    break;
+                case 8:
+                    data.NapTime = "01.00";
+                    break;
+                case 9:
+                    data.NapTime = "02.00";
+                    break;
+                case 10:
+                    data.NapTime = "03.00";
+                    break;
 
-            return View();
+            }
+
+            Models.Database Db = new Models.Database();
+            List<Userdata> queryList = new List<Userdata>();
+
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
+
+            bool update = false;
+
+            var lastSynced = from a in Db.Userdatas
+                             where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= dateStop
+                             orderby a.DateStamp
+                             select a;
+
+            foreach (Userdata query in lastSynced)
+            {
+                if (query.DateStamp > dateStop)
+                {
+                    dateStop = query.DateStamp;
+                }
+                if (query.DateStamp.Date == data.DateStamp)
+                {
+                    update = true;
+                }
+            }
+            if (update == true)
+            {
+
+            }
+         //   else db.Userdatas.Add(data);
+                return View("Callback");
 
 
 
@@ -763,7 +783,7 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> Sync()
         {
 
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             FitbitClient client = GetFitbitClient();
        //     await FitbitDataSync(client, userId);
             MyViewModel model = DataModelCreation(userId);

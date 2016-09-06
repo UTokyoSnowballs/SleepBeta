@@ -108,7 +108,7 @@ namespace SleepMakeSense.Models
 
         public bool Snack2 { get; set; }
 
-        public int Job { get; set; }
+        public string Job { get; set; }
 
         public int Job2 { get; set; }
 

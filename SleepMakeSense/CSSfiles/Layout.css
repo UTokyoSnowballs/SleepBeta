@@ -1430,10 +1430,7 @@ th {
     margin-bottom: 20px
 }
 tr {
-    border-bottom: 4px solid #373E4F;
-}
-.tr-noborder {
-    border-bottom: 0px;
+    border-bottom: 10px solid #373E4F;
 }
 
 .table thead>tr>th,
@@ -1749,6 +1746,11 @@ input[type="number"]::-webkit-inner-spin-button {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+td .form-control {
+    background-color: #373E4F;
+    border: 1px solid #373E4F;
+    color: #fff;
 }
 
 .form-control:focus {
@@ -6978,8 +6980,18 @@ footer{
 }
 .diaryfactor {
     text-align: center;
+    background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+    background: linear-gradient(141deg, #F74657, #459EE8);
+    background: -o-linear-gradient(141deg, #F74657, #459EE8);
+    background: -moz-linear-gradient(141deg, #F74657, #459EE8);
 }
 .diaryfactor span {
     display: block;
     padding-top: 5px;
+}
+.diaryquestion{
+    padding-left: 50px !important;
+}
+.tr-nobg {
+    background-color: #373E4F;
 }

@@ -844,7 +844,6 @@ C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.WebPages.Razor.resources.dll
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\bin\ja\System.Web.Optimization.resources.dll
-C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.Initial.resources
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test.resources
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test1.resources
@@ -862,3 +861,4 @@ C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\Slee
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.dll
 C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.pdb
+C:\Users\Sean\Source\Repos\SleepExplorer_QUT_Basic\SleepMakeSense\obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache

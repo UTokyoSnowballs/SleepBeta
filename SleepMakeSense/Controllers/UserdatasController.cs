@@ -50,7 +50,7 @@ namespace SleepMakeSense.Controllers
             return View(userdata);
         }
 
-        public async Task<ActionResult> FactorQuestions()
+        public ActionResult FactorQuestions()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -79,6 +79,65 @@ namespace SleepMakeSense.Controllers
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+
+
+        [HttpPost]
+        public ActionResult FactorQuestions(MyViewModel model)
+        {
+            Userdata data = model.Userdata;
+            data.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            data.DiaryDataNight = true;
+            data.DateStamp = DateTime.UtcNow.Date;
+            Models.Database Db = new Models.Database();
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
+            bool update = false;
+            var lastSynced = from a in Db.Userdatas
+                             where a.AspNetUserId.Equals(data.AspNetUserId) && a.FitbitData.Equals(false) && a.DateStamp >= dateStop
+                             orderby a.DateStamp
+                             select a;
+
+            foreach (Userdata query in lastSynced)
+            {
+                if (query.DateStamp > dateStop)
+                {
+                    dateStop = query.DateStamp;
+                }
+                if (query.DateStamp.Date == data.DateStamp)
+                {
+                    update = true;
+                    query.Stress = data.Stress;
+                    query.Alcohol = data.Alcohol;
+                    query.Coffee = data.Coffee;
+                    query.CoffeeTime = query.CoffeeTime;
+                    query.DiaryDataNight = true;
+
+                    query.WatchTV = data.WatchTV;
+                    query.ExerciseDuration = data.ExerciseDuration;
+                    query.ExerciseIntensity = data.ExerciseIntensity;
+                    query.ExerciseType = data.ExerciseType;
+                    query.Snack = data.Snack;
+                    query.Snack2 = data.Snack2;
+                    query.Job = data.Job;
+                    query.Phone = data.Phone;
+                    query.Music = data.Music;
+                    query.MusicDuration = data.MusicDuration;
+                    query.SocialMedia = data.SocialMedia;
+                    query.Games = data.Games;
+                    query.Assessment = data.Assessment;
+                    query.SleepDiary = data.SleepDiary;
+                }
+            }
+            if (update == false)
+            {
+                db.Userdatas.Add(data);
+            }
+            //   else db.Userdatas.Add(data);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         // GET: Userdatas/Create
         public ActionResult Create()
@@ -242,19 +301,18 @@ namespace SleepMakeSense.Controllers
             }
         }
 
-        private ActionResult SyncDiaryData()
+        public ActionResult SaveDiaryData()
         {
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             Userdata data = new Userdata();
             data.DateStamp = DateTime.UtcNow.Date;
             int temp = 0;
 
+            
+
             //TV - Need to add in Database and Model
             //ddlViewByWatchTV
-            if (Convert.ToInt32(Request["ddlViewByWatchTV"].ToString()) != 0)
-            {
-                data.WatchTV = Request["ddlViewByWatchTV"].ToString();
-            }
+
             //Caffiene
             if (Convert.ToInt32(Request["ddlViewByCoffee"].ToString()) != 0)
             {
@@ -354,174 +412,16 @@ namespace SleepMakeSense.Controllers
 
             //Games
             //ddlViewByGames
-            if (Convert.ToInt32(Request["ddlViewByGames"].ToString()) != 0)
-            {
-                data.Games = Request["ddlViewByGames"].ToString();
-            }
+
             //Exam/
             //ddlViewByAssessment
-
-            data.Games = Request["ddlViewByAssessment"].ToString();
-
             // Stressed
 
-            if (Convert.ToInt32(Request["ddlViewByStress"].ToString()) != 0)
-            {
-                data.Stress = Request["ddlViewByStress"].ToString();
-            }
-
-            //switch statement for naptime
-            switch (napTime)
-            {
-                case 1:
-                    data.NapTime = "09.00";
-                    break;
-                case 2:
-                    data.NapTime = "10.00";
-                    break;
-                case 3:
-                    data.NapTime = "11.00";
-                    break;
-                case 4:
-                    data.NapTime = "12.00";
-                    break;
-                case 5:
-                    data.NapTime = "13.00";
-                    break;
-                case 6:
-                    data.NapTime = "14.00";
-                    break;
-                case 7:
-                    data.NapTime = "15.00";
-                    break;
-                case 8:
-                    data.NapTime = "16.00";
-                    break;
-                case 9:
-                    data.NapTime = "17.00";
-                    break;
-                case 10:
-                    data.NapTime = "18.00";
-                    break;
-                case 11:
-                    data.NapTime = "19.00";
-                    break;
-            }
-            //switch statement for coffeeTime
-            switch (coffeeTime)
-            {
-                case 1:
-                    data.NapTime = "06.00";
-                    break;
-                case 2:
-                    data.NapTime = "07.00";
-                    break;
-                case 3:
-                    data.NapTime = "08.00";
-                    break;
-                case 4:
-                    data.NapTime = "09.00";
-                    break;
-                case 5:
-                    data.NapTime = "10.00";
-                    break;
-                case 6:
-                    data.NapTime = "11.00";
-                    break;
-                case 7:
-                    data.NapTime = "12.00";
-                    break;
-                case 8:
-                    data.NapTime = "13.00";
-                    break;
-                case 9:
-                    data.NapTime = "14.00";
-                    break;
-                case 10:
-                    data.NapTime = "15.00";
-                    break;
-                case 11:
-                    data.NapTime = "16.00";
-                    break;
-                case 12:
-                    data.NapTime = "17.00";
-                    break;
-                case 13:
-                    data.NapTime = "18.00";
-                    break;
-            }
-            //switch statement for coffeeTime
-            switch (job)
-            {
-                case 1:
-                    data.NapTime = "18.00";
-                    break;
-                case 2:
-                    data.NapTime = "19.00";
-                    break;
-                case 3:
-                    data.NapTime = "20.00";
-                    break;
-                case 4:
-                    data.NapTime = "21.00";
-                    break;
-                case 5:
-                    data.NapTime = "22.00";
-                    break;
-                case 6:
-                    data.NapTime = "23.00";
-                    break;
-                case 7:
-                    data.NapTime = "00.00";
-                    break;
-                case 8:
-                    data.NapTime = "01.00";
-                    break;
-                case 9:
-                    data.NapTime = "02.00";
-                    break;
-                case 10:
-                    data.NapTime = "03.00";
-                    break;
-
-            }
-            data.DiaryDataNight = true;
-
-            Models.Database Db = new Models.Database();
-
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
-
-            bool update = false;
-
-            var lastSynced = from a in Db.Userdatas
-                             where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= dateStop
-                             orderby a.DateStamp
-                             select a;
-
-            foreach (Userdata query in lastSynced)
-            {
-                if (query.DateStamp > dateStop)
-                {
-                    dateStop = query.DateStamp;
-                }
-                if (query.DateStamp.Date == data.DateStamp)
-                {
-                    update = true;
-                }
-            }
-            if (update == false)
-            {
-                db.Userdatas.Add(data);
-            }
-            //   else db.Userdatas.Add(data);
-            db.SaveChanges();
-
             return View("Callback");
-
-
-
+            
         }
 
+        
 
         private async Task<ActionResult> FitbitDataSync(FitbitClient client, String userId)
         {
@@ -785,18 +685,23 @@ namespace SleepMakeSense.Controllers
 
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             FitbitClient client = GetFitbitClient();
-       //     await FitbitDataSync(client, userId);
+            await FitbitDataSync(client, userId);
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }
-/*
-        private ActionResult Sync()
+        public ActionResult Sync(String userId)
         {
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }
-*/
+        /*
+                private ActionResult Sync()
+                {
+                    string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
+                    MyViewModel model = DataModelCreation(userId);
+                    return View(model);
+                }
+        */
         public ActionResult NoDataSync()
         {
             return View("Sync");

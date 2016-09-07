@@ -102,10 +102,10 @@
             
             <table class="table">                    
                     <tr style="@((bool)Model.UserQuestion.Question1 ? "display:" : "display:none")">        
-                        <td class="diaryfactor"><i class="fa fa-tv fa-2x"></i><span>Watch TV</span></td>
-                        <td>How many hours did you watch TV after 6pm last night?</td>
+                        <td class="diaryfactor"><i class="fa fa-tv fa-2x"></i><span>TV</span></td>
+                        <td class="diaryquestion">How many hours did you watch TV after 6pm last night?</td>
                         <td>
-                            <select id="ddlViewByWatchTV">
+                            <select class="form-control" id="ddlViewByWatchTV">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -123,9 +123,9 @@
 
                     <tr class="tr-noborder" style="@((bool)Model.UserQuestion.Question2 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
-                        <td>How many coffees and/or energy drinks did you drink yesterday?</td>
+                        <td class="diaryquestion">How many coffees and/or energy drinks did you drink yesterday?</td>
                         <td>
-                            <select id="ddlViewByCoffee">
+                            <select class="form-control" id="ddlViewByCoffee">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -142,10 +142,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question3 ? "display:" : "display:none")">
-                        <td> </td>
-                        <td>When was the last time you had caffine? (energy drink, coffee, etc.)</td>
+                        <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
+                        <td class="diaryquestion">When was the last time you had caffine? (energy drink, coffee, etc.)</td>
                         <td>
-                            <select id="ddlViewByCoffeeTime">
+                            <select class="form-control" id="ddlViewByCoffeeTime">
                                 <option value="0" selected="selected">No Coffee</option>
                                 <option value="1">6AM</option>
                                 <option value="2">7AM</option>
@@ -166,9 +166,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question4 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
-                        <td>How many hours did you exercise yesterday?</td>
+                        <td class="diaryquestion">How many hours did you exercise yesterday?</td>
                         <td>
-                            <select id="ddlViewByExerciseDuration">
+                            <select class="form-control" id="ddlViewByExerciseDuration">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -180,10 +180,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question5 ? "display:" : "display:none")">
-                        <td> </td>
-                        <td>How intense did you work out on a scale of 1-5 (1 being easy workout, 5 being your body was in a lot of pain afterwards)</td>
+                        <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
+                        <td class="diaryquestion">How intense did you work out on a scale of 1-10 (1 being easy workout, 10 being your body was in a lot of pain afterwards)</td>
                         <td>
-                            <select id="ddlViewByExerciseIntensity">
+                            <select class="form-control" id="ddlViewByExerciseIntensity">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -200,10 +200,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question6 ? "display:" : "display:none")">
-                        <td> </td>
-                        <td>What type of exercise did you do? (e.g. football, basketball, yoga, jogging, swimming)</td>
+                        <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
+                        <td class="diaryquestion">What type of exercise did you do? (e.g. football, basketball, yoga, jogging, swimming)</td>
                         <td>
-                            <select id="ddlViewByExerciseType">
+                            <select class="form-control" id="ddlViewByExerciseType">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">Running</option>
                                 <option value="2">Swimming</option>
@@ -221,9 +221,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question7 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Snacking</span></td>
-                        <td>How many hours before bed did you snack last night?</td>
+                        <td class="diaryquestion">How many hours before bed did you snack last night?</td>
                         <td>
-                            <select id="ddlViewBySnack">
+                            <select class="form-control"id="ddlViewBySnack">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -240,10 +240,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question8 ? "display:" : "display:none")">
-                        <td> </td>
-                        <td>What types of food did you snack on?</td>
+                        <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Snacking</span></td>
+                        <td class="diaryquestion">What types of food did you snack on?</td>
                         <td>
-                            <select id="ddlViewBySnack2">
+                            <select class="form-control" id="ddlViewBySnack2">
                                 <option value="0" selected="selected"> </option>
                                 <option value="1">Healthy Food</option>
                                 <option value="2">Unhealthy Food</option>
@@ -253,9 +253,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question9 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
-                        <td>How long did you nap for Today?</td>
+                        <td class="diaryquestion">How long did you nap for Today?</td>
                         <td>
-                            <select id="ddlViewByDuration">
+                            <select class="form-control"id="ddlViewByDuration">
                                 <option value="0" selected="selected">0 - 10 minutes</option>
                                 <option value="1">11 - 20 minutes</option>
                                 <option value="2">21 - 30 minutes</option>
@@ -272,10 +272,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question10 ? "display:" : "display:none")" >
-                        <td> </td>
-                        <td>What Time was your nap?</td>
+                        <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
+                        <td class="diaryquestion">What Time was your nap?</td>
                         <td>
-                            <select id="ddlViewByNapTime">
+                            <select class="form-control"id="ddlViewByNapTime">
                                 <option value="0" selected="selected">No Nap</option>
                                 <option value="1">9AM</option>
                                 <option value="2">10AM</option>
@@ -294,9 +294,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question11 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol</span></td>
-                        <td>How many drinks did you have today?</td>
+                        <td class="diaryquestion">How many drinks did you have today?</td>
                         <td>
-                            <select id="ddlViewByAlcohol">
+                            <select class="form-control"id="ddlViewByAlcohol">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -314,9 +314,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question12 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
-                        <td>When did your shift start last night?</td>
+                        <td class="diaryquestion">When did your shift start last night?</td>
                         <td>
-                            <select id="ddlViewByJob">
+                            <select class="form-control" id="ddlViewByJob">
                                 <option value="0" selected="selected">No Shift</option>
                                 <option value="1">Before 6PM</option>
                                 <option value="2">7PM</option>
@@ -333,10 +333,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question13 ? "display:" : "display:none")">
-                        <td> </td>
-                        <td>How many hours did you work for?</td>
+                        <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
+                        <td class="diaryquestion">How many hours did you work for?</td>
                         <td>
-                            <select id="ddlViewByJob2">
+                            <select class="form-control"id="ddlViewByJob2">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -354,9 +354,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question14 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Mobile use</span></td>
-                        <td>How many hours did you spend on your phone after 6pm yesterday?</td>
+                        <td class="diaryquestion">How many hours did you spend on your phone after 6pm yesterday?</td>
                         <td>
-                            <select id="ddlViewByPhone">
+                            <select class="form-control"id="ddlViewByPhone">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -373,10 +373,10 @@
                     </tr>
 
                     <tr style="@((bool)Model.UserQuestion.Question15 ? "display:" : "display:none")">
-                        <td class="diaryfactor"><i class="fa fa-book fa-2x"></i><span>Journal</span></td>
-                        <td>Did you write in your journal/diary before bed last night?</td>
+                        <td class="diaryfactor"><i class="fa fa-pencil fa-2x"></i><span>Journal</span></td>
+                        <td class="diaryquestion">Did you write in your journal/diary before bed last night?</td>
                         <td>
-                            <select id="ddlViewByDiary">
+                            <select class="form-control" id="ddlViewByDiary">
                                 <option value="0" selected="selected"></option>
                                 <option value="1">No</option>
                                 <option value="2">Yes</option>
@@ -386,10 +386,10 @@
 
 
                 <tr style="@((bool)Model.UserQuestion.Question17 ? "display:" : "display:none")">
-                    <td> </td>
-                    <td>What genre of music did you listen to?</td>
+                    <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
+                    <td class="diaryquestion">What genre of music did you listen to?</td>
                     <td>
-                        <select id="ddlViewByMusicType">
+                        <select class="form-control"id="ddlViewByMusicType">
                             <option value="0" selected="selected">Didn't listen to music</option>
                             <option value="1">Electronic</option>
                             <option value="2">Hip Hop</option>
@@ -405,9 +405,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question16 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
-                        <td>How long did you listen to music to before sleeping last night?</td>
+                        <td class="diaryquestion">How long did you listen to music to before sleeping last night?</td>
                         <td>
-                            <select id="ddlViewByMusicDuration">
+                            <select class="form-control" id="ddlViewByMusicDuration">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -425,10 +425,10 @@
 
 
                     <tr style="@((bool)Model.UserQuestion.Question18 ? "display:" : "display:none")">
-                        <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span>a</td>
-                        <td>How long were you on social media for after 6pm last night?</td>
+                        <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span></td>
+                        <td class="diaryquestion">How long were you on social media for after 6pm last night?</td>
                         <td>
-                            <select id="ddlViewBySocialMedia">
+                            <select class="form-control"id="ddlViewBySocialMedia">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -446,9 +446,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question19 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-gamepad fa-2x"></i><span>Video games</span></td>
-                        <td>How long did you play video games for after 6pm?</td>
+                        <td class="diaryquestion">How long did you play video games for after 6pm?</td>
                         <td>
-                            <select id="ddlViewByGames">
+                            <select class="form-control"id="ddlViewByGames">
                                 <option value="0" selected="selected">0 hours</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
@@ -466,9 +466,9 @@
 
                     <tr style="@((bool)Model.UserQuestion.Question20 ? "display:" : "display:none")">
                         <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>Assessment</span></td>
-                        <td>Do you have any assessment due or exams this week?</td>
+                        <td class="diaryquestion">Do you have any assessment due or exams this week?</td>
                         <td>
-                            <select id="ddlViewByAssessment">
+                            <select class="form-control"id="ddlViewByAssessment">
                                 <option value="0" selected="selected">No</option>
                                 <option value="1">Yes</option>
 
@@ -477,10 +477,10 @@
                     </tr>
 
                     <tr>
-                        <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span>/td>
-                        <td>How anxious/stressed were you Today? (1 not at all - 5 very)</td>
+                        <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
+                        <td class="diaryquestion">How anxious/stressed were you Today? (1 not at all - 10 very)</td>
                         <td>
-                            <select id="ddlViewByStress">
+                            <select class="form-control"id="ddlViewByStress">
                                 <option value="0" selected="selected">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -491,10 +491,10 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr class="tr-nobg">
                         <td></td>
-                        <td><button id="Submit" onclick="account()">Submit!</button></td>
-                        <td>@Html.ActionLink("Save", "DiaryDataSync", "UserDatas", new { }, new { @class = "btn btn-success" })</td>
+                        <td></td>
+                        <td><button class="btn btn-primary btn-lg btn-block" id="Submit" onclick="account()">Submit</button></td>
                     </tr>
 
                 </tbody>

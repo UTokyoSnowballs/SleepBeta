@@ -353,7 +353,8 @@
                      .attr("fill", function (d) {
                          if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
                              //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                         else if (mark == "MinutesAsleep" && ((d.Value >= 8) || (d.Value <= 10))) { return red; }
+                         else if (mark == "MinutesAsleep" && (d.Value < 8)) { return red; }
+                         else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; } 
                          else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
                          else return blue;
                      })

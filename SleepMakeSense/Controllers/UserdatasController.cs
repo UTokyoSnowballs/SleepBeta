@@ -241,89 +241,136 @@ namespace SleepMakeSense.Controllers
             db.SaveChangesAsync();
             }
         }
-
-        private void UpdateDiaryData(int queryId, bool queryDairyData, Userdata item)
-        {
-
-            if (!queryDairyData)
-            {
-                Userdata updateQuery = (from a in db.Userdatas
-                                        where a.Id == queryId
-                                        select a).First();
-                //Update database
-                updateQuery.WakeUpFreshness = item.WakeUpFreshness;
-                updateQuery.Coffee = item.Coffee;
-                updateQuery.CoffeeTime = item.CoffeeTime;
-                updateQuery.Alcohol = item.Alcohol;
-                updateQuery.Mood = item.Mood;
-                updateQuery.Stress = item.Stress;
-                updateQuery.Tiredness = item.Tiredness;
-                updateQuery.Dream = item.Dream;
-                updateQuery.DigitalDev = item.DigitalDev;
-                updateQuery.Light = item.Light;
-                updateQuery.NapDuration = item.NapDuration;
-                updateQuery.NapTime = item.NapTime;
-                updateQuery.SocialActivity = item.SocialActivity;
-                updateQuery.DinnerTime = item.DinnerTime;
-                updateQuery.AmbientTemp = item.AmbientTemp;
-                updateQuery.AmbientHumd = item.AmbientHumd;
-                updateQuery.ExerciseTime = item.ExerciseTime;
-                updateQuery.BodyTemp = item.BodyTemp;
-                updateQuery.Hormone = item.Hormone;
-                updateQuery.DiaryData = true;
-                db.SaveChangesAsync();
-            }
-            else
-            {
-                db.Userdatas.Add(item);
-                db.SaveChanges();
-            }
-
-        }
-
-
+          
         private ActionResult DiaryDataSync()
         {
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             Userdata data = new Userdata();
-            data.DateStamp = DateTime.UtcNow;
+            data.DateStamp = DateTime.UtcNow.Date;
+            int temp = 0;
+ 
+            //TV - Need to add in Database and Model
+            //ddlViewByWatchTV
+            if (Convert.ToInt32(Request["ddlViewByWatchTV"].ToString()) != 0)
+            {
+                data.WatchTV = Convert.ToInt32(Request["ddlViewByWatchTV"].ToString());
+            }
             //Caffiene
-            data.Coffee = Request["ddlViewByCaffiene"].ToString();
+            if (Convert.ToInt32(Request["ddlViewByCoffee"].ToString()) != 0)
+            {
+                data.Coffee = Request["ddlViewByCoffee"].ToString();
+            }
             //Caffiene2 - will need a switch statement
-           // data.CoffeeTime = Request[""].ToString();
-           int coffeeTime = Convert.ToInt32(Request["ddlViewByCaffiene2"].ToString());
-            //Alcohol2
-            data.Alcohol = Request["ddlViewByAlcohol"].ToString();
-            //Social
-            data.SocialActivity = Request[""].ToString();
-            //Exam/ Stressed
-            data.Stress = Request["ddlViewByStress"].ToString();
-            //Nap durateion
-            data.NapDuration = Request["ddlViewByNap"].ToString();
+            // data.CoffeeTime = Request[""].ToString();
+            int coffeeTime = Convert.ToInt32(Request["ddlViewByCoffeeTime"].ToString());
+            //Exersise time - need to add in database and model
+            //ddlViewByExerciseDuration
+            if (Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString()) != 0)
+            {
+                data.ExerciseDuration = Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString());
+            }
+            //Exersise time 2 - need to add in database and model
+            //ddlViewByExerciseIntensity
+            if (Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString()) != 0)
+            {
+                data.ExerciseIntensity = Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString());
+            }
+            //Exersise time 3 -  need to add in database and model
+            //ddlViewByExerciseType
+            if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
+            {
+                data.ExerciseType = Convert.ToInt32(Request["ddlViewByExerciseType"].ToString());
+            }
+            //Snack - need to add in database and model
+            //ddlViewBySnack
+            if (Convert.ToInt32(Request["ddlViewBySnack"].ToString()) != 0)
+            {
+                data.Snack = Convert.ToInt32(Request["ddlViewBySnack"].ToString());
+            }
+            //Snack - need to add in database and model
+            //ddlViewBySnack2
+            temp = Convert.ToInt32(Request["ddlViewBySnack2"].ToString());
+            if (temp != 0)
+            {
+                if (temp == 1) data.Snack2 = false;
+                else data.Snack2 = true;
+            }
+            //Nap durateion - will need a switch statement
+            if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
+            {
+                data.NapDuration = Request["ddlViewByExerciseType"].ToString();
+            }
             //NapTime - will need a switch statement
             int napTime = Convert.ToInt32(Request["ddlViewByNap2"].ToString());
-            //Degitial devices 
-            int sum = Convert.ToInt32(Request["ddlViewByGames"].ToString()) + Convert.ToInt32(Request["ddlViewBySocial"].ToString()) + Convert.ToInt32(Request["ddlViewByPhone"].ToString());
-            data.DigitalDev = sum.ToString();
+            //Alcohol2
+            if (Convert.ToInt32(Request["ddlViewByAlcohol"].ToString()) != 0)
+            {
+                data.Alcohol = Request["ddlViewByAlcohol"].ToString();
+            }
+            //Job 
+            //ddlViewByJob - will require a switch statement
+            int job = Convert.ToInt32(Request["ddlViewByJob"].ToString());
+            //Job 2
+            //ddlViewByJob2 
+            if (Convert.ToInt32(Request["ddlViewByJob2"].ToString()) != 0)
+            {
+                data.Job2 = Convert.ToInt32(Request["ddlViewByJob2"].ToString());
+            }
+            //Time on phone
+            //ddlViewByPhone
+            if (Convert.ToInt32(Request["ddlViewByPhone"].ToString()) != 0)
+            {
+                data.Phone = Convert.ToInt32(Request["ddlViewByPhone"].ToString());
+            }
+            //Sleep Diary
+            //ddlViewByDiary
+            temp = Convert.ToInt32(Request["ddlViewByDiary"].ToString());
+            if (temp != 0)
+            {
+                if (temp == 1) data.SleepDiary = false;
+                else data.SleepDiary = true;
+            }
+            //Music
+            //ddlViewByMusicDuration
+            if (Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString()) != 0)
+            {
+                data.Music = true;
+                data.MusicDuration = Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString());
+            }
 
-            data.Coffee = Request[""].ToString();
-            data.Coffee = Request[""].ToString();
-            data.Coffee = Request[""].ToString();
-            data.Coffee = Request[""].ToString();
+            //Type of Music 
+            //ddlViewByMusicType
+            if (Convert.ToInt32(Request["ddlViewByMusicType"].ToString()) != 0)
+            {
+                data.Music = true;
+                data.MusicDuration = Convert.ToInt32(Request["ddlViewByMusicType"].ToString());
+            }
 
-            /*
+            //Social Media
+            //ddlViewBySocialMedia
+            //Social
+            if (Convert.ToInt32(Request["ddlViewBySocialMedia"].ToString()) != 0)
+            {
+                data.SocialActivity = Request["ddlViewBySocialMedia"].ToString();
+            }
 
-            Exercise
-            Exercise2
-            Exercise3
-                Snack
-                Snack2
-                Job
-                Job2
-                Diary
-                Music
-                Music2
-                */
+            //Games
+            //ddlViewByGames
+            if (Convert.ToInt32(Request["ddlViewByGames"].ToString()) != 0)
+            {
+                data.Games = Convert.ToInt32(Request["ddlViewByGames"].ToString());
+            }
+                //Exam/
+                //ddlViewByAssessment
+                if (Convert.ToInt32(Request["ddlViewByAssessment"].ToString()) == 0) data.Assessment = false;
+                else data.Assessment = true;
 
+            // Stressed
+
+            if (Convert.ToInt32(Request["ddlViewByStress"].ToString()) != 0)
+            {
+                data.Stress = Request["ddlViewByStress"].ToString();
+            }
 
             //switch statement for naptime
             switch (napTime)
@@ -362,8 +409,6 @@ namespace SleepMakeSense.Controllers
                     data.NapTime = "19.00";
                     break;
             }
-
-
             //switch statement for coffeeTime
             switch (coffeeTime)
             {
@@ -407,8 +452,71 @@ namespace SleepMakeSense.Controllers
                     data.NapTime = "18.00";
                     break;
             }
+            //switch statement for coffeeTime
+            switch (job)
+            {
+                case 1:
+                    data.NapTime = "18.00";
+                    break;
+                case 2:
+                    data.NapTime = "19.00";
+                    break;
+                case 3:
+                    data.NapTime = "20.00";
+                    break;
+                case 4:
+                    data.NapTime = "21.00";
+                    break;
+                case 5:
+                    data.NapTime = "22.00";
+                    break;
+                case 6:
+                    data.NapTime = "23.00";
+                    break;
+                case 7:
+                    data.NapTime = "00.00";
+                    break;
+                case 8:
+                    data.NapTime = "01.00";
+                    break;
+                case 9:
+                    data.NapTime = "02.00";
+                    break;
+                case 10:
+                    data.NapTime = "03.00";
+                    break;
 
-            return View();
+            }
+
+            Models.Database Db = new Models.Database();
+            List<Userdata> queryList = new List<Userdata>();
+
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
+
+            bool update = false;
+
+            var lastSynced = from a in Db.Userdatas
+                             where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= dateStop
+                             orderby a.DateStamp
+                             select a;
+
+            foreach (Userdata query in lastSynced)
+            {
+                if (query.DateStamp > dateStop)
+                {
+                    dateStop = query.DateStamp;
+                }
+                if (query.DateStamp.Date == data.DateStamp)
+                {
+                    update = true;
+                }
+            }
+            if (update == true)
+            {
+
+            }
+         //   else db.Userdatas.Add(data);
+                return View("Callback");
 
 
 
@@ -675,9 +783,9 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> Sync()
         {
 
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             FitbitClient client = GetFitbitClient();
-        //    await FitbitDataSync(client, userId);
+       //     await FitbitDataSync(client, userId);
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }
@@ -708,12 +816,10 @@ namespace SleepMakeSense.Controllers
             ViewBag.FitbitSynced = true;
             //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
-            bool userLogedIn = false;
             Models.Database Db = new Models.Database();
 
             DateTime date = DateTime.UtcNow.AddDays(-40);
 
-            userLogedIn = true;
             List<Userdata> results = (from a in Db.Userdatas
                                       where a.AspNetUserId == userId && a.DateStamp >= date && a.FitbitData == true
                                      orderby  a.DateStamp

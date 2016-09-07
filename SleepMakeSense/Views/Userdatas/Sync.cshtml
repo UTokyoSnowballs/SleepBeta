@@ -33,9 +33,8 @@
             display: none;
         }
 
-        div.tooltip-timeseries {
-            position: absolute;
-            text-align: center;
+        .tooltip-timeseries {
+            
             width: 160px;
             height: 36px;
             padding: 2px;
@@ -44,11 +43,14 @@
             background: black;
             border: 0px;
             border-radius: 8px;
+            text-align: center;
             pointer-events: none;
+            position: absolute;
+            display: inline;
         }
 
 
-        div.tooltip-bubble {
+        .tooltip-bubble {
             position: absolute;
             text-align: left;
             width: 200px;
@@ -349,6 +351,7 @@
                 var div = d3.select(section).append("div")
                             .attr("class", "tooltip-timeseries")
                             .style("opacity", 0);
+                
                 var formatTime = d3.time.format("%b %e");
 
                 chart.selectAll("rect")
@@ -391,11 +394,14 @@
 
 
                          div.html(tooltiptext)
-                            //.style("left", (d3.event.pageX - 64) + "px")
+                            //.style("left", (d3.event.pageX - 34) + "px")
                             //.style("top", (d3.event.pageY - 12) + "px");
                             .style("left", (window.pageXOffset + matrix.e + 15) + "px")
                             .style("top", (window.pageYOffset + matrix.f - 30) + "px");
                          // Need a better solution here!!
+
+                        
+                            
                      })
                      .on("mouseout", function (d) {
                          d3.select(this)

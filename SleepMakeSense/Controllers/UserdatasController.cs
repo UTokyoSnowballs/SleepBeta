@@ -241,14 +241,14 @@ namespace SleepMakeSense.Controllers
             db.SaveChangesAsync();
             }
         }
-          
-        private ActionResult DiaryDataSync()
+
+        private ActionResult SyncDiaryData()
         {
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             Userdata data = new Userdata();
             data.DateStamp = DateTime.UtcNow.Date;
             int temp = 0;
- 
+
             //TV - Need to add in Database and Model
             //ddlViewByWatchTV
             if (Convert.ToInt32(Request["ddlViewByWatchTV"].ToString()) != 0)
@@ -292,7 +292,7 @@ namespace SleepMakeSense.Controllers
             temp = Convert.ToInt32(Request["ddlViewBySnack2"].ToString());
             if (temp != 0)
             {
-                 data.Snack2 = Request["ddlViewBySnack"].ToString();
+                data.Snack2 = Request["ddlViewBySnack"].ToString();
             }
             //Nap durateion - will need a switch statement
             if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
@@ -326,7 +326,7 @@ namespace SleepMakeSense.Controllers
             temp = Convert.ToInt32(Request["ddlViewByDiary"].ToString());
             if (temp != 0)
             {
-                 data.SleepDiary = Request["ddlViewByDiary"].ToString();
+                data.SleepDiary = Request["ddlViewByDiary"].ToString();
             }
             //Music
             //ddlViewByMusicDuration
@@ -358,8 +358,8 @@ namespace SleepMakeSense.Controllers
             {
                 data.Games = Request["ddlViewByGames"].ToString();
             }
-                //Exam/
-                //ddlViewByAssessment
+            //Exam/
+            //ddlViewByAssessment
 
             data.Games = Request["ddlViewByAssessment"].ToString();
 
@@ -485,9 +485,9 @@ namespace SleepMakeSense.Controllers
                     break;
 
             }
+            data.DiaryDataNight = true;
 
             Models.Database Db = new Models.Database();
-            List<Userdata> queryList = new List<Userdata>();
 
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
 
@@ -509,12 +509,14 @@ namespace SleepMakeSense.Controllers
                     update = true;
                 }
             }
-            if (update == true)
+            if (update == false)
             {
-
+                db.Userdatas.Add(data);
             }
-         //   else db.Userdatas.Add(data);
-                return View("Callback");
+            //   else db.Userdatas.Add(data);
+            db.SaveChanges();
+
+            return View("Callback");
 
 
 

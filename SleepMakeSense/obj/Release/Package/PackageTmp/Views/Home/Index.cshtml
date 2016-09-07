@@ -25,19 +25,7 @@
     {
         <p>@Html.ActionLink("Connect", "ConnectFitbit", "Fitbit", new { }, new { @class = "btn btn-success" })</p>
     }
-    @*testing only*@
-    @if (ViewBag.AccessToken != null)
-    {
-        <p>Token -- @ViewBag.Token</p>
-        <p>Token type -- @ViewBag.TokenType</p>
-        <p>Expires In -- @ViewBag.ExpiresIn</p>
-        <p>Refresh token -- @ViewBag.RefreshToken</p>
 
-    }
-    else
-    {
-        
-    }
 
     @*
         Work in progress

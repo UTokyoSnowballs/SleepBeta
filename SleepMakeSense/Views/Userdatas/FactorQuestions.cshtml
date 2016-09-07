@@ -494,7 +494,8 @@
                     <tr class="tr-nobg">
                         <td></td>
                         <td></td>
-                        <td><button class="btn btn-primary btn-lg btn-block" id="Submit" onclick="account()">Submit</button></td>
+                        <td>@Html.ActionLink("Save", "SyncDiaryData", "Userdatas", new { }, new { @class = "btn btn-primary btn-lg btn-block" })</td>
+                        <input type="button" value="Create" onclick="location.href='@Url.Action("DiaryDataSync", "UserDatas")'" />
                     </tr>
 
                 </tbody>

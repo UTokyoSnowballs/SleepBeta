@@ -253,7 +253,7 @@ namespace SleepMakeSense.Controllers
             //ddlViewByWatchTV
             if (Convert.ToInt32(Request["ddlViewByWatchTV"].ToString()) != 0)
             {
-                data.WatchTV = Convert.ToInt32(Request["ddlViewByWatchTV"].ToString());
+                data.WatchTV = Request["ddlViewByWatchTV"].ToString();
             }
             //Caffiene
             if (Convert.ToInt32(Request["ddlViewByCoffee"].ToString()) != 0)
@@ -267,33 +267,32 @@ namespace SleepMakeSense.Controllers
             //ddlViewByExerciseDuration
             if (Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString()) != 0)
             {
-                data.ExerciseDuration = Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString());
+                data.ExerciseDuration = Request["ddlViewByExerciseDuration"].ToString();
             }
             //Exersise time 2 - need to add in database and model
             //ddlViewByExerciseIntensity
             if (Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString()) != 0)
             {
-                data.ExerciseIntensity = Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString());
+                data.ExerciseIntensity = Request["ddlViewByExerciseIntensity"].ToString();
             }
             //Exersise time 3 -  need to add in database and model
             //ddlViewByExerciseType
             if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
             {
-                data.ExerciseType = Convert.ToInt32(Request["ddlViewByExerciseType"].ToString());
+                data.ExerciseType = Request["ddlViewByExerciseType"].ToString();
             }
             //Snack - need to add in database and model
             //ddlViewBySnack
             if (Convert.ToInt32(Request["ddlViewBySnack"].ToString()) != 0)
             {
-                data.Snack = Convert.ToInt32(Request["ddlViewBySnack"].ToString());
+                data.Snack = Request["ddlViewBySnack"].ToString();
             }
             //Snack - need to add in database and model
             //ddlViewBySnack2
             temp = Convert.ToInt32(Request["ddlViewBySnack2"].ToString());
             if (temp != 0)
             {
-                if (temp == 1) data.Snack2 = false;
-                else data.Snack2 = true;
+                 data.Snack2 = Request["ddlViewBySnack"].ToString();
             }
             //Nap durateion - will need a switch statement
             if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
@@ -314,36 +313,35 @@ namespace SleepMakeSense.Controllers
             //ddlViewByJob2 
             if (Convert.ToInt32(Request["ddlViewByJob2"].ToString()) != 0)
             {
-                data.Job2 = Convert.ToInt32(Request["ddlViewByJob2"].ToString());
+                data.Job2 = Request["ddlViewByJob2"].ToString();
             }
             //Time on phone
             //ddlViewByPhone
             if (Convert.ToInt32(Request["ddlViewByPhone"].ToString()) != 0)
             {
-                data.Phone = Convert.ToInt32(Request["ddlViewByPhone"].ToString());
+                data.Phone = Request["ddlViewByPhone"].ToString();
             }
             //Sleep Diary
             //ddlViewByDiary
             temp = Convert.ToInt32(Request["ddlViewByDiary"].ToString());
             if (temp != 0)
             {
-                if (temp == 1) data.SleepDiary = false;
-                else data.SleepDiary = true;
+                 data.SleepDiary = Request["ddlViewByDiary"].ToString();
             }
             //Music
             //ddlViewByMusicDuration
             if (Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString()) != 0)
             {
-                data.Music = true;
-                data.MusicDuration = Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString());
+                data.Music = "1";
+                data.MusicDuration = Request["ddlViewByMusicDuration"].ToString();
             }
 
             //Type of Music 
             //ddlViewByMusicType
             if (Convert.ToInt32(Request["ddlViewByMusicType"].ToString()) != 0)
             {
-                data.Music = true;
-                data.MusicDuration = Convert.ToInt32(Request["ddlViewByMusicType"].ToString());
+                data.Music = "1";
+                data.MusicDuration = Request["ddlViewByMusicType"].ToString();
             }
 
             //Social Media
@@ -358,12 +356,12 @@ namespace SleepMakeSense.Controllers
             //ddlViewByGames
             if (Convert.ToInt32(Request["ddlViewByGames"].ToString()) != 0)
             {
-                data.Games = Convert.ToInt32(Request["ddlViewByGames"].ToString());
+                data.Games = Request["ddlViewByGames"].ToString();
             }
                 //Exam/
                 //ddlViewByAssessment
-                if (Convert.ToInt32(Request["ddlViewByAssessment"].ToString()) == 0) data.Assessment = false;
-                else data.Assessment = true;
+
+            data.Games = Request["ddlViewByAssessment"].ToString();
 
             // Stressed
 

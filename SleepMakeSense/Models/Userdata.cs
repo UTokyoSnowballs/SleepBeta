@@ -96,39 +96,39 @@ namespace SleepMakeSense.Models
 
         public bool DiaryDataNight { get; set; }
 
-        public int WatchTV { get; set; }
+        public string WatchTV { get; set; }
 
-        public int ExerciseDuration { get; set; }
+        public string ExerciseDuration { get; set; }
 
-        public int ExerciseIntensity { get; set; }
+        public string ExerciseIntensity { get; set; }
 
-        public int ExerciseType { get; set; }
+        public string ExerciseType { get; set; }
 
-        public int Snack { get; set; }
+        public string Snack { get; set; }
 
-        public bool Snack2 { get; set; }
+        public string Snack2 { get; set; }
 
         public string Job { get; set; }
 
-        public int Job2 { get; set; }
+        public string Job2 { get; set; }
 
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
-        public bool SleepDiary { get; set; }
+        public string SleepDiary { get; set; }
 
-        public bool Music { get; set; }
+        public string Music { get; set; }
 
-        public int MusicDuration { get; set; }
+        public string MusicDuration { get; set; }
 
-        public int MusicType { get; set; }
+        public string MusicType { get; set; }
 
-        public int SocialMedia { get; set; }
+        public string SocialMedia { get; set; }
 
-        public int Games { get; set; }
+        public string Games { get; set; }
 
-        public bool Assessment { get; set; }
+        public string Assessment { get; set; }
 
-        public bool DiaryDataMorning { get; set; }
+     //   public bool DiaryDataMorning { get; set; }
 
         [Required]
         [StringLength(128)]

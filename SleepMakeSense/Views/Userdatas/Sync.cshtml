@@ -24,7 +24,13 @@
             fill: none;
             stroke: #747F97;
             shape-rendering: crispEdges;
-            font-size: x-small;
+            
+        }
+        .axis {
+            font-size: 14px;
+        }
+        .x.axis path {
+            display: none;
         }
 
         div.tooltip-timeseries {
@@ -328,9 +334,13 @@
                     .attr("transform", "rotate(-90)");
 
                 chart.append("g")
-                     .attr("class", "y axis")
-                     .call(yAxis)
-                     .append("text")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
                     .text(sFeature);
 
                 
@@ -416,7 +426,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs" id="mytab">
-                        <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Minutes Asleep</a></li>
+                        <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Hours Asleep</a></li>
                         <li><a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Minutes Restless</a></li>
                         <li><a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a></li>
 
@@ -438,7 +448,7 @@
                     <div class="tab-pane active fade in" id="MinutesAsleepTimeseries">
                         <div id="MinutesAsleepTimeseries">
                             <script type="text/javascript">
-                                PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
+                                PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Hours");
                             </script>
                         </div>
                         
@@ -457,7 +467,7 @@
                     <div class="tab-pane fade" id="MinutesAwakeTimeseries">
                         <div id="MinutesAwakeTimeseries">
                             <script type="text/javascript">
-                                PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
+                                PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Mins");
                             </script>
                         </div>
                         
@@ -475,7 +485,7 @@
                     <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
                             <script type="text/javascript">
-                        PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
+                        PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "%");
                             </script>
                         </div>
                                 <div class="row">

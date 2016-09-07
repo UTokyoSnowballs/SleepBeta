@@ -824,7 +824,7 @@ namespace SleepMakeSense.Controllers
                                             select a).ToList();
 
 
-            List<DiaryData> diaryData = new List<DiaryData>();
+         //   List<DiaryData> diaryData = new List<DiaryData>();
         
 
             int CNTcaloriesIn = 0, CNTwater = 0, CNTcaloriesOut = 0, CNTsteps = 0, CNTweight = 0, CNTfat = 0;

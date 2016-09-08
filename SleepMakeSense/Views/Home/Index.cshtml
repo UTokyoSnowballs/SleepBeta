@@ -1,4 +1,8 @@
-﻿@{
+﻿@using SleepMakeSense.Models
+
+@model MyViewModel
+
+@{
     ViewBag.Title = "SleepBeta";
 }
 
@@ -23,7 +27,12 @@
     }
     else
     {
-        <p>@Html.ActionLink("Connect", "ConnectFitbit", "Fitbit", new { }, new { @class = "btn btn-success" })</p>
+        <p>@Html.ActionLink("See Your Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary" })</p>
+    }
+
+    @if (Request.IsAuthenticated == true && Model.Userdata.DiaryDataNight != true)
+    {
+        <p>@Html.ActionLink("Today's Diary Info", "FactorQuestions", "UserDatas", new { }, new { @class = "btn btn-primary" })</p>
     }
 
 

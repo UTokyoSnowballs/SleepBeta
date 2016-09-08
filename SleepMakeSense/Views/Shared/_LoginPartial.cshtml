@@ -10,8 +10,11 @@
                     <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
                     <li><a href="@Url.Action("About", "Home")"><i class="fa fa-info fa-fw" aria-hidden="true"></i>&nbsp; About</a></li>
                     <li><a href="@Url.Action("DirectToSync", "Fitbit")"><i class="fa fa-bar-chart fa-fw" aria-hidden="true"></i>&nbsp; Sleep Data</a></li>
-                    <li><a href="@Url.Action("FactorQuestions", "Userdatas")"><i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp; Sleep Diary</a></li>
                     
+                    @if (Request.IsAuthenticated == true && Model.Userdata.DiaryDataNight != true)
+                    {
+                        <li><a href="@Url.Action("FactorQuestions", "Userdatas")"><i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp; Sleep Diary</a></li>
+                    }
                 </ul>
                 
             
@@ -22,7 +25,6 @@ else
     
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
-                    <li><a href="@Url.Action("About", "Home")"><i class="fa fa-info fa-fw" aria-hidden="true"></i>&nbsp; About</a></li>
                     
                 </ul>
                 

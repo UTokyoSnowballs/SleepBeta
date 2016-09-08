@@ -72,7 +72,7 @@ namespace SleepMakeSense.Controllers
 
             syncFitbitCred(accessToken);
 
-             return View();
+             return RedirectToAction("Index", "Home");
             //return RedirectToAction("Sync", "UserDatas");
 
 

@@ -54,6 +54,7 @@ namespace SleepMakeSense.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                MyViewModel viewModel = new MyViewModel();
                 Models.Database Db = new Models.Database();
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 var dataQuery = from a in Db.UserQuestions
@@ -65,17 +66,16 @@ namespace SleepMakeSense.Controllers
                     if(data.AspNetUserId == userId)
                     {
                         ViewBag.Message = "Enter Your Daily Habits";
-                        MyViewModel viewModel = new MyViewModel();
 
                         viewModel.UserQuestion = data;
                         viewModel.Morning = false;
                         if (DateTime.UtcNow.AddHours(10).ToString("tt") == "AM") viewModel.Morning = true;
 
-                        return View(viewModel);
+                        return View();
                     }
                 }
 
-                return View("Callback");
+                return View(Sync());
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }

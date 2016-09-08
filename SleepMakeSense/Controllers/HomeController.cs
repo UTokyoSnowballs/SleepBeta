@@ -22,14 +22,22 @@ namespace SleepMakeSense.Controllers
                                  where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= endStop
                                  orderby a.DateStamp
                                  select a;
+                bool entryForToday = false;
                 foreach (Userdata data in lastSynced)
                 {
                     if (data.DateStamp == DateTime.UtcNow.Date)
                     {
                         model.Userdata = data;
-                        return View(model);
+                        entryForToday = true;
                     }
+
                 }
+                if (!entryForToday)
+                {
+                    model.Userdata = new Userdata();
+                    model.Userdata.DiaryDataNight = false;
+                    }
+                return View(model);
 
             }
 

@@ -28,29 +28,30 @@
     else
     {
         <p>@Html.ActionLink("See Your Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary" })</p>
+
+        <p style="@((bool)Model.Userdata.DiaryDataNight ? "display:none" : "display:")">
+            @Html.ActionLink("Today's Diary Info", "FactorQuestions", "Userdatas", new { }, new { @class = "btn btn-primary" })
+        </p>
+        
     }
 
-    @if (Request.IsAuthenticated == true && Model.Userdata.DiaryDataNight != true)
-    {
-        <p>@Html.ActionLink("Today's Diary Info", "FactorQuestions", "UserDatas", new { }, new { @class = "btn btn-primary" })</p>
-    }
 
 
-    @*
-        Work in progress
-    else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected == false)
-    {
-        <p><a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
-    }
-    else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected)
-    {
-        <p><a href="/Userdatas/Sync" class="btn btn-primary">See Your Stats &raquo;</a></p>
-    }
-    else
-    {
-        <p class="lead">Error: Viewbag (FitBit not being Checked)</p>
-    }
-        *@
+            @*
+                    Work in progress
+                else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected == false)
+                {
+                    <p><a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
+                }
+                else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected)
+                {
+                    <p><a href="/Userdatas/Sync" class="btn btn-primary">See Your Stats &raquo;</a></p>
+                }
+                else
+                {
+                    <p class="lead">Error: Viewbag (FitBit not being Checked)</p>
+                }
+            *@
 </div>
 </div>
 

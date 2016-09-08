@@ -133,7 +133,7 @@ namespace SleepMakeSense.Controllers
             }
             //   else db.Userdatas.Add(data);
             db.SaveChanges();
-
+            TempData["notice"] = "Successfully Saved";
 
             return RedirectToAction("Index", "Home");
         }
@@ -300,129 +300,7 @@ namespace SleepMakeSense.Controllers
             db.SaveChangesAsync();
             }
         }
-
-        public ActionResult SaveDiaryData()
-        {
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            Userdata data = new Userdata();
-            data.DateStamp = DateTime.UtcNow.Date;
-            int temp = 0;
-
-            
-
-            //TV - Need to add in Database and Model
-            //ddlViewByWatchTV
-
-            //Caffiene
-            if (Convert.ToInt32(Request["ddlViewByCoffee"].ToString()) != 0)
-            {
-                data.Coffee = Request["ddlViewByCoffee"].ToString();
-            }
-            //Caffiene2 - will need a switch statement
-            // data.CoffeeTime = Request[""].ToString();
-            int coffeeTime = Convert.ToInt32(Request["ddlViewByCoffeeTime"].ToString());
-            //Exersise time - need to add in database and model
-            //ddlViewByExerciseDuration
-            if (Convert.ToInt32(Request["ddlViewByExerciseDuration"].ToString()) != 0)
-            {
-                data.ExerciseDuration = Request["ddlViewByExerciseDuration"].ToString();
-            }
-            //Exersise time 2 - need to add in database and model
-            //ddlViewByExerciseIntensity
-            if (Convert.ToInt32(Request["ddlViewByExerciseIntensity"].ToString()) != 0)
-            {
-                data.ExerciseIntensity = Request["ddlViewByExerciseIntensity"].ToString();
-            }
-            //Exersise time 3 -  need to add in database and model
-            //ddlViewByExerciseType
-            if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
-            {
-                data.ExerciseType = Request["ddlViewByExerciseType"].ToString();
-            }
-            //Snack - need to add in database and model
-            //ddlViewBySnack
-            if (Convert.ToInt32(Request["ddlViewBySnack"].ToString()) != 0)
-            {
-                data.Snack = Request["ddlViewBySnack"].ToString();
-            }
-            //Snack - need to add in database and model
-            //ddlViewBySnack2
-            temp = Convert.ToInt32(Request["ddlViewBySnack2"].ToString());
-            if (temp != 0)
-            {
-                data.Snack2 = Request["ddlViewBySnack"].ToString();
-            }
-            //Nap durateion - will need a switch statement
-            if (Convert.ToInt32(Request["ddlViewByExerciseType"].ToString()) != 0)
-            {
-                data.NapDuration = Request["ddlViewByExerciseType"].ToString();
-            }
-            //NapTime - will need a switch statement
-            int napTime = Convert.ToInt32(Request["ddlViewByNap2"].ToString());
-            //Alcohol2
-            if (Convert.ToInt32(Request["ddlViewByAlcohol"].ToString()) != 0)
-            {
-                data.Alcohol = Request["ddlViewByAlcohol"].ToString();
-            }
-            //Job 
-            //ddlViewByJob - will require a switch statement
-            int job = Convert.ToInt32(Request["ddlViewByJob"].ToString());
-            //Job 2
-            //ddlViewByJob2 
-            if (Convert.ToInt32(Request["ddlViewByJob2"].ToString()) != 0)
-            {
-                data.Job2 = Request["ddlViewByJob2"].ToString();
-            }
-            //Time on phone
-            //ddlViewByPhone
-            if (Convert.ToInt32(Request["ddlViewByPhone"].ToString()) != 0)
-            {
-                data.Phone = Request["ddlViewByPhone"].ToString();
-            }
-            //Sleep Diary
-            //ddlViewByDiary
-            temp = Convert.ToInt32(Request["ddlViewByDiary"].ToString());
-            if (temp != 0)
-            {
-                data.SleepDiary = Request["ddlViewByDiary"].ToString();
-            }
-            //Music
-            //ddlViewByMusicDuration
-            if (Convert.ToInt32(Request["ddlViewByMusicDuration"].ToString()) != 0)
-            {
-                data.Music = "1";
-                data.MusicDuration = Request["ddlViewByMusicDuration"].ToString();
-            }
-
-            //Type of Music 
-            //ddlViewByMusicType
-            if (Convert.ToInt32(Request["ddlViewByMusicType"].ToString()) != 0)
-            {
-                data.Music = "1";
-                data.MusicDuration = Request["ddlViewByMusicType"].ToString();
-            }
-
-            //Social Media
-            //ddlViewBySocialMedia
-            //Social
-            if (Convert.ToInt32(Request["ddlViewBySocialMedia"].ToString()) != 0)
-            {
-                data.SocialActivity = Request["ddlViewBySocialMedia"].ToString();
-            }
-
-            //Games
-            //ddlViewByGames
-
-            //Exam/
-            //ddlViewByAssessment
-            // Stressed
-
-            return View("Callback");
-            
-        }
-
-        
-
+    
         private async Task<ActionResult> FitbitDataSync(FitbitClient client, String userId)
         {
             ViewBag.FitbitSynced = true;
@@ -689,11 +567,7 @@ namespace SleepMakeSense.Controllers
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }
-        public ActionResult Sync(String userId)
-        {
-            MyViewModel model = DataModelCreation(userId);
-            return View(model);
-        }
+
         /*
                 private ActionResult Sync()
                 {

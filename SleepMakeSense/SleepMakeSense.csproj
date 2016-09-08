@@ -507,6 +507,7 @@
     <Content Include="Views\Userdatas\FactorQuestions.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Userdatas\SaveDiaryData.cshtml" />
+    <Content Include="Views\Userdatas\UserQuestionSetup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

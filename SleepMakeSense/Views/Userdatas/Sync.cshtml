@@ -40,15 +40,17 @@
             padding: 2px;
             font: 12px sans-serif;
             color: white;
-            background: black;
+            background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+            background: linear-gradient(141deg, #F74657, #459EE8);
+            background: -o-linear-gradient(141deg, #F74657, #459EE8);
+            background: -moz-linear-gradient(141deg, #F74657, #459EE8);
             border: 0px;
             border-radius: 8px;
             text-align: center;
             pointer-events: none;
             position: absolute;
-            display: inline;
+            
         }
-
 
         .tooltip-bubble {
             position: absolute;
@@ -58,10 +60,18 @@
             padding: 16px;
             font: 12px sans-serif;
             color: white;
-            background: black;
+            background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+            background: linear-gradient(141deg, #F74657, #459EE8);
+            background: -o-linear-gradient(141deg, #F74657, #459EE8);
+            background: -moz-linear-gradient(141deg, #F74657, #459EE8);
             border: 6px;
             border-radius: 8px;
             pointer-events: none;
+        }
+        .tooltip-bubble h4 {
+            text-align: left;
+            color: white;
+            
         }
         svg.bubble {
             padding-right: 15px;
@@ -195,11 +205,11 @@
                             .style("cursor", "pointer");
                         div.transition()
                             .duration(100)
-                            .style("opacity", 0.9);
+                            .style("opacity", 1);
 
                         div.html("<h4><center>" + d.Name + "</h4>" + d.Note)
-                              .style("left", (d.x) + "px")
-                              .style("top", (d.y) + "px");
+                              .style("left", 170 + "px")
+                              .style("top", -100 + "px");
                         //.style("top", function (d) {
                         //return (this.y - 300) + "px";
                         //return this.y + "px";

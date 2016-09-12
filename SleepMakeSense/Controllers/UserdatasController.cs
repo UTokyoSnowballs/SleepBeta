@@ -4039,7 +4039,7 @@ namespace SleepMakeSense.Controllers
                             Assignments[temp] = tempValue;
                             tempMinutesAsleepAssignments[temp] = MinutesAsleep[identifier];
                             tempAwakeningsCountAssignments[temp] = AwakeningsCount[identifier];
-                            tempSleepEfficiencyVideoGames[temp] = SleepEfficiency[identifier];
+                            tempSleepEfficiencyAssignments[temp] = SleepEfficiency[identifier];
 
                             temp++;
                         }

@@ -604,9 +604,26 @@ namespace SleepMakeSense.Controllers
                                      orderby  a.DateStamp
                                             select a).ToList();
 
+            var model = new MyViewModel();
 
-         //   List<DiaryData> diaryData = new List<DiaryData>();
-        
+            var dataQuery = from a in Db.UserQuestions
+                            where a.AspNetUserId.Equals(userId)
+                            select a;
+
+            foreach (UserQuestion data in dataQuery)
+            {
+                if (data.AspNetUserId == userId)
+                {
+                    ViewBag.Message = "Enter Your Daily Habits";
+
+                    model.UserQuestion = data;
+
+                }
+            }
+
+
+            //   List<DiaryData> diaryData = new List<DiaryData>();
+
 
             int CNTcaloriesIn = 0, CNTwater = 0, CNTcaloriesOut = 0, CNTsteps = 0, CNTweight = 0, CNTfat = 0;
             int CNTwakeUpFreshness = 0, CNTcoffee = 0, CNTcoffeeTime = 0, CNTalcohol = 0, CNTmood = 0, CNTstress = 0,
@@ -3795,7 +3812,7 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            var model = new MyViewModel();
+
             model.AllData = results;
             model.CorrCoefficient = CoefficientList;
 

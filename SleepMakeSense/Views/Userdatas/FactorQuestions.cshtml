@@ -38,7 +38,7 @@
                         <td class="diaryfactor"><i class="fa fa-tv fa-2x"></i><span>TV</span></td>
                         <td class="diaryquestion">How many hours did you watch TV after 6pm last night?</td>
                         <td>
-                            @Html.DropDownListFor(m=> m.Userdata.WatchTV, Model.WatchTV(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m=> m.Userdata.WatchTV, Model.questionSelection.WatchTV(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -46,7 +46,7 @@
                         <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
                         <td class="diaryquestion">How many coffees and/or energy drinks did you drink yesterday?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Coffee, Model.Coffee(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Coffee, Model.questionSelection.Coffee(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -54,7 +54,7 @@
                     <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
                     <td class="diaryquestion">When was the last time you had caffine? (energy drink, coffee, etc.)</td>
                     <td>
-                        @Html.DropDownListFor(m => m.Userdata.CoffeeTime, Model.CoffeeTime(), new { @class = "diaryquestion" })
+                        @Html.DropDownListFor(m => m.Userdata.CoffeeTime, Model.questionSelection.CoffeeTime(), new { @class = "diaryquestion" })
                     </td>
                 </tr>
 
@@ -62,7 +62,7 @@
                     <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
                     <td class="diaryquestion">How many hours did you exercise yesterday?</td>
                     <td>
-                        @Html.DropDownListFor(m => m.Userdata.ExerciseDuration, Model.ExerciseDuration(), new { @class = "diaryquestion" })
+                        @Html.DropDownListFor(m => m.Userdata.ExerciseDuration, Model.questionSelection.ExerciseDuration(), new { @class = "diaryquestion" })
                     </td>
                 </tr>
 
@@ -70,7 +70,7 @@
                     <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
                     <td class="diaryquestion">How intense did you work out on a scale of 1-10 (1 being easy workout, 10 being your body was in a lot of pain afterwards)</td>
                     <td>
-                        @Html.DropDownListFor(m => m.Userdata.ExerciseIntensity, Model.ExerciseIntensity(), new { @class = "diaryquestion" })
+                        @Html.DropDownListFor(m => m.Userdata.ExerciseIntensity, Model.questionSelection.ExerciseIntensity(), new { @class = "diaryquestion" })
                     </td>
                 </tr>
 
@@ -78,7 +78,7 @@
                     <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
                     <td class="diaryquestion">What type of exercise did you do? (e.g. football, basketball, yoga, jogging, swimming)</td>
                     <td>
-                        @Html.DropDownListFor(m => m.Userdata.ExerciseType, Model.ExerciseType(), new { @class = "diaryquestion" })
+                        @Html.DropDownListFor(m => m.Userdata.ExerciseType, Model.questionSelection.ExerciseType(), new { @class = "diaryquestion" })
                     </td>
                 </tr>
 
@@ -86,7 +86,7 @@
                         <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Snacking</span></td>
                         <td class="diaryquestion">How many hours before bed did you snack last night?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Snack, Model.SnackTime(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Snack, Model.questionSelection.SnackTime(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -94,7 +94,7 @@
                         <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Snacking</span></td>
                         <td class="diaryquestion">What types of food did you snack on?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Snack2, Model.SnackType(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Snack2, Model.questionSelection.SnackType(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -102,7 +102,7 @@
                         <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
                         <td class="diaryquestion">How long did you nap for Today?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.NapDuration, Model.NapDuration(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.NapDuration, Model.questionSelection.NapDuration(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -110,7 +110,7 @@
                         <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
                         <td class="diaryquestion">What Time was your nap?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.NapTime, Model.NapTime(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.NapTime, Model.questionSelection.NapTime(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -118,7 +118,7 @@
                         <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol</span></td>
                         <td class="diaryquestion">How many drinks did you have today?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Alcohol, Model.Alcohol(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Alcohol, Model.questionSelection.Alcohol(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -126,7 +126,7 @@
                         <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
                         <td class="diaryquestion">When did your shift start last night?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Job, Model.WorkTime(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Job, Model.questionSelection.WorkTime(), new { @class = "diaryquestion" })
                             
                         </td>
                     </tr>
@@ -135,7 +135,7 @@
                         <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
                         <td class="diaryquestion">How many hours did you work for?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Job2, Model.WorkDuration(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Job2, Model.questionSelection.WorkDuration(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -143,7 +143,7 @@
                         <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Mobile use</span></td>
                         <td class="diaryquestion">How many hours did you spend on your phone after 6pm yesterday?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Phone, Model.Phone(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Phone, Model.questionSelection.Phone(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -151,7 +151,7 @@
                         <td class="diaryfactor"><i class="fa fa-pencil fa-2x"></i><span>Journal</span></td>
                         <td class="diaryquestion">Did you write in your journal/diary before bed last night?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.SleepDiary, Model.SleepDiary(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.SleepDiary, Model.questionSelection.SleepDiary(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -160,7 +160,7 @@
                     <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
                     <td class="diaryquestion">What genre of music did you listen to?</td>
                     <td>
-                        @Html.DropDownListFor(m => m.Userdata.MusicType, Model.MusicType(), new { @class = "diaryquestion" })
+                        @Html.DropDownListFor(m => m.Userdata.MusicType, Model.questionSelection.MusicType(), new { @class = "diaryquestion" })
                     </td>
                 </tr>
 
@@ -168,7 +168,7 @@
                         <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
                         <td class="diaryquestion">How long did you listen to music to before sleeping last night?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.MusicDuration, Model.Music(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.MusicDuration, Model.questionSelection.Music(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -177,7 +177,7 @@
                         <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span></td>
                         <td class="diaryquestion">How long were you on social media for after 6pm last night?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.SocialMedia, Model.SocialMedia(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.SocialMedia, Model.questionSelection.SocialMedia(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -185,7 +185,7 @@
                         <td class="diaryfactor"><i class="fa fa-gamepad fa-2x"></i><span>Video games</span></td>
                         <td class="diaryquestion">How long did you play video games for after 6pm?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Games, Model.VideoGames(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Games, Model.questionSelection.VideoGames(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -193,7 +193,7 @@
                         <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>Assessment</span></td>
                         <td class="diaryquestion">Do you have any assessment due or exams this week?</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Assessment, Model.Assignments(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Assessment, Model.questionSelection.Assignments(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 
@@ -201,7 +201,7 @@
                         <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
                         <td class="diaryquestion">How anxious/stressed were you Today? (1 not at all - 10 very)</td>
                         <td>
-                            @Html.DropDownListFor(m => m.Userdata.Stress, Model.Stress(), new { @class = "diaryquestion" })
+                            @Html.DropDownListFor(m => m.Userdata.Stress, Model.questionSelection.Stress(), new { @class = "diaryquestion" })
                         </td>
                     </tr>
 

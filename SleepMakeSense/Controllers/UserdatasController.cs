@@ -71,7 +71,7 @@ namespace SleepMakeSense.Controllers
                         viewModel.Morning = false;
                         if (DateTime.UtcNow.AddHours(10).ToString("tt") == "AM") viewModel.Morning = true;
 
-                        return View();
+                        return View(viewModel);
                     }
                 }
 

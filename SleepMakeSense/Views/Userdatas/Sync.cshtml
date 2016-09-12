@@ -111,7 +111,7 @@
             {
                 @:factorList.push({ Name: "Watch TV", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Watching tv for too long after dark can cause you to havea lack of sleep." });
                             @:facWidth += 160;
-                        }
+            }
             @if (Model.UserQuestion.Question2 == true) {
                 @:factorList.push({ Name: "Coffee", Coefficient: 1, Width: facWidth, Height: facHeight, Note: "You Drank 0 Coffee! Coffee can stay in your system for up to 12 hours potentially causing sleep disruption." });
                             @:facWidth += 160;
@@ -623,7 +623,7 @@
                                 <div class="col-md-12">
                                     <div id="AffectingFactorsMinutesAwake">
                                         <script type="text/javascript">
-                                            testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
+                                            testVis(factorList, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
                                         </script>
                                     </div>
                                 </div>
@@ -640,7 +640,7 @@
                                     <div class="col-md-12">
                                         <div id="AffectingFactorsSleepEfficiency">
                                             <script type="text/javascript">
-                                                testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
+                                                testVis(factorList, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
                                             </script>
                                         </div>
                                     </div>

@@ -4089,6 +4089,10 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
+            foreach(var Entry in CoefficientList)
+                {
+                Entry.Coefficient = (Entry.Coefficient + 1) / 2;
+            }
             model.AllData = results;
             model.CorrCoefficient = CoefficientList;
 

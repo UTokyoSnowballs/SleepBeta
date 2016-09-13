@@ -4089,7 +4089,7 @@ namespace SleepMakeSense.Controllers
                 }
             }
             int count = 0;
-            CoefficientList.OrderBy()
+            //CoefficientList.OrderBy()
 
             foreach (var entry in CoefficientList)
                 {

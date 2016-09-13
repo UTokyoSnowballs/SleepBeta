@@ -216,10 +216,6 @@
                 @:factorList.push({ Name: "Assignments", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Upcoming exams can cause stress reducing the quality of sleep. Also trying the cram late the night before is bad for your sleep as well as your grades as a good night's sleep will help focusing during an exam." });
                 @:facWidth += 160;
             }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
             @if(Model.UserQuestion.Question20 == true)
             {
                 @:factorList.push({ Name: "Stress", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Anxiety and stress can cause you to take longer to fall asleep, wake up earlier and in general just have a bad night’s sleep." });
@@ -603,7 +599,7 @@
                             <div class="col-md-12">
                                 <div id="AffectingFactorsMinutesAsleep">
                                     <script type="text/javascript">
-                        testVis(cMinutesAsleep, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
+                        testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
                                     </script>
                                 </div>
                             </div>
@@ -621,7 +617,7 @@
                                 <div class="col-md-12">
                                     <div id="AffectingFactorsMinutesAwake">
                                         <script type="text/javascript">
-                                            testVis(cMinutesAwake, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
+                                            testVis(factorList, "#AffectingFactorsMinutesAwake", "AffectingFactorsMinutesAwake", "MinutesAwake");
                                         </script>
                                     </div>
                                 </div>
@@ -638,7 +634,7 @@
                                     <div class="col-md-12">
                                         <div id="AffectingFactorsSleepEfficiency">
                                             <script type="text/javascript">
-                                                testVis(cMinutesToFallAsleep, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
+                                                testVis(factorList, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
                                             </script>
                                         </div>
                                     </div>

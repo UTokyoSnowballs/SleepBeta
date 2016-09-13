@@ -234,30 +234,30 @@
 
                 if (@d.Belong == "MinutesAsleep")
                 {
-                    @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
+                    @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                                 }
                 else if (@d.Belong == "MinutesAwake")
                 {
                     var temp = 0 - d.Coefficient;
-                    @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
+                    @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                                 }
                 else if (@d.Belong == "AwakeningsCount")
                 {
                     var temp = 0 - d.Coefficient;
-                    @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
+                    @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                                 }
                 else if (@d.Belong == "MinutesToFallAsleep")
                 {
                     var temp = 0 - d.Coefficient;
-                    @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
+                    @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                                 }
                 else if (@d.Belong == "SleepEfficiency")
                 {
-                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
+                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                                 }
                 else if (@d.Belong == "WakeUpFreshness")
                 {
-                    @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
+                    @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                              }
             }
 

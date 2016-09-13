@@ -360,6 +360,7 @@
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\BoxPosition.cs" />
     <Compile Include="Models\CorrList.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\DiaryData.cs" />

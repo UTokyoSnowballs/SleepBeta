@@ -92,6 +92,7 @@
             var cMinutesToFallAsleep = [];
             var cSleepEfficiency = [];
             var cWakeUpFresh = [];
+            var BoxPosition = [, ];
 
 
             var MinutesAsleep = [];
@@ -107,131 +108,13 @@
             var quest2 = false;
             var quest3 = false;
 
-            @if (Model.UserQuestion.Question1 == true)
-            {
-                @:factorList.push({ Name: "Watch TV", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Watching tv for too long after dark can cause you to havea lack of sleep." });
-                            @:facWidth += 160;
-            }
-            @if (Model.UserQuestion.Question2 == true) {
-                @:factorList.push({ Name: "Coffee", Coefficient: 1, Width: facWidth, Height: facHeight, Note: "You Drank 0 Coffee! Coffee can stay in your system for up to 12 hours potentially causing sleep disruption." });
-                            @:facWidth += 160;
-                        }
-            @if (Model.UserQuestion.Question4 == true) {
-                @:factorList.push({ Name: "Exercise", Coefficient: 1, Width: facWidth, Height: facHeight, Note: "Exercise is good at making you sleep as well as causing you to sleep in longer." });
-                @:facWidth += 160;
-                        }
-            if (facWidth == 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question7 == true)
-            {
-                @:factorList.push({ Name: "Late Night Snacking", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
-                @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question9 == true)
-            {
-                @:facWidth += 160;
-                @:factorList.push({ Name: "Napping", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Napping close to bed time can cause you to be more restless in your sleep as well as making it hard to fall asleep." });
-
-            }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question11 == true)
-            {
-                @:factorList.push({ Name: "Alcohol", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Alcohol can make you more restless during your sleep although making it easier to sleep." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question12 == true)
-            {
-                @:factorList.push({ Name: "Part Time Job", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Working late shifts or overnight shifts irregularly will make it harder to go to bed at your usual time." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question14 == true)
-            {
-                @:factorList.push({ Name: "Phone", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Using your mobile phone is just as bad as watching TV it messes with the part of your brain telling you its nighttime." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question15 == true)
-            {
-                @:factorList.push({ Name: "Diary/Journal", Coefficient: 1, Width: facWidth, Height: facHeight, Note: "Diary/journals can help reduce stress making it easier get to sleep." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question16 == true)
-            {
-                @:factorList.push({ Name: "Music", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Listening to relaxing music before bed is good for your sleep but most other kinds of music are bad." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question17 == true)
-            {
-                @:factorList.push({ Name: "Social Media", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Research shows that the use of social media during adolescence can affect sleep quality, anxiety and depression. However logging in during the day has less impact on sleep than at night." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question18 == true)
-            {
-                @:factorList.push({ Name: "Video Games", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Exposure to too much unnatural light will impact parts of the brain that make us feel sleepy." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question19 == true)
-            {
-                @:factorList.push({ Name: "Assignments", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Upcoming exams can cause stress reducing the quality of sleep. Also trying the cram late the night before is bad for your sleep as well as your grades as a good night's sleep will help focusing during an exam." });
-                            @:facWidth += 160;
-                        }
-            if (facWidth == 320 || 480) {
-                facHeight = 110;
-                facWidth = 0;
-            }
-            @if(Model.UserQuestion.Question20 == true)
-            {
-                @:factorList.push({ Name: "Stress", Coefficient: 0.5, Width: facWidth, Height: facHeight, Note: "Anxiety and stress can cause you to take longer to fall asleep, wake up earlier and in general just have a bad night’s sleep." });
-                            @:facWidth += 160;
-                        }
+            var Counter = 0;
 
 
-            /*              factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Width: 0, Height: 0, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
-              factorList.push({ Name: "Exercise", Coefficient: 1, Width: 160, Height: 0, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
-              factorList.push({ Name: "Listening to music", Coefficient: 0.5, Width: 320, Height: 0, Note: "Try to listen to more soothing music before sleeping" });
-              factorList.push({ Name: "test", Coefficient: 0.5, Width: 0, Height: 110, Note: "testing 1" });
-              factorList.push({ Name: "test 2", Coefficient: 1, Width: 160, Height: 110, Note: "testing 2" });
-              //1 = green , 0.5 = 2nd red
-              */
+            
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
             {
-
+                
                 if (@d.Belong == "MinutesAsleep")
                 {
                     @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
@@ -259,6 +142,7 @@
                 {
                     @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
                              }
+                
             }
 
             @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)

@@ -19,5 +19,7 @@ namespace SleepMakeSense.Models
 
         public QuestionsSelections questionSelection { get; set; }
 
+        public int [,] BoxPosition { get; set; }
+
     }
 }

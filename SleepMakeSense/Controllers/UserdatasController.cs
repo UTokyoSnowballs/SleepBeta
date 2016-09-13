@@ -4088,11 +4088,15 @@ namespace SleepMakeSense.Controllers
                     }
                 }
             }
+            int count = 0;
+            CoefficientList.OrderBy()
 
-            foreach(var Entry in CoefficientList)
+            foreach (var entry in CoefficientList)
                 {
-                Entry.Coefficient = (Entry.Coefficient + 1) / 2;
+                entry.Coefficient = (entry.Coefficient + 1) / 2;
+                count++;
             }
+            model.BoxPosition = BoxPosition.GetPositionrArray(count);
             model.AllData = results;
             model.CorrCoefficient = CoefficientList;
 

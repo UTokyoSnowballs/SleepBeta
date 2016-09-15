@@ -566,7 +566,7 @@ namespace SleepMakeSense.Controllers
 
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             FitbitClient client = GetFitbitClient();
-      //      await FitbitDataSync(client, userId);
+           await FitbitDataSync(client, userId);
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }
@@ -4088,15 +4088,14 @@ namespace SleepMakeSense.Controllers
                     }
                 }
             }
-            int count = 0;
-            //CoefficientList.OrderBy()
+
 
             foreach (var entry in CoefficientList)
-                {
+            {
                 entry.Coefficient = (entry.Coefficient + 1) / 2;
-                count++;
+
             }
-            model.BoxPosition = BoxPosition.GetPositionrArray(count);
+
             model.AllData = results;
             model.CorrCoefficient = CoefficientList;
 

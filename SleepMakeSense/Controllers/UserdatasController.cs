@@ -272,6 +272,7 @@ namespace SleepMakeSense.Controllers
         /// <param name="query"></param>
         /// <param name="item"></param>
 
+        /*
         private void UpdateFitbitData (Userdata item)
         {
             var updateQuery = from a in db.Userdatas
@@ -309,25 +310,24 @@ namespace SleepMakeSense.Controllers
             }
             db.SaveChanges();
         }
+        */
     
         private async Task<ActionResult> FitbitDataSync()
         {
             ViewBag.FitbitSynced = true;
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             FitbitClient client = GetFitbitClient();
-
             bool userLogedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
             Models.Database Db = new Models.Database();
 
 
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-40);
 
-            userLogedIn = true;
+            List<Userdata> results = (from a in db.Userdatas
+                                  where a.AspNetUserId == userId && a.DateStamp >= dateStop
+                                  select a).ToList();
 
-
-                List<Userdata> results = new List<Userdata>();
-
-                var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, dateStop, DateTime.UtcNow);
+            var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, dateStop, DateTime.UtcNow);
                 var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, dateStop, DateTime.UtcNow);
                 var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, dateStop, DateTime.UtcNow);
                 var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, dateStop, DateTime.UtcNow);
@@ -350,6 +350,21 @@ namespace SleepMakeSense.Controllers
                 var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, DateTime.UtcNow);
 
                 foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
+                {
+                bool addData = true;
+                    foreach(Userdata dataBaseResult in results.ToList())
+                {
+                    if (data.DateTime.Date.AddDays(-1) == dataBaseResult.DateStamp && dataBaseResult.FitbitData == false)
+                    {
+                        addData = false;
+                        results.Add(new Userdata()
+                        {
+                            MinutesAsleep = data.Value,
+                            FitbitData = true
+                        });
+                     }
+                }
+                if (addData)
                 {
                     if (Convert.ToDouble(data.Value) > 0)  // Remove entries with no sleep log (e.g. due to battery issue)
                     {
@@ -400,6 +415,7 @@ namespace SleepMakeSense.Controllers
                             FitbitData = true
                         });
                     }
+                }
                 }
 
                 foreach (Userdata item in results)
@@ -513,10 +529,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-              foreach(Userdata item in results)
-            {
-                UpdateFitbitData(item);
-            }
+            db.SaveChanges();
             
             return View();
         }

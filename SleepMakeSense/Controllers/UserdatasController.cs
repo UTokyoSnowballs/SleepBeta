@@ -11,6 +11,16 @@ using System.Data.Sql;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
+
+
+
+
+
+
+
+
+
+
 //Refer to Fitbit Library
 
 using Fitbit.Models;
@@ -312,10 +322,9 @@ namespace SleepMakeSense.Controllers
         }
         */
     
-        private async Task<ActionResult> FitbitDataSync()
+        private async Task<ActionResult> FitbitDataSync(string userId )
         {
             ViewBag.FitbitSynced = true;
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             FitbitClient client = GetFitbitClient();
             bool userLogedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
             Models.Database Db = new Models.Database();
@@ -536,9 +545,15 @@ namespace SleepMakeSense.Controllers
 
         public async Task<ActionResult> Sync()
         {
-
+            //Comment out the bellow line to disable getting the current logged in user data
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-           await FitbitDataSync();
+            //UnComment the bellow line to select a specific use to show the users sync page screen
+            //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
+
+            //Enable Fitbit Data SYNC
+           await FitbitDataSync(userId);
+
+            //Retrieves the Data
             MyViewModel model = DataModelCreation(userId);
             return View(model);
         }

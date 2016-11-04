@@ -27,7 +27,7 @@
     }
     else
     {
-        <p>@Html.ActionLink("See Your Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg" })</p>
+        <p>@Html.ActionLink("See My Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg" })</p>
 
         <p style="@((bool)Model.Userdata.DiaryDataNight ? "display:none" : "display:")">
             @Html.ActionLink("Today's Diary Info", "FactorQuestions", "Userdatas", new { }, new { @class = "btn btn-primary btn-lg" })

@@ -12,7 +12,7 @@
     Updated to be a login/regrestration screen. 
     If the uers is logged in, they will be propted to either create and account or log in
     If they are logged in, they will be propted to sync there data and load the next page
-    If the user has not connected their FitBit, it will prompt, however this is broken
+    If the user has not connected their FitBit, it will prompt, however this is broken //Pandita: broken??
     Done By Sean - 21/5/16
     *@
 
@@ -27,10 +27,10 @@
     }
     else
     {
-        <p>@Html.ActionLink("See Your Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg" })</p>
+        <p>@Html.ActionLink("See My Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg" })</p>
 
         <p style="@((bool)Model.Userdata.DiaryDataNight ? "display:none" : "display:")">
-            @Html.ActionLink("Today's Diary Info", "FactorQuestions", "Userdatas", new { }, new { @class = "btn btn-primary btn-lg" })
+            @Html.ActionLink("Log today's Diary Info", "FactorQuestions", "Userdatas", new { }, new { @class = "btn btn-primary btn-lg" })
         </p>
         
     }

@@ -4,19 +4,15 @@ namespace SleepMakeSense.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using SleepMakeSense.Models;
 
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<SleepMakeSense.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SleepMakeSense.Models.Database>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SleepMakeSense.Models.ApplicationDbContext context)
+        protected override void Seed(SleepMakeSense.Models.Database context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -30,11 +26,6 @@ namespace SleepMakeSense.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-          /*  context.Userdatas.AddOrUpdate(p => p.Name, new Userdata
-   {
-       Steps = "20000",
-       MinutesAsleep = "480",
-   });*/
         }
     }
 }

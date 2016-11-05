@@ -10,17 +10,6 @@ using System.Data.Sql;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
-
-
-
-
-
-
-
-
-
-
-
 //Refer to Fitbit Library
 
 using Fitbit.Models;

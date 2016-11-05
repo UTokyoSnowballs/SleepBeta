@@ -298,61 +298,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507122114520_Initial.cs" />
-    <Compile Include="Migrations\201507122114520_Initial.Designer.cs">
-      <DependentUpon>201507122114520_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507122132436_test.cs" />
-    <Compile Include="Migrations\201507122132436_test.Designer.cs">
-      <DependentUpon>201507122132436_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507122204232_test1.cs" />
-    <Compile Include="Migrations\201507122204232_test1.Designer.cs">
-      <DependentUpon>201507122204232_test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507130016392_test2.cs" />
-    <Compile Include="Migrations\201507130016392_test2.Designer.cs">
-      <DependentUpon>201507130016392_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507140820283_test3.cs" />
-    <Compile Include="Migrations\201507140820283_test3.Designer.cs">
-      <DependentUpon>201507140820283_test3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507140844278_test4.cs" />
-    <Compile Include="Migrations\201507140844278_test4.Designer.cs">
-      <DependentUpon>201507140844278_test4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507200358202_tst.cs" />
-    <Compile Include="Migrations\201507200358202_tst.Designer.cs">
-      <DependentUpon>201507200358202_tst.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507200425233_test5.cs" />
-    <Compile Include="Migrations\201507200425233_test5.Designer.cs">
-      <DependentUpon>201507200425233_test5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507200729307_test6.cs" />
-    <Compile Include="Migrations\201507200729307_test6.Designer.cs">
-      <DependentUpon>201507200729307_test6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507200740536_test7.cs" />
-    <Compile Include="Migrations\201507200740536_test7.Designer.cs">
-      <DependentUpon>201507200740536_test7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507210055248_test8.cs" />
-    <Compile Include="Migrations\201507210055248_test8.Designer.cs">
-      <DependentUpon>201507210055248_test8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507272141168_test9.cs" />
-    <Compile Include="Migrations\201507272141168_test9.Designer.cs">
-      <DependentUpon>201507272141168_test9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508230208213_tst1.cs" />
-    <Compile Include="Migrations\201508230208213_tst1.Designer.cs">
-      <DependentUpon>201508230208213_tst1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508231101235_test10.cs" />
-    <Compile Include="Migrations\201508231101235_test10.Designer.cs">
-      <DependentUpon>201508231101235_test10.cs</DependentUpon>
+    <Compile Include="Migrations\201611050631140_Initial.cs" />
+    <Compile Include="Migrations\201611050631140_Initial.Designer.cs">
+      <DependentUpon>201611050631140_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -430,7 +378,7 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="Properties\PublishProfiles\SleepBeta - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SleepBeta-v1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Fitbit.Portable.dll" />
@@ -519,83 +467,12 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507122114520_Initial.resx">
-      <DependentUpon>201507122114520_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507122132436_test.resx">
-      <DependentUpon>201507122132436_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507122204232_test1.resx">
-      <DependentUpon>201507122204232_test1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507130016392_test2.resx">
-      <DependentUpon>201507130016392_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507140820283_test3.resx">
-      <DependentUpon>201507140820283_test3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507140844278_test4.resx">
-      <DependentUpon>201507140844278_test4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507200358202_tst.resx">
-      <DependentUpon>201507200358202_tst.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507200425233_test5.resx">
-      <DependentUpon>201507200425233_test5.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507200729307_test6.resx">
-      <DependentUpon>201507200729307_test6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507200740536_test7.resx">
-      <DependentUpon>201507200740536_test7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507210055248_test8.resx">
-      <DependentUpon>201507210055248_test8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507272141168_test9.resx">
-      <DependentUpon>201507272141168_test9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508230208213_tst1.resx">
-      <DependentUpon>201508230208213_tst1.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508231101235_test10.resx">
-      <DependentUpon>201508231101235_test10.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.Initial.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test1.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test10.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test2.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test3.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test4.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test5.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test6.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test7.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test8.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.test9.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.tst.resources" />
-    <EmbeddedResource Include="obj\Debug\SleepMakeSense.Migrations.tst1.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.Initial.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test1.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test10.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test2.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test3.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test4.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test5.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test6.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test7.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test8.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.test9.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.tst.resources" />
-    <EmbeddedResource Include="obj\Release\SleepMakeSense.Migrations.tst1.resources" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <EmbeddedResource Include="Migrations\201611050631140_Initial.resx">
+      <DependentUpon>201611050631140_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

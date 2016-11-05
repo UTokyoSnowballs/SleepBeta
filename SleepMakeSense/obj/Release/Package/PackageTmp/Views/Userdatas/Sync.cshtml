@@ -24,25 +24,35 @@
             fill: none;
             stroke: #747F97;
             shape-rendering: crispEdges;
-            font-size: x-small;
+            
+        }
+        .axis {
+            font-size: 14px;
+        }
+        .x.axis path {
+            display: none;
         }
 
-        div.tooltip-timeseries {
-            position: absolute;
-            text-align: center;
+        .tooltip-timeseries {
+            
             width: 160px;
             height: 36px;
             padding: 2px;
             font: 12px sans-serif;
             color: white;
-            background: black;
+            background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+            background: linear-gradient(141deg, #F74657, #459EE8);
+            background: -o-linear-gradient(141deg, #F74657, #459EE8);
+            background: -moz-linear-gradient(141deg, #F74657, #459EE8);
             border: 0px;
             border-radius: 8px;
+            text-align: center;
             pointer-events: none;
+            position: absolute;
+            
         }
 
-
-        div.tooltip-bubble {
+        .tooltip-bubble {
             position: absolute;
             text-align: left;
             width: 200px;
@@ -50,10 +60,18 @@
             padding: 16px;
             font: 12px sans-serif;
             color: white;
-            background: black;
+            background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
+            background: linear-gradient(141deg, #F74657, #459EE8);
+            background: -o-linear-gradient(141deg, #F74657, #459EE8);
+            background: -moz-linear-gradient(141deg, #F74657, #459EE8);
             border: 6px;
             border-radius: 8px;
             pointer-events: none;
+        }
+        .tooltip-bubble h4 {
+            text-align: left;
+            color: white;
+            
         }
         svg.bubble {
             padding-right: 15px;
@@ -74,42 +92,74 @@
             var cMinutesToFallAsleep = [];
             var cSleepEfficiency = [];
             var cWakeUpFresh = [];
-
-
+            var BoxPosition = [, ];
             var MinutesAsleep = [];
             var MinutesAwake = [];
             var AwakeningsCount = [];
             var MinutesToFallAsleep = [];
             var SleepEfficiency = [];
             var WakeUpFresh = [];
+            var facCoff = 0;
+            var quest2 = false;
+            var quest3 = false;
 
-            factorList.push({ Name: "Late Night Snacking", Coefficient: 1, Width: 0, Height: 0, Note: "Eating healthy foods before bed is good for sleep but sugar/junk food before bed is bad for you sleep" });
-            factorList.push({ Name: "Exercise", Coefficient: 1, Width: 160, Height: 0, Note: "Exercise is good for your sleep but try not to push yourself to the point where you are in pain" });
-            factorList.push({ Name: "Listening to music", Coefficient: 0.5, Width: 320, Height: 0, Note: "Try to listen to more soothing music before sleeping" });
-            factorList.push({ Name: "test", Coefficient: 0.5, Width: 0, Height: 110, Note: "testing 1" });
-            factorList.push({ Name: "test 2", Coefficient: 1, Width: 160, Height: 110, Note: "testing 2" });
-            //1 = green , 0.5 = 2nd red
+
+            var facWidth = 0;
+            var facHeight = 0;
+            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+            {
+
+                if (@d.Belong == "MinutesAsleep")
+                {
+                    @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
+                    @:facWidth += 160;
+                 }
+
+               @:if (facWidth == 480)
+               {
+                 @: facHeight += 130;
+                 @: facWidth == 0;
+               }
+            }
+
+            facWidth = 0;
+            facHeight = 0;
 
             @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
             {
 
-                if (@d.Belong == "MinutesAsleep") {
-                    @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                            } else if (@d.Belong == "MinutesAwake"){
-                    var temp = 0 - d.Coefficient;
-                    @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                                        } else if (@d.Belong == "AwakeningsCount"){
-                    var temp = 0 - d.Coefficient;
-                    @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                                        } else if (@d.Belong == "MinutesToFallAsleep"){
-                    var temp = 0 - d.Coefficient;
-                    @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp", Note: "@d.Note" });
-                                        } else if (@d.Belong == "SleepEfficiency"){
-                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                                        } else if (@d.Belong == "WakeUpFreshness") {
-                    @:cWakeUpFresh.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                                        }
+                if (@d.Belong == "MinutesAwake")
+            {
+                @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
+                @:facWidth += 160;
             }
+
+            @:if (facWidth == 480)
+            {
+                @: facHeight += 130;
+                @: facWidth == 0;
+            }
+            }
+
+            facWidth = 0;
+            facHeight = 0;
+
+            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+            {
+
+                if (@d.Belong == "SleepEfficiency")
+            {
+                @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Width: facWidth, Height: facHeight, Note: "@d.Note" });
+                @:facWidth += 160;
+            }
+
+            @:if (facWidth == 480)
+            {
+                @: facHeight += 130;
+                @: facWidth == 0;
+            }
+            }
+
 
             @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
             {
@@ -117,11 +167,11 @@
                     var weekday = d.DateStamp.DayOfWeek;
 
                     @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAsleep" });
-                                                                @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
-                                                                @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
-                                                                @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
-                                                                @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
-                                                                @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
+                                                        @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
+                                                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
+                                                        @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
+                                                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
+                                                        @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
 
              }
 
@@ -129,7 +179,7 @@
 
             function processData(data) {
                 return { children: data };
-            }    
+            }
 
             function testVis(mydata, section, textp, sfeature) {
 
@@ -158,7 +208,7 @@
                         .style("opacity", 0);
 
                     var bubble = d3.layout.pack()
-                    .size(100, 50).padding(function (d) { return d.width;})
+                    .size(100, 50).padding(function (d) { return d.width; })
                     //.value(function (d) { temp = Math.abs(d.Coefficient); if (temp >= 0) { return temp; } })
                     //.padding(50); // padding between adjacent bubbles
 
@@ -179,7 +229,7 @@
                     .attr('width', 155)
                     .attr('height', 105)
                     .style("fill", "#2C3041")
-                    
+
                     .on("mouseover", function (d) {
                         d3.select(this)
                             .style("stroke", "#373E4F")
@@ -187,11 +237,11 @@
                             .style("cursor", "pointer");
                         div.transition()
                             .duration(100)
-                            .style("opacity", 0.9);
+                            .style("opacity", 1);
 
                         div.html("<h4><center>" + d.Name + "</h4>" + d.Note)
-                              .style("left", (d.x) + "px")
-                              .style("top", (d.y) + "px");
+                              .style("left", 170 + "px")
+                              .style("top", -100 + "px");
                         //.style("top", function (d) {
                         //return (this.y - 300) + "px";
                         //return this.y + "px";
@@ -211,7 +261,7 @@
                     .attr("x", function (d) {
                         if (d.Width == 0) {
                             return 75;
-                        } else if(d.Width == 160){
+                        } else if (d.Width == 160) {
                             return 235;
                         } else {
                             return 395;
@@ -245,25 +295,25 @@
                     //.attr("x", function (d) { return d.width / 2 })
                     //.attr("y", function (d) { return d.height / 2 });
 
-                   /* var legend = svg.selectAll(".legend")
-                        .data(legend_data)
-                      .enter().append("g")
-                        .attr("class", "legend")
-                        .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
+                    /* var legend = svg.selectAll(".legend")
+                         .data(legend_data)
+                       .enter().append("g")
+                         .attr("class", "legend")
+                         .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
 
-                    legend.append("rect")
-                        .attr("x", width - 170)
-                        .attr("y", 135)
-                        .attr("width", 18)
-                        .attr("height", 18)
-                        .style("fill", function (d) { return d.color; });
+                     legend.append("rect")
+                         .attr("x", width - 170)
+                         .attr("y", 135)
+                         .attr("width", 18)
+                         .attr("height", 18)
+                         .style("fill", function (d) { return d.color; });
 
-                    legend.append("text")
-                        .attr("x", width - 170)
-                        .attr("y", 135)
-                        .attr("dy", ".35em")
-                        .style("text-anchor", "start")
-                        .text(function (d) { return d.text; }); */
+                     legend.append("text")
+                         .attr("x", width - 170)
+                         .attr("y", 135)
+                         .attr("dy", ".35em")
+                         .style("text-anchor", "start")
+                         .text(function (d) { return d.text; }); */
                 }
             }
 
@@ -285,7 +335,7 @@
                 var margin = { top: 30, right: 20, bottom: 50, left: 40 };
                 width = w - margin.left - margin.right,
                 height = h - margin.top - margin.bottom;
-                parseDate = d3.time.format("%d/%m/%Y").parse;
+                parseDate = d3.time.format("%m/%d/%Y").parse;
 
                 var chart = d3.select(section).append("svg")
               .attr("width", w)
@@ -328,17 +378,22 @@
                     .attr("transform", "rotate(-90)");
 
                 chart.append("g")
-                     .attr("class", "y axis")
-                     .call(yAxis)
-                     .append("text")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
                     .text(sFeature);
 
-                
+
 
 
                 var div = d3.select(section).append("div")
                             .attr("class", "tooltip-timeseries")
                             .style("opacity", 0);
+
                 var formatTime = d3.time.format("%b %e");
 
                 chart.selectAll("rect")
@@ -354,14 +409,14 @@
                          if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
                              //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
                          else if (mark == "MinutesAsleep" && (d.Value < 8)) { return red; }
-                         else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; } 
+                         else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; }
                          else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
                          else return blue;
                      })
                      .on("mouseover", function (d) {
                          var matrix = this.getScreenCTM()
-                            .translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
-                         
+                            .translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
+
                          d3.select(this)
                            .attr("fill", "#747F97");
 
@@ -381,11 +436,14 @@
 
 
                          div.html(tooltiptext)
-                            //.style("left", (d3.event.pageX - 64) + "px")
+                            //.style("left", (d3.event.pageX - 34) + "px")
                             //.style("top", (d3.event.pageY - 12) + "px");
                             .style("left", (window.pageXOffset + matrix.e + 15) + "px")
                             .style("top", (window.pageYOffset + matrix.f - 30) + "px");
                          // Need a better solution here!!
+
+
+
                      })
                      .on("mouseout", function (d) {
                          d3.select(this)
@@ -416,7 +474,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs" id="mytab">
-                        <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Minutes Asleep</a></li>
+                        <li class="active"><a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Hours Asleep</a></li>
                         <li><a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Minutes Restless</a></li>
                         <li><a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a></li>
 
@@ -438,7 +496,7 @@
                     <div class="tab-pane active fade in" id="MinutesAsleepTimeseries">
                         <div id="MinutesAsleepTimeseries">
                             <script type="text/javascript">
-                                PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Time asleep (hrs)");
+                                PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Hours");
                             </script>
                         </div>
                         
@@ -447,7 +505,7 @@
                             <div class="col-md-12">
                                 <div id="AffectingFactorsMinutesAsleep">
                                     <script type="text/javascript">
-                        testVis(factorList, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
+                        testVis(cMinutesAsleep, "#AffectingFactorsMinutesAsleep", "AffectingFactorsMinutesAsleep", "MinutesAsleep");
                                     </script>
                                 </div>
                             </div>
@@ -457,7 +515,7 @@
                     <div class="tab-pane fade" id="MinutesAwakeTimeseries">
                         <div id="MinutesAwakeTimeseries">
                             <script type="text/javascript">
-                                PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes Awake (min)");
+                                PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Mins");
                             </script>
                         </div>
                         
@@ -475,14 +533,14 @@
                     <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
                             <script type="text/javascript">
-                        PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "Sleep efficiency (%)");
+                        PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "%");
                             </script>
                         </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div id="AffectingFactorsSleepEfficiency">
                                             <script type="text/javascript">
-                                                testVis(cSleepEfficiency, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
+                                                testVis(cMinutesToFallAsleep, "#AffectingFactorsSleepEfficiency", "AffectingFactorsSleepEfficiency", "SleepEfficiency");
                                             </script>
                                         </div>
                                     </div>

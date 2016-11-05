@@ -5,6 +5,7 @@ namespace SleepMakeSense.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
+    // Pandita: why partial class??
     public partial class Database : DbContext
     {
         public Database()

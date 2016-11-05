@@ -1,32 +1,32 @@
 ﻿@model SleepMakeSense.Models.IndexViewModel
 @{
-    ViewBag.Title = "管理";
+    ViewBag.Title = "Manage";
 }
 
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>アカウント設定の変更</h4>
+    <h4>Change Account Settings</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>パスワード:</dt>
+        <dt>Password:</dt>
         <dd>
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("パスワードの変更", "ChangePassword")
+                @Html.ActionLink("Change Password", "ChangePassword")
             }
             else
             {
-                @Html.ActionLink("作成", "SetPassword")
+                @Html.ActionLink("Set Password", "SetPassword")
             }
             ]
         </dd>
-        <dt>外部ログイン:</dt>
+        <dt>External Login:</dt>
         <dd>
             @Model.Logins.Count [
-            @Html.ActionLink("管理", "ManageLogins") ]
+            @Html.ActionLink("Manage Logins", "ManageLogins") ]
         </dd>
         @*
             電話番号を 2 要素認証システムの第 2 認証要素としてお使いいただけます。

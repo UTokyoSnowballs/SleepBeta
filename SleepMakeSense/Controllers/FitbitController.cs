@@ -20,9 +20,6 @@ namespace SleepMakeSense.Controllers
 {
     public class FitbitController : Controller
     {
-
-
-
         //
         // GET: /Fitbit/
 
@@ -149,6 +146,7 @@ namespace SleepMakeSense.Controllers
 
                 GetFitbitClient(accessToken);
                 syncFitbitCred(accessToken);
+
              return View("Callback");
               //  return RedirectToAction("Sync", "UserDatas");
             }
@@ -162,6 +160,7 @@ namespace SleepMakeSense.Controllers
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
+            // 20161108 Pandita
             Models.Database Db = new Models.Database();
             bool fitbitConnected = false;
             OAuth2AccessToken accessToken = new OAuth2AccessToken();

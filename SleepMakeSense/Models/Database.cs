@@ -5,11 +5,22 @@ namespace SleepMakeSense.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
+    // 20161107 Pandita
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     // Pandita: why partial class??
     public partial class Database : DbContext
     {
+        /* 20161107 Pandita
         public Database()
             : base("name=Database")
+        {
+        }
+        */
+
+        public Database()
+    : base("Database")
         {
         }
 
@@ -45,6 +56,17 @@ namespace SleepMakeSense.Models
                 .WithRequired(e => e.AspNetUser)
                 .WillCascadeOnDelete(false);
 
+        }
+
+        // 20161107 Pandita: define Create() and SaveChanges()
+        public static Database Create()
+        {
+            return new Database();
+        }
+
+        internal void SaveChanges(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

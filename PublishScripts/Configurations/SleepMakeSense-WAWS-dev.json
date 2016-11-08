@@ -1,21 +1,21 @@
 {
     "environmentSettings": {
         "webSite": {
-            "name": "SleepMakeSense",
+            "name": "SleepBeta",
             "location": "East Asia"
         },
         "databases": [
-            {
-                "connectionStringName": "DefaultConnection",
-                "databaseName": "SleepMakeSense_db",
-                "serverName": "tailoredhealth",
-                "user": "DBadmin",
-                "password": "",
-                "edition": "",
-                "size": "",
-                "collation": "",
-                "location": "East Asia"
-            }
+          {
+            "connectionStringName": "DefaultConnection",
+            "databaseName": "SleepExplorer_db",
+            "serverName": "sleepexplorerdbserver",
+            "user": "DBadmin",
+            "password": "2016Augosto9@",
+            "edition": "",
+            "size": "",
+            "collation": "",
+            "location": "East Asia"
+          }
         ]
     }
 }

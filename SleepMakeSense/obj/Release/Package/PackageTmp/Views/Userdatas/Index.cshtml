@@ -71,9 +71,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.ActivityCalories)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Floors)
-            </th>
+            @*
+    <th>
+        @Html.DisplayNameFor(model => model.Floors)
+    </th>
+            *@
             <th>
                 @Html.DisplayNameFor(model => model.TimeEnteredBed)
             </th>
@@ -145,9 +147,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ActivityCalories)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Floors)
-            </td>
+            @*
+    <td>
+        @Html.DisplayFor(modelItem => item.Floors)
+    </td>
+            *@
             <td>
                 @Html.DisplayFor(modelItem => item.TimeEnteredBed)
             </td>
@@ -161,9 +165,14 @@
                 @Html.DisplayFor(modelItem => item.Fat)
             </td>
             <td>
+                @* 20161105 Pandita
                 @Html.ActionLink("Edit", "Edit", new { id=item.UserdataId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.UserdataId }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.UserdataId })
+                *@
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }

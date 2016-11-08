@@ -165,14 +165,16 @@
                     @Html.ValidationMessageFor(model => model.ActivityCalories, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Floors, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Floors, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Floors, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    @*
+    <div class="form-group">
+        @Html.LabelFor(model => model.Floors, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Floors, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Floors, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    *@
     
             <div class="form-group">
                 @Html.LabelFor(model => model.TimeEnteredBed, htmlAttributes: new { @class = "control-label col-md-2" })

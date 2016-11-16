@@ -571,7 +571,7 @@ namespace SleepMakeSense.Controllers
                       select a).ToList();
                       */
 
-            Userdata DBentry = new Models.Userdata();
+            // Userdata DBentry = new Models.Userdata();
 
             foreach (SleepMakeSense.Models.Userdata item in results)
             {

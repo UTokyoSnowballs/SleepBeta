@@ -58,15 +58,17 @@ namespace SleepMakeSense.Controllers
             }
             return View(userdata);
         }
-        public ActionResult FactorQuestions()
+
+        public async Task<ActionResult> FactorQuestions()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 MyViewModel viewModel = new MyViewModel();
 
                 // 20161107 Pandita
-                // Models.Database Db = new Models.Database();
+                Models.Database Db = new Models.Database();
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                //string userId = "4bc8cdd3-fa46-4aca-8baa-a0ce42097765";
 
                 // 20161108 Pandita: what if no entry for this user exist in database?
                 var dataQuery = from a in Db.UserQuestions
@@ -91,12 +93,17 @@ namespace SleepMakeSense.Controllers
                 }
 
                 // 20161108 Pandita: Here is the problem ????????????????????????????????
-                return View(Sync());
+                await FitbitDataSync(userId);
+                //Retrieves the Data
+                MyViewModel model = DataModelCreation(userId);
+                return View(model);
+
+                //return View(Sync());
 
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-
+        
 
         [HttpPost]
         public ActionResult FactorQuestions(MyViewModel model)
@@ -597,14 +604,15 @@ namespace SleepMakeSense.Controllers
             else
             {*/
 
-                //Comment out the bellow line to disable getting the current logged in user data
-                string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                //UnComment the bellow line to select a specific use to show the users sync page screen
-                //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
+            //Comment out the bellow line to disable getting the current logged in user data
+            //string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            //UnComment the bellow line to select a specific use to show the users sync page screen
+            //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
+            string userId = "4bc8cdd3-fa46-4aca-8baa-a0ce42097765";
 
 
                 //Enable Fitbit Data SYNC
-                await FitbitDataSync(userId);
+            await FitbitDataSync(userId);
                 //Retrieves the Data
                 MyViewModel model = DataModelCreation(userId);
                 return View(model);

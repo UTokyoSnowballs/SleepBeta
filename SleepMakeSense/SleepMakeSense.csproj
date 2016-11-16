@@ -376,7 +376,9 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="ClassDiagram1.cd" />
-    <None Include="Properties\PublishProfiles\SleepBeta-v1.pubxml" />
+    <None Include="Properties\PublishProfiles\SleepBeta - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\SleepBeta - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SleepBeta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Fitbit.Portable.dll" />

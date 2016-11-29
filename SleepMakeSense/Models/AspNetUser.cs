@@ -8,6 +8,8 @@ namespace SleepMakeSense.Models
 
     public partial class AspNetUser
     {
+        internal ICollection<object> Fitbitdatas;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUser()
         {

@@ -10,33 +10,44 @@ namespace SleepMakeSense.Controllers
 {
     public class HomeController : Controller
     {
+        private Database Db = new Models.Database();
+
         public ActionResult Index()
         {
             MyViewModel model = new MyViewModel();
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                Models.Database Db = new Models.Database();
                 DateTime endStop = DateTime.UtcNow.Date.AddDays(-5);
+                model.TodaySync = true;
+                model.QuestionsSetup = false;
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                var lastSynced = from a in Db.Userdatas
-                                 where a.AspNetUserId.Equals(userId) && a.FitbitData.Equals(false) && a.DateStamp >= endStop
-                                 orderby a.DateStamp
-                                 select a;
-                bool entryForToday = false;
-                foreach (Userdata data in lastSynced)
-                {
-                    if (data.DateStamp == DateTime.UtcNow.Date)
-                    {
-                        model.Userdata = data;
-                        entryForToday = true;
-                    }
 
-                }
-                if (!entryForToday)
+                //Getting Table Data
+                var userQuestions = from table in Db.UserQuestions
+                                    where table.AspNetUserId.Equals(userId)
+                                    select table;
+
+                var lastSynced = from table in Db.DiaryDatas
+                                 where table.AspNetUserId.Equals(userId) && table.DateStamp >= endStop
+                                 orderby table.DateStamp
+                                 select table;
+
+                foreach (UserQuestion userQuestion in userQuestions)
                 {
-                    model.Userdata = new Userdata();
-                    model.Userdata.DiaryDataNight = false;
+                    if (userQuestion.AspNetUserId == userId )
+                    {
+                        model.QuestionsSetup = true;
                     }
+                }
+
+                foreach (DiaryData diaryData in lastSynced)
+                {
+                    if (diaryData.AspNetUserId == userId && diaryData.DateStamp == DateTime.UtcNow.Date)
+                    {
+                        model.TodaySync = false;
+                    }
+                }
+
                 return View(model);
 
             }

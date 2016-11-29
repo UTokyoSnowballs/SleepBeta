@@ -270,6 +270,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataMining.cs" />
+    <Compile Include="Controllers\DiaryDataController.cs" />
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -308,10 +309,10 @@
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
-    <Compile Include="Models\BoxPosition.cs" />
     <Compile Include="Models\CorrList.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\DiaryData.cs" />
+    <Compile Include="Models\FitbitData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyViewModel.cs" />
@@ -451,10 +452,9 @@
     <Content Include="Views\Fitbit\SleepIntraday.cshtml" />
     <Content Include="Views\Fitbit\Callback.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Userdatas\FactorQuestions.cshtml" />
+    <Content Include="Views\DiaryData\EnterDiaryData.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Userdatas\SaveDiaryData.cshtml" />
-    <Content Include="Views\Userdatas\UserQuestionSetup.cshtml" />
+    <Content Include="Views\DiaryData\DiaryDataSetup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,11 +15,13 @@ namespace SleepMakeSense.Models
 
         public Userdata Userdata { get; set; }
 
-        public bool Morning { get; set; }
+        public DiaryData DiaryData { get; set; }
+
+        public bool QuestionsSetup { get; set; }
+
+        public bool TodaySync { get; set; }
 
         public QuestionsSelections questionSelection { get; set; }
-
-        public int [,] BoxPosition { get; set; }
 
     }
 }

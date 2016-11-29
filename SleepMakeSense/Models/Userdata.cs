@@ -8,132 +8,17 @@ namespace SleepMakeSense.Models
 
     public partial class Userdata
     {
-        public int Id { get; set; }
 
-        public string Steps { get; set; }
-
-        public string MinutesAsleep { get; set; }
-
-        public DateTime DateStamp { get; set; }
-
-        public string Water { get; set; }
-
-        public string Distance { get; set; }
-
-        public string MinutesSedentary { get; set; }
-
-        public string MinutesVeryActive { get; set; }
-
-        public string AwakeningsCount { get; set; }
-
-        public string TimeEnteredBed { get; set; }
-
-        public string Weight { get; set; }
-
-        public string MinutesAwake { get; set; }
-
-        public string TimeInBed { get; set; }
-
-        public string MinutesToFallAsleep { get; set; }
-
-        public string MinutesAfterWakeup { get; set; }
-
-        public string CaloriesIn { get; set; }
-
-        public string CaloriesOut { get; set; }
-
-        public string MinutesLightlyActive { get; set; }
-
-        public string MinutesFairlyActive { get; set; }
-
-        public string ActivityCalories { get; set; }
-
-        public string BMI { get; set; }
-
-        public string Fat { get; set; }
-
-        public string SleepEfficiency { get; set; }
-
-        public string WakeUpFreshness { get; set; }
-
-        public string Coffee { get; set; }
-
-        public string CoffeeTime { get; set; }
-
-        public string Alcohol { get; set; }
-
-        public string Mood { get; set; }
-
-        public string Stress { get; set; }
-
-        public string Tiredness { get; set; }
-
-        public string Dream { get; set; }
-
-        public string DigitalDev { get; set; }
-
-        public string Light { get; set; }
-
-        public string NapDuration { get; set; }
-
-        public string NapTime { get; set; }
-
-        public string SocialActivity { get; set; }
-
-        public string DinnerTime { get; set; }
-
-        public string AmbientTemp { get; set; }
-
-        public string AmbientHumd { get; set; }
-
-        public string ExerciseTime { get; set; }
-
-        public string BodyTemp { get; set; }
-
-        public string Hormone { get; set; }
-
-        public bool FitbitData { get; set; }
-
-        public bool DiaryDataNight { get; set; }
-
-        public string WatchTV { get; set; }
-
-        public string ExerciseDuration { get; set; }
-
-        public string ExerciseIntensity { get; set; }
-
-        public string ExerciseType { get; set; }
-
-        public string Snack { get; set; }
-
-        public string Snack2 { get; set; }
-
-        public string Job { get; set; }
-
-        public string Job2 { get; set; }
-
-        public string Phone { get; set; }
-
-        public string SleepDiary { get; set; }
-
-        public string Music { get; set; }
-
-        public string MusicDuration { get; set; }
-
-        public string MusicType { get; set; }
-
-        public string SocialMedia { get; set; }
-
-        public string Games { get; set; }
-
-        public string Assessment { get; set; }
-
-     //   public bool DiaryDataMorning { get; set; }
-
+        //User Details
         [Required]
         [StringLength(128)]
         public string AspNetUserId { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        public DateTime DateStamp { get; set; }
+
+        public FitbitData FitbitData { get; set; }
+
+        public DiaryData DiaryData { get; set; } 
+
     }
 }

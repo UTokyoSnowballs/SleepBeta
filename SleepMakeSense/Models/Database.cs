@@ -12,12 +12,14 @@ namespace SleepMakeSense.Models
     // Pandita: why partial class??
     public partial class Database : DbContext
     {
+        internal object DiaryData;
+
         /* 20161107 Pandita
-        public Database()
-            : base("name=Database")
-        {
-        }
-        */
+public Database()
+: base("name=Database")
+{
+}
+*/
 
         public Database()
     : base("Database")
@@ -32,6 +34,9 @@ namespace SleepMakeSense.Models
         public virtual DbSet<TokenManagement> TokenManagements { get; set; }
         public virtual DbSet<Userdata> Userdatas { get; set; }
         public virtual DbSet<UserQuestion> UserQuestions { get; set; }
+        public virtual DbSet<FitbitData> FitbitDatas { get; set; }
+        public virtual DbSet<DiaryData> DiaryDatas { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -50,11 +55,6 @@ namespace SleepMakeSense.Models
                 .HasMany(e => e.AspNetUserLogins)
                 .WithRequired(e => e.AspNetUser)
                 .HasForeignKey(e => e.UserId);
-
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.Userdatas)
-                .WithRequired(e => e.AspNetUser)
-                .WillCascadeOnDelete(false);
 
         }
 

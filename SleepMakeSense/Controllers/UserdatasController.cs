@@ -430,7 +430,9 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> Sync()
         {
 
-            /* Todo: Pandita
+            /* Todo: Pandita 
+             * // Sean -- Good idea :)
+             * We could use the View Model instead
             if (ViewBag.FitbitSynced == true) {
                 //NoDataSync();
                 return View("Sync");
@@ -447,7 +449,8 @@ namespace SleepMakeSense.Controllers
                 //Enable Fitbit Data SYNC
                 await FitbitDataSync(userId);
                 //Retrieves the Data
-                MyViewModel model = DataModelCreation(userId);
+                UserData 
+                MyViewModel model = DataModelCreation();
                 return View(model);
             
         }
@@ -503,8 +506,15 @@ namespace SleepMakeSense.Controllers
         }
 
 
-        public MyViewModel DataModelCreation(List <Userdata> userDatas)
+        public MyViewModel DataModelCreation(List<Userdata> userDatas)
         {
+            /*Fixing the data to make it easier to work on in the future.
+             * Thinking of making this into a differnt class and splitting it into smaller methods as alot of the code is repetitive
+             * Just need to figure out a way to be able to subsite the variable in the code and change to a different varible on each run
+             * EG.. steps, then go to distance and use the same generic code
+             * It could be split into 3 types, int, time and bool
+            */
+
             ViewBag.FitbitSynced = true;
 
             //Fitbit Data Counters
@@ -515,10 +525,10 @@ namespace SleepMakeSense.Controllers
 
             //Diary Data Counters
             int CNTWakeUpFreshness = 0, CNTMood = 0, CNTStress = 0, CNTTiredness = 0,
-                CNTDream = 0, CNTBodyTemp = 0, CNTHormone = 0, 
-                CNTCoffeeAmt = 0,CNTCoffeeTime = 0, CNTAlcoholAmt = 0, CNTAlcoholTime = 0,
-                CNTNapTime = 0, CNTNapDuration = 0, 
-                CNTDigDeviceDuration = 0, CNTGamesDuration = 0,CNTSocialActivites = 0, CNTSocialActivity = 0, CNTSocialMediaActivity = 0, CNTMusicDuration = 0, CNTTVDuration = 0,
+                CNTDream = 0, CNTBodyTemp = 0, CNTHormone = 0,
+                CNTCoffeeAmt = 0, CNTCoffeeTime = 0, CNTAlcoholAmt = 0, CNTAlcoholTime = 0,
+                CNTNapTime = 0, CNTNapDuration = 0,
+                CNTDigDeviceDuration = 0, CNTGamesDuration = 0, CNTSocialActivites = 0, CNTSocialActivity = 0, CNTSocialMediaActivity = 0, CNTMusicDuration = 0, CNTTVDuration = 0,
                 CNTWorkTime = 0, CNTWorkDuration = 0, CNTExerciseDuration = 0, CNTExerciseIntensity = 0,
                 CNTDinnerTime = 0, CNTSnackTime = 0,
                 CNTAmbientTemp = 0, CNTAmbientHumd = 0, CNTLight = 0, CNTSunRiseTime = 0, CNTSunSetTime = 0;
@@ -541,123 +551,141 @@ namespace SleepMakeSense.Controllers
                 if (Convert.ToDouble(userData.DiaryData.Tiredness) > 0) CNTTiredness++;
                 if (Convert.ToDouble(userData.DiaryData.Dream) > 0) CNTDream++;
                 if (Convert.ToDouble(userData.DiaryData.BodyTemp) > 0) CNTBodyTemp++;
-                if (Convert.ToDouble(userData.DiaryData.Hormone) > 0) CNTHormone++; 
+                if (Convert.ToDouble(userData.DiaryData.Hormone) > 0) CNTHormone++;
                 if (Convert.ToDouble(userData.DiaryData.CoffeeAmt) >= 0) CNTCoffeeAmt++;
                 if (Convert.ToDateTime(userData.DiaryData.CoffeeTime) != null) CNTCoffeeTime++;
                 if (Convert.ToDouble(userData.DiaryData.AlcoholAmt) > 0) CNTAlcoholAmt++;
                 if (Convert.ToDateTime(userData.DiaryData.AlcoholTime) != null) CNTAlcoholTime++;
                 if (Convert.ToDateTime(userData.DiaryData.NapTime) != null) CNTNapTime++;
-                if (Convert.ToDouble(userData.DiaryData.NapDuration) > 0) CNTNapDuration++; 
+                if (Convert.ToDouble(userData.DiaryData.NapDuration) > 0) CNTNapDuration++;
                 if (Convert.ToDouble(userData.DiaryData.DigDeviceDuration) > 0) CNTDigDeviceDuration++;
                 if (Convert.ToDouble(userData.DiaryData.GamesDuration) > 0) CNTGamesDuration++;
                 if (Convert.ToDouble(userData.DiaryData.SocialActivites) > 0) CNTSocialActivites++;
                 if (Convert.ToDouble(userData.DiaryData.SocialActivity) > 0) CNTSocialActivity++;
-               // if (Convert.ToDouble(userData.DiaryData.SocialMediaActivity) > 0) CNTSocialMediaActivity++; 
+                // if (Convert.ToDouble(userData.DiaryData.SocialMediaActivity) > 0) CNTSocialMediaActivity++;  Need to Fix the DB and the view for this one
                 if (Convert.ToDouble(userData.DiaryData.MusicDuration) >= 0) CNTMusicDuration++;
                 if (Convert.ToDouble(userData.DiaryData.TVDuration) > 0) CNTTVDuration++;
-                if (Convert.ToDouble(userData.DiaryData.MinutesLightlyActive) > 0) CNTMinutesLightlyActive++;
-                if (Convert.ToDouble(userData.DiaryData.MinutesFairlyActive) > 0) CNTMinutesFairlyActive++;
-                if (Convert.ToDouble(userData.DiaryData.MinutesVeryActive) > 0) CNTMinutesVeryActive++;
-                if (Convert.ToDouble(userData.DiaryData.Water) > 0) CNTWater++;
+                if (Convert.ToDateTime(userData.DiaryData.WorkTime) != null) CNTWorkTime++;
+                if (Convert.ToDouble(userData.DiaryData.ExerciseDuration) > 0) CNTExerciseDuration++;
+                if (Convert.ToDouble(userData.DiaryData.ExerciseIntensity) > 0) CNTExerciseIntensity++;
+                if (Convert.ToDateTime(userData.DiaryData.DinnerTime) != null) CNTDinnerTime++;
+                if (Convert.ToDateTime(userData.DiaryData.SnackTime) != null) CNTSnackTime++;
+                if (Convert.ToDouble(userData.DiaryData.AmbientTemp) > 0) CNTAmbientTemp++;
+                if (Convert.ToDouble(userData.DiaryData.AmbientHumd) > 0) CNTAmbientHumd++;
+                if (Convert.ToDouble(userData.DiaryData.Light) > 0) CNTLight++;
+                if (Convert.ToDateTime(userData.DiaryData.SunRiseTime) != null) CNTSunRiseTime++;
+                if (Convert.ToDateTime(userData.DiaryData.SunSetTime) != null) CNTSunSetTime++;
 
             }
 
 
-            int len = results.Count;
+            int countOfDaysData = userDatas.Count;
 
             List<CorrList> CoefficientList = new List<CorrList>();
 
-            double[] MinutesAsleep = new double[len];
-            double[] MinutesAwake = new double[len];
-            double[] AwakeningsCount = new double[len];
-            double[] MinutesToFallAsleep = new double[len];
-            double[] SleepEfficiency = new double[len];
+            double[] MinutesAsleep = new double[countOfDaysData];
+            double[] MinutesAwake = new double[countOfDaysData];
+            double[] AwakeningsCount = new double[countOfDaysData];
+            double[] MinutesToFallAsleep = new double[countOfDaysData];
+            double[] SleepEfficiency = new double[countOfDaysData];
 
-            double[] MinutesSedentary = new double[len];
-            double[] MinutesLightlyActive = new double[len];
-            double[] MinutesFairlyActive = new double[len];
-            double[] MinutesVeryActive = new double[len];
+            double[] MinutesSedentary = new double[countOfDaysData];
+            double[] MinutesLightlyActive = new double[countOfDaysData];
+            double[] MinutesFairlyActive = new double[countOfDaysData];
+            double[] MinutesVeryActive = new double[countOfDaysData];
 
-            // should correlate to all tracked factors, including the ones tracked using diary       
-            double[] WakeUpFreshnessCaloriesIn = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessWater = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessCaloriesOut = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessSteps = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessMinutesSedentary = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessMinutesLightlyActive = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessMinutesFairlyActive = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessMinutesVeryActive = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessWeight = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessFat = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessCoffee = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessCoffeeTime = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessAlcohol = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessMood = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessStress = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessTiredness = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessDream = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessDigitalDev = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessLight = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessNapDuration = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessNapTime = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessSocialActivity = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessDinnerTime = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessExerciseTime = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessAmbientTemp = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessAmbientHumd = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessBodyTemp = new double[CNTwakeUpFreshness];
-            double[] WakeUpFreshnessHormone = new double[CNTwakeUpFreshness];
+            // should correlate to all tracked factors, including the ones tracked using diary  
+                
+            //No idea what this is ment to do :/ - Sean
+            double[] WakeUpFreshnessSteps = new double[CNTSteps];
+            double[] WakeUpFreshnessDistance = new double[CNTDistance];
+            double[] WakeUpFreshnessMinutesSedentary = new double[CNTMinutesSedentary];
+            double[] WakeUpFreshnessMinutesLightlyActive = new double[CNTMinutesLightlyActive];
+            double[] WakeUpFreshnessMinutesFairlyActive = new double[CNTMinutesFairlyActive];
+            double[] WakeUpFreshnessMinutesVeryActive = new double[CNTMinutesVeryActive];
+            double[] WakeUpFreshnessWater = new double[CNTWater];
+            double[] WakeUpFreshnessMood = new double[CNTMood];
+            double[] WakeUpFreshnessStress = new double[CNTStress];
+            double[] WakeUpFreshnessTiredness = new double[CNTTiredness];
+            double[] WakeUpFreshnessDream = new double[CNTDream];
+            double[] WakeUpFreshnessBodyTemp = new double[CNTBodyTemp];
+            double[] WakeUpFreshnessHormone = new double[CNTHormone];
+            double[] WakeUpFreshnessCoffeeAmt = new double[CNTCoffeeAmt];
+            double[] WakeUpFreshnessCoffeeTime = new double[CNTCoffeeTime];
+            double[] WakeUpFreshnessAlcoholAmt = new double[CNTAlcoholAmt];
+            double[] WakeUpFreshnessAlcoholTime = new double[CNTAlcoholTime];
+            double[] WakeUpFreshnessNapTime = new double[CNTNapTime];
+            double[] WakeUpFreshnessNapDuration = new double[CNTNapDuration];
+            double[] WakeUpFreshnessDigDeviceDuration = new double[CNTDigDeviceDuration];
+            double[] WakeUpFreshnessGamesDuration = new double[CNTGamesDuration];
+            double[] WakeUpFreshnessSocialActivites = new double[CNTSocialActivites];
+            double[] WakeUpFreshnessSocialActivity = new double[CNTSocialActivity];
+            double[] WakeUpFreshnessMusicDuration = new double[CNTMusicDuration];
+            double[] WakeUpFreshnessTVDuration = new double[CNTTVDuration];
+            double[] WakeUpFreshnessWorkTime = new double[CNTWorkTime];
+            double[] WakeUpFreshnessExerciseDuration = new double[CNTExerciseDuration];
+            double[] WakeUpFreshnessExerciseIntensity = new double[CNTExerciseIntensity];
+            double[] WakeUpFreshnessDinnerTime = new double[CNTDinnerTime];
+            double[] WakeUpFreshnessSnackTime = new double[CNTSnackTime];
+            double[] WakeUpFreshnessAmbientTemp = new double[CNTAmbientTemp];
+            double[] WakeUpFreshnessAmbientHumd = new double[CNTAmbientHumd];
+            double[] WakeUpFreshnessLight = new double[CNTLight];
+            double[] WakeUpFreshnessSunRiseTime = new double[CNTSunRiseTime];
+            double[] WakeUpFreshnessSunSetTime = new double[CNTSunSetTime];
 
-            double[] tmpCaloriesIn = new double[CNTwakeUpFreshness];
-            double[] tmpWater = new double[CNTwakeUpFreshness];
-            double[] tmpCaloriesOut = new double[CNTwakeUpFreshness];
-            double[] tmpSteps = new double[CNTwakeUpFreshness];
-            double[] tmpMinutesSedentary = new double[CNTwakeUpFreshness];
-            double[] tmpMinutesLightlyActive = new double[CNTwakeUpFreshness];
-            double[] tmpMinutesFairlyActive = new double[CNTwakeUpFreshness];
-            double[] tmpMinutesVeryActive = new double[CNTwakeUpFreshness];
-            double[] tmpWeight = new double[CNTwakeUpFreshness];
-            double[] tmpFat = new double[CNTwakeUpFreshness];
-            double[] tmpCoffee = new double[CNTwakeUpFreshness];
-            double[] tmpCoffeeTime = new double[CNTwakeUpFreshness];
-            double[] tmpAlcohol = new double[CNTwakeUpFreshness];
-            double[] tmpMood = new double[CNTwakeUpFreshness];
-            double[] tmpStress = new double[CNTwakeUpFreshness];
-            double[] tmpTiredness = new double[CNTwakeUpFreshness];
-            double[] tmpDream = new double[CNTwakeUpFreshness];
-            double[] tmpDigitalDev = new double[CNTwakeUpFreshness];
-            double[] tmpLight = new double[CNTwakeUpFreshness];
-            double[] tmpNapDuration = new double[CNTwakeUpFreshness];
-            double[] tmpNapTime = new double[CNTwakeUpFreshness];
-            double[] tmpSocialActivity = new double[CNTwakeUpFreshness];
-            double[] tmpDinnerTime = new double[CNTwakeUpFreshness];
-            double[] tmpExerciseTime = new double[CNTwakeUpFreshness];
-            double[] tmpAmbientTemp = new double[CNTwakeUpFreshness];
-            double[] tmpAmbientHumd = new double[CNTwakeUpFreshness];
-            double[] tmpBodyTemp = new double[CNTwakeUpFreshness];
-            double[] tmpHormone = new double[CNTwakeUpFreshness];
+            double[] tmpSteps = new double[CNTSteps];
+            double[] tmpDistance = new double[CNTDistance];
+            double[] tmpMinutesSedentary = new double[CNTMinutesSedentary];
+            double[] tmpMinutesLightlyActive = new double[CNTMinutesLightlyActive];
+            double[] tmpMinutesFairlyActive = new double[CNTMinutesFairlyActive];
+            double[] tmpMinutesVeryActive = new double[CNTMinutesVeryActive];
+            double[] tmpWater = new double[CNTWater];
+            double[] tmpMood = new double[CNTMood];
+            double[] tmpStress = new double[CNTStress];
+            double[] tmpTiredness = new double[CNTTiredness];
+            double[] tmpDream = new double[CNTDream];
+            double[] tmpBodyTemp = new double[CNTBodyTemp];
+            double[] tmpHormone = new double[CNTHormone];
+            double[] tmpCoffeeAmt = new double[CNTCoffeeAmt];
+            double[] tmpCoffeeTime = new double[CNTCoffeeTime];
+            double[] tmpAlcoholAmt = new double[CNTAlcoholAmt];
+            double[] tmpAlcoholTime = new double[CNTAlcoholTime];
+            double[] tmpNapTime = new double[CNTNapTime];
+            double[] tmpNapDuration = new double[CNTNapDuration];
+            double[] tmpDigDeviceDuration = new double[CNTDigDeviceDuration];
+            double[] tmpGamesDuration = new double[CNTGamesDuration];
+            double[] tmpSocialActivites = new double[CNTSocialActivites];
+            double[] tmpSocialActivity = new double[CNTSocialActivity];
+            double[] tmpMusicDuration = new double[CNTMusicDuration];
+            double[] tmpTVDuration = new double[CNTTVDuration];
+            double[] tmpWorkTime = new double[CNTWorkTime];
+            double[] tmpExerciseDuration = new double[CNTExerciseDuration];
+            double[] tmpExerciseIntensity = new double[CNTExerciseIntensity];
+            double[] tmpDinnerTime = new double[CNTDinnerTime];
+            double[] tmpSnackTime = new double[CNTSnackTime];
+            double[] tmpAmbientTemp = new double[CNTAmbientTemp];
+            double[] tmpAmbientHumd = new double[CNTAmbientHumd];
+            double[] tmpLight = new double[CNTLight];
+            double[] tmpSunRiseTime = new double[CNTSunRiseTime];
+            double[] tmpSunSetTime = new double[CNTSunSetTime];
 
-            //double[] Floors = new double[len];
-            //double[] TimeEnteredBed = new double[len];
 
 
-            int iMinutesAsleep = 0;
-            int iMinutesAwake = 0;
-            int iAwakeningsCount = 0;
-            int iMinutesToFallAsleep = 0;
-            int iSleepEfficiency = 0;
-            int iWakeUpFreshnessCaloriesIn = 0, iWakeUpFreshnessWater = 0, iWakeUpFreshnessCaloriesOut = 0,
-                iWakeUpFreshnessSteps = 0, iWakeUpFreshnessMinutesSedentary = 0, iWakeUpFreshnessMinutesLightlyActive = 0,
-                iWakeUpFreshnessMinutesFairlyActive = 0, iWakeUpFreshnessMinutesVeryActive = 0, iWakeUpFreshnessWeight = 0,
-                iWakeUpFreshnessFat = 0, iWakeUpFreshnessCoffee = 0, iWakeUpFreshnessCoffeeTime = 0, iWakeUpFreshnessAlcohol = 0, iWakeUpFreshnessMood = 0,
-                iWakeUpFreshnessStress = 0, iWakeUpFreshnessTiredness = 0, iWakeUpFreshnessDream = 0, iWakeUpFreshnessDigitalDev = 0, iWakeUpFreshnessLight = 0,
-                iWakeUpFreshnessNapDuration = 0, iWakeUpFreshnessNapTime = 0, iWakeUpFreshnessSocialActivity = 0, iWakeUpFreshnessDinnerTime = 0,
-                iWakeUpFreshnessExerciseTime = 0, iWakeUpFreshnessAmbientTemp = 0, iWakeUpFreshnessAmbientHumd = 0, iWakeUpFreshnessBodyTemp = 0, iWakeUpFreshnessHormone = 0;
+            //Fitbit Data incruments 
+            int iSteps = 0, iDistance = 0, iMinutesSedentary = 0, iMinutesLightlyActive = 0,
+                iMinutesFairlyActive = 0, iMinutesVeryActive = 0, iWater = 0;
+            //Not Used
+            //  iCaloriesOut = 0, iActivityCalories = 0, iWeight = 0, iBMI = 0, iFat = 0, iCaloriesIn = 0;
 
-            int iMinutesSedentary = 0;
-            int iMinutesLightlyActive = 0;
-            int iMinutesFairlyActive = 0;
-            int iMinutesVeryActive = 0;
+            //Diary Data incruments
+            int iWakeUpFreshness = 0, iMood = 0, iStress = 0, iTiredness = 0,
+                iDream = 0, iBodyTemp = 0, iHormone = 0,
+                iCoffeeAmt = 0, iCoffeeTime = 0, iAlcoholAmt = 0, iAlcoholTime = 0,
+                iNapTime = 0, iNapDuration = 0,
+                iDigDeviceDuration = 0, iGamesDuration = 0, iSocialActivites = 0, iSocialActivity = 0, iSocialMediaActivity = 0, iMusicDuration = 0, iTVDuration = 0,
+                iWorkTime = 0, iWorkDuration = 0, iExerciseDuration = 0, iExerciseIntensity = 0,
+                iDinnerTime = 0, iSnackTime = 0,
+                iAmbientTemp = 0, iAmbientHumd = 0, iLight = 0, iSunRiseTime = 0, iSunSetTime = 0;
 
             //int iFloors = 0;
             //int iTimeEnteredBed = 0;
@@ -674,7 +702,8 @@ namespace SleepMakeSense.Controllers
                 // ******** Add entry to DB !!! *************         
 
                 // 20161105 Pandita: Not necessary here? 
-                Db.Userdatas.Add(item);
+                //No - Think it was left from Old code
+                //Db.Userdatas.Add(item);
 
                 MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(item.MinutesAsleep);
                 MinutesAwake[iMinutesAwake++] = Convert.ToDouble(item.MinutesAwake);

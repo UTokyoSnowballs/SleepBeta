@@ -45,54 +45,54 @@ namespace SleepMakeSense.Models
         public IEnumerable<SelectListItem> TimeToFive()
         {
             yield return new SelectListItem { Text = "Please Select", Value = null };
-            yield return new SelectListItem { Text = "0", Value = "00:00" };
-            yield return new SelectListItem { Text = "15 Minutes", Value = "00:15" };
-            yield return new SelectListItem { Text = "30 Minutes", Value = "00:30" };
-            yield return new SelectListItem { Text = "45 Minutes", Value = "00:45" };
-            yield return new SelectListItem { Text = "1 Hour", Value = "01:00" };
-            yield return new SelectListItem { Text = "1 Hour 15 Minutes", Value = "01:15" };
-            yield return new SelectListItem { Text = "1 Hour 30 Minutes", Value = "01:30" };
-            yield return new SelectListItem { Text = "1 Hour 45 Minutes", Value = "01:45" };
-            yield return new SelectListItem { Text = "2 Hour", Value = "02:00" };
-            yield return new SelectListItem { Text = "2 Hour 15 Minutes", Value = "02:15" };
-            yield return new SelectListItem { Text = "2 Hour 30 Minutes", Value = "02:30" };
-            yield return new SelectListItem { Text = "2 Hour 45 Minutes", Value = "02:45" };
-            yield return new SelectListItem { Text = "3 Hour", Value = "03:00" };
-            yield return new SelectListItem { Text = "3 Hour 15 Minutes", Value = "03:15" };
-            yield return new SelectListItem { Text = "3 Hour 30 Minutes", Value = "03:30" };
-            yield return new SelectListItem { Text = "3 Hour 45 Minutes", Value = "03:45" };
-            yield return new SelectListItem { Text = "4 Hour", Value = "04:00" };
-            yield return new SelectListItem { Text = "4 Hour 15 Minutes", Value = "04:15" };
-            yield return new SelectListItem { Text = "4 Hour 30 Minutes", Value = "04:30" };
-            yield return new SelectListItem { Text = "4 Hour 45 Minutes", Value = "04:45" };
-            yield return new SelectListItem { Text = "5 Hour", Value = "05:00" };
+            yield return new SelectListItem { Text = "0", Value = "0" };
+            yield return new SelectListItem { Text = "15 Minutes", Value = "15" };
+            yield return new SelectListItem { Text = "30 Minutes", Value = "30" };
+            yield return new SelectListItem { Text = "45 Minutes", Value = "45" };
+            yield return new SelectListItem { Text = "1 Hour", Value = "60" };
+            yield return new SelectListItem { Text = "1 Hour 15 Minutes", Value = "75" };
+            yield return new SelectListItem { Text = "1 Hour 30 Minutes", Value = "90" };
+            yield return new SelectListItem { Text = "1 Hour 45 Minutes", Value = "105" };
+            yield return new SelectListItem { Text = "2 Hour", Value = "120" };
+            yield return new SelectListItem { Text = "2 Hour 15 Minutes", Value = "135" };
+            yield return new SelectListItem { Text = "2 Hour 30 Minutes", Value = "150" };
+            yield return new SelectListItem { Text = "2 Hour 45 Minutes", Value = "165" };
+            yield return new SelectListItem { Text = "3 Hour", Value = "180" };
+            yield return new SelectListItem { Text = "3 Hour 15 Minutes", Value = "195" };
+            yield return new SelectListItem { Text = "3 Hour 30 Minutes", Value = "210" };
+            yield return new SelectListItem { Text = "3 Hour 45 Minutes", Value = "225" };
+            yield return new SelectListItem { Text = "4 Hour", Value = "240" };
+            yield return new SelectListItem { Text = "4 Hour 15 Minutes", Value = "255" };
+            yield return new SelectListItem { Text = "4 Hour 30 Minutes", Value = "270" };
+            yield return new SelectListItem { Text = "4 Hour 45 Minutes", Value = "285" };
+            yield return new SelectListItem { Text = "5 Hour", Value = "300" };
 
         }
 
         public IEnumerable<SelectListItem> TimeToTen()
         {
             yield return new SelectListItem { Text = "Please Select", Value = null };
-            yield return new SelectListItem { Text = "0", Value = "00:00" };
-            yield return new SelectListItem { Text = "30 Minutes", Value = "00:30" };
-            yield return new SelectListItem { Text = "1 Hour", Value = "01:00" };
-            yield return new SelectListItem { Text = "1 Hour 30 Minutes", Value = "01:30" };
-            yield return new SelectListItem { Text = "2 Hours", Value = "02:00" };
-            yield return new SelectListItem { Text = "2 Hours 30 Minutes", Value = "02:30" };
-            yield return new SelectListItem { Text = "3 Hours", Value = "03:00" };
-            yield return new SelectListItem { Text = "3 Hours 30 Minutes", Value = "03:30" };
-            yield return new SelectListItem { Text = "4 Hours", Value = "04:00" };
-            yield return new SelectListItem { Text = "4 Hours 30 Minutes", Value = "04:30" };
-            yield return new SelectListItem { Text = "5 Hours", Value = "05:00" };
-            yield return new SelectListItem { Text = "5 Hours 30 Minutes", Value = "00:30" };
-            yield return new SelectListItem { Text = "6 Hours", Value = "01:00" };
-            yield return new SelectListItem { Text = "6 Hours 30 Minutes", Value = "01:30" };
-            yield return new SelectListItem { Text = "7 Hours", Value = "02:00" };
-            yield return new SelectListItem { Text = "7 Hours 30 Minutes", Value = "02:30" };
-            yield return new SelectListItem { Text = "8 Hours", Value = "03:00" };
-            yield return new SelectListItem { Text = "8 Hours 30 Minutes", Value = "03:30" };
-            yield return new SelectListItem { Text = "9 Hours", Value = "04:00" };
-            yield return new SelectListItem { Text = "9 Hours 30 Minutes", Value = "04:30" };
-            yield return new SelectListItem { Text = "10 Hours", Value = "05:00" };
+            yield return new SelectListItem { Text = "0", Value = "0" };
+            yield return new SelectListItem { Text = "30 Minutes", Value = "30" };
+            yield return new SelectListItem { Text = "1 Hour", Value = "60" };
+            yield return new SelectListItem { Text = "1 Hour 30 Minutes", Value = "90" };
+            yield return new SelectListItem { Text = "2 Hours", Value = "120" };
+            yield return new SelectListItem { Text = "2 Hours 30 Minutes", Value = "150" };
+            yield return new SelectListItem { Text = "3 Hours", Value = "180" };
+            yield return new SelectListItem { Text = "3 Hours 30 Minutes", Value = "210" };
+            yield return new SelectListItem { Text = "4 Hours", Value = "240" };
+            yield return new SelectListItem { Text = "4 Hours 30 Minutes", Value = "270" };
+            yield return new SelectListItem { Text = "5 Hours", Value = "300" };
+            yield return new SelectListItem { Text = "5 Hours 30 Minutes", Value = "330" };
+            yield return new SelectListItem { Text = "6 Hours", Value = "360" };
+            yield return new SelectListItem { Text = "6 Hours 30 Minutes", Value = "390" };
+            yield return new SelectListItem { Text = "7 Hours", Value = "420" };
+            yield return new SelectListItem { Text = "7 Hours 30 Minutes", Value = "450" };
+            yield return new SelectListItem { Text = "8 Hours", Value = "480" };
+            yield return new SelectListItem { Text = "8 Hours 30 Minutes", Value = "510" };
+            yield return new SelectListItem { Text = "9 Hours", Value = "540" };
+            yield return new SelectListItem { Text = "9 Hours 30 Minutes", Value = "570" };
+            yield return new SelectListItem { Text = "10 Hours", Value = "600" };
         }
 
         public IEnumerable<SelectListItem> DayHours()
@@ -162,3 +162,61 @@ namespace SleepMakeSense.Models
         }
     }
 }
+
+
+
+                if (Convert.ToDouble(userData.FitbitData.Steps) > 0) CNTSteps++;
+                if (Convert.ToDouble(userData.FitbitData.Distance) >= 0) CNTDistance++;
+                if (Convert.ToDouble(userData.FitbitData.MinutesSedentary) > 0) CNTMinutesSedentary++;
+                if (Convert.ToDouble(userData.FitbitData.MinutesLightlyActive) > 0) CNTMinutesLightlyActive++;
+                if (Convert.ToDouble(userData.FitbitData.MinutesFairlyActive) > 0) CNTMinutesFairlyActive++;
+                if (Convert.ToDouble(userData.FitbitData.MinutesVeryActive) > 0) CNTMinutesVeryActive++;
+                if (Convert.ToDouble(userData.FitbitData.Water) > 0) CNTWater++;
+
+                //Diary Data Counter
+                if (Convert.ToDouble(userData.DiaryData.WakeUpFreshness) > 0) CNTWakeUpFreshness++;
+                if (Convert.ToDouble(userData.DiaryData.Mood) >= 0) CNTMood++;
+                if (Convert.ToDouble(userData.DiaryData.Stress) > 0) CNTStress++;
+                if (Convert.ToDouble(userData.DiaryData.Tiredness) > 0) CNTTiredness++;
+                if (Convert.ToDouble(userData.DiaryData.Dream) > 0) CNTDream++;
+                if (Convert.ToDouble(userData.DiaryData.BodyTemp) > 0) CNTBodyTemp++;
+                if (Convert.ToDouble(userData.DiaryData.Hormone) > 0) CNTHormone++; 
+                if (Convert.ToDouble(userData.DiaryData.CoffeeAmt) >= 0) CNTCoffeeAmt++;
+                if (Convert.ToDateTime(userData.DiaryData.CoffeeTime) != null) CNTCoffeeTime++;
+                if (Convert.ToDouble(userData.DiaryData.AlcoholAmt) > 0) CNTAlcoholAmt++;
+                if (Convert.ToDateTime(userData.DiaryData.AlcoholTime) != null) CNTAlcoholTime++;
+                if (Convert.ToDateTime(userData.DiaryData.NapTime) != null) CNTNapTime++;
+                if (Convert.ToDouble(userData.DiaryData.NapDuration) > 0) CNTNapDuration++; 
+                if (Convert.ToDouble(userData.DiaryData.DigDeviceDuration) > 0) CNTDigDeviceDuration++;
+                if (Convert.ToDouble(userData.DiaryData.GamesDuration) > 0) CNTGamesDuration++;
+                if (Convert.ToDouble(userData.DiaryData.SocialActivites) > 0) CNTSocialActivites++;
+                if (Convert.ToDouble(userData.DiaryData.SocialActivity) > 0) CNTSocialActivity++;
+               // if (Convert.ToDouble(userData.DiaryData.SocialMediaActivity) > 0) CNTSocialMediaActivity++;  Need to Fix the DB and the view for this one
+                if (Convert.ToDouble(userData.DiaryData.MusicDuration) >= 0) CNTMusicDuration++;
+                if (Convert.ToDouble(userData.DiaryData.TVDuration) > 0) CNTTVDuration++;
+                if (Convert.ToDateTime(userData.DiaryData.WorkTime) != null) CNTWorkTime++;
+                if (Convert.ToDouble(userData.DiaryData.ExerciseDuration) > 0) CNTExerciseDuration++;
+                if (Convert.ToDouble(userData.DiaryData.ExerciseIntensity) > 0) CNTExerciseIntensity++;
+                if (Convert.ToDateTime(userData.DiaryData.DinnerTime) != null) CNTDinnerTime++;
+                if (Convert.ToDateTime(userData.DiaryData.SnackTime) != null) CNTSnackTime++;
+                if (Convert.ToDouble(userData.DiaryData.AmbientTemp) > 0) CNTAmbientTemp++;
+                if (Convert.ToDouble(userData.DiaryData.AmbientHumd) > 0) CNTAmbientHumd++;
+                if (Convert.ToDouble(userData.DiaryData.Light) > 0) CNTLight++;
+                if (Convert.ToDateTime(userData.DiaryData.SunRiseTime) != null) CNTSunRiseTime++;
+                if (Convert.ToDateTime(userData.DiaryData.SunSetTime) != null) CNTSunSetTime++;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

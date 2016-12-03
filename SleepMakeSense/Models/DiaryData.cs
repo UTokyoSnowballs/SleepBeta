@@ -32,6 +32,8 @@ namespace SleepMakeSense.Models
 
         public string Hormone { get; set; }
 
+        public string SchoolStress { get; set; }
+
         public string CoffeeAmt { get; set; }
 
         public string CoffeeTime { get; set; }

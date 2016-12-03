@@ -23,15 +23,16 @@ namespace SleepMakeSense.Controllers
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
                 //Getting Table Data
-                var userQuestions = from table in Db.UserQuestions
+                /*
+                List <UserQuestion> userQuestions = (from table in Db.UserQuestions
                                     where table.AspNetUserId.Equals(userId)
-                                    select table;
-
+                                    select table).ToList();
+                                    */
                 var lastSynced = from table in Db.DiaryDatas
                                  where table.AspNetUserId.Equals(userId) && table.DateStamp >= endStop
                                  orderby table.DateStamp
                                  select table;
-
+                /*
                 foreach (UserQuestion userQuestion in userQuestions)
                 {
                     if (userQuestion.AspNetUserId == userId )
@@ -39,12 +40,12 @@ namespace SleepMakeSense.Controllers
                         model.QuestionsSetup = true;
                     }
                 }
-
+                */
                 foreach (DiaryData diaryData in lastSynced)
                 {
                     if (diaryData.AspNetUserId == userId && diaryData.DateStamp == DateTime.UtcNow.Date)
                     {
-                        model.TodaySync = false;
+                        model.TodaySync = true;
                     }
                 }
 

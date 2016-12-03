@@ -8,11 +8,9 @@ namespace SleepMakeSense.Models
 
     public partial class Userdata
     {
-
+        [Key]
+        public int Id { get; set; }
         //User Details
-        [Required]
-        [StringLength(128)]
-        public string AspNetUserId { get; set; }
 
         public DateTime DateStamp { get; set; }
 

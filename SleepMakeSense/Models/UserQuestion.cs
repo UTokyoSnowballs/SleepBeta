@@ -8,7 +8,7 @@ namespace SleepMakeSense.Models
 
     public partial class UserQuestion
     {
-
+        [Key]
         public int Id { get; set; }
 
         [Required]

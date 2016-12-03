@@ -32,7 +32,6 @@ public Database()
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<TokenManagement> TokenManagements { get; set; }
-        public virtual DbSet<Userdata> Userdatas { get; set; }
         public virtual DbSet<UserQuestion> UserQuestions { get; set; }
         public virtual DbSet<FitbitData> FitbitDatas { get; set; }
         public virtual DbSet<DiaryData> DiaryDatas { get; set; }

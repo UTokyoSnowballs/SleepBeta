@@ -31,7 +31,7 @@ namespace SleepMakeSense.Controllers
         // private ApplicationDbContext db = new ApplicationDbContext();
         private Models.Database Db = new Models.Database();
 
-
+        /*
         // GET: Userdatas
         public ActionResult Index()
         {
@@ -147,7 +147,7 @@ namespace SleepMakeSense.Controllers
             }
             return View(userdata);
         }
-
+       
         // POST: Userdatas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -164,7 +164,7 @@ namespace SleepMakeSense.Controllers
 
             return RedirectToAction("Index");
         }
-
+         */
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -182,7 +182,7 @@ namespace SleepMakeSense.Controllers
         /// More info at: http://stackoverflow.com/questions/22560971/what-is-the-overhead-of-creating-a-new-httpclient-per-call-in-a-webapi-client
         /// </summary>
         /// <returns></returns>
-        public FitbitClient GetFitbitClient(OAuth2AccessToken accessToken = null)
+        private FitbitClient GetFitbitClient(OAuth2AccessToken accessToken = null)
         {
             if (Session["FitbitClient"] == null)
             {
@@ -449,8 +449,8 @@ namespace SleepMakeSense.Controllers
                 //Enable Fitbit Data SYNC
                 await FitbitDataSync(userId);
                 //Retrieves the Data
-                UserData 
-                MyViewModel model = DataModelCreation();
+                 
+                MyViewModel model = DataModelCreation(UserDatas(userId));
                 return View(model);
             
         }
@@ -490,7 +490,7 @@ namespace SleepMakeSense.Controllers
                     userDatas.Add(new Userdata
                     {
                         DateStamp = fitbitData.DateStamp,
-                        AspNetUserId = fitbitData.AspNetUserId,
+                   //     AspNetUserId = fitbitData.AspNetUserId,
                         FitbitData = fitbitData
                     });
                 }
@@ -513,19 +513,25 @@ namespace SleepMakeSense.Controllers
              * Just need to figure out a way to be able to subsite the variable in the code and change to a different varible on each run
              * EG.. steps, then go to distance and use the same generic code
              * It could be split into 3 types, int, time and bool
+             * 
+             * Update on this thought - should the wakeup freashness be redesigned?
             */
 
+            //Part of the redesign - this will allow the datamining method to flick through all of the classes with less commplication
+
+            MyViewModel viewModel = new MyViewModel();
             ViewBag.FitbitSynced = true;
 
             //Fitbit Data Counters
             int CNTSteps = 0, CNTDistance = 0, CNTMinutesSedentary = 0, CNTMinutesLightlyActive = 0,
-                CNTMinutesFairlyActive = 0, CNTMinutesVeryActive = 0, CNTWater = 0;
-            //Not Used
-            //  CNTCaloriesOut = 0, CNTActivityCalories = 0, CNTWeight = 0, CNTBMI = 0, CNTFat = 0, CNTCaloriesIn = 0;
+                CNTMinutesFairlyActive = 0, CNTMinutesVeryActive = 0, CNTWater = 0,
+                CNTCaloriesOut = 0, CNTActivityCalories = 0, CNTWeight = 0, CNTBMI = 0, CNTFat = 0, CNTCaloriesIn = 0;
+
 
             //Diary Data Counters
             int CNTWakeUpFreshness = 0, CNTMood = 0, CNTStress = 0, CNTTiredness = 0,
                 CNTDream = 0, CNTBodyTemp = 0, CNTHormone = 0,
+                CNTSchoolStress = 0,
                 CNTCoffeeAmt = 0, CNTCoffeeTime = 0, CNTAlcoholAmt = 0, CNTAlcoholTime = 0,
                 CNTNapTime = 0, CNTNapDuration = 0,
                 CNTDigDeviceDuration = 0, CNTGamesDuration = 0, CNTSocialActivites = 0, CNTSocialActivity = 0, CNTSocialMediaActivity = 0, CNTMusicDuration = 0, CNTTVDuration = 0,
@@ -543,6 +549,12 @@ namespace SleepMakeSense.Controllers
                 if (Convert.ToDouble(userData.FitbitData.MinutesFairlyActive) > 0) CNTMinutesFairlyActive++;
                 if (Convert.ToDouble(userData.FitbitData.MinutesVeryActive) > 0) CNTMinutesVeryActive++;
                 if (Convert.ToDouble(userData.FitbitData.Water) > 0) CNTWater++;
+                if (Convert.ToDouble(userData.FitbitData.CaloriesIn) >= 0) CNTCaloriesIn++;
+                if (Convert.ToDouble(userData.FitbitData.CaloriesOut) > 0) CNTCaloriesOut++;
+                if (Convert.ToDouble(userData.FitbitData.ActivityCalories) > 0) CNTActivityCalories++;
+                if (Convert.ToDouble(userData.FitbitData.Weight) > 0) CNTWeight++;
+                if (Convert.ToDouble(userData.FitbitData.BMI) > 0) CNTBMI++;
+                if (Convert.ToDouble(userData.FitbitData.Fat) > 0) CNTFat++;
 
                 //Diary Data Counter
                 if (Convert.ToDouble(userData.DiaryData.WakeUpFreshness) > 0) CNTWakeUpFreshness++;
@@ -552,6 +564,7 @@ namespace SleepMakeSense.Controllers
                 if (Convert.ToDouble(userData.DiaryData.Dream) > 0) CNTDream++;
                 if (Convert.ToDouble(userData.DiaryData.BodyTemp) > 0) CNTBodyTemp++;
                 if (Convert.ToDouble(userData.DiaryData.Hormone) > 0) CNTHormone++;
+                if (Convert.ToDouble(userData.DiaryData.SchoolStress) > 0) CNTSchoolStress++;
                 if (Convert.ToDouble(userData.DiaryData.CoffeeAmt) >= 0) CNTCoffeeAmt++;
                 if (Convert.ToDateTime(userData.DiaryData.CoffeeTime) != null) CNTCoffeeTime++;
                 if (Convert.ToDouble(userData.DiaryData.AlcoholAmt) > 0) CNTAlcoholAmt++;
@@ -604,12 +617,20 @@ namespace SleepMakeSense.Controllers
             double[] WakeUpFreshnessMinutesFairlyActive = new double[CNTMinutesFairlyActive];
             double[] WakeUpFreshnessMinutesVeryActive = new double[CNTMinutesVeryActive];
             double[] WakeUpFreshnessWater = new double[CNTWater];
+            double[] WakeUpFreshnessCaloriesIn = new double[CNTCaloriesIn];
+            double[] WakeUpFreshnessCaloriesOut = new double[CNTCaloriesOut];
+            double[] WakeUpFreshnessActivityCalories = new double[CNTActivityCalories];
+            double[] WakeUpFreshnessWeight = new double[CNTWeight];
+            double[] WakeUpFreshnessBMI = new double[CNTBMI];
+            double[] WakeUpFreshnessFat = new double[CNTFat];
+
             double[] WakeUpFreshnessMood = new double[CNTMood];
             double[] WakeUpFreshnessStress = new double[CNTStress];
             double[] WakeUpFreshnessTiredness = new double[CNTTiredness];
             double[] WakeUpFreshnessDream = new double[CNTDream];
             double[] WakeUpFreshnessBodyTemp = new double[CNTBodyTemp];
             double[] WakeUpFreshnessHormone = new double[CNTHormone];
+            double[] WakeUpFreshnessSchoolStress = new double[CNTHormone];
             double[] WakeUpFreshnessCoffeeAmt = new double[CNTCoffeeAmt];
             double[] WakeUpFreshnessCoffeeTime = new double[CNTCoffeeTime];
             double[] WakeUpFreshnessAlcoholAmt = new double[CNTAlcoholAmt];
@@ -623,6 +644,7 @@ namespace SleepMakeSense.Controllers
             double[] WakeUpFreshnessMusicDuration = new double[CNTMusicDuration];
             double[] WakeUpFreshnessTVDuration = new double[CNTTVDuration];
             double[] WakeUpFreshnessWorkTime = new double[CNTWorkTime];
+            double[] WakeUpFreshnessWorkDuration = new double[CNTWorkDuration];
             double[] WakeUpFreshnessExerciseDuration = new double[CNTExerciseDuration];
             double[] WakeUpFreshnessExerciseIntensity = new double[CNTExerciseIntensity];
             double[] WakeUpFreshnessDinnerTime = new double[CNTDinnerTime];
@@ -633,6 +655,9 @@ namespace SleepMakeSense.Controllers
             double[] WakeUpFreshnessSunRiseTime = new double[CNTSunRiseTime];
             double[] WakeUpFreshnessSunSetTime = new double[CNTSunSetTime];
 
+
+            //Temp Values
+            //Fitbit
             double[] tmpSteps = new double[CNTSteps];
             double[] tmpDistance = new double[CNTDistance];
             double[] tmpMinutesSedentary = new double[CNTMinutesSedentary];
@@ -640,12 +665,21 @@ namespace SleepMakeSense.Controllers
             double[] tmpMinutesFairlyActive = new double[CNTMinutesFairlyActive];
             double[] tmpMinutesVeryActive = new double[CNTMinutesVeryActive];
             double[] tmpWater = new double[CNTWater];
+            double[] tmpCaloriesIn = new double[CNTCaloriesIn];
+            double[] tmpCaloriesOut = new double[CNTCaloriesOut];
+            double[] tmpActivityCalories = new double[CNTActivityCalories];
+            double[] tmpWeight = new double[CNTWeight];
+            double[] tmpBMI = new double[CNTBMI];
+            double[] tmpFat = new double[CNTFat];
+
+            //Diary 
             double[] tmpMood = new double[CNTMood];
             double[] tmpStress = new double[CNTStress];
             double[] tmpTiredness = new double[CNTTiredness];
             double[] tmpDream = new double[CNTDream];
             double[] tmpBodyTemp = new double[CNTBodyTemp];
             double[] tmpHormone = new double[CNTHormone];
+            double[] tmpSchoolStress = new double[CNTSchoolStress];
             double[] tmpCoffeeAmt = new double[CNTCoffeeAmt];
             double[] tmpCoffeeTime = new double[CNTCoffeeTime];
             double[] tmpAlcoholAmt = new double[CNTAlcoholAmt];
@@ -659,6 +693,7 @@ namespace SleepMakeSense.Controllers
             double[] tmpMusicDuration = new double[CNTMusicDuration];
             double[] tmpTVDuration = new double[CNTTVDuration];
             double[] tmpWorkTime = new double[CNTWorkTime];
+            double[] tmpWorkDuration = new double[CNTWorkDuration];
             double[] tmpExerciseDuration = new double[CNTExerciseDuration];
             double[] tmpExerciseIntensity = new double[CNTExerciseIntensity];
             double[] tmpDinnerTime = new double[CNTDinnerTime];
@@ -672,14 +707,17 @@ namespace SleepMakeSense.Controllers
 
 
             //Fitbit Data incruments 
+            int iMinutesAsleep = 0, iMinutesAwake = 0,
+            iAwakeningsCount = 0, iMinutesToFallAsleep = 0, iSleepEfficiency = 0;
+
             int iSteps = 0, iDistance = 0, iMinutesSedentary = 0, iMinutesLightlyActive = 0,
-                iMinutesFairlyActive = 0, iMinutesVeryActive = 0, iWater = 0;
-            //Not Used
-            //  iCaloriesOut = 0, iActivityCalories = 0, iWeight = 0, iBMI = 0, iFat = 0, iCaloriesIn = 0;
+                iMinutesFairlyActive = 0, iMinutesVeryActive = 0, iWater = 0,
+                iCaloriesOut = 0, iActivityCalories = 0, iWeight = 0, iBMI = 0, iFat = 0, iCaloriesIn = 0;
 
             //Diary Data incruments
             int iWakeUpFreshness = 0, iMood = 0, iStress = 0, iTiredness = 0,
                 iDream = 0, iBodyTemp = 0, iHormone = 0,
+                iSchoolStress = 0,
                 iCoffeeAmt = 0, iCoffeeTime = 0, iAlcoholAmt = 0, iAlcoholTime = 0,
                 iNapTime = 0, iNapDuration = 0,
                 iDigDeviceDuration = 0, iGamesDuration = 0, iSocialActivites = 0, iSocialActivity = 0, iSocialMediaActivity = 0, iMusicDuration = 0, iTVDuration = 0,
@@ -690,9 +728,27 @@ namespace SleepMakeSense.Controllers
             //int iFloors = 0;
             //int iTimeEnteredBed = 0;
 
+            int iWakeUpFreshnessMinutesAsleep = 0, iWakeUpFreshnessMinutesAwake = 0,
+                iWakeUpFreshnessAwakeningsCount = 0, iWakeUpFreshnessMinutesToFallAsleep = 0, iWakeUpFreshnessSleepEfficiency = 0;
+
+            int iWakeUpFreshnessSteps = 0, iWakeUpFreshnessDistance = 0, iWakeUpFreshnessMinutesSedentary = 0, iWakeUpFreshnessMinutesLightlyActive = 0,
+                iWakeUpFreshnessMinutesFairlyActive = 0, iWakeUpFreshnessMinutesVeryActive = 0, iWakeUpFreshnessWater = 0,
+                iWakeUpFreshnessCaloriesOut = 0, iWakeUpFreshnessActivityCalories = 0, iWakeUpFreshnessWeight = 0, iWakeUpFreshnessBMI = 0, iWakeUpFreshnessFat = 0, iWakeUpFreshnessCaloriesIn = 0;
+
+            //Diary Data incruments
+            int iWakeUpFreshnessMood = 0, iWakeUpFreshnessStress = 0, iWakeUpFreshnessTiredness = 0,
+                iWakeUpFreshnessDream = 0, iWakeUpFreshnessBodyTemp = 0, iWakeUpFreshnessHormone = 0,
+                iWakeUpFreshnessSchoolStress = 0,
+                iWakeUpFreshnessCoffeeAmt = 0, iWakeUpFreshnessCoffeeTime = 0, iWakeUpFreshnessAlcoholAmt = 0, iWakeUpFreshnessAlcoholTime = 0,
+                iWakeUpFreshnessNapTime = 0, iWakeUpFreshnessNapDuration = 0,
+                iWakeUpFreshnessDigDeviceDuration = 0, iWakeUpFreshnessGamesDuration = 0, iWakeUpFreshnessSocialActivites = 0, iWakeUpFreshnessSocialActivity = 0, iWakeUpFreshnessSocialMediaActivity = 0, iWakeUpFreshnessMusicDuration = 0, iWakeUpFreshnessTVDuration = 0,
+                iWakeUpFreshnessWorkTime = 0, iWakeUpFreshnessWorkDuration = 0, iWakeUpFreshnessExerciseDuration = 0, iWakeUpFreshnessExerciseIntensity = 0,
+                iWakeUpFreshnessDinnerTime = 0, iWakeUpFreshnessSnackTime = 0,
+                iWakeUpFreshnessAmbientTemp = 0, iWakeUpFreshnessAmbientHumd = 0, iWakeUpFreshnessLight = 0, iWakeUpFreshnessSunRiseTime = 0, iWakeUpFreshnessSunSetTime = 0;
 
 
-            foreach (SleepMakeSense.Models.Userdata item in results)
+
+            foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
             {
 
                 //Console.Write(item); //didnt work!!!
@@ -705,187 +761,275 @@ namespace SleepMakeSense.Controllers
                 //No - Think it was left from Old code
                 //Db.Userdatas.Add(item);
 
-                MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(item.MinutesAsleep);
-                MinutesAwake[iMinutesAwake++] = Convert.ToDouble(item.MinutesAwake);
-                AwakeningsCount[iAwakeningsCount++] = Convert.ToDouble(item.AwakeningsCount);
-                MinutesToFallAsleep[iMinutesToFallAsleep++] = Convert.ToDouble(item.MinutesToFallAsleep);
-                SleepEfficiency[iSleepEfficiency++] = Convert.ToDouble(item.SleepEfficiency);
+                MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(daysData.FitbitData.MinutesAsleep);
+                MinutesAwake[iMinutesAwake++] = Convert.ToDouble(daysData.FitbitData.MinutesAwake);
+                AwakeningsCount[iAwakeningsCount++] = Convert.ToDouble(daysData.FitbitData.AwakeningsCount);
+                MinutesToFallAsleep[iMinutesToFallAsleep++] = Convert.ToDouble(daysData.FitbitData.MinutesToFallAsleep);
+                SleepEfficiency[iSleepEfficiency++] = Convert.ToDouble(daysData.FitbitData.SleepEfficiency);
 
-                MinutesSedentary[iMinutesSedentary++] = Convert.ToDouble(item.MinutesSedentary);
-                MinutesLightlyActive[iMinutesLightlyActive++] = Convert.ToDouble(item.MinutesLightlyActive);
-                MinutesFairlyActive[iMinutesFairlyActive++] = Convert.ToDouble(item.MinutesFairlyActive);
-                MinutesVeryActive[iMinutesVeryActive++] = Convert.ToDouble(item.MinutesVeryActive);
+                MinutesSedentary[iMinutesSedentary++] = Convert.ToDouble(daysData.FitbitData.MinutesSedentary);
+                MinutesLightlyActive[iMinutesLightlyActive++] = Convert.ToDouble(daysData.FitbitData.MinutesLightlyActive);
+                MinutesFairlyActive[iMinutesFairlyActive++] = Convert.ToDouble(daysData.FitbitData.MinutesFairlyActive);
+                MinutesVeryActive[iMinutesVeryActive++] = Convert.ToDouble(daysData.FitbitData.MinutesVeryActive);
 
-                if (Convert.ToDouble(item.WakeUpFreshness) > 0)
+                if (Convert.ToDouble(daysData.DiaryData.WakeUpFreshness ) > 0)
                 {
-
-                    if (Convert.ToDouble(item.CaloriesIn) > 0)
+                    //Fitbit Data
+                    if (Convert.ToDouble(daysData.FitbitData.Steps) > 0)
                     {
-                        WakeUpFreshnessCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(item.CaloriesIn);
-                        iWakeUpFreshnessCaloriesIn++;
-                    }
-                    if (Convert.ToDouble(item.Water) > 0)
-                    {
-                        WakeUpFreshnessWater[iWakeUpFreshnessWater] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpWater[iWakeUpFreshnessWater] = Convert.ToDouble(item.Water);
-                        iWakeUpFreshnessWater++;
-                    }
-                    if (Convert.ToDouble(item.CaloriesOut) > 0)
-                    {
-                        WakeUpFreshnessCaloriesOut[iWakeUpFreshnessCaloriesOut] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpCaloriesOut[iWakeUpFreshnessCaloriesOut] = Convert.ToDouble(item.CaloriesOut);
-                        iWakeUpFreshnessCaloriesOut++;
-                    }
-                    if (Convert.ToDouble(item.Steps) > 0)
-                    {
-                        WakeUpFreshnessSteps[iWakeUpFreshnessSteps] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpSteps[iWakeUpFreshnessSteps] = Convert.ToDouble(item.Steps);
+                        WakeUpFreshnessSteps[iWakeUpFreshnessSteps] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpSteps[iWakeUpFreshnessSteps] = Convert.ToDouble(daysData.FitbitData.Steps);
                         iWakeUpFreshnessSteps++;
                     }
-                    if (Convert.ToDouble(item.MinutesSedentary) > 0)
+                    if (Convert.ToDouble(daysData.FitbitData.Distance) > 0)
                     {
-                        WakeUpFreshnessMinutesSedentary[iWakeUpFreshnessMinutesSedentary] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpMinutesSedentary[iWakeUpFreshnessMinutesSedentary] = Convert.ToDouble(item.MinutesSedentary);
+                        WakeUpFreshnessWater[iWakeUpFreshnessDistance] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpDistance[iWakeUpFreshnessDistance] = Convert.ToDouble(daysData.FitbitData.Distance);
+                        iWakeUpFreshnessDistance++;
+                    }
+                    if (Convert.ToDouble(daysData.FitbitData.MinutesSedentary) > 0)
+                    {
+                        WakeUpFreshnessMinutesSedentary[iWakeUpFreshnessMinutesSedentary] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpMinutesSedentary[iWakeUpFreshnessMinutesSedentary] = Convert.ToDouble(daysData.FitbitData.MinutesSedentary);
                         iWakeUpFreshnessMinutesSedentary++;
                     }
-                    if (Convert.ToDouble(item.MinutesLightlyActive) >= 0)
+                    if (Convert.ToDouble(daysData.FitbitData.MinutesLightlyActive) > 0)
                     {
-                        WakeUpFreshnessMinutesLightlyActive[iWakeUpFreshnessMinutesLightlyActive] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpMinutesLightlyActive[iWakeUpFreshnessMinutesLightlyActive] = Convert.ToDouble(item.MinutesLightlyActive);
+                        WakeUpFreshnessMinutesLightlyActive[iWakeUpFreshnessSteps] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpMinutesLightlyActive[iWakeUpFreshnessMinutesLightlyActive] = Convert.ToDouble(daysData.FitbitData.MinutesLightlyActive);
                         iWakeUpFreshnessMinutesLightlyActive++;
                     }
-                    if (Convert.ToDouble(item.MinutesFairlyActive) >= 0)
+                    if (Convert.ToDouble(daysData.FitbitData.MinutesFairlyActive) > 0)
                     {
-                        WakeUpFreshnessMinutesFairlyActive[iWakeUpFreshnessMinutesFairlyActive] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpMinutesFairlyActive[iWakeUpFreshnessMinutesFairlyActive] = Convert.ToDouble(item.MinutesFairlyActive);
+                        WakeUpFreshnessMinutesFairlyActive[iWakeUpFreshnessMinutesFairlyActive] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpMinutesFairlyActive[iWakeUpFreshnessMinutesFairlyActive] = Convert.ToDouble(daysData.FitbitData.MinutesFairlyActive);
                         iWakeUpFreshnessMinutesFairlyActive++;
                     }
-                    if (Convert.ToDouble(item.MinutesVeryActive) >= 0)
+                    if (Convert.ToDouble(daysData.FitbitData.MinutesVeryActive) >= 0)
                     {
-                        WakeUpFreshnessMinutesVeryActive[iWakeUpFreshnessMinutesVeryActive] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpMinutesVeryActive[iWakeUpFreshnessMinutesVeryActive] = Convert.ToDouble(item.MinutesVeryActive);
+                        WakeUpFreshnessMinutesVeryActive[iWakeUpFreshnessMinutesVeryActive] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpMinutesVeryActive[iWakeUpFreshnessMinutesVeryActive] = Convert.ToDouble(daysData.FitbitData.MinutesVeryActive);
                         iWakeUpFreshnessMinutesVeryActive++;
                     }
-                    if (Convert.ToDouble(item.Weight) > 0)
+                    if (Convert.ToDouble(daysData.FitbitData.Water) >= 0)
                     {
-                        WakeUpFreshnessWeight[iWakeUpFreshnessWeight] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpWeight[iWakeUpFreshnessWeight] = Convert.ToDouble(item.Weight);
+                        WakeUpFreshnessWater[iWakeUpFreshnessWater] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpWater[iWakeUpFreshnessWater] = Convert.ToDouble(daysData.FitbitData.Water);
+                        iWakeUpFreshnessWater++;
+                    }
+                    if (Convert.ToDouble(daysData.FitbitData.CaloriesIn) >= 0)
+                    {
+                        WakeUpFreshnessCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(daysData.FitbitData.CaloriesIn);
+                        iWakeUpFreshnessCaloriesIn++;
+                    }
+                    if (Convert.ToDouble(daysData.FitbitData.CaloriesOut) >= 0)
+                    {
+                        WakeUpFreshnessCaloriesOut[iWakeUpFreshnessCaloriesOut] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpCaloriesOut[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(daysData.FitbitData.CaloriesIn);
+                        iWakeUpFreshnessCaloriesIn++;
+                    }
+                    if (Convert.ToDouble(daysData.FitbitData.ActivityCalories) >= 0)
+                    {
+                        WakeUpFreshnessActivityCalories[iWakeUpFreshnessActivityCalories] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpActivityCalories[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(daysData.FitbitData.ActivityCalories);
+                        iWakeUpFreshnessActivityCalories++;
+                    }
+                    if (Convert.ToDouble(daysData.FitbitData.Weight) > 0)
+                    {
+                        WakeUpFreshnessWeight[iWakeUpFreshnessWeight] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpWeight[iWakeUpFreshnessWeight] = Convert.ToDouble(daysData.FitbitData.Weight);
                         iWakeUpFreshnessWeight++;
                     }
-                    if (Convert.ToDouble(item.Fat) > 0)
+                    if (Convert.ToDouble(daysData.FitbitData.Fat) > 0)
                     {
-                        WakeUpFreshnessFat[iWakeUpFreshnessFat] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpFat[iWakeUpFreshnessFat] = Convert.ToDouble(item.Fat);
+                        WakeUpFreshnessFat[iWakeUpFreshnessFat] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpFat[iWakeUpFreshnessFat] = Convert.ToDouble(daysData.FitbitData.Fat);
                         iWakeUpFreshnessFat++;
                     }
-                    if (Convert.ToDouble(item.Coffee) >= 0)
+                    if (Convert.ToDouble(daysData.FitbitData.Fat) > 0)
                     {
-                        WakeUpFreshnessCoffee[iWakeUpFreshnessCoffee] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpCoffee[iWakeUpFreshnessCoffee] = Convert.ToDouble(item.Coffee);
-                        iWakeUpFreshnessCoffee++;
+                        WakeUpFreshnessBMI[iWakeUpFreshnessBMI] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpBMI[iWakeUpFreshnessBMI] = Convert.ToDouble(daysData.FitbitData.BMI);
+                        iWakeUpFreshnessBMI++;
                     }
-                    if (Convert.ToDouble(item.CoffeeTime) > 0)
+                    //Diary data
+                    if (Convert.ToDouble(daysData.DiaryData.Mood) >= 0)
                     {
-                        WakeUpFreshnessCoffeeTime[iWakeUpFreshnessCoffeeTime] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpCoffeeTime[iWakeUpFreshnessCoffeeTime] = Convert.ToDouble(item.CoffeeTime);
-                        iWakeUpFreshnessCoffeeTime++;
-                    }
-                    if (Convert.ToDouble(item.Alcohol) >= 0)
-                    {
-                        WakeUpFreshnessAlcohol[iWakeUpFreshnessAlcohol] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpAlcohol[iWakeUpFreshnessAlcohol] = Convert.ToDouble(item.Alcohol);
-                        iWakeUpFreshnessAlcohol++;
-                    }
-                    if (Convert.ToDouble(item.Mood) >= 0)
-                    {
-                        WakeUpFreshnessMood[iWakeUpFreshnessMood] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpMood[iWakeUpFreshnessMood] = Convert.ToDouble(item.Mood);
+                        WakeUpFreshnessMood[iWakeUpFreshnessMood] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpMood[iWakeUpFreshnessMood] = Convert.ToDouble(daysData.DiaryData.Mood);
                         iWakeUpFreshnessMood++;
                     }
-                    if (Convert.ToDouble(item.Stress) >= 0)
+                    if (Convert.ToDouble(daysData.DiaryData.Stress) > 0)
                     {
-                        WakeUpFreshnessStress[iWakeUpFreshnessStress] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpStress[iWakeUpFreshnessStress] = Convert.ToDouble(item.Stress);
+                        WakeUpFreshnessStress[iWakeUpFreshnessStress] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpStress[iWakeUpFreshnessStress] = Convert.ToDouble(daysData.DiaryData.Stress);
                         iWakeUpFreshnessStress++;
                     }
-                    if (Convert.ToDouble(item.Tiredness) >= 0)
+                    if (Convert.ToDouble(daysData.DiaryData.Tiredness) >= 0)
                     {
-                        WakeUpFreshnessTiredness[iWakeUpFreshnessTiredness] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpTiredness[iWakeUpFreshnessTiredness] = Convert.ToDouble(item.Tiredness);
+                        WakeUpFreshnessTiredness[iWakeUpFreshnessTiredness] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpTiredness[iWakeUpFreshnessTiredness] = Convert.ToDouble(daysData.DiaryData.Tiredness);
                         iWakeUpFreshnessTiredness++;
                     }
-                    if (Convert.ToDouble(item.Dream) >= 0)
+                    if (Convert.ToDouble(daysData.DiaryData.Dream) >= 0)
                     {
-                        WakeUpFreshnessDream[iWakeUpFreshnessDream] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpDream[iWakeUpFreshnessDream] = Convert.ToDouble(item.Dream);
+                        WakeUpFreshnessDream[iWakeUpFreshnessDream] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpDream[iWakeUpFreshnessDream] = Convert.ToDouble(daysData.DiaryData.Dream);
                         iWakeUpFreshnessDream++;
                     }
-                    if (Convert.ToDouble(item.DigitalDev) >= 0)
+                    if (Convert.ToDouble(daysData.DiaryData.BodyTemp) >= 0)
                     {
-                        WakeUpFreshnessDigitalDev[iWakeUpFreshnessDigitalDev] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpDigitalDev[iWakeUpFreshnessDigitalDev] = Convert.ToDouble(item.DigitalDev);
-                        iWakeUpFreshnessDigitalDev++;
-                    }
-                    if (Convert.ToDouble(item.Light) >= 0)
-                    {
-                        WakeUpFreshnessLight[iWakeUpFreshnessLight] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpLight[iWakeUpFreshnessLight] = Convert.ToDouble(item.Light);
-                        iWakeUpFreshnessLight++;
-                    }
-                    if (Convert.ToDouble(item.NapDuration) >= 0)
-                    {
-                        WakeUpFreshnessNapDuration[iWakeUpFreshnessNapDuration] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpNapDuration[iWakeUpFreshnessNapDuration] = Convert.ToDouble(item.NapDuration);
-                        iWakeUpFreshnessNapDuration++;
-                    }
-                    if (Convert.ToDouble(item.NapTime) > 0)
-                    {
-                        WakeUpFreshnessNapTime[iWakeUpFreshnessNapTime] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpNapTime[iWakeUpFreshnessNapTime] = Convert.ToDouble(item.NapTime);
-                        iWakeUpFreshnessNapTime++;
-                    }
-                    if (Convert.ToDouble(item.SocialActivity) >= 0)
-                    {
-                        WakeUpFreshnessSocialActivity[iWakeUpFreshnessSocialActivity] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpSocialActivity[iWakeUpFreshnessSocialActivity] = Convert.ToDouble(item.SocialActivity);
-                        iWakeUpFreshnessSocialActivity++;
-                    }
-                    if (Convert.ToDouble(item.DinnerTime) > 0)
-                    {
-                        WakeUpFreshnessDinnerTime[iWakeUpFreshnessDinnerTime] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpDinnerTime[iWakeUpFreshnessDinnerTime] = Convert.ToDouble(item.DinnerTime);
-                        iWakeUpFreshnessDinnerTime++;
-                    }
-                    if (Convert.ToDouble(item.ExerciseTime) > 0)
-                    {
-                        WakeUpFreshnessExerciseTime[iWakeUpFreshnessExerciseTime] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpExerciseTime[iWakeUpFreshnessExerciseTime] = Convert.ToDouble(item.ExerciseTime);
-                        iWakeUpFreshnessExerciseTime++;
-                    }
-                    if (Convert.ToDouble(item.AmbientTemp) > 0)
-                    {
-                        WakeUpFreshnessAmbientTemp[iWakeUpFreshnessAmbientTemp] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpAmbientTemp[iWakeUpFreshnessAmbientTemp] = Convert.ToDouble(item.AmbientTemp);
-                        iWakeUpFreshnessAmbientTemp++;
-                    }
-                    if (Convert.ToDouble(item.AmbientHumd) > 0)
-                    {
-                        WakeUpFreshnessAmbientHumd[iWakeUpFreshnessAmbientHumd] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpAmbientHumd[iWakeUpFreshnessAmbientHumd] = Convert.ToDouble(item.AmbientHumd);
-                        iWakeUpFreshnessAmbientHumd++;
-                    }
-                    if (Convert.ToDouble(item.BodyTemp) > 0)
-                    {
-                        WakeUpFreshnessBodyTemp[iWakeUpFreshnessBodyTemp] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpBodyTemp[iWakeUpFreshnessBodyTemp] = Convert.ToDouble(item.BodyTemp);
+                        WakeUpFreshnessBodyTemp[iWakeUpFreshnessBodyTemp] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpBodyTemp[iWakeUpFreshnessBodyTemp] = Convert.ToDouble(daysData.DiaryData.BodyTemp);
                         iWakeUpFreshnessBodyTemp++;
                     }
-                    if (Convert.ToDouble(item.Hormone) > 0)
+                    if (Convert.ToDouble(daysData.DiaryData.Hormone) >= 0)
                     {
-                        WakeUpFreshnessHormone[iWakeUpFreshnessHormone] = Convert.ToDouble(item.WakeUpFreshness);
-                        tmpHormone[iWakeUpFreshnessHormone] = Convert.ToDouble(item.Hormone);
+                        WakeUpFreshnessHormone[iWakeUpFreshnessHormone] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpHormone[iWakeUpFreshnessHormone] = Convert.ToDouble(daysData.DiaryData.Hormone);
                         iWakeUpFreshnessHormone++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.CoffeeAmt) >= 0)
+                    {
+                        WakeUpFreshnessCoffeeAmt[iWakeUpFreshnessCoffeeAmt] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpCoffeeAmt[iWakeUpFreshnessCoffeeAmt] = Convert.ToDouble(daysData.DiaryData.CoffeeAmt);
+                        iWakeUpFreshnessCoffeeAmt++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.CoffeeTime) >= 0)
+                    {
+                        WakeUpFreshnessCoffeeTime[iWakeUpFreshnessCoffeeTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpCoffeeTime[iWakeUpFreshnessCoffeeTime] = Convert.ToDouble(daysData.DiaryData.CoffeeTime);
+                        iWakeUpFreshnessCoffeeTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.AlcoholAmt) >= 0)
+                    {
+                        WakeUpFreshnessAlcoholAmt[iWakeUpFreshnessAlcoholAmt] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpAlcoholAmt[iWakeUpFreshnessAlcoholAmt] = Convert.ToDouble(daysData.DiaryData.AlcoholAmt);
+                        iWakeUpFreshnessAlcoholAmt++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.AlcoholTime) >= 0)
+                    {
+                        WakeUpFreshnessAlcoholTime[iWakeUpFreshnessAlcoholTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpAlcoholTime[iWakeUpFreshnessAlcoholTime] = Convert.ToDouble(daysData.DiaryData.AlcoholTime);
+                        iWakeUpFreshnessAlcoholTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.NapTime) > 0)
+                    {
+                        WakeUpFreshnessNapTime[iWakeUpFreshnessNapTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpNapTime[iWakeUpFreshnessNapTime] = Convert.ToDouble(daysData.DiaryData.NapTime);
+                        iWakeUpFreshnessNapTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.NapDuration) >= 0)
+                    {
+                        WakeUpFreshnessNapDuration[iWakeUpFreshnessNapDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpNapDuration[iWakeUpFreshnessNapDuration] = Convert.ToDouble(daysData.DiaryData.NapDuration);
+                        iWakeUpFreshnessNapDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.DigDeviceDuration) > 0)
+                    {
+                        WakeUpFreshnessDigDeviceDuration[iWakeUpFreshnessDigDeviceDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpDigDeviceDuration[iWakeUpFreshnessDigDeviceDuration] = Convert.ToDouble(daysData.DiaryData.DigDeviceDuration);
+                        iWakeUpFreshnessDigDeviceDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.GamesDuration) > 0)
+                    {
+                        WakeUpFreshnessGamesDuration[iWakeUpFreshnessGamesDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpGamesDuration[iWakeUpFreshnessGamesDuration] = Convert.ToDouble(daysData.DiaryData.GamesDuration);
+                        iWakeUpFreshnessGamesDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.SocialActivites) > 0)
+                    {
+                        WakeUpFreshnessSocialActivites[iWakeUpFreshnessSocialActivites] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpSocialActivites[iWakeUpFreshnessSocialActivites] = Convert.ToDouble(daysData.DiaryData.SocialActivites);
+                        iWakeUpFreshnessSocialActivites++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.SocialActivity) > 0)
+                    {
+                        WakeUpFreshnessSocialActivity[iWakeUpFreshnessSocialActivity] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpSocialActivity[iWakeUpFreshnessSocialActivity] = Convert.ToDouble(daysData.DiaryData.SocialActivity);
+                        iWakeUpFreshnessSocialActivity++;
+                    }
+
+
+
+                    if (Convert.ToDouble(daysData.DiaryData.MusicDuration) > 0)
+                    {
+                        WakeUpFreshnessMusicDuration[iWakeUpFreshnessMusicDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpMusicDuration[iWakeUpFreshnessMusicDuration] = Convert.ToDouble(daysData.DiaryData.MusicDuration);
+                        iWakeUpFreshnessMusicDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.TVDuration) > 0)
+                    {
+                        WakeUpFreshnessTVDuration[iWakeUpFreshnessTVDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpTVDuration[iWakeUpFreshnessTVDuration] = Convert.ToDouble(daysData.DiaryData.TVDuration);
+                        iWakeUpFreshnessTVDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.WorkTime) > 0)
+                    {
+                        WakeUpFreshnessWorkTime[iWakeUpFreshnessWorkTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpWorkTime[iWakeUpFreshnessWorkTime] = Convert.ToDouble(daysData.DiaryData.WorkTime);
+                        iWakeUpFreshnessWorkTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.WorkDuration) > 0)
+                    {
+                        WakeUpFreshnessWorkDuration[iWakeUpFreshnessWorkDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpWorkDuration[iWakeUpFreshnessWorkDuration] = Convert.ToDouble(daysData.DiaryData.WorkDuration);
+                        iWakeUpFreshnessWorkDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.ExerciseDuration) > 0)
+                    {
+                        WakeUpFreshnessExerciseDuration[iWakeUpFreshnessExerciseDuration] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpExerciseDuration[iWakeUpFreshnessExerciseDuration] = Convert.ToDouble(daysData.DiaryData.ExerciseDuration);
+                        iWakeUpFreshnessExerciseDuration++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.ExerciseIntensity) > 0)
+                    {
+                        WakeUpFreshnessExerciseIntensity[iWakeUpFreshnessExerciseIntensity] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpExerciseIntensity[iWakeUpFreshnessExerciseIntensity] = Convert.ToDouble(daysData.DiaryData.ExerciseIntensity);
+                        iWakeUpFreshnessExerciseIntensity++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.DinnerTime) > 0)
+                    {
+                        WakeUpFreshnessDinnerTime[iWakeUpFreshnessDinnerTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpDinnerTime[iWakeUpFreshnessDinnerTime] = Convert.ToDouble(daysData.DiaryData.DinnerTime);
+                        iWakeUpFreshnessDinnerTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.SnackTime) > 0)
+                    {
+                        WakeUpFreshnessSnackTime[iWakeUpFreshnessSnackTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpSnackTime[iWakeUpFreshnessSnackTime] = Convert.ToDouble(daysData.DiaryData.SnackTime);
+                        iWakeUpFreshnessSnackTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.AmbientTemp) > 0)
+                    {
+                        WakeUpFreshnessAmbientTemp[iWakeUpFreshnessAmbientTemp] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpAmbientTemp[iWakeUpFreshnessAmbientTemp] = Convert.ToDouble(daysData.DiaryData.AmbientTemp);
+                        iWakeUpFreshnessAmbientTemp++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.AmbientHumd) > 0)
+                    {
+                        WakeUpFreshnessAmbientHumd[iWakeUpFreshnessAmbientHumd] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpAmbientHumd[iWakeUpFreshnessAmbientHumd] = Convert.ToDouble(daysData.DiaryData.AmbientHumd);
+                        iWakeUpFreshnessAmbientHumd++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.Light) > 0)
+                    {
+                        WakeUpFreshnessLight[iWakeUpFreshnessLight] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpLight[iWakeUpFreshnessLight] = Convert.ToDouble(daysData.DiaryData.Light);
+                        iWakeUpFreshnessLight++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.SunRiseTime) > 0)
+                    {
+                        WakeUpFreshnessSunRiseTime[iWakeUpFreshnessSunRiseTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpSunRiseTime[iWakeUpFreshnessSunRiseTime] = Convert.ToDouble(daysData.DiaryData.SunRiseTime);
+                        iWakeUpFreshnessSunRiseTime++;
+                    }
+                    if (Convert.ToDouble(daysData.DiaryData.SunSetTime) > 0)
+                    {
+                        WakeUpFreshnessSunSetTime[iWakeUpFreshnessSunSetTime] = Convert.ToDouble(daysData.DiaryData.WakeUpFreshness);
+                        tmpSunSetTime[iWakeUpFreshnessSunSetTime] = Convert.ToDouble(daysData.DiaryData.SunSetTime);
+                        iWakeUpFreshnessSunSetTime++;
                     }
                 }
 
@@ -894,51 +1038,6 @@ namespace SleepMakeSense.Controllers
             // WakeUpFreshness
             double rWakeUpFreshness = 0;
 
-            if (iWakeUpFreshnessCaloriesIn > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCaloriesIn, tmpCaloriesIn);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "CaloriesIn", Coefficient = rWakeUpFreshness, Note = "The more calories you intook a day, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "CaloriesIn", Coefficient = rWakeUpFreshness, Note = "The more calories you intook a day, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessWater > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessWater, tmpWater);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "The more water you drunk a day, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "The more water you drunk a day, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessCaloriesOut > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCaloriesOut, tmpCaloriesOut);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "CaloriesOut", Coefficient = rWakeUpFreshness, Note = "The more your calory output was, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "CaloriesOut", Coefficient = rWakeUpFreshness, Note = "The more your calory output was, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
             if (iWakeUpFreshnessSteps > 4)
             {
                 rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessSteps, tmpSteps);
@@ -946,7 +1045,7 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Steps", Coefficient = rWakeUpFreshness, Note = "The more steps you walked, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "Wake Up Freshness", Name = "Steps", Coefficient = rWakeUpFreshness, Note = "The more steps you walked, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
@@ -961,11 +1060,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesSedentary", Coefficient = rWakeUpFreshness, Note = "The more sedentary you were, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Stationary", Coefficient = rWakeUpFreshness, Note = "The more time you spent stationary, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesSedentary", Coefficient = rWakeUpFreshness, Note = "The more sedentary you were, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Stationary", Coefficient = rWakeUpFreshness, Note = "The more time you spent stationary, the more dizzy you felt when you woke up the second morning." });
                     }
                 }
             }
@@ -976,11 +1075,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesLightlyActive", Coefficient = rWakeUpFreshness, Note = "The more light exercise you did, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Lightly Active", Coefficient = rWakeUpFreshness, Note = "The more light exersise that you did, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesLightlyActive", Coefficient = rWakeUpFreshness, Note = "The more light exercise you did, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Lightly Active", Coefficient = rWakeUpFreshness, Note = "The more light exersise that you did, the more dizzy you felt when you woke up the second morning." });
                     }
                 }
             }
@@ -991,11 +1090,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesFairlyActive", Coefficient = rWakeUpFreshness, Note = "The more moderate exercise you did, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Fairly Active", Coefficient = rWakeUpFreshness, Note = "The more moderate exersise that you did, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesFairlyActive", Coefficient = rWakeUpFreshness, Note = "The more moderate exercise you did, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Fairly Active", Coefficient = rWakeUpFreshness, Note = "The more moderate exersise that you did, the more dizzy you felt when you woke up the second morning." });
                     }
                 }
             }
@@ -1006,11 +1105,71 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesVeryActive", Coefficient = rWakeUpFreshness, Note = "The more intense exercise you did, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Very Active", Coefficient = rWakeUpFreshness, Note = "The more intense exercise you did, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "MinutesVeryActive", Coefficient = rWakeUpFreshness, Note = "The more intense exercise you did, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Very Active", Coefficient = rWakeUpFreshness, Note = "The more intense exercise you did, the more dizzy you felt when you woke up the second morning." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessWater > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessWater, tmpWater);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "The more water you had in the day, the more alert you felt when you woke up the second morning." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "The more water you had in the day, the more dizzy you felt when you woke up the second morning." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessCaloriesIn > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCaloriesIn, tmpCaloriesIn);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Food Intake", Coefficient = rWakeUpFreshness, Note = "The more you ate, the more alert you felt when you woke up the second morning." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Food Intake", Coefficient = rWakeUpFreshness, Note = "The more you ate, the more dizzy you felt when you woke up the second morning." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessCaloriesOut > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCaloriesOut, tmpCaloriesOut);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Energy Burned", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day, the more alert you felt when you woke up the second morning." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Energy Burned", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day, the more dizzy you felt when you woke up the second morning." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessActivityCalories > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessActivityCalories, tmpActivityCalories);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Active Moments", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day from exercise, the more alert you felt when you woke up the second morning." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Active Moments", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day from exercise, the more dizzy you felt when you woke up the second morning." });
                     }
                 }
             }
@@ -1021,11 +1180,26 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "The heavier your weight were, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "The more you weighted, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "The heavier your weight were, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "The more you weighted, the more alert you felt when you woke up the second morning." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessBMI > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessBMI, tmpBMI);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BMI", Coefficient = rWakeUpFreshness, Note = "The higher your BMI was, the more alert you felt when you woke up the second morning." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BMI", Coefficient = rWakeUpFreshness, Note = "The higher your BMI was, the more dizzy you felt when you woke up the second morning." });
                     }
                 }
             }
@@ -1036,59 +1210,15 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "The higher your fat rate were, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "The more fat you had, the more alert you felt when you woke up the second morning." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "The higher your fat rate were, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "The more fat you had, the more dizzy you felt when you woke up the second morning." });
                     }
                 }
             }
-            if (iWakeUpFreshnessCoffee > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCoffee, tmpCoffee);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee", Coefficient = rWakeUpFreshness, Note = "The more coffee you consumed, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee", Coefficient = rWakeUpFreshness, Note = "The more coffee you consume, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessCoffeeTime > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCoffeeTime, tmpCoffeeTime);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "CoffeeTime", Coefficient = rWakeUpFreshness, Note = "The later you drunk coffee during the day, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "CoffeeTime", Coefficient = rWakeUpFreshness, Note = "The earlier you drunk coffee during the day, the more alert you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessAlcohol > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessAlcohol, tmpAlcohol);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol", Coefficient = rWakeUpFreshness, Note = "The more alcohol you drunk, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol", Coefficient = rWakeUpFreshness, Note = "The more alcohol you drunk, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
+            //Diary data
             if (iWakeUpFreshnessMood > 4)
             {
                 rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessMood, tmpMood);
@@ -1096,11 +1226,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "The happier you felt before bed time, the more alert you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "The better your mood before bed time, the more alert you felt when you woke up." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "Oops! The happier you felt before bed time, the more dizzy you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "The better your mood before bed time, the more dizzy you felt when you woke up." });
                     }
                 }
             }
@@ -1111,14 +1241,15 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "The more stressed you were before bed time, the more alert you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "The more Stressed you felt before bed time, the more alert you felt when you woke up." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "The more stressed you were before bed time, the more dizzy you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "The more Stressed you felt before bed time, the more dizzy you felt when you woke up." });
                     }
                 }
             }
+
             if (iWakeUpFreshnessTiredness > 4)
             {
                 rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessTiredness, tmpTiredness);
@@ -1146,141 +1277,6 @@ namespace SleepMakeSense.Controllers
                     else if (rWakeUpFreshness < 0)
                     {
                         CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Dream", Coefficient = rWakeUpFreshness, Note = "Dreaming makes you feel alert when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessDigitalDev > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessDigitalDev, tmpDigitalDev);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "DigitalDev", Coefficient = rWakeUpFreshness, Note = "The heavier you used digital devices before bed time, the more alert you felt when you woke up." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "DigitalDev", Coefficient = rWakeUpFreshness, Note = "The heavier you used digital devices before bed time, the more dizzy you felt when you woke up." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessLight > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessLight, tmpLight);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Light", Coefficient = rWakeUpFreshness, Note = "The more you were exposed to artificial light before bed time, the more alert you felt when you woke up." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Light", Coefficient = rWakeUpFreshness, Note = "The more you were exposed to artificial light before bed time, the more dizzy you felt when you woke up." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessNapDuration > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessNapDuration, tmpNapDuration);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "NapDuration", Coefficient = rWakeUpFreshness, Note = "The longer nap you took during the day, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "NapDuration", Coefficient = rWakeUpFreshness, Note = "The longer nap you took during the day, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessNapTime > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessNapTime, tmpNapTime);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "NapTime", Coefficient = rWakeUpFreshness, Note = "The earlier you took a nap during the day, the more dizzy you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "NapTime", Coefficient = rWakeUpFreshness, Note = "The earlier you took a nap during the day, the more alert you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessSocialActivity > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessSocialActivity, tmpSocialActivity);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "SocialActivity", Coefficient = rWakeUpFreshness, Note = "The more you were involved in social activities before bed time, the more alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "SocialActivity", Coefficient = rWakeUpFreshness, Note = "The more you were involved in social activities before bed time, the more dizzy you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessDinnerTime > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessDinnerTime, tmpDinnerTime);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "DinnerTime", Coefficient = rWakeUpFreshness, Note = "The earlier you had dinner, the less alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "DinnerTime", Coefficient = rWakeUpFreshness, Note = "The earlier you had dinner, the more alert you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessExerciseTime > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessExerciseTime, tmpExerciseTime);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "ExerciseTime", Coefficient = rWakeUpFreshness, Note = "The earlier you exercised, the less alert you felt when you woke up the second morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "ExerciseTime", Coefficient = rWakeUpFreshness, Note = "The earlier you exercised, the more alert you felt when you woke up the second morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessAmbientTemp > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessAmbientTemp, tmpAmbientTemp);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "AmbientTemp", Coefficient = rWakeUpFreshness, Note = "The hotter the environment was, the more alert you felt when you woke up in the morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "AmbientTemp", Coefficient = rWakeUpFreshness, Note = "The hotter the environment was, the less alert you felt when you woke up in the morning." });
-                    }
-                }
-            }
-            if (iWakeUpFreshnessAmbientHumd > 4)
-            {
-                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessAmbientHumd, tmpAmbientHumd);
-                if (Math.Abs(rWakeUpFreshness) >= 0.3)
-                {
-                    if (rWakeUpFreshness > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "AmbientHumd", Coefficient = rWakeUpFreshness, Note = "The more humid the environment was, the more alert you felt when you woke up in the morning." });
-                    }
-                    else if (rWakeUpFreshness < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "AmbientHumd", Coefficient = rWakeUpFreshness, Note = "The more humid the environment was, the less alert you felt when you woke up in the morning." });
                     }
                 }
             }
@@ -1314,6 +1310,216 @@ namespace SleepMakeSense.Controllers
                     }
                 }
             }
+            if (iWakeUpFreshnessCoffeeAmt > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCoffeeAmt, tmpCoffeeAmt);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Amount", Coefficient = rWakeUpFreshness, Note = "The more coffee you had, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Amount", Coefficient = rWakeUpFreshness, Note = "The more coffee you had, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessCoffeeTime > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessCoffeeTime, tmpCoffeeTime);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Time", Coefficient = rWakeUpFreshness, Note = "The later you had coffee, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Time", Coefficient = rWakeUpFreshness, Note = "The later you had coffee, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessAlcoholAmt > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessAlcoholAmt, tmpAlcoholAmt);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Amount", Coefficient = rWakeUpFreshness, Note = "The more Alcohol you had, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Amount", Coefficient = rWakeUpFreshness, Note = "The more Alcohol you had, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessAlcoholTime > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessAlcoholTime, tmpAlcoholTime);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Time", Coefficient = rWakeUpFreshness, Note = "The later you had Alcohol, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Time", Coefficient = rWakeUpFreshness, Note = "The later you had Alcohol, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessNapTime > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessNapTime, tmpNapTime);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Time", Coefficient = rWakeUpFreshness, Note = "The later you had a nap, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Time", Coefficient = rWakeUpFreshness, Note = "The later you had a nap, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessNapDuration > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessNapDuration, tmpNapDuration);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Duration", Coefficient = rWakeUpFreshness, Note = "The longer you had a nap, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Duration", Coefficient = rWakeUpFreshness, Note = "The longer you had a nap, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessDigDeviceDuration > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessDigDeviceDuration, tmpDigDeviceDuration);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Digital Devices", Coefficient = rWakeUpFreshness, Note = "The heavier you used digital devices before bed time, the more alert you felt when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Digital Devices", Coefficient = rWakeUpFreshness, Note = "The heavier you used digital devices before bed time, the more dizzy you felt when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessGamesDuration > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessGamesDuration, tmpGamesDuration);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Games", Coefficient = rWakeUpFreshness, Note = "The heavier you played games before bed time, the more alert you felt when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Games", Coefficient = rWakeUpFreshness, Note = "The heavier you played games before bed time, the more dizzy you felt when you woke up.." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessSocialActivites > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessSocialActivites, tmpSocialActivites);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Activites", Coefficient = rWakeUpFreshness, Note = "The more social activites you do before bed, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Activites", Coefficient = rWakeUpFreshness, Note = "The more social activites you do before bed, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessSocialActivity > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessSocialActivity, tmpSocialActivity);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Media", Coefficient = rWakeUpFreshness, Note = "The heavier you were on social media before bed time, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Media", Coefficient = rWakeUpFreshness, Note = "The heavier you were on social media before bed time, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessMusicDuration > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessMusicDuration, tmpMusicDuration);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Music", Coefficient = rWakeUpFreshness, Note = "The longer you had listened to Music, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Music", Coefficient = rWakeUpFreshness, Note = "The longer you had listened to Music, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessTVDuration > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessTVDuration, tmpTVDuration);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "TV", Coefficient = rWakeUpFreshness, Note = "The longer you had watched TV, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "TV", Coefficient = rWakeUpFreshness, Note = "The longer you had watched TV, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessExerciseDuration > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessExerciseDuration, tmpExerciseDuration);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Duration", Coefficient = rWakeUpFreshness, Note = "The longer you Exercised, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Duration", Coefficient = rWakeUpFreshness, Note = "The longer you Exercised, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
+            if (iWakeUpFreshnessExerciseIntensity > 4)
+            {
+                rWakeUpFreshness = Correlation.Pearson(WakeUpFreshnessExerciseIntensity, tmpExerciseIntensity);
+                if (Math.Abs(rWakeUpFreshness) >= 0.3)
+                {
+                    if (rWakeUpFreshness > 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Intensity", Coefficient = rWakeUpFreshness, Note = "The more intense you Exercised, you tend to feel more alert when you woke up." });
+                    }
+                    else if (rWakeUpFreshness < 0)
+                    {
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Intensity", Coefficient = rWakeUpFreshness, Note = "The more intense you Exercised, you tend to feel more dizzy when you woke up." });
+                    }
+                }
+            }
 
             // MinutesAsleep
             double rMinutesSedentary = Correlation.Pearson(MinutesAsleep, MinutesSedentary);
@@ -1333,8 +1539,8 @@ namespace SleepMakeSense.Controllers
             if (Math.Abs(rMinutesLightlyActive) >= 0.3)
             {
                 if (rMinutesLightlyActive > 0)
-                {
-                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Note = "The more light exercise your did, the longer you were asleep during night." });
+                { 
+                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Minutes Lightly Active", Coefficient = rMinutesLightlyActive, Note = "The more light exercise your did, the longer you were asleep during night." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
@@ -1347,7 +1553,7 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesFairlyActive > 0)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Note = "The more moderate exercise your did, the longer you were asleep during night." });
+                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Minutes Fairly Active", Coefficient = rMinutesFairlyActive, Note = "The more moderate exercise your did, the longer you were asleep during night." });
                 }
                 else if (rMinutesFairlyActive < 0)
                 {
@@ -1481,16 +1687,17 @@ namespace SleepMakeSense.Controllers
             // CaloriesIn - DONE!!! YEAH!!!
             int temp = 0, identifier = 0;
             double pearson = 0, tempValue = 0;
-            if (CNTcaloriesIn > 4)
+            if (CNTCaloriesIn > 4)
             {
-                double[] CaloriesIn = new double[CNTcaloriesIn];
-                double[] tempMinutesAsleepCalariesIn = new double[CNTcaloriesIn];
-                double[] tempAwakeningsCountCalariesIn = new double[CNTcaloriesIn];
-                double[] tempSleepEfficiencyCalariesIn = new double[CNTcaloriesIn];
+                double[] CaloriesIn = new double[CNTCaloriesIn];
+                double[] tempMinutesAsleepCalariesIn = new double[CNTCaloriesIn];
+                double[] tempAwakeningsCountCalariesIn = new double[CNTCaloriesIn];
+                double[] tempSleepEfficiencyCalariesIn = new double[CNTCaloriesIn];
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    tempValue = Convert.ToDouble(item.CaloriesIn);
+                    
+                       tempValue = Convert.ToDouble(daysData.FitbitData.CaloriesIn);
                     if (tempValue > 0)
                     {
                         CaloriesIn[temp] = tempValue;
@@ -1546,20 +1753,20 @@ namespace SleepMakeSense.Controllers
 
             // CaloriesOut -- DONE !!! YEAH !!!
 
-            if (CNTcaloriesOut > 4)
+            if (CNTCaloriesOut > 4)
             {
-                double[] CaloriesOut = new double[CNTcaloriesOut];
-                double[] tempMinutesAsleepCalariesOut = new double[CNTcaloriesOut];
-                double[] tempAwakeningsCountCalariesOut = new double[CNTcaloriesOut];
-                double[] tempSleepEfficiencyCalariesOut = new double[CNTcaloriesOut];
+                double[] CaloriesOut = new double[CNTCaloriesOut];
+                double[] tempMinutesAsleepCalariesOut = new double[CNTCaloriesOut];
+                double[] tempAwakeningsCountCalariesOut = new double[CNTCaloriesOut];
+                double[] tempSleepEfficiencyCalariesOut = new double[CNTCaloriesOut];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    tempValue = Convert.ToDouble(item.CaloriesOut);
+                    tempValue = Convert.ToDouble(daysData.FitbitData.CaloriesOut);
                     if (tempValue > 0)
                     {
                         CaloriesOut[temp] = tempValue;
@@ -1615,20 +1822,20 @@ namespace SleepMakeSense.Controllers
 
             // Water -- DONE YEAH!!
 
-            if (CNTwater > 4)
+            if (CNTWater > 4)
             {
-                double[] Water = new double[CNTwater];
-                double[] tempMinutesAsleepWater = new double[CNTwater];
-                double[] tempAwakeningsCountWater = new double[CNTwater];
-                double[] tempSleepEfficiencyWater = new double[CNTwater];
+                double[] Water = new double[CNTWater];
+                double[] tempMinutesAsleepWater = new double[CNTWater];
+                double[] tempAwakeningsCountWater = new double[CNTWater];
+                double[] tempSleepEfficiencyWater = new double[CNTWater];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    tempValue = Convert.ToDouble(item.Water);
+                    tempValue = Convert.ToDouble(daysData.FitbitData.Water);
                     if (tempValue > 0)
                     {
                         Water[temp] = tempValue;
@@ -1684,20 +1891,20 @@ namespace SleepMakeSense.Controllers
 
             // Steps -- DONE YEAH!!
 
-            if (CNTsteps > 4)
+            if (CNTSteps > 4)
             {
-                double[] Steps = new double[CNTsteps];
-                double[] tempMinutesAsleepSteps = new double[CNTsteps];
-                double[] tempAwakeningsCountSteps = new double[CNTsteps];;
-                double[] tempSleepEfficiencySteps = new double[CNTsteps];
+                double[] Steps = new double[CNTSteps];
+                double[] tempMinutesAsleepSteps = new double[CNTSteps];
+                double[] tempAwakeningsCountSteps = new double[CNTSteps];;
+                double[] tempSleepEfficiencySteps = new double[CNTSteps];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    tempValue = Convert.ToDouble(item.Steps);
+                    tempValue = Convert.ToDouble(daysData.FitbitData.Steps);
                     if (tempValue > 0)
                     {
                         Steps[temp] = tempValue;
@@ -1754,20 +1961,20 @@ namespace SleepMakeSense.Controllers
 
             // weight -- DONE YEAH!!
 
-            if (CNTweight > 4)
+            if (CNTWeight > 4)
             {
-                double[] Weight = new double[CNTweight];
-                double[] tempMinutesAsleepWeight = new double[CNTweight];
-                double[] tempAwakeningsCountWeight = new double[CNTweight];
-                double[] tempSleepEfficiencyWeight = new double[CNTweight];
+                double[] Weight = new double[CNTWeight];
+                double[] tempMinutesAsleepWeight = new double[CNTWeight];
+                double[] tempAwakeningsCountWeight = new double[CNTWeight];
+                double[] tempSleepEfficiencyWeight = new double[CNTWeight];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    tempValue = Convert.ToDouble(item.Weight);
+                    tempValue = Convert.ToDouble(daysData.FitbitData.Weight);
                     if (tempValue > 0)
                     {
                         Weight[temp] = tempValue;
@@ -1825,20 +2032,20 @@ namespace SleepMakeSense.Controllers
 
             // Fat -- DONE YEAH!!
 
-            if (CNTfat > 4)
+            if (CNTFat > 4)
             {
-                double[] Fat = new double[CNTfat];
-                double[] tempMinutesAsleepFat = new double[CNTfat];
-                double[] tempAwakeningsCountFat = new double[CNTfat];
-                double[] tempSleepEfficiencyFat = new double[CNTfat];
+                double[] Fat = new double[CNTFat];
+                double[] tempMinutesAsleepFat = new double[CNTFat];
+                double[] tempAwakeningsCountFat = new double[CNTFat];
+                double[] tempSleepEfficiencyFat = new double[CNTFat];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    tempValue = Convert.ToDouble(item.Fat);
+                    tempValue = Convert.ToDouble(daysData.FitbitData.Fat);
                     if (tempValue > 0)
                     {
                         Fat[temp] = tempValue;
@@ -1875,22 +2082,22 @@ namespace SleepMakeSense.Controllers
 
             // Coffee -- DONE YEAH!!
 
-            if (CNTcoffee > 4)
+            if (CNTCoffeeAmt > 4)
             {
-                double[] Coffee = new double[CNTcoffee];
-                double[] tempMinutesAsleepCoffee = new double[CNTcoffee];
-                double[] tempAwakeningsCountCoffee = new double[CNTcoffee];
-                double[] tempSleepEfficiencyCoffee = new double[CNTcoffee];
+                double[] Coffee = new double[CNTCoffeeAmt];
+                double[] tempMinutesAsleepCoffee = new double[CNTCoffeeAmt];
+                double[] tempAwakeningsCountCoffee = new double[CNTCoffeeAmt];
+                double[] tempSleepEfficiencyCoffee = new double[CNTCoffeeAmt];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Coffee != null)
+                    if (daysData.DiaryData.CoffeeAmt != null)
                     {
-                        tempValue = Convert.ToDouble(item.Coffee);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.CoffeeAmt);
                         if (tempValue >= 0)
                         {
                             Coffee[temp] = tempValue;
@@ -1949,22 +2156,22 @@ namespace SleepMakeSense.Controllers
 
             // CoffeeTime -- DONE YEAH!!
 
-            if (CNTcoffeeTime > 4)
+            if (CNTCoffeeTime > 4)
             {
-                double[] CoffeeTime = new double[CNTcoffeeTime];
-                double[] tempMinutesAsleepCoffeeTime = new double[CNTcoffeeTime];
-                double[] tempAwakeningsCountCoffeeTime = new double[CNTcoffeeTime];
-                double[] tempSleepEfficiencyCoffeeTime = new double[CNTcoffeeTime];
+                double[] CoffeeTime = new double[CNTCoffeeTime];
+                double[] tempMinutesAsleepCoffeeTime = new double[CNTCoffeeTime];
+                double[] tempAwakeningsCountCoffeeTime = new double[CNTCoffeeTime];
+                double[] tempSleepEfficiencyCoffeeTime = new double[CNTCoffeeTime];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.CoffeeTime != null)
+                    if (daysData.DiaryData.CoffeeTime != null)
                     {
-                        tempValue = Convert.ToDouble(item.CoffeeTime);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.CoffeeTime);
                         if (tempValue > 0)
                         {
                             CoffeeTime[temp] = tempValue;
@@ -2024,22 +2231,22 @@ namespace SleepMakeSense.Controllers
 
             // Alcohol -- DONE YEAH!!
 
-            if (CNTalcohol > 4)
+            if (CNTAlcoholAmt > 4)
             {
-                double[] Alcohol = new double[CNTalcohol];
-                double[] tempMinutesAsleepAlcohol = new double[CNTalcohol];
-                double[] tempAwakeningsCountAlcohol = new double[CNTalcohol];
-                double[] tempSleepEfficiencyAlcohol = new double[CNTalcohol];
+                double[] Alcohol = new double[CNTAlcoholAmt];
+                double[] tempMinutesAsleepAlcohol = new double[CNTAlcoholAmt];
+                double[] tempAwakeningsCountAlcohol = new double[CNTAlcoholAmt];
+                double[] tempSleepEfficiencyAlcohol = new double[CNTAlcoholAmt];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Alcohol != null)
+                    if (daysData.DiaryData.AlcoholAmt != null)
                     {
-                        tempValue = Convert.ToDouble(item.Alcohol);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.AlcoholAmt);
                         if (tempValue >= 0)
                         {
                             Alcohol[temp] = tempValue;
@@ -2100,22 +2307,22 @@ namespace SleepMakeSense.Controllers
 
             // Mood -- DONE YEAH!!
 
-            if (CNTmood > 4)
+            if (CNTMood > 4)
             {
-                double[] Mood = new double[CNTmood];
-                double[] tempMinutesAsleepMood = new double[CNTmood];
-                double[] tempAwakeningsCountMood = new double[CNTmood];
-                double[] tempSleepEfficiencyMood = new double[CNTmood];
+                double[] Mood = new double[CNTMood];
+                double[] tempMinutesAsleepMood = new double[CNTMood];
+                double[] tempAwakeningsCountMood = new double[CNTMood];
+                double[] tempSleepEfficiencyMood = new double[CNTMood];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Mood != null)
+                    if (daysData.DiaryData.Mood != null)
                     {
-                        tempValue = Convert.ToDouble(item.Mood);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.Mood);
                         if (tempValue >= 0)
                         {
                             Mood[temp] = tempValue;
@@ -2175,22 +2382,22 @@ namespace SleepMakeSense.Controllers
 
             // Stress -- DONE YEAH!!
 
-            if (CNTstress > 4)
+            if (CNTStress > 4)
             {
-                double[] Stress = new double[CNTstress];
-                double[] tempMinutesAsleepStress = new double[CNTstress];
-                double[] tempAwakeningsCountStress = new double[CNTstress];
-                double[] tempSleepEfficiencyStress = new double[CNTstress];
+                double[] Stress = new double[CNTStress];
+                double[] tempMinutesAsleepStress = new double[CNTStress];
+                double[] tempAwakeningsCountStress = new double[CNTStress];
+                double[] tempSleepEfficiencyStress = new double[CNTStress];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Stress != null)
+                    if (daysData.DiaryData.Stress != null)
                     {
-                        tempValue = Convert.ToDouble(item.Stress);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.Stress);
                         if (tempValue >= 0)
                         {
                             Stress[temp] = tempValue;
@@ -2247,22 +2454,22 @@ namespace SleepMakeSense.Controllers
 
             // Tiredness -- DONE YEAH!!
 
-            if (CNTtiredness > 4)
+            if (CNTTiredness > 4)
             {
-                double[] Tiredness = new double[CNTtiredness];
-                double[] tempMinutesAsleepTiredness = new double[CNTtiredness];
-                double[] tempAwakeningsCountTiredness = new double[CNTtiredness];
-                double[] tempSleepEfficiencyTiredness = new double[CNTtiredness];
+                double[] Tiredness = new double[CNTTiredness];
+                double[] tempMinutesAsleepTiredness = new double[CNTTiredness];
+                double[] tempAwakeningsCountTiredness = new double[CNTTiredness];
+                double[] tempSleepEfficiencyTiredness = new double[CNTTiredness];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Tiredness != null)
+                    if (daysData.DiaryData.Tiredness != null)
                     {
-                        tempValue = Convert.ToDouble(item.Tiredness);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.Tiredness);
                         if (tempValue >= 0)
                         {
                             Tiredness[temp] = tempValue;
@@ -2322,22 +2529,22 @@ namespace SleepMakeSense.Controllers
 
             // Dream -- DONE YEAH!!
 
-            if (CNTdream > 4)
+            if (CNTDream > 4)
             {
-                double[] Dream = new double[CNTdream];
-                double[] tempMinutesAsleepDream = new double[CNTdream];
-                double[] tempAwakeningsCountDream = new double[CNTdream];
-                double[] tempSleepEfficiencyDream = new double[CNTdream];
+                double[] Dream = new double[CNTDream];
+                double[] tempMinutesAsleepDream = new double[CNTDream];
+                double[] tempAwakeningsCountDream = new double[CNTDream];
+                double[] tempSleepEfficiencyDream = new double[CNTDream];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Dream != null)
+                    if (daysData.DiaryData.Dream != null)
                     {
-                        tempValue = Convert.ToDouble(item.Dream);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.Dream);
                         if (tempValue >= 0)
                         {
                             Dream[temp] = tempValue;
@@ -2394,22 +2601,22 @@ namespace SleepMakeSense.Controllers
 
             // DigitalDev -- DONE YEAH!!
 
-            if (CNTdigitalDev > 4)
+            if (CNTDigDeviceDuration > 4)
             {
-                double[] DigitalDev = new double[CNTdigitalDev];
-                double[] tempMinutesAsleepDigitalDev = new double[CNTdigitalDev];
-                double[] tempAwakeningsCountDigitalDev = new double[CNTdigitalDev];
-                double[] tempSleepEfficiencyDigitalDev = new double[CNTdigitalDev];
+                double[] DigitalDev = new double[CNTDigDeviceDuration];
+                double[] tempMinutesAsleepDigitalDev = new double[CNTDigDeviceDuration];
+                double[] tempAwakeningsCountDigitalDev = new double[CNTDigDeviceDuration];
+                double[] tempSleepEfficiencyDigitalDev = new double[CNTDigDeviceDuration];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.DigitalDev != null)
+                    if (daysData.DiaryData.DigDeviceDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.DigitalDev);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.DigDeviceDuration);
                         if (tempValue >= 0)
                         {
                             DigitalDev[temp] = tempValue;
@@ -2466,22 +2673,22 @@ namespace SleepMakeSense.Controllers
 
             // NapDuration -- DONE YEAH!!
 
-            if (CNTnapDuration > 4)
+            if (CNTNapDuration > 4)
             {
-                double[] NapDuration = new double[CNTnapDuration];
-                double[] tempMinutesAsleepNapDuration = new double[CNTnapDuration];
-                double[] tempAwakeningsCountNapDuration = new double[CNTnapDuration];
-                double[] tempSleepEfficiencyNapDuration = new double[CNTnapDuration];
+                double[] NapDuration = new double[CNTNapDuration];
+                double[] tempMinutesAsleepNapDuration = new double[CNTNapDuration];
+                double[] tempAwakeningsCountNapDuration = new double[CNTNapDuration];
+                double[] tempSleepEfficiencyNapDuration = new double[CNTNapDuration];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.NapDuration != null)
+                    if (daysData.DiaryData.NapDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.NapDuration);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.NapDuration);
                         if (tempValue >= 0)
                         {
                             NapDuration[temp] = tempValue;
@@ -2518,22 +2725,22 @@ namespace SleepMakeSense.Controllers
 
             // NapTime -- DONE YEAH!!
 
-            if (CNTnapTime > 4)
+            if (CNTNapTime > 4)
             {
-                double[] NapTime = new double[CNTnapTime];
-                double[] tempMinutesAsleepNapTime = new double[CNTnapTime];
-                double[] tempAwakeningsCountNapTime = new double[CNTnapTime];
-                double[] tempSleepEfficiencyNapTime = new double[CNTnapTime];
+                double[] NapTime = new double[CNTNapTime];
+                double[] tempMinutesAsleepNapTime = new double[CNTNapTime];
+                double[] tempAwakeningsCountNapTime = new double[CNTNapTime];
+                double[] tempSleepEfficiencyNapTime = new double[CNTNapTime];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.NapTime != null)
+                    if (daysData.DiaryData.NapTime != null)
                     {
-                        tempValue = Convert.ToDouble(item.NapTime);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.NapTime);
                         if (tempValue > 0)
                         {
                             NapTime[temp] = tempValue;
@@ -2569,22 +2776,22 @@ namespace SleepMakeSense.Controllers
 
             // SocialActivity -- DONE YEAH!!
 
-            if (CNTsocialActivity > 4)
+            if (CNTSocialActivity > 4)
             {
-                double[] SocialActivity = new double[CNTsocialActivity];
-                double[] tempMinutesAsleepSocialActivity = new double[CNTsocialActivity];
-                double[] tempAwakeningsCountSocialActivity = new double[CNTsocialActivity];
-                double[] tempSleepEfficiencySocialActivity = new double[CNTsocialActivity];
+                double[] SocialActivity = new double[CNTSocialActivity];
+                double[] tempMinutesAsleepSocialActivity = new double[CNTSocialActivity];
+                double[] tempAwakeningsCountSocialActivity = new double[CNTSocialActivity];
+                double[] tempSleepEfficiencySocialActivity = new double[CNTSocialActivity];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.SocialActivity != null)
+                    if (daysData.DiaryData.SocialActivity != null)
                     {
-                        tempValue = Convert.ToDouble(item.SocialActivity);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.SocialActivity);
                         if (tempValue >= 0)
                         {
                             SocialActivity[temp] = tempValue;
@@ -2622,22 +2829,22 @@ namespace SleepMakeSense.Controllers
 
             // DinnerTime -- DONE YEAH!!
 
-            if (CNTdinnerTime > 4)
+            if (CNTDinnerTime > 4)
             {
-                double[] DinnerTime = new double[CNTdinnerTime];
-                double[] tempMinutesAsleepDinnerTime = new double[CNTdinnerTime];
-                double[] tempAwakeningsCountDinnerTime = new double[CNTdinnerTime];
-                double[] tempSleepEfficiencyDinnerTime = new double[CNTdinnerTime];
+                double[] DinnerTime = new double[CNTDinnerTime];
+                double[] tempMinutesAsleepDinnerTime = new double[CNTDinnerTime];
+                double[] tempAwakeningsCountDinnerTime = new double[CNTDinnerTime];
+                double[] tempSleepEfficiencyDinnerTime = new double[CNTDinnerTime];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.DinnerTime != null)
+                    if (daysData.DiaryData.DinnerTime != null)
                     {
-                        tempValue = Convert.ToDouble(item.DinnerTime);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.DinnerTime);
                         if (tempValue > 0)
                         {
                             DinnerTime[temp] = tempValue;
@@ -2673,22 +2880,22 @@ namespace SleepMakeSense.Controllers
 
             // ExerciseTime -- DONE YEAH!!
 
-            if (CNTexerciseTime > 4)
+            if (CNTExerciseDuration > 4)
             {
-                double[] ExerciseTime = new double[CNTexerciseTime];
-                double[] tempMinutesAsleepExerciseTime = new double[CNTexerciseTime];
-                double[] tempAwakeningsCountExerciseTime = new double[CNTexerciseTime];
-                double[] tempSleepEfficiencyExerciseTime = new double[CNTexerciseTime];
+                double[] ExerciseTime = new double[CNTExerciseDuration];
+                double[] tempMinutesAsleepExerciseTime = new double[CNTExerciseDuration];
+                double[] tempAwakeningsCountExerciseTime = new double[CNTExerciseDuration];
+                double[] tempSleepEfficiencyExerciseTime = new double[CNTExerciseDuration];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.ExerciseTime != null)
+                    if (daysData.DiaryData.ExerciseDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.ExerciseTime);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.ExerciseDuration);
                         if (tempValue > 0)
                         {
                             ExerciseTime[temp] = tempValue;
@@ -2726,24 +2933,24 @@ namespace SleepMakeSense.Controllers
 
             // AmbientTemp -- DONE YEAH!!
 
-            if (CNTambientTemp > 4)
+            if (CNTAmbientTemp > 4)
             {
-                double[] AmbientTemp = new double[CNTambientTemp];
-                double[] tempMinutesAsleepAmbientTemp = new double[CNTambientTemp];
-                double[] tempMinutesAwakeAmbientTemp = new double[CNTambientTemp];
-                double[] tempAwakeningsCountAmbientTemp = new double[CNTambientTemp];
-                double[] tempMinutesToFallAsleepAmbientTemp = new double[CNTambientTemp];
-                double[] tempSleepEfficiencyAmbientTemp = new double[CNTambientTemp];
+                double[] AmbientTemp = new double[CNTAmbientTemp];
+                double[] tempMinutesAsleepAmbientTemp = new double[CNTAmbientTemp];
+                double[] tempMinutesAwakeAmbientTemp = new double[CNTAmbientTemp];
+                double[] tempAwakeningsCountAmbientTemp = new double[CNTAmbientTemp];
+                double[] tempMinutesToFallAsleepAmbientTemp = new double[CNTAmbientTemp];
+                double[] tempSleepEfficiencyAmbientTemp = new double[CNTAmbientTemp];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.AmbientTemp != null)
+                    if (daysData.DiaryData.AmbientTemp != null)
                     {
-                        tempValue = Convert.ToDouble(item.AmbientTemp);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.AmbientTemp);
                         if (tempValue > 0)
                         {
                             AmbientTemp[temp] = tempValue;
@@ -2782,22 +2989,22 @@ namespace SleepMakeSense.Controllers
 
             // AmbientHumd -- DONE YEAH!!
 
-            if (CNTambientHumd > 4)
+            if (CNTAmbientHumd > 4)
             {
-                double[] AmbientHumd = new double[CNTambientHumd];
-                double[] tempMinutesAsleepAmbientHumd = new double[CNTambientHumd];
-                double[] tempAwakeningsCountAmbientHumd = new double[CNTambientHumd];
-                double[] tempSleepEfficiencyAmbientHumd = new double[CNTambientHumd];
+                double[] AmbientHumd = new double[CNTAmbientHumd];
+                double[] tempMinutesAsleepAmbientHumd = new double[CNTAmbientHumd];
+                double[] tempAwakeningsCountAmbientHumd = new double[CNTAmbientHumd];
+                double[] tempSleepEfficiencyAmbientHumd = new double[CNTAmbientHumd];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.AmbientHumd != null)
+                    if (daysData.DiaryData.AmbientHumd != null)
                     {
-                        tempValue = Convert.ToDouble(item.AmbientHumd);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.AmbientHumd);
                         if (tempValue > 0)
                         {
                             AmbientHumd[temp] = tempValue;
@@ -2837,24 +3044,24 @@ namespace SleepMakeSense.Controllers
 
             // BodyTemp -- DONE YEAH!!
 
-            if (CNTbodyTemp > 4)
+            if (CNTBodyTemp > 4)
             {
-                double[] BodyTemp = new double[CNTbodyTemp];
-                double[] tempMinutesAsleepBodyTemp = new double[CNTbodyTemp];
-                double[] tempMinutesAwakeBodyTemp = new double[CNTbodyTemp];
-                double[] tempAwakeningsCountBodyTemp = new double[CNTbodyTemp];
-                double[] tempMinutesToFallAsleepBodyTemp = new double[CNTbodyTemp];
-                double[] tempSleepEfficiencyBodyTemp = new double[CNTbodyTemp];
+                double[] BodyTemp = new double[CNTBodyTemp];
+                double[] tempMinutesAsleepBodyTemp = new double[CNTBodyTemp];
+                double[] tempMinutesAwakeBodyTemp = new double[CNTBodyTemp];
+                double[] tempAwakeningsCountBodyTemp = new double[CNTBodyTemp];
+                double[] tempMinutesToFallAsleepBodyTemp = new double[CNTBodyTemp];
+                double[] tempSleepEfficiencyBodyTemp = new double[CNTBodyTemp];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.BodyTemp != null)
+                    if (daysData.DiaryData.BodyTemp != null)
                     {
-                        tempValue = Convert.ToDouble(item.BodyTemp);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.BodyTemp);
                         if (tempValue > 0)
                         {
                             BodyTemp[temp] = tempValue;
@@ -2873,19 +3080,19 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAsleepBodyTemp, BodyTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "BodyTemp", Coefficient = pearson });
+                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Body Temp", Coefficient = pearson });
                 }
 
                 pearson = Correlation.Pearson(tempAwakeningsCountBodyTemp, BodyTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "BodyTemp", Coefficient = pearson });
+                    CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Body Temp", Coefficient = pearson });
                 }
 
                 pearson = Correlation.Pearson(tempSleepEfficiencyBodyTemp, BodyTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "BodyTemp", Coefficient = pearson });
+                    CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Body Temp", Coefficient = pearson });
                 }
 
             }
@@ -2893,24 +3100,24 @@ namespace SleepMakeSense.Controllers
 
             // Hormone -- DONE YEAH!!
 
-            if (CNThormone > 4)
+            if (CNTHormone > 4)
             {
-                double[] Hormone = new double[CNThormone];
-                double[] tempMinutesAsleepHormone = new double[CNThormone];
-                double[] tempMinutesAwakeHormone = new double[CNThormone];
-                double[] tempAwakeningsCountHormone = new double[CNThormone];
-                double[] tempMinutesToFallAsleepHormone = new double[CNThormone];
-                double[] tempSleepEfficiencyHormone = new double[CNThormone];
+                double[] Hormone = new double[CNTHormone];
+                double[] tempMinutesAsleepHormone = new double[CNTHormone];
+                double[] tempMinutesAwakeHormone = new double[CNTHormone];
+                double[] tempAwakeningsCountHormone = new double[CNTHormone];
+                double[] tempMinutesToFallAsleepHormone = new double[CNTHormone];
+                double[] tempSleepEfficiencyHormone = new double[CNTHormone];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Hormone != null)
+                    if (daysData.DiaryData.Hormone != null)
                     {
-                        tempValue = Convert.ToDouble(item.Hormone);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.Hormone);
                         if (tempValue > 0)
                         {
                             Hormone[temp] = tempValue;
@@ -2971,22 +3178,22 @@ namespace SleepMakeSense.Controllers
 
             // WatchTV -- DONE YEAH!!
 
-            if (CNTWatchTV > 4)
+            if (CNTTVDuration > 4)
             {
-                double[] WatchTV = new double[CNTWatchTV];
-                double[] tempMinutesAsleepWatchTV = new double[CNTWatchTV];
-                double[] tempAwakeningsCountWatchTV = new double[CNTWatchTV];
-                double[] tempSleepEfficiencyWatchTV = new double[CNTWatchTV];
+                double[] WatchTV = new double[CNTTVDuration];
+                double[] tempMinutesAsleepWatchTV = new double[CNTTVDuration];
+                double[] tempAwakeningsCountWatchTV = new double[CNTTVDuration];
+                double[] tempSleepEfficiencyWatchTV = new double[CNTTVDuration];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.WatchTV != null)
+                    if (daysData.DiaryData.TVDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.WatchTV);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.TVDuration);
                         if (tempValue > 0)
                         {
                             WatchTV[temp] = tempValue;
@@ -3045,22 +3252,22 @@ namespace SleepMakeSense.Controllers
 
             // ExerciseDuration -- DONE YEAH!!
 
-            if (CNTExerciseDuration > 4)
+            if (CNTExerciseIntensity > 4)
             {
-                double[] ExerciseDuration = new double[CNTExerciseDuration];
-                double[] tempMinutesAsleepExerciseDuration = new double[CNTExerciseDuration];
-                double[] tempAwakeningsCountExerciseDuration = new double[CNTExerciseDuration];
-                double[] tempSleepEfficiencyExerciseDuration = new double[CNTExerciseDuration];
+                double[] ExerciseDuration = new double[CNTExerciseIntensity];
+                double[] tempMinutesAsleepExerciseDuration = new double[CNTExerciseIntensity];
+                double[] tempAwakeningsCountExerciseDuration = new double[CNTExerciseIntensity];
+                double[] tempSleepEfficiencyExerciseDuration = new double[CNTExerciseIntensity];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.ExerciseDuration != null)
+                    if (daysData.DiaryData.ExerciseIntensity != null)
                     {
-                        tempValue = Convert.ToDouble(item.ExerciseDuration);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.ExerciseIntensity);
                         if (tempValue > 0)
                         {
                             ExerciseDuration[temp] = tempValue;
@@ -3117,80 +3324,6 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            // ExerciseIntensity -- DONE YEAH!!
-
-            if (CNTExerciseIntensity > 4)
-            {
-                double[] ExerciseIntensity = new double[CNTExerciseIntensity];
-                double[] tempMinutesAsleepExerciseIntensity = new double[CNTExerciseIntensity];
-                double[] tempAwakeningsCountExerciseIntensity = new double[CNTExerciseIntensity];
-                double[] tempSleepEfficiencyExerciseIntensity = new double[CNTExerciseIntensity];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata item in results)
-                {
-                    if (item.ExerciseIntensity != null)
-                    {
-                        tempValue = Convert.ToDouble(item.ExerciseIntensity);
-                        if (tempValue > 0)
-                        {
-                            ExerciseIntensity[temp] = tempValue;
-                            tempMinutesAsleepExerciseIntensity[temp] = MinutesAsleep[identifier];
-                            tempAwakeningsCountExerciseIntensity[temp] = AwakeningsCount[identifier];
-                            tempSleepEfficiencyExerciseIntensity[temp] = SleepEfficiency[identifier];
-
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
-
-                pearson = Correlation.Pearson(tempMinutesAsleepExerciseIntensity, ExerciseIntensity);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Exercise Duration", Coefficient = pearson, Note = "If your workout is longer, you tend to have longer time asleep." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Exercise Duration", Coefficient = pearson, Note = "If your workout is longer, you tend to have shorter time asleep.." });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempAwakeningsCountExerciseIntensity, ExerciseIntensity);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Exercise Duration", Coefficient = pearson, Note = "If your workout is longer, you tend to have more awakenings." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Exercise Duration", Coefficient = pearson, Note = "If your workout is longer, you tend to have less awakenings." });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencyExerciseIntensity, ExerciseIntensity);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Exercise Duration", Coefficient = pearson, Note = "If your workout is longer, your sleep efficiency tends to become better." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Exercise Duration", Coefficient = pearson, Note = "If your workout is longer, your sleep efficiency tends to become worse." });
-                    }
-                }
-
-            }
-
             // SnackTime -- DONE YEAH!!
 
             if (CNTSnackTime > 4)
@@ -3204,11 +3337,11 @@ namespace SleepMakeSense.Controllers
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.ExerciseIntensity != null)
+                    if (daysData.DiaryData.SnackTime != null)
                     {
-                        tempValue = Convert.ToDouble(item.Snack);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.SnackTime);
                         if (tempValue > 0)
                         {
                             SnackTime[temp] = tempValue;
@@ -3264,81 +3397,6 @@ namespace SleepMakeSense.Controllers
                 }
 
             }
-
-            // SnackType -- DONE YEAH!!
-
-            if (CNTSnackType > 4)
-            {
-                double[] SnackType = new double[CNTSnackType];
-                double[] tempMinutesAsleepSnackType = new double[CNTSnackType];
-                double[] tempAwakeningsCountSnackType = new double[CNTSnackType];
-                double[] tempSleepEfficiencySnackType = new double[CNTSnackType];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata item in results)
-                {
-                    if (item.ExerciseIntensity != null)
-                    {
-                        tempValue = Convert.ToDouble(item.Snack2);
-                        if (tempValue > 0)
-                        {
-                            SnackType[temp] = tempValue;
-                            tempMinutesAsleepSnackType[temp] = MinutesAsleep[identifier];
-                            tempAwakeningsCountSnackType[temp] = AwakeningsCount[identifier];
-                            tempSleepEfficiencySnackType[temp] = SleepEfficiency[identifier];
-
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
-
-                pearson = Correlation.Pearson(tempMinutesAsleepSnackType, SnackType);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Snack Type", Coefficient = pearson});
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Snack Type", Coefficient = pearson});
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempAwakeningsCountSnackType, SnackType);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Snack Type", Coefficient = pearson});
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Snack Type", Coefficient = pearson});
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencySnackType, SnackType);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Snack Type", Coefficient = pearson});
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Snack Type", Coefficient = pearson});
-                    }
-                }
-
-            }
-
             // WorkTime -- DONE YEAH!!
 
             if (CNTWorkTime > 4)
@@ -3352,11 +3410,11 @@ namespace SleepMakeSense.Controllers
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.ExerciseIntensity != null)
+                    if (daysData.DiaryData.WorkTime != null)
                     {
-                        tempValue = Convert.ToDouble(item.Job);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.WorkTime);
                         if (tempValue > 0)
                         {
                             WorkTime[temp] = tempValue;
@@ -3425,11 +3483,11 @@ namespace SleepMakeSense.Controllers
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.ExerciseIntensity != null)
+                    if (daysData.DiaryData.WorkDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.Job2);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.WorkDuration);
                         if (tempValue > 0)
                         {
                             WorkDuration[temp] = tempValue;
@@ -3486,171 +3544,24 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            // Phone -- DONE YEAH!!
-
-            if (CNTPhone > 4)
-            {
-                double[] Phone = new double[CNTPhone];
-                double[] tempMinutesAsleepPhone = new double[CNTPhone];
-                double[] tempAwakeningsCountPhone = new double[CNTPhone];
-                double[] tempSleepEfficiencyPhone = new double[CNTPhone];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata item in results)
-                {
-                    if (item.Phone != null)
-                    {
-                        tempValue = Convert.ToDouble(item.Phone);
-                        if (tempValue > 0)
-                        {
-                            Phone[temp] = tempValue;
-                            tempMinutesAsleepPhone[temp] = MinutesAsleep[identifier];
-                            tempAwakeningsCountPhone[temp] = AwakeningsCount[identifier];
-                            tempSleepEfficiencyPhone[temp] = SleepEfficiency[identifier];
-
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
-
-                pearson = Correlation.Pearson(tempMinutesAsleepPhone, Phone);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Phone", Coefficient = pearson, Note = "On your phone Later, you tend to have longer time asleep." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Phone", Coefficient = pearson, Note = "On your phone Later, you tend to have shorter time asleep.." });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempAwakeningsCountPhone, Phone);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Phone", Coefficient = pearson, Note = "On your phone Later, you tend to have more awakenings." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Phone", Coefficient = pearson, Note = "On your phone Later, you tend to have less awakenings." });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencyPhone, Phone);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Phone", Coefficient = pearson, Note = "On your phone Later, your sleep efficiency tends to become better." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Phone", Coefficient = pearson, Note = "On your phone Later, your sleep efficiency tends to become worse." });
-                    }
-                }
-
-            }
-
-            // Sleep diary -- DONE YEAH!!
-
-            if (CNTSleepDiary > 4)
-            {
-                double[] SleepDiary = new double[CNTSleepDiary];
-                double[] tempMinutesAsleepSleepDiary = new double[CNTSleepDiary];
-                double[] tempAwakeningsCountSleepDiary = new double[CNTSleepDiary];
-                double[] tempSleepEfficiencySleepDiary = new double[CNTSleepDiary];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata item in results)
-                {
-                    if (item.Phone != null)
-                    {
-                        tempValue = Convert.ToDouble(item.SleepDiary);
-                        if (tempValue > 0)
-                        {
-                            SleepDiary[temp] = tempValue;
-                            tempMinutesAsleepSleepDiary[temp] = MinutesAsleep[identifier];
-                            tempAwakeningsCountSleepDiary[temp] = AwakeningsCount[identifier];
-                            tempSleepEfficiencySleepDiary[temp] = SleepEfficiency[identifier];
-
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
-
-                pearson = Correlation.Pearson(tempMinutesAsleepSleepDiary, SleepDiary);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "SleepDiary", Coefficient = pearson});
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "SleepDiary", Coefficient = pearson});
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempAwakeningsCountSleepDiary, SleepDiary);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "SleepDiary", Coefficient = pearson});
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "SleepDiary", Coefficient = pearson});
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencySleepDiary, SleepDiary);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "SleepDiary", Coefficient = pearson});
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "SleepDiary", Coefficient = pearson});
-                    }
-                }
-
-            }
             // Music -- DONE YEAH!!
 
-            if (CNTMusic > 4)
+            if (CNTMusicDuration > 4)
             {
-                double[] Music = new double[CNTMusic];
-                double[] tempMinutesAsleepMusic = new double[CNTMusic];
-                double[] tempAwakeningsCountMusic = new double[CNTMusic];
-                double[] tempSleepEfficiencyMusic = new double[CNTMusic];
+                double[] Music = new double[CNTMusicDuration];
+                double[] tempMinutesAsleepMusic = new double[CNTMusicDuration];
+                double[] tempAwakeningsCountMusic = new double[CNTMusicDuration];
+                double[] tempSleepEfficiencyMusic = new double[CNTMusicDuration];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Phone != null)
+                    if (daysData.DiaryData.MusicDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.Music);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.MusicDuration);
                         if (tempValue > 0)
                         {
                             Music[temp] = tempValue;
@@ -3706,98 +3617,24 @@ namespace SleepMakeSense.Controllers
                 }
 
             }
-            // Music tpye-- DONE YEAH!!
-
-            if (CNTMusicType > 4)
-            {
-                double[] MusicType = new double[CNTMusicType];
-                double[] tempMinutesAsleepMusicType = new double[CNTMusicType];
-                double[] tempAwakeningsCountMusicType = new double[CNTMusicType];
-                double[] tempSleepEfficiencyMusicType = new double[CNTMusicType];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata item in results)
-                {
-                    if (item.Phone != null)
-                    {
-                        tempValue = Convert.ToDouble(item.MusicType);
-                        if (tempValue > 0)
-                        {
-                            MusicType[temp] = tempValue;
-                            tempMinutesAsleepMusicType[temp] = MinutesAsleep[identifier];
-                            tempAwakeningsCountMusicType[temp] = AwakeningsCount[identifier];
-                            tempSleepEfficiencyMusicType[temp] = SleepEfficiency[identifier];
-
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
-
-                pearson = Correlation.Pearson(tempMinutesAsleepMusicType, MusicType);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Music Type", Coefficient = pearson });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Music Type", Coefficient = pearson });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempAwakeningsCountMusicType, MusicType);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Music Type", Coefficient = pearson });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Music Type", Coefficient = pearson });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencyMusicType, MusicType);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Music Type", Coefficient = pearson });
-                    }
-                    else if (pearson < 0)
-                    {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Music Type", Coefficient = pearson });
-                    }
-                }
-
-            }
-
             // Social Media-- DONE YEAH!!
 
-            if (CNTSocialMedia > 4)
+            if (CNTSocialActivites > 4)
             {
-                double[] SocialMedia = new double[CNTSocialMedia];
-                double[] tempMinutesAsleepSocialMedia = new double[CNTSocialMedia];
-                double[] tempAwakeningsCountSocialMedia = new double[CNTSocialMedia];
-                double[] tempSleepEfficiencySocialMedia = new double[CNTSocialMedia];
+                double[] SocialMedia = new double[CNTSocialActivites];
+                double[] tempMinutesAsleepSocialMedia = new double[CNTSocialActivites];
+                double[] tempAwakeningsCountSocialMedia = new double[CNTSocialActivites];
+                double[] tempSleepEfficiencySocialMedia = new double[CNTSocialActivites];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Phone != null)
+                    if (daysData.DiaryData.SocialActivites != null)
                     {
-                        tempValue = Convert.ToDouble(item.SocialMedia);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.SocialActivites);
                         if (tempValue > 0)
                         {
                             SocialMedia [temp] = tempValue;
@@ -3857,22 +3694,22 @@ namespace SleepMakeSense.Controllers
 
             // Social Media-- DONE YEAH!!
 
-            if (CNTVideoGames > 4)
+            if (CNTGamesDuration > 4)
             {
-                double[] VideoGames = new double[CNTVideoGames];
-                double[] tempMinutesAsleepVideoGames = new double[CNTVideoGames];
-                double[] tempAwakeningsCountVideoGames = new double[CNTVideoGames];
-                double[] tempSleepEfficiencyVideoGames = new double[CNTVideoGames];
+                double[] VideoGames = new double[CNTGamesDuration];
+                double[] tempMinutesAsleepVideoGames = new double[CNTGamesDuration];
+                double[] tempAwakeningsCountVideoGames = new double[CNTGamesDuration];
+                double[] tempSleepEfficiencyVideoGames = new double[CNTGamesDuration];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Phone != null)
+                    if (daysData.DiaryData.GamesDuration != null)
                     {
-                        tempValue = Convert.ToDouble(item.Games);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.GamesDuration);
                         if (tempValue > 0)
                         {
                             VideoGames[temp] = tempValue;
@@ -3931,22 +3768,22 @@ namespace SleepMakeSense.Controllers
 
             // Social Media-- DONE YEAH!!
 
-            if (CNTAssignments > 4)
+            if (CNTSchoolStress > 4)
             {
-                double[] Assignments = new double[CNTAssignments];
-                double[] tempMinutesAsleepAssignments = new double[CNTAssignments];
-                double[] tempAwakeningsCountAssignments = new double[CNTAssignments];
-                double[] tempSleepEfficiencyAssignments = new double[CNTAssignments];
+                double[] Assignments = new double[CNTSchoolStress];
+                double[] tempMinutesAsleepAssignments = new double[CNTSchoolStress];
+                double[] tempAwakeningsCountAssignments = new double[CNTSchoolStress];
+                double[] tempSleepEfficiencyAssignments = new double[CNTSchoolStress];
 
                 // counters back to zero
                 temp = 0;
                 identifier = 0;
 
-                foreach (SleepMakeSense.Models.Userdata item in results)
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (item.Phone != null)
+                    if (daysData.DiaryData.SchoolStress != null)
                     {
-                        tempValue = Convert.ToDouble(item.Assessment);
+                        tempValue = Convert.ToDouble(daysData.DiaryData.SchoolStress);
                         if (tempValue > 0)
                         {
                             Assignments[temp] = tempValue;
@@ -3993,11 +3830,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "Social Media", Name = "Assignments & Exams", Coefficient = pearson });
+                        CoefficientList.Add(new CorrList() { Belong = "Sleep Efficiency", Name = "Assignments & Exams", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Assignments & Exams", Coefficient = pearson });
+                        CoefficientList.Add(new CorrList() { Belong = "Sleep Efficiency", Name = "Assignments & Exams", Coefficient = pearson });
                     }
                 }
             }
@@ -4009,10 +3846,10 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            model.AllData = results;
-            model.CorrCoefficient = CoefficientList;
+            viewModel.Userdata = userDatas;
+            viewModel.CorrCoefficient = CoefficientList;
 
-            return model;
+            return viewModel;
 
         }   
     }    

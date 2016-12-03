@@ -9,12 +9,13 @@
 
 <!-- Pandita:If user is already logged in, direct to Devices.cshtml; else, direct to log in page -->
 @*
-    Updated to be a login/regrestration screen. 
+    Updated to be a login/regrestration screen.
     If the uers is logged in, they will be propted to either create and account or log in
     If they are logged in, they will be propted to sync there data and load the next page
     If the user has not connected their FitBit, it will prompt, however this is broken //Pandita: broken??
     Done By Sean - 21/5/16
-    *@
+    style="@((bool)Model.Userdata.DiaryDataNight ? "display:none" : "display:"
+*@
 
 <div class="jumbotron">
 <div class="container">
@@ -29,10 +30,10 @@
     {
         <p>@Html.ActionLink("See My Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg" })</p>
 
-        <p style="@((bool)Model.Userdata.DiaryDataNight ? "display:none" : "display:")">
-            @Html.ActionLink("Log today's Diary Info", "FactorQuestions", "Userdatas", new { }, new { @class = "btn btn-primary btn-lg" })
-        </p>
-        
+
+
+        <p>@Html.ActionLink("Log today's Diary Info", "EnterDiaryData", "DiaryData", new { }, new { @class = "btn btn-primary btn-lg" })</p>
+        <p>@Html.ActionLink("Setup Diary Data", "DiaryDataSetup", "DiaryData", new { }, new { @class = "btn btn-primary btn-lg" })</p>
     }
 
 
@@ -41,7 +42,8 @@
                     Work in progress
                 else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected == false)
                 {
-                    <p><a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
+                    <p>
+                <a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
                 }
                 else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected)
                 {

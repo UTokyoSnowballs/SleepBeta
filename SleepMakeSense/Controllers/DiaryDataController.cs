@@ -24,7 +24,7 @@ namespace SleepMakeSense.Controllers
             MyViewModel viewModel = new MyViewModel();
             viewModel.questionSelection = new QuestionsSelections();
             viewModel.UserQuestion = new UserQuestion();
-            return View();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -41,21 +41,32 @@ namespace SleepMakeSense.Controllers
 
             //checing that this entry is the only entry
             bool hasQuestionsAlready = false;
-
-            foreach (UserQuestion questionCheck in dataQuery)
+            try
             {
-                if (questionCheck.AspNetUserId == userQusetion.AspNetUserId)
+                foreach (UserQuestion questionCheck in dataQuery.Where(questionCheck => questionCheck.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId() && questionCheck != null))
                 {
                     hasQuestionsAlready = true;
                 }
             }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!hasQuestionsAlready)
+            {
+                Db.UserQuestions.Add(userQusetion);
+                Db.SaveChanges();
+                TempData["notice"] = "Successfully Saved";
+            }
 
             //Saving new data
+            /*
             if (hasQuestionsAlready)
             {
                 Db.UserQuestions.Add(userQusetion);
                 TempData["notice"] = "Successfully Saved";
             }
+            */
 
             // Taking the user back home
             return RedirectToAction("Index", "Home");

@@ -13,7 +13,7 @@ namespace SleepMakeSense.Models
 
         public UserQuestion UserQuestion { get; set; }
 
-        public Userdata Userdata { get; set; }
+        public  List<Userdata> Userdata { get; set; }
 
         public DiaryData DiaryData { get; set; }
 

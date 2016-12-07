@@ -10,7 +10,7 @@ namespace SleepMakeSense.Controllers
 {
     public class HomeController : Controller
     {
-        private Database Db = new Models.Database();
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
 
         public ActionResult Index()
         {
@@ -23,12 +23,12 @@ namespace SleepMakeSense.Controllers
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
                 //Getting Table Data
-                /*
-                List <UserQuestion> userQuestions = (from table in Db.UserQuestions
+                
+                IEnumerable<UserQuestion> userQuestions = from table in Db.UserQuestions
                                     where table.AspNetUserId.Equals(userId)
-                                    select table).ToList();
-                                    */
-                var lastSynced = from table in Db.DiaryDatas
+                                    select table;
+                                    
+                IEnumerable<DiaryData> lastSynced = from table in Db.DiaryDatas
                                  where table.AspNetUserId.Equals(userId) && table.DateStamp >= endStop
                                  orderby table.DateStamp
                                  select table;
@@ -41,14 +41,16 @@ namespace SleepMakeSense.Controllers
                     }
                 }
                 */
-                foreach (DiaryData diaryData in lastSynced)
+                if (lastSynced.Count() != 0)
                 {
-                    if (diaryData.AspNetUserId == userId && diaryData.DateStamp == DateTime.UtcNow.Date)
+                    foreach (DiaryData diaryData in lastSynced)
                     {
-                        model.TodaySync = true;
+                        if (diaryData.AspNetUserId == userId && diaryData.DateStamp == DateTime.UtcNow.Date)
+                        {
+                            model.TodaySync = true;
+                        }
                     }
                 }
-
                 return View(model);
 
             }

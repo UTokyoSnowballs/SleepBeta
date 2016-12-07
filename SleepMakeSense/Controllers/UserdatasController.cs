@@ -29,7 +29,8 @@ namespace SleepMakeSense.Controllers
 
         // 20161105 Pandita
         // private ApplicationDbContext db = new ApplicationDbContext();
-        private Models.Database Db = new Models.Database();
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
+        
 
         /*
         // GET: Userdatas
@@ -214,7 +215,7 @@ namespace SleepMakeSense.Controllers
    
             bool userLogedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
 
-            var lastSyncedData = from table in Db.FitbitDatas
+            IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
                                 where table.AspNetUserId.Equals(userId) && table.DateStamp >= DateTime.UtcNow.Date.AddDays(-dateStopNumber)
                                  orderby table.DateStamp
                                 select table;
@@ -416,12 +417,10 @@ namespace SleepMakeSense.Controllers
                 }
             //Comparing Saved data with new data
 
-            foreach (FitbitData fitbitData in fitbitInputDatas)
-            {
-                Db.FitbitDatas.Add(fitbitData);
-            }
 
-            Db.SaveChanges();
+            Db.FitbitDatas.InsertAllOnSubmit(fitbitInputDatas);
+
+            Db.SubmitChanges();
             ViewBag.FitbitSynced = true; 
 
             return View();

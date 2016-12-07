@@ -16,14 +16,14 @@ namespace SleepMakeSense.Controllers
 {
     public class DiaryDataController : Controller
     {
-        private Models.Database Db = new Models.Database();
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
 
         public ActionResult DiaryDataSetup()
         {
             //Setting up the Selection for the questions
             MyViewModel viewModel = new MyViewModel();
             viewModel.questionSelection = new QuestionsSelections();
-            viewModel.UserQuestion = new UserQuestion();
+            viewModel.UserQuestion = new UserQuestion() { AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId() };
             return View(viewModel);
         }
 
@@ -31,43 +31,35 @@ namespace SleepMakeSense.Controllers
         public ActionResult DiaryDataSetup(MyViewModel model)
         {
             //getting User questions and userID 
-            UserQuestion userQusetion  = model.UserQuestion;
-            userQusetion.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            bool noEntry = false;
 
             //Looking up the questions for the user
-            var dataQuery = from table in Db.UserQuestions
-                            where table.AspNetUserId.Equals(userQusetion.AspNetUserId)
-                            select table;
-
-            //checing that this entry is the only entry
-            bool hasQuestionsAlready = false;
-            try
-            {
-                foreach (UserQuestion questionCheck in dataQuery.Where(questionCheck => questionCheck.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId() && questionCheck != null))
+            try {
+                UserQuestion dataQuery = (from table in Db.UserQuestions
+                                          where table.AspNetUserId.Equals(userId)
+                                          select table).First();
+                if (dataQuery.AspNetUserId == userId)
                 {
-                    hasQuestionsAlready = true;
+                    dataQuery = model.UserQuestion;
+                    TempData["notice"] = "Successfully Saved";
+                }
+                else if (dataQuery.AspNetUserId != userId)
+                {
+                    noEntry = true;
                 }
             }
-            catch (NotSupportedException)
+            catch
             {
+                noEntry = true;
             }
 
-            if (!hasQuestionsAlready)
+            if (noEntry)
             {
-                Db.UserQuestions.Add(userQusetion);
-                Db.SaveChanges();
+                Db.UserQuestions.InsertOnSubmit(model.UserQuestion);
                 TempData["notice"] = "Successfully Saved";
             }
-
-            //Saving new data
-            /*
-            if (hasQuestionsAlready)
-            {
-                Db.UserQuestions.Add(userQusetion);
-                TempData["notice"] = "Successfully Saved";
-            }
-            */
-
+            Db.SubmitChanges();
             // Taking the user back home
             return RedirectToAction("Index", "Home");
         }
@@ -85,7 +77,7 @@ namespace SleepMakeSense.Controllers
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
                 //Looking up the questions for the user
-                var dataQuery = from table in Db.UserQuestions
+                IEnumerable <UserQuestion> dataQuery = from table in Db.UserQuestions
                                 where table.AspNetUserId.Equals(userId)
                                 select table;
 
@@ -121,7 +113,7 @@ namespace SleepMakeSense.Controllers
             //Database lookup of the last 5 days
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
             bool update = false;
-            var lastSynced = from table in Db.DiaryDatas
+            IEnumerable <DiaryData> lastSynced = from table in Db.DiaryDatas
                              where table.AspNetUserId.Equals(dairyData.AspNetUserId) && table.DateStamp >= dateStop
                              orderby table.DateStamp
                              select table;
@@ -141,11 +133,11 @@ namespace SleepMakeSense.Controllers
             //Updating the database if no match in date is found
             if (update == false)
             {
-                Db.DiaryDatas.Add(dairyData);
+                Db.DiaryDatas.InsertOnSubmit(dairyData);
             }
             //   else db.Userdatas.Add(data);
             //Commiting to database
-            Db.SaveChanges();
+            Db.SubmitChanges();
             //redirection to homepage
             TempData["notice"] = "Successfully Saved";
             return RedirectToAction("Index", "Home");

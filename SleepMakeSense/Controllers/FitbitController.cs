@@ -23,6 +23,8 @@ namespace SleepMakeSense.Controllers
         //
         // GET: /Fitbit/
 
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
+
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Home");
@@ -80,8 +82,6 @@ namespace SleepMakeSense.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
 
-                Models.Database Db = new Models.Database();
-
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 TokenManagement userToken = (from a in Db.TokenManagements
                                              where a.AspNetUserId.Equals(userId)
@@ -92,7 +92,7 @@ namespace SleepMakeSense.Controllers
                 {
                     userToken = new TokenManagement();
                     userToken.AspNetUserId = userId;
-                    Db.TokenManagements.Add(userToken);
+                    Db.SubmitChanges();
                 }
 
                 userToken.DateChanged = DateTime.UtcNow;
@@ -101,7 +101,7 @@ namespace SleepMakeSense.Controllers
                 userToken.ExpiresIn = accessToken.ExpiresIn;
                 userToken.RefreshToken = accessToken.RefreshToken;
 
-                Db.SaveChanges();
+   
 
             }
         }
@@ -113,11 +113,10 @@ namespace SleepMakeSense.Controllers
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
-            Models.Database Db = new Models.Database();
             bool fitbitConnected = false;
             OAuth2AccessToken accessToken = new OAuth2AccessToken();
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = from a in Db.TokenManagements
+            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements
                              where a.AspNetUserId.Equals(userId)
                              select a;
             foreach (TokenManagement data in userToken)
@@ -161,11 +160,10 @@ namespace SleepMakeSense.Controllers
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
             // 20161108 Pandita
-            Models.Database Db = new Models.Database();
             bool fitbitConnected = false;
             OAuth2AccessToken accessToken = new OAuth2AccessToken();
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = from a in Db.TokenManagements
+            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements
                             where a.AspNetUserId.Equals(userId)
                             select a;
             foreach (TokenManagement data in userToken)

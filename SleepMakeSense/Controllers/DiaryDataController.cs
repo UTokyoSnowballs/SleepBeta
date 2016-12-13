@@ -70,7 +70,6 @@ namespace SleepMakeSense.Controllers
             return RedirectToAction("Index", "Home");
         }
         */
-
         /// <summary>
         /// This Method submits the questions to ask the user.
         /// this is done by looking for any previous entry and updating it.
@@ -145,13 +144,14 @@ namespace SleepMakeSense.Controllers
             Db.SubmitChanges();
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
         public ActionResult EnterDiaryData()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 //Setting up the Selection for the questions
-                MyViewModel viewModel = new MyViewModel();
-                viewModel.questionSelection = new QuestionsSelections();
+                DiaryDataViewClass viewModel = new DiaryDataViewClass();
+                viewModel.QUESTIONSELECTION = new QuestionsSelections();
 
                 //Getting the current User for DB lookup
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();

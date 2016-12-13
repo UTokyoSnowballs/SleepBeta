@@ -33,29 +33,29 @@
 
             <table class="table">
                 <tr class="tr-noborder" style="@((bool)Model.UserQuestion.Stress ? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class="fa a-frown-o fa-2x"></i><span>Stress</span></td>
+                    <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
                     <td class="diaryquestion"> How anxious/stressed were you Today? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.Stress, Model.QUESTIONSELECTION.ToFive(), new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.Tiredness ? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class=""></i><span>Tired</span></td>
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Tired</span></td>
                     <td class="diaryquestion"> How tired/sleepy were you Today? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.Tiredness, Model.QUESTIONSELECTION.ToFive(), new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.Dream? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class=""></i><span>Tired</span></td>
-                    <td class="diaryquestion"> How Well did your remember your dreamodelfromodellast night? (1 not at all - 5 very)</td>
+                    <td class="diaryfactor"><i class="fa fa-cloud fa-2x"></i><span>Dream</span></td>
+                    <td class="diaryquestion"> How Well did your remember your dream last night? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.Dream, Model.QUESTIONSELECTION.ToFive(), new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.SchoolQuestions ? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class=""></i><span>Tired</span></td>
-                    <td class="diaryquestion"> How Stressed are your fromodelassignment/exams? (1 not at all - 5 very)</td>
+                    <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>School</span></td>
+                    <td class="diaryquestion"> How Stressed are your from assignment/exams? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.SchoolStress, Model.QUESTIONSELECTION.ToFive(), new { @class = "form-control" })
                     </td>
@@ -147,14 +147,14 @@
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.DigDeviceDurationQuestion ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Mobile use</span></td>
-                    <td class="diaryquestion">How many hours did you spend on your phone after 6pmodelyesterday?</td>
+                    <td class="diaryquestion">How many hours did you spend on your phone after 6pm yesterday?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DigDeviceDuration, Model.QUESTIONSELECTION.TimeToFive(), new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.SocialMediaDurationQuestion ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span></td>
-                    <td class="diaryquestion">How long were you on social media for after 6pmodellast night?</td>
+                    <td class="diaryquestion">How long were you on social media for after 6pm last night?</td>
                     <td>
                         @Html.DropDownListFor(model => model.SocialActivites, Model.QUESTIONSELECTION.TimeToFive(), new { @class = "form-control" })
                     </td>

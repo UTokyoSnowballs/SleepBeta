@@ -1,19 +1,12 @@
 ﻿@using SleepMakeSense.Models
 
-@model MyViewModel
+@model DiaryDataSetupModel
 
-@{
-    var BooleanTrueFalse = new List<SelectListItem>();
-    BooleanTrueFalse.Add(new SelectListItem { Text = "Select Item", Selected = false });
-    BooleanTrueFalse.Add(new SelectListItem { Text = "Yes", Selected = true });
-    BooleanTrueFalse.Add(new SelectListItem { Text = "No", Selected = false });
-}
 
 
 <!DOCTYPE html>
 @using (Html.BeginForm("DiaryDataSetup", "DiaryData", FormMethod.Post))
 {
-
     <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,13 +15,10 @@
     </head>
 
 
-    <body onload="UserdatasController.html()">
+    <body onload="DiaryDataController.html()">
         <div id="DataProcessing">
             <script type="text/javascript">
-
-
             </script>
-            <% using (Html.BeginForm())
         </div>
         <div class="container">
             <div class="row">
@@ -40,117 +30,123 @@
             </div>
 
             <table class="table">
-                <tr>
+                <tr class="tr-noborder">
                     <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
                     <td class="diaryquestion">Asked Question - How anxious/stressed were you Today? (1 not at all - 5 very)</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.Stress = true ? true : false)
+                      @Html.CheckBoxFor(Model => Model.Stress)
+                    </td>
+                </tr>
+                <tr class="tr-noborder">
+                    <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Wake Up Freshness</span></td>
+                    <td class="diaryquestion">Asked Question - How fresh did you feel from last nights sleep? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.WakeUpFreshness)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class=""></i><span>Tired</span></td>
                     <td class="diaryquestion">Asked Question - How tired/sleepy were you Today? (1 not at all - 5 very)</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.Tiredness = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.Tiredness)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class=""></i><span>Dream</span></td>
                     <td class="diaryquestion">Asked Question - How well did you rember your dream? (1 not at all - 5 very)</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.Dream = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.Dream)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>School Questions</span></td>
                     <td class="diaryquestion">Asked Question - How anxious/stressed are you in regards to school exams and assignements?  (1 not at all - 5 very)</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.SchoolQuestions = false ? true : false)
-
+                        @Html.CheckBoxFor(Model => Model.SchoolQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Coffees Questions</span></td>
                     <td class="diaryquestion">Asked Question - How many caffinated beverages & Time of the last caffinated beverages</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.CoffeeQuestions = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.CoffeeQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol Questions</span></td>
                     <td class="diaryquestion">Asked Question - How many Alcoholic beverages & Time of the last Alcoholic beverages</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.AlcoholQuestions = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.AlcoholQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Nap Questions</span></td>
                     <td class="diaryquestion">Asked Question - What Time was your nap & How long did you nap for Today</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.NapQuestions = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.NapQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Digital Device Question</span></td>
                     <td class="diaryquestion">Asked Question - How long did spend on your phone/tablet for after 6pm?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.DigDeviceDurationQuestion = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.DigDeviceDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Games Question</span></td>
                     <td class="diaryquestion">Asked Question - How long did spend on Video Games for after 6pm?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.GameDurationQuestion = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.GameDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Social Media Question</span></td>
                     <td class="diaryquestion">Asked Question - How long did spend on Social Media for after 6pm?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.SocialMediaDurationQuestion = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.SocialMediaDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Social Activities Question</span></td>
                     <td class="diaryquestion">Asked Question - How long did spend on Social Activities for after 6pm?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.SocialActivityDurationQuestion = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.SocialActivityDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Music Question</span></td>
                     <td class="diaryquestion">Asked Question - How long did spend listerning to music after 6pm?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.MusicDurationQuestion = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.MusicDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>TV Question</span></td>
                     <td class="diaryquestion">Asked Question - How long did spend Watching TV after 6pm?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.TVDurationQuestion = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.TVDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work Questions</span></td>
                     <td class="diaryquestion">Asked Question - When Did you start work today? & How long were you at work?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.WorkQuestions = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.WorkQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Excersise Questions</span></td>
                     <td class="diaryquestion">Asked Question - How long was your workout today? & How instense was your workout?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.ExersiseQuestions = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.ExersiseQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Food Questions</span></td>
                     <td class="diaryquestion">Asked Question - When was dinner tonight? & What time did you snack tonight?</td>
                     <td>
-                        @Html.CheckBox("IsActive", Model.UserQuestion.FoodQuestions = true ? true : false)
+                        @Html.CheckBoxFor(Model => Model.FoodQuestions)
                     </td>
                 </tr>
 

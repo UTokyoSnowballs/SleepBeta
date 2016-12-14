@@ -71,8 +71,8 @@ namespace SleepMakeSense.Controllers
 
             syncFitbitCred(accessToken);
 
-             return RedirectToAction("Index", "Home");
-            //return RedirectToAction("Sync", "UserDatas");
+             //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Sync", "UserDatas");
 
 
         }
@@ -83,26 +83,34 @@ namespace SleepMakeSense.Controllers
             {
 
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                TokenManagement userToken = (from a in Db.TokenManagements
-                                             where a.AspNetUserId.Equals(userId)
-                                             select a).FirstOrDefault();
+                var userToken = from table in Db.TokenManagements
+                                where table.AspNetUserId.Equals(userId)
+                                select table;
+                bool tokenAvailable = false;
 
+                foreach (TokenManagement token in userToken)
+                {
+                    if (token.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
+                    {
+                        token.DateChanged = DateTime.UtcNow;
+                        token.Token = accessToken.Token;
+                        token.TokenType = accessToken.TokenType;
+                        token.ExpiresIn = accessToken.ExpiresIn;
+                        token.RefreshToken = accessToken.RefreshToken;
+                    }
+                }
 
                 if (userToken == null)
                 {
-                    userToken = new TokenManagement();
-                    userToken.AspNetUserId = userId;
-                    Db.SubmitChanges();
+                    TokenManagement token = new TokenManagement()
+                    {
+
+                    };
+                    Db.TokenManagements.InsertOnSubmit(token);
                 }
 
-                userToken.DateChanged = DateTime.UtcNow;
-                userToken.Token = accessToken.Token;
-                userToken.TokenType = accessToken.TokenType;
-                userToken.ExpiresIn = accessToken.ExpiresIn;
-                userToken.RefreshToken = accessToken.RefreshToken;
 
-   
-
+                Db.SubmitChanges();
             }
         }
 

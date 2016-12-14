@@ -10,14 +10,12 @@ namespace SleepMakeSense.Models
     {
         public IEnumerable<SelectListItem> TrueFalse()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "True", Value = "1" };
             yield return new SelectListItem { Text = "False", Value = "0" };
         }
 
         public IEnumerable<SelectListItem> ToFive()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "0", Value = "0" };
             yield return new SelectListItem { Text = "1", Value = "1" };
             yield return new SelectListItem { Text = "2", Value = "2" };
@@ -28,7 +26,6 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> ToTen()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "0", Value = "0" };
             yield return new SelectListItem { Text = "1", Value = "1" };
             yield return new SelectListItem { Text = "2", Value = "2" };
@@ -44,7 +41,6 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> TimeToFive()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "0", Value = "0" };
             yield return new SelectListItem { Text = "15 Minutes", Value = "15" };
             yield return new SelectListItem { Text = "30 Minutes", Value = "30" };
@@ -71,7 +67,6 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> TimeToTen()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "0", Value = "0" };
             yield return new SelectListItem { Text = "30 Minutes", Value = "30" };
             yield return new SelectListItem { Text = "1 Hour", Value = "60" };
@@ -97,7 +92,6 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> DayHours()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "06:00 AM", Value = "06:00" };
             yield return new SelectListItem { Text = "07:00 AM", Value = "07:00" };
             yield return new SelectListItem { Text = "08:00 AM", Value = "08:00" };
@@ -115,7 +109,6 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> NightHours()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "06:00 PM", Value = "18:00" };
             yield return new SelectListItem { Text = "07:00 PM", Value = "19:00" };
             yield return new SelectListItem { Text = "08:00 PM", Value = "20:00" };
@@ -133,7 +126,6 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> AllHours()
         {
-            yield return new SelectListItem { Text = "Please Select", Value = null };
             yield return new SelectListItem { Text = "12:00 AM", Value = "00:00" };
             yield return new SelectListItem { Text = "01:00 AM", Value = "01:00" };
             yield return new SelectListItem { Text = "02:00 AM", Value = "02:00" };

@@ -181,38 +181,91 @@ namespace SleepMakeSense.Controllers
 
 
         [HttpPost]
-        public ActionResult EnterDiaryData(MyViewModel model)
+        public ActionResult EnterDiaryData(DiaryDataViewClass model)
         {
-            //getting data, userID and time of save
-            DiaryData dairyData = model.DiaryData;
-            dairyData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            dairyData.DateStamp = DateTime.UtcNow.Date;
+
 
             // 20161107 Pandita
             // Models.Database Db = new Models.Database();
             //Database lookup of the last 5 days
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
+            DateTime dateNow = DateTime.UtcNow.Date;
             bool update = false;
             IEnumerable <DiaryData> lastSynced = from table in Db.DiaryDatas
-                             where table.AspNetUserId.Equals(dairyData.AspNetUserId) && table.DateStamp >= dateStop
+                             where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId()) && table.DateStamp >= dateStop
                              orderby table.DateStamp
                              select table;
 
             //checking for a previous entry from the same day
             foreach (DiaryData query in lastSynced)
             {
-                if (query.DateStamp > dateStop)
-                {
-                    dateStop = query.DateStamp;
-                }
-                if (query.DateStamp.Date == dairyData.DateStamp)
+
+                if (query.DateStamp.Date == dateNow && query.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
                 {
                     update = true;
+                    query.WakeUpFreshness = model.WakeUpFreshness;
+                    query.Mood = model.Mood;
+                    query.Stress = model.Stress;
+                    query.Tiredness = model.Tiredness;
+                    query.Dream = model.Dream;
+                    query.BodyTemp = model.BodyTemp;
+                    query.Hormone = model.Hormone;
+                    query.SchoolStress = model.SchoolStress;
+                    query.CoffeeAmt = model.CoffeeAmt;
+                    query.CoffeeTime = model.CoffeeTime;
+                    query.AlcoholAmt = model.AlcoholAmt;
+                    query.AlcoholTime = model.AlcoholTime;
+                    query.NapTime = model.NapTime;
+                    query.NapDuration = model.NapDuration;
+                    query.DigDeviceDuration = model.DigDeviceDuration;
+                    query.GamesDuration = model.GamesDuration;
+                    query.SocialActivites = model.SocialActivites;
+                    query.SocialActivity = model.SocialActivity;
+                    query.MusicDuration = model.MusicDuration;
+                    query.TVDuration = model.TVDuration;
+                    query.WorkTime = model.WorkTime;
+                    query.WorkDuration = model.WorkDuration;
+                    query.ExerciseDuration = model.ExerciseDuration;
+                    query.ExerciseIntensity = model.ExerciseIntensity;
+                    query.DinnerTime = model.DinnerTime;
+                    query.SnackTime = model.SnackTime;
                 }
             }
             //Updating the database if no match in date is found
             if (update == false)
             {
+                //getting data, userID and time of save
+                DiaryData dairyData = new DiaryData()
+                {
+                    AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
+                    DateStamp = dateNow,
+                    WakeUpFreshness = model.WakeUpFreshness,
+                    Mood = model.Mood,
+                    Stress = model.Stress,
+                    Tiredness = model.Tiredness,
+                    Dream = model.Dream,
+                    BodyTemp = model.BodyTemp,
+                    Hormone = model.Hormone,
+                    SchoolStress = model.SchoolStress,
+                    CoffeeAmt = model.CoffeeAmt,
+                    CoffeeTime = model.CoffeeTime,
+                    AlcoholAmt = model.AlcoholAmt,
+                    AlcoholTime = model.AlcoholTime,
+                    NapTime = model.NapTime,
+                    NapDuration = model.NapDuration,
+                    DigDeviceDuration = model.DigDeviceDuration,
+                    GamesDuration = model.GamesDuration,
+                    SocialActivites = model.SocialActivites,
+                    SocialActivity = model.SocialActivity,
+                    MusicDuration = model.MusicDuration,
+                    TVDuration = model.TVDuration,
+                    WorkTime = model.WorkTime,
+                    WorkDuration = model.WorkDuration,
+                    ExerciseDuration = model.ExerciseDuration,
+                    ExerciseIntensity = model.ExerciseIntensity,
+                    DinnerTime = model.DinnerTime,
+                    SnackTime = model.SnackTime
+                };
                 Db.DiaryDatas.InsertOnSubmit(dairyData);
             }
             //   else db.Userdatas.Add(data);

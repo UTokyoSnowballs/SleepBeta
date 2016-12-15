@@ -69,7 +69,7 @@ namespace SleepMakeSense.Controllers
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             FitbitClient fitbitClient = GetFitbitClient(accessToken);
 
-            syncFitbitCred(accessToken);
+            SyncFitbitCred(accessToken);
 
              //return RedirectToAction("Index", "Home");
             return RedirectToAction("Sync", "UserDatas");
@@ -77,7 +77,7 @@ namespace SleepMakeSense.Controllers
 
         }
 
-        private void syncFitbitCred(OAuth2AccessToken accessToken)
+        private void SyncFitbitCred(OAuth2AccessToken accessToken)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -92,6 +92,7 @@ namespace SleepMakeSense.Controllers
                 {
                     if (token.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
                     {
+                        tokenAvailable = true;
                         token.DateChanged = DateTime.UtcNow;
                         token.Token = accessToken.Token;
                         token.TokenType = accessToken.TokenType;
@@ -100,12 +101,17 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                if (userToken == null)
+                if (tokenAvailable == false)
                 {
                     TokenManagement token = new TokenManagement()
                     {
-
-                    };
+                    AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
+                    DateChanged = DateTime.UtcNow,
+                    Token = accessToken.Token,
+                    TokenType = accessToken.TokenType,
+                    ExpiresIn = accessToken.ExpiresIn,
+                    RefreshToken = accessToken.RefreshToken
+                };
                     Db.TokenManagements.InsertOnSubmit(token);
                 }
 
@@ -131,6 +137,7 @@ namespace SleepMakeSense.Controllers
             {
                 if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
                 {
+
                     fitbitConnected = true;
                     accessToken.Token = data.Token;
                     accessToken.TokenType = data.TokenType;
@@ -152,7 +159,7 @@ namespace SleepMakeSense.Controllers
                 };
 
                 GetFitbitClient(accessToken);
-                syncFitbitCred(accessToken);
+                SyncFitbitCred(accessToken);
 
              return View("Callback");
               //  return RedirectToAction("Sync", "UserDatas");
@@ -199,7 +206,7 @@ namespace SleepMakeSense.Controllers
                 };
 
                 GetFitbitClient(accessToken);
-                syncFitbitCred(accessToken);
+                SyncFitbitCred(accessToken);
                 //     return View("Callback");
                 return RedirectToAction("Sync", "UserDatas");
             }

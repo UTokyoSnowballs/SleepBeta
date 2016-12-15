@@ -292,9 +292,10 @@
     <Compile Include="Models\AspNetUserLogin.cs" />
     <Compile Include="Models\CorrList.cs" />
     <Compile Include="Models\DiaryDataViewClass.cs" />
+    <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MyViewModel.cs" />
+    <Compile Include="Models\SyncViewModel.cs" />
     <Compile Include="Models\DiaryDataSetupModel.cs" />
     <Compile Include="Models\QuestionsSelections.cs" />
     <Compile Include="Models\Sleepbeta.designer.cs">

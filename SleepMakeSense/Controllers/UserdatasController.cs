@@ -212,11 +212,12 @@ namespace SleepMakeSense.Controllers
                 // Step 1: Retrieve 40 days data and store in "results"
             FitbitClient client = GetFitbitClient();
             int dateStopNumber = 40;
-   
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-dateStopNumber);
+
             bool userLogedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
 
             IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
-                                where table.AspNetUserId.Equals(userId) && table.DateStamp >= DateTime.UtcNow.Date.AddDays(-dateStopNumber)
+                                where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
                                  orderby table.DateStamp
                                 select table;
 
@@ -241,7 +242,10 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            DateTime dateStop = lastSyncedDate.Min();
+            if (lastSyncedData.Any())
+            {
+                 dateStop = lastSyncedDate.Min();
+            }
             List<FitbitData> fitbitInputDatas = new List<FitbitData>();
 
 
@@ -449,7 +453,7 @@ namespace SleepMakeSense.Controllers
                 await FitbitDataSync(userId);
                 //Retrieves the Data
                  
-                MyViewModel model = DataModelCreation(UserDatas(userId));
+                SyncViewModel model = DataModelCreation(UserDatas(userId));
                 return View(model);
             
         }
@@ -505,7 +509,7 @@ namespace SleepMakeSense.Controllers
         }
 
 
-        public MyViewModel DataModelCreation(List<Userdata> userDatas)
+        public SyncViewModel DataModelCreation(List<Userdata> userDatas)
         {
             /*Fixing the data to make it easier to work on in the future.
              * Thinking of making this into a differnt class and splitting it into smaller methods as alot of the code is repetitive
@@ -518,8 +522,10 @@ namespace SleepMakeSense.Controllers
 
             //Part of the redesign - this will allow the datamining method to flick through all of the classes with less commplication
 
-            MyViewModel viewModel = new MyViewModel();
+            SyncViewModel syncViewModel = new SyncViewModel();
             ViewBag.FitbitSynced = true;
+            syncViewModel.Userdata = userDatas;
+
 
             //Fitbit Data Counters
             int CNTSteps = 0, CNTDistance = 0, CNTMinutesSedentary = 0, CNTMinutesLightlyActive = 0,
@@ -3845,10 +3851,10 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            viewModel.Userdata = userDatas;
-            viewModel.CorrCoefficient = CoefficientList;
+            syncViewModel.Userdata = userDatas;
+            syncViewModel.CorrCoefficient = CoefficientList;
 
-            return viewModel;
+            return syncViewModel;
 
         }   
     }    

@@ -1,6 +1,6 @@
 ﻿@using SleepMakeSense.Models
 
-@model MyViewModel
+@model SyncViewModel
 
 
 @using System.Web.Script.Serialization
@@ -165,17 +165,15 @@
                 }
 
 
-                @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
+                @foreach (SleepMakeSense.Models.Userdata d in Model.Userdata)
                 {
                         var dateOnly = d.DateStamp.ToShortDateString();
                         var weekday = d.DateStamp.DayOfWeek;
 
-                        @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAsleep" });
-                                                            @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesAwake" });
-                                                            @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.AwakeningsCount" });
-                                                            @:MinutesToFallAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.MinutesToFallAsleep" });
-                                                            @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.SleepEfficiency" });
-                                                            @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.WakeUpFreshness" });
+                        @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.FitbitData.MinutesAsleep" });
+                                                            @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.FitbitData.AwakeningsCount" });
+                                                            @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.FitbitData.SleepEfficiency" });
+                                                            @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@d.DiaryData.WakeUpFreshness" });
 
                  }
 

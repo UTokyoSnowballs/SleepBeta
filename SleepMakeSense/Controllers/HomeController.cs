@@ -14,12 +14,12 @@ namespace SleepMakeSense.Controllers
 
         public ActionResult Index()
         {
-            MyViewModel model = new MyViewModel();
+            HomePageViewModel viewModel = new HomePageViewModel();
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 DateTime endStop = DateTime.UtcNow.Date.AddDays(-5);
-                model.TodaySync = true;
-                model.QuestionsSetup = false;
+                viewModel.DiarySetup = false;
+                viewModel.TodayDiaryEntry = false;
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
                 //Getting Table Data
@@ -32,26 +32,26 @@ namespace SleepMakeSense.Controllers
                                  where table.AspNetUserId.Equals(userId) && table.DateStamp >= endStop
                                  orderby table.DateStamp
                                  select table;
-                /*
+                
                 foreach (UserQuestion userQuestion in userQuestions)
                 {
                     if (userQuestion.AspNetUserId == userId )
                     {
-                        model.QuestionsSetup = true;
+                        viewModel.DiarySetup = true;
                     }
                 }
-                */
+                
                 if (lastSynced.Count() != 0)
                 {
                     foreach (DiaryData diaryData in lastSynced)
                     {
                         if (diaryData.AspNetUserId == userId && diaryData.DateStamp == DateTime.UtcNow.Date)
                         {
-                            model.TodaySync = true;
+                            viewModel.TodayDiaryEntry = true;
                         }
                     }
                 }
-                return View(model);
+                return View(viewModel);
 
             }
 

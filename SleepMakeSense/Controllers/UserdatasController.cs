@@ -432,7 +432,7 @@ namespace SleepMakeSense.Controllers
 
         public async Task<ActionResult> Sync()
         {
-
+            int numOfDays = 40;
             /* Todo: Pandita 
              * // Sean -- Good idea :)
              * We could use the View Model instead
@@ -453,7 +453,7 @@ namespace SleepMakeSense.Controllers
                 await FitbitDataSync(userId);
                 //Retrieves the Data
                  
-                SyncViewModel model = DataModelCreation(UserDatas(userId));
+                SyncViewModel model = DataModelCreation(UserDatas(userId, numOfDays));
                 return View(model);
             
         }
@@ -469,10 +469,10 @@ namespace SleepMakeSense.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
 
-        private List<Userdata> UserDatas(string userId)
+        private List<Userdata> UserDatas(string userId, int numOfDays)
         {
             //Item Stup
-            DateTime dateStop = DateTime.UtcNow.AddDays(-40);
+            DateTime dateStop = DateTime.UtcNow.AddDays(-numOfDays);
             List<Userdata> userDatas = new List<Userdata>();
 
             //Data retieval
@@ -525,7 +525,7 @@ namespace SleepMakeSense.Controllers
             SyncViewModel syncViewModel = new SyncViewModel();
             syncViewModel.MinutesAsleepList = new List<TimeList>();
             syncViewModel.AwakeCountList = new List<TimeList>();
-            syncViewModel.SleepEffiencyList = new List<TimeList>();
+            syncViewModel.SleepEfficiencyList = new List<TimeList>();
             ViewBag.FitbitSynced = true;
 
 
@@ -595,6 +595,17 @@ namespace SleepMakeSense.Controllers
                 if (Convert.ToDouble(userData.DiaryData.Light) > 0) CNTLight++;
                 if (Convert.ToDateTime(userData.DiaryData.SunRiseTime) != null) CNTSunRiseTime++;
                 if (Convert.ToDateTime(userData.DiaryData.SunSetTime) != null) CNTSunSetTime++;
+
+                //To Ignore anything with 0
+                /*
+                if (Convert.ToDouble(userData.FitbitData.MinutesAsleep) > 0) syncViewModel.MinutesAsleepList.Add(new TimeList() {Date = userData.FitbitData.DateStamp, Value = (Convert.ToDouble(userData.FitbitData.MinutesAsleep)/60) });
+                if (Convert.ToDouble(userData.FitbitData.AwakeningsCount) > 0) syncViewModel.AwakeCountList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.AwakeningsCount)});
+                if (Convert.ToDouble(userData.FitbitData.SleepEfficiencyList) > 0) syncViewModel.SleepEfficiencyList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.SleepEfficiency) });
+                */
+                //All - I like the idea of seeing when data is not present
+                syncViewModel.MinutesAsleepList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Math.Round((Convert.ToDouble(userData.FitbitData.MinutesAsleep) / 60), 2) });
+                syncViewModel.AwakeCountList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.AwakeningsCount) });
+                syncViewModel.SleepEfficiencyList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.SleepEfficiency) });
 
             }
 

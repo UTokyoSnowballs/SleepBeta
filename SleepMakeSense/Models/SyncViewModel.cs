@@ -14,7 +14,7 @@ namespace SleepMakeSense.Models
 
         public List<TimeList> AwakeCountList { get; set; }
 
-        public List<TimeList> SleepEffiencyList { get; set; }
+        public List<TimeList> SleepEfficiencyList { get; set; }
 
     }
 }

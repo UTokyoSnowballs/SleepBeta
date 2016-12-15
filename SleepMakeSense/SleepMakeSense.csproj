@@ -303,6 +303,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Sleepbeta.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeList.cs" />
     <Compile Include="Models\Userdata.cs" />
     <Compile Include="OAuth2\DefaultTokenManager.cs" />
     <Compile Include="OAuth2\ITokenManager.cs" />
@@ -364,7 +365,6 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\SleepBeta-v1.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Fitbit.Portable.dll" />
     <Content Include="obj\Debug\Fitbit.Portable.pdb" />
@@ -378,9 +378,15 @@
     <Content Include="obj\Release\_WPPLastBuildInfo.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -432,15 +438,15 @@
     <Content Include="Views\Userdatas\Index.cshtml" />
     <Content Include="Views\Fitbit\Devices.cshtml" />
     <Content Include="Views\Fitbit\Tablero.cshtml" />
-    <Content Include="Views\Userdatas\Sync.cshtml" />
+    <Content Include="Views\Userdatas\Sync - old.cshtml" />
     <Content Include="Views\Userdatas\FactorList.cshtml" />
     <Content Include="Views\Fitbit\StepIntraday.cshtml" />
     <Content Include="Views\Fitbit\SleepIntraday.cshtml" />
     <Content Include="Views\Fitbit\Callback.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\DiaryData\EnterDiaryData.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\DiaryData\DiaryDataSetup.cshtml" />
+    <Content Include="Views\Userdatas\Sync.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

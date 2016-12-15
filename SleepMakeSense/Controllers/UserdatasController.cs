@@ -523,8 +523,10 @@ namespace SleepMakeSense.Controllers
             //Part of the redesign - this will allow the datamining method to flick through all of the classes with less commplication
 
             SyncViewModel syncViewModel = new SyncViewModel();
+            syncViewModel.MinutesAsleepList = new List<TimeList>();
+            syncViewModel.AwakeCountList = new List<TimeList>();
+            syncViewModel.SleepEffiencyList = new List<TimeList>();
             ViewBag.FitbitSynced = true;
-            syncViewModel.Userdata = userDatas;
 
 
             //Fitbit Data Counters
@@ -3851,7 +3853,7 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            syncViewModel.Userdata = userDatas;
+
             syncViewModel.CorrCoefficient = CoefficientList;
 
             return syncViewModel;

@@ -16,7 +16,7 @@ namespace SleepMakeSense.Controllers
 {
     public class DiaryDataController : Controller
     {
-        private SleepbetaDataContext Db = new SleepbetaDataContext();
+        private SleepBetaDataContext Db = new SleepBetaDataContext();
 
         [HttpGet]
         public ActionResult DiaryDataSetup()

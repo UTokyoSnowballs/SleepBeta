@@ -295,14 +295,14 @@
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SleepBeta.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SleepBeta.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\SyncViewModel.cs" />
     <Compile Include="Models\DiaryDataSetupModel.cs" />
     <Compile Include="Models\QuestionsSelections.cs" />
-    <Compile Include="Models\Sleepbeta.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sleepbeta.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\TimeList.cs" />
     <Compile Include="Models\Userdata.cs" />
     <Compile Include="OAuth2\DefaultTokenManager.cs" />
@@ -359,9 +359,9 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Models\Sleepbeta.dbml">
+    <Content Include="Models\SleepBeta.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>Sleepbeta.designer.cs</LastGenOutput>
+      <LastGenOutput>SleepBeta.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\SleepBeta-v1.pubxml" />
@@ -464,8 +464,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\Sleepbeta.dbml.layout">
-      <DependentUpon>Sleepbeta.dbml</DependentUpon>
+    <None Include="Models\SleepBeta.dbml.layout">
+      <DependentUpon>SleepBeta.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <PropertyGroup>

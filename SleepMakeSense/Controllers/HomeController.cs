@@ -10,7 +10,7 @@ namespace SleepMakeSense.Controllers
 {
     public class HomeController : Controller
     {
-        private SleepbetaDataContext Db = new SleepbetaDataContext();
+        private SleepBetaDataContext Db = new SleepBetaDataContext();
 
         public ActionResult Index()
         {

@@ -23,7 +23,7 @@ namespace SleepMakeSense.Controllers
         //
         // GET: /Fitbit/
 
-        private SleepbetaDataContext Db = new SleepbetaDataContext();
+        private SleepBetaDataContext Db = new SleepBetaDataContext();
 
         public ActionResult Index()
         {

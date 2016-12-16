@@ -29,7 +29,7 @@ namespace SleepMakeSense.Controllers
 
         // 20161105 Pandita
         // private ApplicationDbContext db = new ApplicationDbContext();
-        private SleepbetaDataContext Db = new SleepbetaDataContext();
+        private SleepBetaDataContext Db = new SleepBetaDataContext();
         
 
         /*
@@ -236,7 +236,7 @@ namespace SleepMakeSense.Controllers
                         dayExists = true;
                     }
                 }
-                if (dayExists != true)
+                if (dayExists == true)
                 {
                     lastSyncedDate.Add(iDay);
                 }
@@ -244,8 +244,10 @@ namespace SleepMakeSense.Controllers
 
             if (lastSyncedData.Any())
             {
-                 dateStop = lastSyncedDate.Min();
+                dateStop = lastSyncedDate.Min();
             }
+
+            else return View();
             List<FitbitData> fitbitInputDatas = new List<FitbitData>();
 
 
@@ -281,6 +283,7 @@ namespace SleepMakeSense.Controllers
                     {
                     fitbitInputDatas.Add(new FitbitData()
                         {
+                            Id = Guid.NewGuid(),
                             DateStamp = data.DateTime.Date.AddDays(-1),
                             MinutesAsleep = data.Value,
                             MinutesAwake = null,
@@ -421,9 +424,10 @@ namespace SleepMakeSense.Controllers
                 }
             //Comparing Saved data with new data
 
-
-            Db.FitbitDatas.InsertAllOnSubmit(fitbitInputDatas);
-
+            foreach (FitbitData data in fitbitInputDatas)
+            {
+                Db.FitbitDatas.InsertOnSubmit(data);
+            }
             Db.SubmitChanges();
             ViewBag.FitbitSynced = true; 
 
@@ -523,9 +527,10 @@ namespace SleepMakeSense.Controllers
             //Part of the redesign - this will allow the datamining method to flick through all of the classes with less commplication
 
             SyncViewModel syncViewModel = new SyncViewModel();
-            syncViewModel.MinutesAsleepList = new List<TimeList>();
-            syncViewModel.AwakeCountList = new List<TimeList>();
-            syncViewModel.SleepEfficiencyList = new List<TimeList>();
+            List<DateTime> dateList = new List<DateTime>();
+            List<double> minutesAsleepList = new List<double>();
+            List<int> awakeCountList = new List<int>();
+            List<int> sleepEfficiencyList = new List<int>();
             ViewBag.FitbitSynced = true;
 
 
@@ -598,14 +603,23 @@ namespace SleepMakeSense.Controllers
 
                 //To Ignore anything with 0
                 /*
-                if (Convert.ToDouble(userData.FitbitData.MinutesAsleep) > 0) syncViewModel.MinutesAsleepList.Add(new TimeList() {Date = userData.FitbitData.DateStamp, Value = (Convert.ToDouble(userData.FitbitData.MinutesAsleep)/60) });
-                if (Convert.ToDouble(userData.FitbitData.AwakeningsCount) > 0) syncViewModel.AwakeCountList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.AwakeningsCount)});
-                if (Convert.ToDouble(userData.FitbitData.SleepEfficiencyList) > 0) syncViewModel.SleepEfficiencyList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.SleepEfficiency) });
+                                if (Convert.ToDouble(userData.FitbitData.MinutesAsleep) > 0)
+                {
+                    dateList.Add(userData.FitbitData.DateStamp);
+                    MinutesAsleepList.Add(Convert.ToDouble(userData.FitbitData.MinutesAsleep));
+                    AwakeCountList.Add(Convert.ToInt32(userData.FitbitData.AwakeningsCount));
+                    AwakeCountList.Add(Convert.ToInt32(userData.FitbitData.SleepEfficiency));
+                }
                 */
                 //All - I like the idea of seeing when data is not present
-                syncViewModel.MinutesAsleepList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Math.Round((Convert.ToDouble(userData.FitbitData.MinutesAsleep) / 60), 2) });
-                syncViewModel.AwakeCountList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.AwakeningsCount) });
-                syncViewModel.SleepEfficiencyList.Add(new TimeList() { Date = userData.FitbitData.DateStamp, Value = Convert.ToDouble(userData.FitbitData.SleepEfficiency) });
+
+
+                    dateList.Add(userData.FitbitData.DateStamp);
+                    minutesAsleepList.Add(Convert.ToDouble(userData.FitbitData.MinutesAsleep));
+                    awakeCountList.Add(Convert.ToInt32(userData.FitbitData.AwakeningsCount));
+                    sleepEfficiencyList.Add(Convert.ToInt32(userData.FitbitData.SleepEfficiency));
+                
+
 
             }
 
@@ -3864,6 +3878,10 @@ namespace SleepMakeSense.Controllers
 
             }
 
+            syncViewModel.DateStamp = dateList.ToArray();
+            syncViewModel.MinutesAsleep = minutesAsleepList.ToArray();
+            syncViewModel.AwakeCount = awakeCountList.ToArray();
+            syncViewModel.SleepEfficiency = sleepEfficiencyList.ToArray();
 
             syncViewModel.CorrCoefficient = CoefficientList;
 

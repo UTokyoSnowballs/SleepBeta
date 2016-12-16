@@ -7,14 +7,18 @@ using System.Web.Mvc;
 namespace SleepMakeSense.Models
 {
     public class SyncViewModel
-    {
+    { 
         public List<CorrList> CorrCoefficient { get; set; }
 
-        public List<TimeList> MinutesAsleepList { get; set; }
 
-        public List<TimeList> AwakeCountList { get; set; }
+        public DateTime[] DateStamp { get; set; }
 
-        public List<TimeList> SleepEfficiencyList { get; set; }
+        public double[] MinutesAsleep { get; set; }
+
+        public int[] AwakeCount { get; set; }
+
+        public int[] SleepEfficiency { get; set; }
+
 
     }
 }

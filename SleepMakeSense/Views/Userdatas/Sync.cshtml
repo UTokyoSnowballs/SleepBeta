@@ -15,86 +15,22 @@
     <script src="js/Chart.js" type="text/javascript"></script>
 
     <style type="text/css">
-        html, body {
-            height: 100%;
-                    }
-        body {
-            font-family: 12px sans-serif;
-            color: white;
-             }
-        /* button */
-        .button {
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.6em;
-            font-weight: 400;
-            text-transform: uppercase;
-            display: inline-block;
-            padding: 4px 6px;
-            margin: 0 10px;
-            position: relative;
-            background: #ccc;
-            color: #fff;
-            box-shadow: 0 0 2px rgba(0,0,0,0.1);
-            background: rgb(190,190,190); /* Old browsers */
-            background: -moz-linear-gradient(top, rgba(190,190,190,1) 0%, rgba(170,170,170,1) 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(190,190,190,1)), color-stop(100%,rgba(170,170,170,1))); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top, rgba(190,190,190,1) 0%,rgba(170,170,170,1) 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top, rgba(190,190,190,1) 0%,rgba(170,170,170,1) 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top, rgba(190,190,190,1) 0%,rgba(170,170,170,1) 100%); /* IE10+ */
-            background: linear-gradient(to bottom, rgba(190,190,190,1) 0%,rgba(170,170,170,1) 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bebebe', endColorstr='#aaaaaa',GradientType=0 ); /* IE6-9 */
-                }
-        .button:hover {
-                background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
-                background: linear-gradient(141deg, #F74657, #459EE8);
-                background: -o-linear-gradient(141deg, #F74657, #459EE8);
-                background: -moz-linear-gradient(141deg, #F74657, #459EE8);
-                }
-        /* Header styles */
-        header {
-                text-align: center;
-                background: #637b85;
-                color: #fff;
-                margin-bottom: 40px;
-                }
-        header span {
-                font-weight: 200;
-                }
-        header .button {
-                font-size: 0.2em;
-                top: -6px;
-                }
-
-
-
     </style>
 
 </head>
 <body>
     <script type="text/javascript">
-     @{
-         ViewBag.Title = "My Sleep Data";
-         List<TimeList> MinutesAsleep = Model.MinutesAsleepList;
-         List<TimeList> SleepEfficiency = Model.SleepEfficiencyList;
-         List<TimeList> AwakeCount = Model.AwakeCountList;
 
-     }
-        var minutesAsleepTemp = "@MinutesAsleep";
-        var minutesAsleepArray = minutesAsleepTemp.split(',');
+        var Barchart = new Chart(ctx, {
+            type: "bar",
+            data: data,
+            options: options
+        });
 
-        var minutesAsleep = {
-            labels: @Model.MinutesAsleepList.Date,
-            datasets: [
-                {
-                    fillColor: "rgba(99,123,133,0.4)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    data: minutesAsleepTemp
-                }
-            ]
-        }
+        var options ={
+            responsive: true,
+            animation: true
+        };
 
     </script>
 
@@ -122,6 +58,10 @@
                     <ul class="legend">
                         <li><span class="good"></span>good</li>
                         <li><span class="bad"></span>bad</li>
+                        <canvas id="graph" width="800" height="400">
+                            
+                        </canvas>
+
                     </ul>
                 </div>
             </div>
@@ -129,8 +69,14 @@
                 <div class="tab-content">
                     <div class="tab-pane active fade in" id="MinutesAsleepTimeseries">
                         <div id="MinutesAsleepTimeseries">
-                            /* Minutes Asleep Graph */
-                            <canvas id="MinutesAsleepCanvas" width="800" height="400"></canvas>
+                            
+                            <script>
+                            var data = {
+                                labels: @Model.DateStamp,
+                                borderWidth: 1,
+                                data: @Model.MinutesAsleep,
+                            };
+                            </script>
 
                         </div>
                         <div class="row">
@@ -143,8 +89,13 @@
                     </div>
                     <div class="tab-pane fade" id="MinutesAwakeTimeseries">
                         <div id="MinutesAwakeTimeseries">
-                            /* Awake Count Graph */
-                            <canvas id="AwakeCountCanvas" width="800" height="400"></canvas>
+                            <script>
+                            var data = {
+                                labels: @Model.DateStamp,
+                                borderWidth: 1,
+                                data: @Model.AwakeCount,
+                            };
+                            </script>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -156,8 +107,13 @@
                     </div>
                     <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
-                            /* sleep Effiency Graph */
-                            <canvas id="SleepEfficiencyCanvas" width="800" height="400"></canvas>
+                            <script>
+                            var data = {
+                                labels: @Model.DateStamp,
+                                borderWidth: 1,
+                                data: @Model.SleepEfficiency,
+                            };
+                            </script>
                         </div>
                         <div class="row">
                             <div class="col-md-12">

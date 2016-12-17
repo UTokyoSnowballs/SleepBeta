@@ -205,55 +205,43 @@ namespace SleepMakeSense.Controllers
                 return (FitbitClient)Session["FitbitClient"];
             }
         }
+
+        private DateTime FindingDateStop(string userId)
+        {
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-40);
+
+            IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
+                                                   where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
+                                                   select table;
+
+            foreach(FitbitData daysData in lastSyncedData)
+            {
+                if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp.AddDays(1);
+            }
+            return dateStop;
+        }
+
    
         private async Task<ActionResult> FitbitDataSync(string userId )
         {
 
                 // Step 1: Retrieve 40 days data and store in "results"
             FitbitClient client = GetFitbitClient();
-            int dateStopNumber = 40;
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-dateStopNumber);
+            DateTime dateStop = FindingDateStop(userId);
 
-            bool userLogedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            bool syncRequired = false;
 
-            IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
-                                where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
-                                 orderby table.DateStamp
-                                select table;
-
-
-            //Getting a list of all the missing data
-            List<DateTime> lastSyncedDate = new List<DateTime>();
-
-            for (int i = 0; i >= dateStopNumber; i++)
+            if (dateStop < DateTime.UtcNow.Date)
             {
-                bool dayExists = false;
-                DateTime iDay = DateTime.UtcNow.Date.AddDays(i - dateStopNumber);
-                foreach (FitbitData fitbitData in lastSyncedData)
-                {
-                    if (iDay == fitbitData.DateStamp)
-                    {
-                        dayExists = true;
-                    }
-                }
-                if (dayExists == true)
-                {
-                    lastSyncedDate.Add(iDay);
-                }
+                syncRequired = true;
             }
 
-            if (lastSyncedData.Any())
+            if (syncRequired)
             {
-                dateStop = lastSyncedDate.Min();
-            }
+                List<FitbitData> fitbitInputDatas = new List<FitbitData>();
 
-            else return View();
-            List<FitbitData> fitbitInputDatas = new List<FitbitData>();
-
-
-
-            //Each set is 1 call - calling 40 or 60 only increase the size by a small amount
-            //21 calls
+                //Each set is 1 call - calling 40 or 60 only increase the size by a small amount
+                //21 calls
                 var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, dateStop, DateTime.UtcNow);
                 var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, dateStop, DateTime.UtcNow);
                 var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, dateStop, DateTime.UtcNow);
@@ -281,7 +269,7 @@ namespace SleepMakeSense.Controllers
 
                     if (Convert.ToDouble(data.Value) > 0)  // Remove entries with no sleep log (e.g. due to battery issue)
                     {
-                    fitbitInputDatas.Add(new FitbitData()
+                        fitbitInputDatas.Add(new FitbitData()
                         {
                             Id = Guid.NewGuid(),
                             DateStamp = data.DateTime.Date.AddDays(-1),
@@ -310,125 +298,126 @@ namespace SleepMakeSense.Controllers
                         });
                     }
                 }
-                
+
 
                 foreach (FitbitData fitbitInputData in fitbitInputDatas)
                 {
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAwake.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesAwake = data.Value;
+                        fitbitInputData.MinutesAwake = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in awakeningsCount.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.AwakeningsCount = data.Value;
+                        fitbitInputData.AwakeningsCount = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeInBed.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.TimeInBed = data.Value;
+                        fitbitInputData.TimeInBed = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesToFallAsleep.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesToFallAsleep = data.Value;
+                        fitbitInputData.MinutesToFallAsleep = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAfterWakeup.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesAfterWakeup = data.Value;
+                        fitbitInputData.MinutesAfterWakeup = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in sleepEfficiency.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.SleepEfficiency = data.Value;
+                        fitbitInputData.SleepEfficiency = data.Value;
                     }
 
                     // Potential impacting factors; need filter out untracked factors.
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesIn.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.CaloriesIn = data.Value;
+                        fitbitInputData.CaloriesIn = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in water.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.Water = data.Value;
+                        fitbitInputData.Water = data.Value;
                     }
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesOut.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.CaloriesOut = data.Value;
+                        fitbitInputData.CaloriesOut = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in steps.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.Steps = data.Value;
+                        fitbitInputData.Steps = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in distance.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.Distance = data.Value;
+                        fitbitInputData.Distance = data.Value;
                     }
 
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesSedentary.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesSedentary = data.Value;
+                        fitbitInputData.MinutesSedentary = data.Value;
                         //if (Convert.ToDouble(item.MinutesSedentary) > 0) CNTminutesSedentary++; 
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesLightlyActive.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesLightlyActive = data.Value;
+                        fitbitInputData.MinutesLightlyActive = data.Value;
                         //if (Convert.ToDouble(item.MinutesLightlyActive) > 0) CNTminutesLightlyActive++; 
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesFairlyActive.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesFairlyActive = data.Value;
+                        fitbitInputData.MinutesFairlyActive = data.Value;
                         //if (Convert.ToDouble(item.MinutesFairlyActive) > 0) CNTminutesFairlyActive++; 
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesVeryActive.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.MinutesVeryActive = data.Value;
+                        fitbitInputData.MinutesVeryActive = data.Value;
                         //if (Convert.ToDouble(item.MinutesVeryActive) > 0) CNTminutesVeryActive++; 
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in activityCalories.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.ActivityCalories = data.Value;
+                        fitbitInputData.ActivityCalories = data.Value;
                         //if (Convert.ToDouble(item.ActivityCalories) > 0) CNTactivityCalories++; 
                     }
 
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeEnteredBed.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.TimeEnteredBed = data.Value;
+                        fitbitInputData.TimeEnteredBed = data.Value;
                         //if (Convert.ToDouble(item.TimeEnteredBed) > 0) CNTtimeEnteredBed++; 
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in weight.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.Weight = data.Value;
+                        fitbitInputData.Weight = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in bmi.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.BMI = data.Value;
+                        fitbitInputData.BMI = data.Value;
                     }
 
                     foreach (Fitbit.Models.TimeSeriesDataList.Data data in fat.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
-                    fitbitInputData.Fat = data.Value;
+                        fitbitInputData.Fat = data.Value;
                     }
                 }
-            //Comparing Saved data with new data
+                //Comparing Saved data with new data
 
-            foreach (FitbitData data in fitbitInputDatas)
-            {
-                Db.FitbitDatas.InsertOnSubmit(data);
+                foreach (FitbitData data in fitbitInputDatas)
+                {
+                    Db.FitbitDatas.InsertOnSubmit(data);
+                }
+                Db.SubmitChanges();
             }
-            Db.SubmitChanges();
             ViewBag.FitbitSynced = true; 
 
             return View();

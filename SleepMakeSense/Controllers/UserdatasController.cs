@@ -443,7 +443,7 @@ namespace SleepMakeSense.Controllers
 
 
                 //Enable Fitbit Data SYNC
-                await FitbitDataSync(userId);
+              //  await FitbitDataSync(userId);
                 //Retrieves the Data
                  
                 SyncViewModel model = DataModelCreation(UserDatas(userId, numOfDays));
@@ -567,10 +567,6 @@ namespace SleepMakeSense.Controllers
             //Part of the redesign - this will allow the datamining method to flick through all of the classes with less commplication
 
             SyncViewModel syncViewModel = new SyncViewModel();
-            List<DateTime> dateList = new List<DateTime>();
-            List<double> minutesAsleepList = new List<double>();
-            List<int> awakeCountList = new List<int>();
-            List<int> sleepEfficiencyList = new List<int>();
             ViewBag.FitbitSynced = true;
 
 
@@ -653,12 +649,14 @@ namespace SleepMakeSense.Controllers
                 */
                 //All - I like the idea of seeing when data is not present
 
-
-                dateList.Add(userData.DateStamp);
-                    minutesAsleepList.Add(Convert.ToDouble(userData.MinutesAsleep));
-                    awakeCountList.Add(Convert.ToInt32(userData.AwakeningsCount));
-                    sleepEfficiencyList.Add(Convert.ToInt32(userData.SleepEfficiency));
-                
+                try
+                {
+                    syncViewModel.DateStamp.Add(userData.DateStamp);
+                    syncViewModel.MinutesAsleep.Add(Convert.ToInt32(userData.MinutesAsleep));
+                    syncViewModel.AwakeCount.Add(Convert.ToInt32(userData.AwakeningsCount));
+                    syncViewModel.SleepEfficiency.Add(Convert.ToInt32(userData.SleepEfficiency));
+                }
+                catch { }
 
 
             }
@@ -3917,11 +3915,6 @@ namespace SleepMakeSense.Controllers
                 entry.Coefficient = (entry.Coefficient + 1) / 2;
 
             }
-
-            syncViewModel.DateStamp = dateList.ToArray();
-            syncViewModel.MinutesAsleep = minutesAsleepList.ToArray();
-            syncViewModel.AwakeCount = awakeCountList.ToArray();
-            syncViewModel.SleepEfficiency = sleepEfficiencyList.ToArray();
 
             syncViewModel.CorrCoefficient = CoefficientList;
 

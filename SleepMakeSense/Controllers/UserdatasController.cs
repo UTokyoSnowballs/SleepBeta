@@ -426,6 +426,15 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> Sync()
         {
             int numOfDays = 40;
+
+            //Comment out the bellow line to disable getting the current logged in user data
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            //UnComment the bellow line to select a specific use to show the users sync page screen
+            //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
+
+            List<Userdata> userDatas = UserDatas(userId, numOfDays);
+            bool todaySync = true;
+
             /* Todo: Pandita 
              * // Sean -- Good idea :)
              * We could use the View Model instead
@@ -435,26 +444,24 @@ namespace SleepMakeSense.Controllers
             }
             else
             {*/
+            foreach (Userdata userData in userDatas)
+            {
+                if(userData.DateStamp == DateTime.UtcNow.Date) todaySync = false;
+            }
 
-                //Comment out the bellow line to disable getting the current logged in user data
-                string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                //UnComment the bellow line to select a specific use to show the users sync page screen
-                //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
-
-
+            if (todaySync)
+            {
                 //Enable Fitbit Data SYNC
-              //  await FitbitDataSync(userId);
+                await FitbitDataSync(userId);
                 //Retrieves the Data
-                 
-                SyncViewModel model = DataModelCreation(UserDatas(userId, numOfDays));
+            }
+
+            SyncViewModel model = DataModelCreation(userDatas);
                 return View(model);
             
         }
 
-        public ActionResult NoDataSync()
-        {
-            return View("Sync");
-        }
+
 
         /// <summary>
         /// Handels all data retrieval and outputs the user data
@@ -465,7 +472,7 @@ namespace SleepMakeSense.Controllers
         private List<Userdata> UserDatas(string userId, int numOfDays)
         {
             //Item Stup
-            DateTime dateStop = DateTime.UtcNow.AddDays(-numOfDays);
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-numOfDays);
             List<Userdata> userDatas = new List<Userdata>();
 
             //Data retieval
@@ -483,37 +490,34 @@ namespace SleepMakeSense.Controllers
             {
                 userDatas.Add(new Userdata()
                 {
-                    Id = Guid.NewGuid(),
-                    DateStamp = fitbitData.DateStamp
-                });
+                    Id = fitbitData.Id,
+                    DateStamp = fitbitData.DateStamp,
+                    MinutesAsleep = Convert.ToDouble(fitbitData.MinutesAsleep),
+                    MinutesAwake = Convert.ToDouble(fitbitData.MinutesAwake),
+                    AwakeningsCount = Convert.ToDouble(fitbitData.AwakeningsCount),
+                    TimeInBed = Convert.ToDouble(fitbitData.TimeInBed),
+                    MinutesToFallAsleep = Convert.ToDouble(fitbitData.MinutesToFallAsleep),
+                    MinutesAfterWakeup = Convert.ToDouble(fitbitData.MinutesAfterWakeup),
+                    SleepEfficiency = Convert.ToDouble(fitbitData.SleepEfficiency),
+                    CaloriesIn = Convert.ToDouble(fitbitData.CaloriesIn),
+                    CaloriesOut = Convert.ToDouble(fitbitData.CaloriesOut),
+                    Water = Convert.ToDouble(fitbitData.Water),
+                    Steps = Convert.ToDouble(fitbitData.Steps),
+                    Distance = Convert.ToDouble(fitbitData.Distance),
+                    MinutesSedentary = Convert.ToDouble(fitbitData.MinutesSedentary),
+                    MinutesLightlyActive = Convert.ToDouble(fitbitData.MinutesLightlyActive),
+                    MinutesFairlyActive = Convert.ToDouble(fitbitData.MinutesFairlyActive),
+                    MinutesVeryActive = Convert.ToDouble(fitbitData.MinutesVeryActive),
+                    ActivityCalories = Convert.ToDouble(fitbitData.ActivityCalories),
+                // userdata.TimeEnteredBed = TimeSpan.Parse(fitbitData.TimeEnteredBed); //Was getting Null Exception error
+
+                    Weight = Convert.ToDouble(fitbitData.Weight),
+                    BMI = Convert.ToDouble(fitbitData.BMI),
+                    Fat = Convert.ToDouble(fitbitData.Fat)
+            });
             }
             foreach (Userdata userdata in userDatas)
             {
-                foreach (FitbitData fitbitData in fitbitDatas.Where(fitbitData => fitbitData.DateStamp == userdata.DateStamp))
-                {
-                    userdata.MinutesAsleep = Convert.ToDouble(fitbitData.MinutesAsleep);
-                    userdata.MinutesAwake = Convert.ToDouble(fitbitData.MinutesAwake);
-                    userdata.AwakeningsCount = Convert.ToDouble(fitbitData.AwakeningsCount);
-                    userdata.TimeInBed = Convert.ToDouble(fitbitData.TimeInBed);
-                    userdata.MinutesToFallAsleep = Convert.ToDouble(fitbitData.MinutesToFallAsleep);
-                    userdata.MinutesAfterWakeup = Convert.ToDouble(fitbitData.MinutesAfterWakeup);
-                    userdata.SleepEfficiency = Convert.ToDouble(fitbitData.SleepEfficiency);
-                    userdata.CaloriesIn = Convert.ToDouble(fitbitData.CaloriesIn);
-                    userdata.CaloriesOut = Convert.ToDouble(fitbitData.CaloriesOut);
-                    userdata.Water = Convert.ToDouble(fitbitData.Water);
-                    userdata.Steps = Convert.ToDouble(fitbitData.Steps);
-                    userdata.Distance = Convert.ToDouble(fitbitData.Distance);
-                    userdata.MinutesSedentary = Convert.ToDouble(fitbitData.MinutesSedentary);
-                    userdata.MinutesLightlyActive = Convert.ToDouble(fitbitData.MinutesLightlyActive);
-                    userdata.MinutesFairlyActive = Convert.ToDouble(fitbitData.MinutesFairlyActive);
-                    userdata.MinutesVeryActive = Convert.ToDouble(fitbitData.MinutesVeryActive);
-                    userdata.ActivityCalories = Convert.ToDouble(fitbitData.ActivityCalories);
-                    try { userdata.TimeEnteredBed = TimeSpan.Parse(fitbitData.TimeEnteredBed); }
-                    catch { }
-                    userdata.Weight = Convert.ToDouble(fitbitData.Weight);
-                    userdata.BMI = Convert.ToDouble(fitbitData.BMI);
-                    userdata.Fat = Convert.ToDouble(fitbitData.Fat);
-                }
                     foreach (DiaryData diaryData in diaryDatas.Where(diaryData => diaryData.DateStamp == userdata.DateStamp))
                 {
                     userdata.WakeUpFreshness = Convert.ToDouble(diaryData.WakeUpFreshness);
@@ -648,15 +652,6 @@ namespace SleepMakeSense.Controllers
                 }
                 */
                 //All - I like the idea of seeing when data is not present
-
-                try
-                {
-                    syncViewModel.DateStamp.Add(userData.DateStamp);
-                    syncViewModel.MinutesAsleep.Add(Convert.ToInt32(userData.MinutesAsleep));
-                    syncViewModel.AwakeCount.Add(Convert.ToInt32(userData.AwakeningsCount));
-                    syncViewModel.SleepEfficiency.Add(Convert.ToInt32(userData.SleepEfficiency));
-                }
-                catch { }
 
 
             }

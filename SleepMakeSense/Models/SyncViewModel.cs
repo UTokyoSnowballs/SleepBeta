@@ -11,15 +11,7 @@ namespace SleepMakeSense.Models
         public List<CorrList> CorrCoefficient { get; set; }
 
 
-        public List<DateTime> DateStamp { get; set; }
-
-        public List<int> MinutesAsleep { get; set; }
-
-        public List<int> AwakeCount { get; set; }
-
-        public List<int> SleepEfficiency { get; set; }
-
-
+        public List<Userdata> UserData { get; set; }
 
         }
 }

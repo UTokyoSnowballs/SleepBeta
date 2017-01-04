@@ -571,6 +571,7 @@ namespace SleepMakeSense.Controllers
             //Part of the redesign - this will allow the datamining method to flick through all of the classes with less commplication
 
             SyncViewModel syncViewModel = new SyncViewModel();
+            syncViewModel.UserData = new List<Userdata>();
             ViewBag.FitbitSynced = true;
 
 
@@ -594,63 +595,60 @@ namespace SleepMakeSense.Controllers
             foreach (Userdata userData in userDatas)
             {
                 //Fitbit Data Counter
-                if (Convert.ToDouble(userData.Steps) > 0) CNTSteps++;
-                if (Convert.ToDouble(userData.Distance) >= 0) CNTDistance++;
-                if (Convert.ToDouble(userData.MinutesSedentary) > 0) CNTMinutesSedentary++;
-                if (Convert.ToDouble(userData.MinutesLightlyActive) > 0) CNTMinutesLightlyActive++;
-                if (Convert.ToDouble(userData.MinutesFairlyActive) > 0) CNTMinutesFairlyActive++;
-                if (Convert.ToDouble(userData.MinutesVeryActive) > 0) CNTMinutesVeryActive++;
-                if (Convert.ToDouble(userData.Water) > 0) CNTWater++;
-                if (Convert.ToDouble(userData.CaloriesIn) >= 0) CNTCaloriesIn++;
-                if (Convert.ToDouble(userData.CaloriesOut) > 0) CNTCaloriesOut++;
-                if (Convert.ToDouble(userData.ActivityCalories) > 0) CNTActivityCalories++;
-                if (Convert.ToDouble(userData.Weight) > 0) CNTWeight++;
-                if (Convert.ToDouble(userData.BMI) > 0) CNTBMI++;
-                if (Convert.ToDouble(userData.Fat) > 0) CNTFat++;
+                if (userData.Steps > 0) CNTSteps++;
+                if (userData.Distance >= 0) CNTDistance++;
+                if (userData.MinutesSedentary > 0) CNTMinutesSedentary++;
+                if (userData.MinutesLightlyActive > 0) CNTMinutesLightlyActive++;
+                if (userData.MinutesFairlyActive > 0) CNTMinutesFairlyActive++;
+                if (userData.MinutesVeryActive > 0) CNTMinutesVeryActive++;
+                if (userData.Water > 0) CNTWater++;
+                if (userData.CaloriesIn > 0) CNTCaloriesIn++;
+                if (userData.CaloriesOut > 0) CNTCaloriesOut++;
+                if (userData.ActivityCalories > 0) CNTActivityCalories++;
+                if (userData.Weight > 0) CNTWeight++;
+                if (userData.BMI > 0) CNTBMI++;
+                if (userData.Fat > 0) CNTFat++;
 
                 //Diary Data Counter
-                if (Convert.ToDouble(userData.WakeUpFreshness) > 0) CNTWakeUpFreshness++;
-                if (Convert.ToDouble(userData.Mood) >= 0) CNTMood++;
-                if (Convert.ToDouble(userData.Stress) > 0) CNTStress++;
-                if (Convert.ToDouble(userData.Tiredness) > 0) CNTTiredness++;
-                if (Convert.ToDouble(userData.Dream) > 0) CNTDream++;
-                if (Convert.ToDouble(userData.BodyTemp) > 0) CNTBodyTemp++;
-                if (Convert.ToDouble(userData.Hormone) > 0) CNTHormone++;
-                if (Convert.ToDouble(userData.SchoolStress) > 0) CNTSchoolStress++;
-                if (Convert.ToDouble(userData.CoffeeAmt) >= 0) CNTCoffeeAmt++;
-                if (Convert.ToDateTime(userData.CoffeeTime) != null) CNTCoffeeTime++;
-                if (Convert.ToDouble(userData.AlcoholAmt) > 0) CNTAlcoholAmt++;
-                if (Convert.ToDateTime(userData.AlcoholTime) != null) CNTAlcoholTime++;
-                if (Convert.ToDateTime(userData.NapTime) != null) CNTNapTime++;
-                if (Convert.ToDouble(userData.NapDuration) > 0) CNTNapDuration++;
-                if (Convert.ToDouble(userData.DigDeviceDuration) > 0) CNTDigDeviceDuration++;
-                if (Convert.ToDouble(userData.GamesDuration) > 0) CNTGamesDuration++;
-                if (Convert.ToDouble(userData.SocialActivites) > 0) CNTSocialActivites++;
-                if (Convert.ToDouble(userData.SocialActivity) > 0) CNTSocialActivity++;
+                if (userData.WakeUpFreshness > 0) CNTWakeUpFreshness++;
+                if (userData.Mood > 0) CNTMood++;
+                if (userData.Stress > 0) CNTStress++;
+                if (userData.Tiredness > 0) CNTTiredness++;
+                if (userData.Dream > 0) CNTDream++;
+                if (userData.BodyTemp > 0) CNTBodyTemp++;
+                if (userData.Hormone > 0) CNTHormone++;
+                if (userData.SchoolStress > 0) CNTSchoolStress++;
+                if (userData.CoffeeAmt >= 0) CNTCoffeeAmt++;
+                if (userData.CoffeeTime != null) CNTCoffeeTime++;
+                if (userData.AlcoholAmt > 0) CNTAlcoholAmt++;
+                if (userData.AlcoholTime != null) CNTAlcoholTime++;
+                if (userData.NapTime != null) CNTNapTime++;
+                if (userData.NapDuration > 0) CNTNapDuration++;
+                if (userData.DigDeviceDuration > 0) CNTDigDeviceDuration++;
+                if (userData.GamesDuration > 0) CNTGamesDuration++;
+                if (userData.SocialActivites > 0) CNTSocialActivites++;
+                if (userData.SocialActivity > 0) CNTSocialActivity++;
                 // if (Convert.ToDouble(userData.SocialMediaActivity) > 0) CNTSocialMediaActivity++;  Need to Fix the DB and the view for this one
-                if (Convert.ToDouble(userData.MusicDuration) >= 0) CNTMusicDuration++;
-                if (Convert.ToDouble(userData.TVDuration) > 0) CNTTVDuration++;
-                if (Convert.ToDateTime(userData.WorkTime) != null) CNTWorkTime++;
-                if (Convert.ToDouble(userData.ExerciseDuration) > 0) CNTExerciseDuration++;
-                if (Convert.ToDouble(userData.ExerciseIntensity) > 0) CNTExerciseIntensity++;
-                if (Convert.ToDateTime(userData.DinnerTime) != null) CNTDinnerTime++;
-                if (Convert.ToDateTime(userData.SnackTime) != null) CNTSnackTime++;
-                if (Convert.ToDouble(userData.AmbientTemp) > 0) CNTAmbientTemp++;
-                if (Convert.ToDouble(userData.AmbientHumd) > 0) CNTAmbientHumd++;
-                if (Convert.ToDouble(userData.Light) > 0) CNTLight++;
-                if (Convert.ToDateTime(userData.SunRiseTime) != null) CNTSunRiseTime++;
-                if (Convert.ToDateTime(userData.SunSetTime) != null) CNTSunSetTime++;
+                if (userData.MusicDuration >= 0) CNTMusicDuration++;
+                if (userData.TVDuration > 0) CNTTVDuration++;
+                if (userData.WorkTime != null) CNTWorkTime++;
+                if (userData.ExerciseDuration > 0) CNTExerciseDuration++;
+                if (userData.ExerciseIntensity > 0) CNTExerciseIntensity++;
+                if (userData.DinnerTime != null) CNTDinnerTime++;
+                if (userData.SnackTime != null) CNTSnackTime++;
+                if (userData.AmbientTemp > 0) CNTAmbientTemp++;
+                if (userData.AmbientHumd > 0) CNTAmbientHumd++;
+                if (userData.Light > 0) CNTLight++;
+                if (userData.SunRiseTime != null) CNTSunRiseTime++;
+                if (userData.SunSetTime != null) CNTSunSetTime++;
 
                 //To Ignore anything with 0
-                /*
-                                if (Convert.ToDouble(userData.FitbitData.MinutesAsleep) > 0)
+                
+                if (userData.MinutesAsleep > 0)
                 {
-                    dateList.Add(userData.FitbitData.DateStamp);
-                    MinutesAsleepList.Add(Convert.ToDouble(userData.FitbitData.MinutesAsleep));
-                    AwakeCountList.Add(Convert.ToInt32(userData.FitbitData.AwakeningsCount));
-                    AwakeCountList.Add(Convert.ToInt32(userData.FitbitData.SleepEfficiency));
+                    syncViewModel.UserData.Add(userData);
                 }
-                */
+                
                 //All - I like the idea of seeing when data is not present
 
 

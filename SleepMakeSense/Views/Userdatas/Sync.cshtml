@@ -1,10 +1,5 @@
 ﻿@using SleepMakeSense.Models
-
 @model SyncViewModel
-
-
-
-
 
 <!DOCTYPE html>
 
@@ -70,23 +65,70 @@
 </head>
 <body>
     <div id="DataProcessing">
+
         <script type="text/javascript">
+
             var factorList = [];
+            var cMinutesAsleep = [];
+            var cAwakeningsCount = [];
+            var cSleepEfficiency = [];
             var MinutesAsleep = [];
             var AwakeningsCount = [];
             var SleepEfficiency = [];
+            var facCoff = 0;
+            var quest2 = false;
+            var quest3 = false;
 
-            @foreach (SleepMakeSense.Models.Userdata data in Model.UserData)
-            {
-            var dateOnly = data.DateStamp.ToShortDateString();
-            var weekday = data.DateStamp.DayOfWeek;
 
-            @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@data.MinutesAsleep" });
-            @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@data.AwakeningsCount" });
-            @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@data.SleepEfficiency" });
-            @:WakeUpFresh.push({ Date: "@dateOnly", Day: "@weekday", Value: "@data.WakeUpFreshness" });
+            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+                {
+                    if (@d.Belong == "MinutesAsleep")
+                    {
+                        @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
+                                                                                                                                }
+                }
 
-            }
+            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+                {
+                    if (@d.Belong == "AwakeningCount")
+                    {
+                        @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
+                                                                                                                                }
+                }
+
+
+            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+                {
+
+                    if (@d.Belong == "SleepEfficiency")
+                {
+                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
+                                                                                                                            }
+                }
+
+
+            @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
+                {
+                        var dateOnly = m.DateStamp.ToShortDateString();
+                        var weekday = m.DateStamp.DayOfWeek;
+
+                        @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.MinutesAsleep" });
+                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });
+                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.SleepEfficiency" });
+
+                 }
+
+            alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
+
+            @helper CoefficientList()
+           {
+            <table>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+             </table>
+           }
 
 
             function PlotTimeseries(myData, section, mark, sFeature) {
@@ -100,7 +142,7 @@
                 var margin = { top: 30, right: 20, bottom: 50, left: 40 };
                 width = w - margin.left - margin.right,
                 height = h - margin.top - margin.bottom;
-                parseDate = d3.time.format("%m/%d/%Y").parse;
+                parseDate = d3.time.format("%d/%m/%Y").parse;
 
                 var chart = d3.select(section).append("svg")
               .attr("width", w)
@@ -175,7 +217,7 @@
                              //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
                          else if (mark == "MinutesAsleep" && (d.Value < 8)) { return red; }
                          else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; }
-                         else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
+                         else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
                          else return blue;
                      })
                      .on("mouseover", function (d) {
@@ -190,8 +232,6 @@
                             .style("opacity", 0.9);
 
                          if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                             //else if (mark == "MinutesToFallAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
-                         else if (mark == "MinutesAwake") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " min"; }
                          else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings/restlessness"; }
                          else if (mark == "MinutesAsleep") {
                              minutes = d.Value * 60;
@@ -217,7 +257,7 @@
                                if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
                                    //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
                                else if (mark == "MinutesAsleep" && ((d.Value > 10) || (d.Value < 8))) { return red; }
-                               else if (mark == "MinutesAwake" && (d.Value > 27)) { return red; } // 0.05*540 min
+                               else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
                                else return blue;
                            });
                          div.transition()
@@ -225,8 +265,6 @@
                             .style("opacity", 0);
                      });
             }
-
-            alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
         </script>
     </div>
 
@@ -245,7 +283,7 @@
                             <a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Hours Asleep</a>
                         </li>
                         <li>
-                            <a class="AwakeCount" href="#AwakeCountTimeseries" data-toggle="tab">Awake Count</a>
+                            <a class="AwakeningsCountTimeseries" href="#AwakeningsCountTimeseries" data-toggle="tab">Awake Count</a>
                         </li>
                         <li>
                             <a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a>
@@ -269,9 +307,9 @@
                 <div class="tab-content">
                     <div class="tab-pane active fade in" id="MinutesAsleepTimeseries">
                         <div id="MinutesAsleepTimeseries">
-                            <canvas id="myChart" width="800" height="400"></canvas>
-
-
+                            <script>
+                                PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Hours");
+                            </script>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -281,10 +319,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="MinutesAwakeTimeseries">
-                        <div id="MinutesAwakeTimeseries">
+                    <div class="tab-pane fade" id="AwakeningsCountTimeseries">
+                        <div id="AwakeningsCountTimeseries">
                             <script>
-                                PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Mins");
+                                PlotTimeseries(AwakeningsCount, "#AwakeningsCountTimeseries", "AwakeningsCount", "Count");
                             </script>
                         </div>
                         <div class="row">
@@ -298,7 +336,7 @@
                     <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
                             <script>
-
+                                PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "%");
                             </script>
                         </div>
                         <div class="row">
@@ -315,4 +353,5 @@
     </div>
 
 </body>
+
 </html>

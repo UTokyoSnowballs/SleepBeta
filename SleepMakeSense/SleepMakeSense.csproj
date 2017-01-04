@@ -370,7 +370,6 @@
     <Content Include="obj\Debug\Fitbit.Portable.pdb" />
     <Content Include="obj\Debug\SleepMakeSense.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\SleepMakeSense.dll" />
-    <Content Include="obj\Debug\SleepMakeSense.pdb" />
     <Content Include="obj\Release\Package\FilePreviewParameter.xml" />
     <Content Include="obj\Release\SleepMakeSense.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Release\SleepMakeSense.dll" />

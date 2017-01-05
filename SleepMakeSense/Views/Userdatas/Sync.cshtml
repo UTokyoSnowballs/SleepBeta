@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Sync</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style type="text/css">
         .axis path, .axis line {
             fill: none;
@@ -36,7 +37,7 @@
             pointer-events: none;
             position: absolute;
         }
-        .tooltip-bubble {
+        .tooltip {
             position: absolute;
             text-align: left;
             width: 200px;
@@ -61,9 +62,10 @@
                 padding-right: 15px;
                 padding-left: 15px;
                 padding-top: 15px;
-                width: 150px;
+                width: 200px;
                 height: 100px;
                 position center
+                te
         }
     </style>
 </head>
@@ -76,201 +78,203 @@ int counter = corrList.Count;
 
 if (corrList.Count > 0)
 {
-        <table>
-            <tr>
-                @foreach (SleepMakeSense.Models.CorrList corr in corrList)
-                {
-
-                    var color = "#ffffff";
-                    if (corr.Coefficient >= 0 && corr.Coefficient < 2.25)
+        <div style="overflow-x:auto;">
+            <table>
+                <tr>
+                    @foreach (SleepMakeSense.Models.CorrList corr in corrList)
                     {
-                        color = "#f74657";
+
+                        var color = "#ffffff";
+                        if (corr.Coefficient >= 0 && corr.Coefficient < 2.25)
+                        {
+                            color = "#f74657";
+                        }
+                        else if (corr.Coefficient >= 0.225 && corr.Coefficient <= 0.45)
+                        {
+                            color = "#fa8590";
+                        }
+                        else if (corr.Coefficient >= 0.55 && corr.Coefficient < 0.725)
+                        {
+                            color = "#a4d0f4";
+                        }
+                        else if (corr.Coefficient >= 0.725 && corr.Coefficient < 1)
+                        {
+                            color = "#459ee8";
+                        }
+                        <td data-toggle="tooltip" title=@corr.Note data-placement="right" style=" color @color "><i class=@corr.Picture></i>    @corr.Name </td>
+
+                        counter++;
+
                     }
-                    else if (corr.Coefficient >= 0.225 && corr.Coefficient <= 0.45)
-                    {
-                        color = "#fa8590";
-                    }
-                    else if (corr.Coefficient >= 0.55 && corr.Coefficient < 0.725)
-                    {
-                        color = "#a4d0f4";
-                    }
-                    else if (corr.Coefficient >= 0.725 && corr.Coefficient < 1)
-                    {
-                        color = "#459ee8";
-                    }
-                    <td id="@corr.Name" style=" color @color"><i class=@corr.Picture></i>@corr.Name </td>
+                </tr>
+            </table>
+            </div>
+            }
+            else
+            {
+            String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
+            @Message
+            }
 
-                    @counter = counter + 1;
+            }
 
-                }
-            </tr>
-        </table>
-}
-else
-{
-    String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
-    @Message
-}
+            <script type="text/javascript">
 
-}
+                var factorList = [];
+                var MinutesAsleep = [];
+                var AwakeningsCount = [];
+                var SleepEfficiency = [];
+                var facCoff = 0;
+                var quest2 = false;
+                var quest3 = false;
 
-        <script type="text/javascript">
-
-            var factorList = [];
-            var MinutesAsleep = [];
-            var AwakeningsCount = [];
-            var SleepEfficiency = [];
-            var facCoff = 0;
-            var quest2 = false;
-            var quest3 = false;
-
-            @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
+                @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
                 {
                         var dateOnly = m.DateStamp.ToShortDateString();
                         var weekday = m.DateStamp.DayOfWeek;
 
                         @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.MinutesAsleep" });
-                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });
-                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.SleepEfficiency" });
+                                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });
+                                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.SleepEfficiency" });
 
                  }
 
-            alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
+                alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
 
 
-            function PlotTimeseries(myData, section, mark, sFeature) {
+                function PlotTimeseries(myData, section, mark, sFeature) {
 
-                d3.select(section).selectAll("*").remove();
-                var red = "#F74657";
-                var blue = "#459EE8";
+                    d3.select(section).selectAll("*").remove();
+                    var red = "#F74657";
+                    var blue = "#459EE8";
 
-                var w = 500;
-                var h = 350;
-                var margin = { top: 30, right: 20, bottom: 50, left: 40 };
-                width = w - margin.left - margin.right,
-                height = h - margin.top - margin.bottom;
-                parseDate = d3.time.format("%d/%m/%Y").parse;
+                    var w = 500;
+                    var h = 350;
+                    var margin = { top: 30, right: 20, bottom: 50, left: 40 };
+                    width = w - margin.left - margin.right,
+                    height = h - margin.top - margin.bottom;
+                    parseDate = d3.time.format("%d/%m/%Y").parse;
 
-                var chart = d3.select(section).append("svg")
-              .attr("width", w)
-              .attr("height", h)
-              .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                    var chart = d3.select(section).append("svg")
+                  .attr("width", w)
+                  .attr("height", h)
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                myData.forEach(function (d) {
-                    d.Date = parseDate(d.Date);
-                    if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
-                    else d.Value = +d.Value;
-                });
+                    myData.forEach(function (d) {
+                        d.Date = parseDate(d.Date);
+                        if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
+                        else d.Value = +d.Value;
+                    });
 
-                var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
+                    var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
 
-                var yRange = d3.scale.linear().range([height, 0]);
+                    var yRange = d3.scale.linear().range([height, 0]);
 
-                var xAxis = d3.svg.axis()
-                              .scale(xRange)
-                              .orient("bottom")
-                              .ticks(8)
-                              .tickFormat(d3.time.format("%d/%m"));
+                    var xAxis = d3.svg.axis()
+                                  .scale(xRange)
+                                  .orient("bottom")
+                                  .ticks(8)
+                                  .tickFormat(d3.time.format("%d/%m"));
 
-                var yAxis = d3.svg.axis()
-                              .scale(yRange)
-                              .orient("left")
-                              .ticks(5);
+                    var yAxis = d3.svg.axis()
+                                  .scale(yRange)
+                                  .orient("left")
+                                  .ticks(5);
 
-                xRange.domain(myData.map(function (d) { return d.Date; }));
-                yRange.domain([0, d3.max(myData, function (d) { return d.Value; })]);
+                    xRange.domain(myData.map(function (d) { return d.Date; }));
+                    yRange.domain([0, d3.max(myData, function (d) { return d.Value; })]);
 
-                chart.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis)
-                    .selectAll("text")
-                    .style("text-anchor", "end")
-                    .attr("dx", "-.8em")
-                    .attr("dy", "-.55em")
-                    .attr("transform", "rotate(-90)");
+                    chart.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis)
+                        .selectAll("text")
+                        .style("text-anchor", "end")
+                        .attr("dx", "-.8em")
+                        .attr("dy", "-.55em")
+                        .attr("transform", "rotate(-90)");
 
-                chart.append("g")
-                    .attr("class", "y axis")
-                    .call(yAxis)
-                    .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", ".71em")
-                    .style("text-anchor", "end")
-                    .text(sFeature);
-
-
-
-
-                var div = d3.select(section).append("div")
-                            .attr("class", "tooltip-timeseries")
-                            .style("opacity", 0);
-
-                var formatTime = d3.time.format("%b %e");
-
-                chart.selectAll("rect")
-                     .data(myData)
-                     .enter().append("rect")
-                     .attr("class", "bar")
-                     .attr("x", function (d) { return xRange(d.Date); })
-                     .attr("width", xRange.rangeBand())
-                     .attr("y", function (d) { return yRange(d.Value); })
-                     .attr("height", function (d) { return (height - yRange(d.Value)); })
-                     //.attr("fill", "#0000ff")
-                     .attr("fill", function (d) {
-                         if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
-                             //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                         else if (mark == "MinutesAsleep" && (d.Value < 8)) { return red; }
-                         else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; }
-                         else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
-                         else return blue;
-                     })
-                     .on("mouseover", function (d) {
-                         var matrix = this.getScreenCTM()
-                            .translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
-
-                         d3.select(this)
-                           .attr("fill", "#747F97");
-
-                         div.transition()
-                            .duration(200)
-                            .style("opacity", 0.9);
-
-                         if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                         else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
-                         else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
+                    chart.append("g")
+                        .attr("class", "y axis")
+                        .call(yAxis)
+                        .append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 6)
+                        .attr("dy", ".71em")
+                        .style("text-anchor", "end")
+                        .text(sFeature);
 
 
 
-                         div.html(tooltiptext)
-                            //.style("left", (d3.event.pageX - 34) + "px")
-                            //.style("top", (d3.event.pageY - 12) + "px");
-                            .style("left", (window.pageXOffset + matrix.e + 15) + "px")
-                            .style("top", (window.pageYOffset + matrix.f - 30) + "px");
-                         // Need a better solution here!!
+
+                    var div = d3.select(section).append("div")
+                                .attr("class", "tooltip-timeseries")
+                                .style("opacity", 0);
+
+                    var formatTime = d3.time.format("%b %e");
+
+                    chart.selectAll("rect")
+                         .data(myData)
+                         .enter().append("rect")
+                         .attr("class", "bar")
+                         .attr("x", function (d) { return xRange(d.Date); })
+                         .attr("width", xRange.rangeBand())
+                         .attr("y", function (d) { return yRange(d.Value); })
+                         .attr("height", function (d) { return (height - yRange(d.Value)); })
+                         //.attr("fill", "#0000ff")
+                         .attr("fill", function (d) {
+                             if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                                 //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                             else if (mark == "MinutesAsleep" && (d.Value < 8)) { return red; }
+                             else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; }
+                             else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                             else return blue;
+                         })
+                         .on("mouseover", function (d) {
+                             var matrix = this.getScreenCTM()
+                                .translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
+
+                             d3.select(this)
+                               .attr("fill", "#747F97");
+
+                             div.transition()
+                                .duration(200)
+                                .style("opacity", 0.9);
+
+                             if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
+                             else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
+                             else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
 
 
 
-                     })
-                     .on("mouseout", function (d) {
-                         d3.select(this)
-                           //.attr("fill", "#bdbdbd");
-                           .attr("fill", function (d) {
-                               if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
-                                   //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                               else if (mark == "MinutesAsleep" && ((d.Value > 10) || (d.Value < 8))) { return red; }
-                               else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
-                               else return blue;
-                           });
-                         div.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                     });
-            }
-        </script>
-    </div>
+                             div.html(tooltiptext)
+                                //.style("left", (d3.event.pageX - 34) + "px")
+                                //.style("top", (d3.event.pageY - 12) + "px");
+                                .style("left", (window.pageXOffset + matrix.e + 15) + "px")
+                                .style("top", (window.pageYOffset + matrix.f - 30) + "px");
+                             // Need a better solution here!!
+
+
+
+                         })
+                         .on("mouseout", function (d) {
+                             d3.select(this)
+                               //.attr("fill", "#bdbdbd");
+                               .attr("fill", function (d) {
+                                   if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                                       //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                                   else if (mark == "MinutesAsleep" && ((d.Value > 10) || (d.Value < 8))) { return red; }
+                                   else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                                   else return blue;
+                               });
+                             div.transition()
+                                .duration(500)
+                                .style("opacity", 0);
+                         });
+                }
+            </script>
+        </div>
 
     <div class="container">
         <div class="row">

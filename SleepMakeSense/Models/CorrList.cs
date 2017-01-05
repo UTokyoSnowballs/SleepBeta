@@ -13,6 +13,8 @@ namespace SleepMakeSense.Models
         public string Name { get; set;}
         public double Coefficient { get; set;}
         public string Note { get; set; }
+        public string Picture { get; set; }
+
         // ToDO: Significance test
         // public double significance { get; set;}
         

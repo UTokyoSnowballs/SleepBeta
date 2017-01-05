@@ -66,46 +66,36 @@
 <body>
     <div id="DataProcessing">
 
+@helper CoefficientList(List<CorrList> corrList, String type)
+{
+int counter = 1;
+    <table>
+        @if (corrList.Count > 0)
+        {
+           foreach (SleepMakeSense.Models.CorrList corr in corrList)
+            {
+                <tr id=@counter><td>@corr.Name</td></tr>
+            }
+        }
+        else
+        {
+            String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
+            <tr id=@counter><td>@Message</td></tr>
+        }
+
+    </table>
+
+}
+
         <script type="text/javascript">
 
             var factorList = [];
-            var cMinutesAsleep = [];
-            var cAwakeningsCount = [];
-            var cSleepEfficiency = [];
             var MinutesAsleep = [];
             var AwakeningsCount = [];
             var SleepEfficiency = [];
             var facCoff = 0;
             var quest2 = false;
             var quest3 = false;
-
-
-            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
-                {
-                    if (@d.Belong == "MinutesAsleep")
-                    {
-                        @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                                                                                                                                }
-                }
-
-            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
-                {
-                    if (@d.Belong == "AwakeningCount")
-                    {
-                        @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                                                                                                                                }
-                }
-
-
-            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
-                {
-
-                    if (@d.Belong == "SleepEfficiency")
-                {
-                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient", Note: "@d.Note" });
-                                                                                                                            }
-                }
-
 
             @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
                 {
@@ -119,16 +109,6 @@
                  }
 
             alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
-
-            @helper CoefficientList()
-           {
-            <table>
-                <tr>
-                    <td>
-                    </td>
-                </tr>
-             </table>
-           }
 
 
             function PlotTimeseries(myData, section, mark, sFeature) {
@@ -314,7 +294,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="AffectingFactorsMinutesAsleep">
-                                    /* Minutes Asleep Factors */
+                                    @CoefficientList(Model.MinutesAsleepCorrList, "Minutes Asleep")
                                 </div>
                             </div>
                         </div>
@@ -327,8 +307,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="AffectingFactorsMinutesAwake">
-                                    /* Awake Count Factors */
+                                <div id="AffectingFactorsAwakeCount">
+                                    @CoefficientList(Model.AwakeCountCorrList, "Awake Count")
                                 </div>
                             </div>
                         </div>
@@ -342,7 +322,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="AffectingFactorsSleepEfficiency">
-                                    /* sleep Effiency Factors */
+                                    @CoefficientList(Model.SleepEffiencyCorrList, "Sleep Efficiency")
                                 </div>
                             </div>
                         </div>

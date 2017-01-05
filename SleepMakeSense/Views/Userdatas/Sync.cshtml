@@ -56,10 +56,14 @@
                 text-align: left;
                 color: white;
             }
-        svg.bubble {
-            padding-right: 15px;
-            padding-left: 15px;
-            padding-top: 15px;
+
+        td, tr  {
+                padding-right: 15px;
+                padding-left: 15px;
+                padding-top: 15px;
+                width: 150px;
+                height: 100px;
+                position center
         }
     </style>
 </head>
@@ -68,22 +72,45 @@
 
 @helper CoefficientList(List<CorrList> corrList, String type)
 {
-int counter = 1;
-    <table>
-        @if (corrList.Count > 0)
-        {
-           foreach (SleepMakeSense.Models.CorrList corr in corrList)
-            {
-                <tr id=@counter><td>@corr.Name</td></tr>
-            }
-        }
-        else
-        {
-            String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
-            <tr id=@counter><td>@Message</td></tr>
-        }
+int counter = corrList.Count;
 
-    </table>
+if (corrList.Count > 0)
+{
+        <table>
+            <tr>
+                @foreach (SleepMakeSense.Models.CorrList corr in corrList)
+                {
+
+                    var color = "#ffffff";
+                    if (corr.Coefficient >= 0 && corr.Coefficient < 2.25)
+                    {
+                        color = "#f74657";
+                    }
+                    else if (corr.Coefficient >= 0.225 && corr.Coefficient <= 0.45)
+                    {
+                        color = "#fa8590";
+                    }
+                    else if (corr.Coefficient >= 0.55 && corr.Coefficient < 0.725)
+                    {
+                        color = "#a4d0f4";
+                    }
+                    else if (corr.Coefficient >= 0.725 && corr.Coefficient < 1)
+                    {
+                        color = "#459ee8";
+                    }
+                    <td id="@corr.Name" style=" color @color">@corr.Name <i class= @corr.Picture></i></td>
+
+                    @counter = counter + 1;
+
+                }
+            </tr>
+        </table>
+}
+else
+{
+    String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
+    @Message
+}
 
 }
 
@@ -212,12 +239,9 @@ int counter = 1;
                             .style("opacity", 0.9);
 
                          if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                         else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings/restlessness"; }
-                         else if (mark == "MinutesAsleep") {
-                             minutes = d.Value * 60;
-                             mh = minTohr(minutes);
-                             tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + mh;
-                         } else { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value; }
+                         else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
+                         else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
+
 
 
                          div.html(tooltiptext)
@@ -294,7 +318,7 @@ int counter = 1;
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="AffectingFactorsMinutesAsleep">
-                                    @CoefficientList(Model.MinutesAsleepCorrList, "Minutes Asleep")
+                                    @CoefficientList(Model.MinutesAsleepCorrList, "Hours Asleep")
                                 </div>
                             </div>
                         </div>
@@ -308,7 +332,7 @@ int counter = 1;
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="AffectingFactorsAwakeCount">
-                                    @CoefficientList(Model.AwakeCountCorrList, "Awake Count")
+                                    @CoefficientList(Model.AwakeCountCorrList, "Awakening Count")
                                 </div>
                             </div>
                         </div>

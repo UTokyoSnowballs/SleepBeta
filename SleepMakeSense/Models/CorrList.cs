@@ -9,7 +9,6 @@ namespace SleepMakeSense.Models
 
     public class CorrList
     {
-        public string Belong { get; set; } // characterize the correlation to which sleep attribute    
         public string Name { get; set;}
         public double Coefficient { get; set;}
         public string Note { get; set; }

@@ -120,63 +120,23 @@ namespace SleepMakeSense.Controllers
             }
         }
 
-
-        public ActionResult ConnectFitbit()
-        {
-            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                throw new Exception("You Must be Loged in to sync Fitbit Data");
-            }
-            bool fitbitConnected = false;
-            OAuth2AccessToken accessToken = new OAuth2AccessToken();
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements
-                             where a.AspNetUserId.Equals(userId)
-                             select a;
-            foreach (TokenManagement data in userToken)
-            {
-                if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
-                {
-
-                    fitbitConnected = true;
-                    accessToken.Token = data.Token;
-                    accessToken.TokenType = data.TokenType;
-                    accessToken.ExpiresIn = data.ExpiresIn;
-                    accessToken.RefreshToken = data.RefreshToken;
-                    accessToken.UserId = data.UserId;
-                    accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
-
-                }
-            }
-
-            if (fitbitConnected == true)
-            {
-                //Loading Session data when the user has does not have Key creds in their session
-                var appCredentials = new FitbitAppCredentials()
-                {
-                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
-                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
-                };
-
-                GetFitbitClient(accessToken);
-                SyncFitbitCred(accessToken);
-
-             return View("Callback");
-              //  return RedirectToAction("Sync", "UserDatas");
-            }
-
-            return Authorize();
-        }
-
         public ActionResult DirectToSync()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
+            //Loading Session data when the user has does not have Key creds in their session
+            FitbitAppCredentials appCredentials = new FitbitAppCredentials()
+            {
+                ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
+            };
+            Session["AppCredentials"] = appCredentials;
+
+            OAuth2AccessToken accessToken = new OAuth2AccessToken();
             // 20161108 Pandita
             bool fitbitConnected = false;
-            OAuth2AccessToken accessToken = new OAuth2AccessToken();
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements
                             where a.AspNetUserId.Equals(userId)
@@ -192,20 +152,12 @@ namespace SleepMakeSense.Controllers
                     accessToken.RefreshToken = data.RefreshToken;
                     accessToken.UserId = data.UserId;
                     accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
-
                 }
             }
-
             if (fitbitConnected == true)
             {
-                //Loading Session data when the user has does not have Key creds in their session
-                var appCredentials = new FitbitAppCredentials()
-                {
-                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
-                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
-                };
-
-                GetFitbitClient(accessToken);
+                FitbitClient tempSyncClient = GetFitbitClient(accessToken);
+                accessToken = tempSyncClient.AccessToken;
                 SyncFitbitCred(accessToken);
                 //     return View("Callback");
                 return RedirectToAction("Sync", "UserDatas");

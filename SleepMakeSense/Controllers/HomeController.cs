@@ -17,7 +17,7 @@ namespace SleepMakeSense.Controllers
             HomePageViewModel viewModel = new HomePageViewModel();
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                DateTime endStop = DateTime.UtcNow.Date.AddDays(-5);
+                DateTime endStop = DateTime.UtcNow.Date.AddDays(-2);
                 viewModel.DiarySetup = false;
                 viewModel.TodayDiaryEntry = false;
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();

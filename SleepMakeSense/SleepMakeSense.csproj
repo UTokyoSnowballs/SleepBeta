@@ -287,23 +287,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AspNetRole.cs" />
-    <Compile Include="Models\AspNetUserClaim.cs" />
-    <Compile Include="Models\AspNetUserLogin.cs" />
-    <Compile Include="Models\CorrList.cs" />
+    <Compile Include="Models\DiaryDataSetupModel.cs" />
     <Compile Include="Models\DiaryDataViewClass.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\SleepBeta.designer.cs">
+    <Compile Include="Models\Sleepbeta.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SleepBeta.dbml</DependentUpon>
+      <DependentUpon>Sleepbeta.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Models\SyncViewModel.cs" />
-    <Compile Include="Models\DiaryDataSetupModel.cs" />
+    <Compile Include="Models\AspNetRole.cs" />
+    <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\CorrList.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\QuestionsSelections.cs" />
-    <Compile Include="Models\TimeList.cs" />
+    <Compile Include="Models\SyncViewModel.cs" />
     <Compile Include="Models\Userdata.cs" />
     <Compile Include="OAuth2\DefaultTokenManager.cs" />
     <Compile Include="OAuth2\ITokenManager.cs" />
@@ -359,9 +357,9 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Models\SleepBeta.dbml">
+    <Content Include="Models\Sleepbeta.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>SleepBeta.designer.cs</LastGenOutput>
+      <LastGenOutput>Sleepbeta.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\SleepBeta-v1.pubxml" />
@@ -463,8 +461,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\SleepBeta.dbml.layout">
-      <DependentUpon>SleepBeta.dbml</DependentUpon>
+    <None Include="Models\Sleepbeta.dbml.layout">
+      <DependentUpon>Sleepbeta.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <PropertyGroup>

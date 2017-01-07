@@ -41,7 +41,7 @@
                     <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Wake Up Freshness</span></td>
                     <td class="diaryquestion">Asked Question - How fresh did you feel from last nights sleep? (1 not at all - 5 very)</td>
                     <td>
-                        @Html.CheckBoxFor(Model => Model.userQuestions.WakeUpFreshness, new { @Value = ViewBag.WakeUpFreshnessPrev })
+                        @Html.CheckBoxFor(Model => Model.userQuestions.WakeUpFreshness)
                     </td>
                 </tr>
                 <tr>
@@ -153,7 +153,7 @@
                 <tr class="tr-nobg">
                     <td></td>
                     <td></td>
-                    <td><input type="submit" value="Send" class="btn btn-primary btn-lg btn-block" /></td>
+                    <td><input type="submit" value="Save" class="btn btn-primary btn-lg btn-block" /></td>
                 </tr>
             </table>
         </div>

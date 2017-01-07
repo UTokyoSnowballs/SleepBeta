@@ -16,7 +16,7 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> ToFive()
         {
-            yield return new SelectListItem { Text = "0", Value = "0" };
+            yield return new SelectListItem { Text = "None", Value = "0" };
             yield return new SelectListItem { Text = "1", Value = "1" };
             yield return new SelectListItem { Text = "2", Value = "2" };
             yield return new SelectListItem { Text = "3", Value = "3" };
@@ -26,7 +26,7 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> ToTen()
         {
-            yield return new SelectListItem { Text = "0", Value = "0" };
+            yield return new SelectListItem { Text = "None", Value = "0" };
             yield return new SelectListItem { Text = "1", Value = "1" };
             yield return new SelectListItem { Text = "2", Value = "2" };
             yield return new SelectListItem { Text = "3", Value = "3" };
@@ -41,7 +41,7 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> TimeToFive()
         {
-            yield return new SelectListItem { Text = "0", Value = "0" };
+            yield return new SelectListItem { Text = "None", Value = "0" };
             yield return new SelectListItem { Text = "15 Minutes", Value = "15" };
             yield return new SelectListItem { Text = "30 Minutes", Value = "30" };
             yield return new SelectListItem { Text = "45 Minutes", Value = "45" };
@@ -67,7 +67,7 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> TimeToTen()
         {
-            yield return new SelectListItem { Text = "0", Value = "0" };
+            yield return new SelectListItem { Text = "None", Value = "0" };
             yield return new SelectListItem { Text = "30 Minutes", Value = "30" };
             yield return new SelectListItem { Text = "1 Hour", Value = "60" };
             yield return new SelectListItem { Text = "1 Hour 30 Minutes", Value = "90" };
@@ -92,64 +92,64 @@ namespace SleepMakeSense.Models
 
         public IEnumerable<SelectListItem> DayHours()
         {
-            yield return new SelectListItem { Text = "06:00 AM", Value = "6" };
-            yield return new SelectListItem { Text = "07:00 AM", Value = "7" };
-            yield return new SelectListItem { Text = "08:00 AM", Value = "8"};
-            yield return new SelectListItem { Text = "09:00 AM", Value = "9" };
-            yield return new SelectListItem { Text = "10:00 AM", Value = "10" };
-            yield return new SelectListItem { Text = "11:00 AM", Value = "11" };
-            yield return new SelectListItem { Text = "12:00 PM", Value = "12" };
-            yield return new SelectListItem { Text = "01:00 PM", Value = "13" };
-            yield return new SelectListItem { Text = "02:00 PM", Value = "14" };
-            yield return new SelectListItem { Text = "03:00 PM", Value = "15" };
-            yield return new SelectListItem { Text = "04:00 PM", Value = "16" };
-            yield return new SelectListItem { Text = "05:00 PM", Value = "17" };
-            yield return new SelectListItem { Text = "06:00 PM", Value = "18" };
+            yield return new SelectListItem { Text = "06:00 AM", Value = "06:00" };
+            yield return new SelectListItem { Text = "07:00 AM", Value = "07:00" };
+            yield return new SelectListItem { Text = "08:00 AM", Value = "08:00" };
+            yield return new SelectListItem { Text = "09:00 AM", Value = "09:00" };
+            yield return new SelectListItem { Text = "10:00 AM", Value = "10:00" };
+            yield return new SelectListItem { Text = "11:00 AM", Value = "11:00" };
+            yield return new SelectListItem { Text = "12:00 PM", Value = "12:00" };
+            yield return new SelectListItem { Text = "01:00 PM", Value = "13:00" };
+            yield return new SelectListItem { Text = "02:00 PM", Value = "14:00" };
+            yield return new SelectListItem { Text = "03:00 PM", Value = "15:00" };
+            yield return new SelectListItem { Text = "04:00 PM", Value = "16:00" };
+            yield return new SelectListItem { Text = "05:00 PM", Value = "17:00" };
+            yield return new SelectListItem { Text = "06:00 PM", Value = "18:00" };
         }
 
         public IEnumerable<SelectListItem> NightHours()
         {
-            yield return new SelectListItem { Text = "06:00 PM", Value = "18" };
-            yield return new SelectListItem { Text = "07:00 PM", Value = "19" };
-            yield return new SelectListItem { Text = "08:00 PM", Value = "20" };
-            yield return new SelectListItem { Text = "09:00 PM", Value = "21" };
-            yield return new SelectListItem { Text = "10:00 PM", Value = "22" };
-            yield return new SelectListItem { Text = "11:00 PM", Value = "23" };
-            yield return new SelectListItem { Text = "12:00 AM", Value = "24" };
-            yield return new SelectListItem { Text = "01:00 AM", Value = "25" };
-            yield return new SelectListItem { Text = "02:00 AM", Value = "26" };
-            yield return new SelectListItem { Text = "03:00 AM", Value = "27" };
-            yield return new SelectListItem { Text = "04:00 AM", Value = "28" };
-            yield return new SelectListItem { Text = "05:00 AM", Value = "29" };
-            yield return new SelectListItem { Text = "06:00 AM", Value = "30" };
+            yield return new SelectListItem { Text = "06:00 PM", Value = "18:00" };
+            yield return new SelectListItem { Text = "07:00 PM", Value = "19:00" };
+            yield return new SelectListItem { Text = "08:00 PM", Value = "20:00" };
+            yield return new SelectListItem { Text = "09:00 PM", Value = "21:00" };
+            yield return new SelectListItem { Text = "10:00 PM", Value = "22:00" };
+            yield return new SelectListItem { Text = "11:00 PM", Value = "23:00" };
+            yield return new SelectListItem { Text = "12:00 AM", Value = "24:00" };
+            yield return new SelectListItem { Text = "01:00 AM", Value = "25:00" };
+            yield return new SelectListItem { Text = "02:00 AM", Value = "26:00" };
+            yield return new SelectListItem { Text = "03:00 AM", Value = "27:00" };
+            yield return new SelectListItem { Text = "04:00 AM", Value = "28:00" };
+            yield return new SelectListItem { Text = "05:00 AM", Value = "29:00" };
+            yield return new SelectListItem { Text = "06:00 AM", Value = "30:00" };
         }
 
         public IEnumerable<SelectListItem> AllHours()
         {
-            yield return new SelectListItem { Text = "12:00 AM", Value = "0" };
-            yield return new SelectListItem { Text = "01:00 AM", Value = "1" };
-            yield return new SelectListItem { Text = "02:00 AM", Value = "2" };
-            yield return new SelectListItem { Text = "03:00 AM", Value = "3" };
-            yield return new SelectListItem { Text = "04:00 AM", Value = "4" };
-            yield return new SelectListItem { Text = "05:00 AM", Value = "5" };
-            yield return new SelectListItem { Text = "06:00 AM", Value = "6" };
-            yield return new SelectListItem { Text = "07:00 AM", Value = "7" };
-            yield return new SelectListItem { Text = "08:00 AM", Value = "8" };
-            yield return new SelectListItem { Text = "09:00 AM", Value = "9" };
-            yield return new SelectListItem { Text = "10:00 AM", Value = "10" };
-            yield return new SelectListItem { Text = "11:00 AM", Value = "11" };
-            yield return new SelectListItem { Text = "12:00 PM", Value = "12" };
-            yield return new SelectListItem { Text = "01:00 PM", Value = "13" };
-            yield return new SelectListItem { Text = "02:00 PM", Value = "14" };
-            yield return new SelectListItem { Text = "03:00 PM", Value = "15" };
-            yield return new SelectListItem { Text = "04:00 PM", Value = "16" };
-            yield return new SelectListItem { Text = "05:00 PM", Value = "17" };
-            yield return new SelectListItem { Text = "06:00 PM", Value = "18" };
-            yield return new SelectListItem { Text = "07:00 PM", Value = "19" };
-            yield return new SelectListItem { Text = "08:00 PM", Value = "20" };
-            yield return new SelectListItem { Text = "09:00 PM", Value = "21" };
-            yield return new SelectListItem { Text = "10:00 PM", Value = "22" };
-            yield return new SelectListItem { Text = "11:00 PM", Value = "23" };
+            yield return new SelectListItem { Text = "12:00 AM", Value = "00:00" };
+            yield return new SelectListItem { Text = "01:00 AM", Value = "01:00" };
+            yield return new SelectListItem { Text = "02:00 AM", Value = "02:00" };
+            yield return new SelectListItem { Text = "03:00 AM", Value = "03:00" };
+            yield return new SelectListItem { Text = "04:00 AM", Value = "04:00" };
+            yield return new SelectListItem { Text = "05:00 AM", Value = "05:00" };
+            yield return new SelectListItem { Text = "06:00 AM", Value = "06:00" };
+            yield return new SelectListItem { Text = "07:00 AM", Value = "07:00" };
+            yield return new SelectListItem { Text = "08:00 AM", Value = "08:00" };
+            yield return new SelectListItem { Text = "09:00 AM", Value = "09:00" };
+            yield return new SelectListItem { Text = "10:00 AM", Value = "10:00" };
+            yield return new SelectListItem { Text = "11:00 AM", Value = "11:00" };
+            yield return new SelectListItem { Text = "12:00 PM", Value = "12:00" };
+            yield return new SelectListItem { Text = "01:00 PM", Value = "13:00" };
+            yield return new SelectListItem { Text = "02:00 PM", Value = "14:00" };
+            yield return new SelectListItem { Text = "03:00 PM", Value = "15:00" };
+            yield return new SelectListItem { Text = "04:00 PM", Value = "16:00" };
+            yield return new SelectListItem { Text = "05:00 PM", Value = "17:00" };
+            yield return new SelectListItem { Text = "06:00 PM", Value = "18:00" };
+            yield return new SelectListItem { Text = "07:00 PM", Value = "19:00" };
+            yield return new SelectListItem { Text = "08:00 PM", Value = "20:00" };
+            yield return new SelectListItem { Text = "09:00 PM", Value = "21:00" };
+            yield return new SelectListItem { Text = "10:00 PM", Value = "22:00" };
+            yield return new SelectListItem { Text = "11:00 PM", Value = "23:00" };
 
         }
     }

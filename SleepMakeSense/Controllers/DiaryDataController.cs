@@ -16,19 +16,35 @@ namespace SleepMakeSense.Controllers
 {
     public class DiaryDataController : Controller
     {
-        private SleepBetaDataContext Db = new SleepBetaDataContext();
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
 
         [HttpGet]
         public ActionResult DiaryDataSetup()
         {
-            DiaryDataSetupModel diaryDataSetupData = new DiaryDataSetupModel() { AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId() };
+            DiaryDataSetupModel diaryDataSetupData = new DiaryDataSetupModel();
             // Might want to load the data and assign it to the model.
 
+            IEnumerable<UserQuestion> dataQuery = from table in Db.UserQuestions
+                            where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
+                            select table;
+            bool previousEntry = false;
 
+            foreach (UserQuestion entry in dataQuery)
+            {
+                if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
+                {
+                    diaryDataSetupData.userQuestions = entry;
+                    previousEntry = true;
+                }
+            }
+            if(!previousEntry)
+            {
+                diaryDataSetupData.userQuestions = new UserQuestion() { AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId() };
+            }
             //Setting up the Selection for the questions
             //    MyViewModel viewModel = new MyViewModel();
             //    viewModel.UserQuestion = new UserQuestion();
-           // UserQuestion userQuestion = new UserQuestion();
+            // UserQuestion userQuestion = new UserQuestion();
             return View(diaryDataSetupData);//);
         }
         /* Old - trying again to fix the null bug
@@ -80,65 +96,73 @@ namespace SleepMakeSense.Controllers
         [HttpPost]
         public ActionResult DiaryDataSetup(DiaryDataSetupModel diaryDataSetupData)
         {
-            var dataQuery = from table in Db.UserQuestions
-                                      where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
-                                     select table;
+            UserQuestion dataQuery = (from table in Db.UserQuestions
+                                     where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
+                                     select table).First();
 
             bool recordPresent = false;
 
-            foreach (UserQuestion entry in dataQuery)
+            //foreach (UserQuestion entry in dataQuery)
+            //{
+            // if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
+            if (dataQuery.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
             {
-                if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
-                {
                     recordPresent = true;
-                    entry.WakeUpFreshness = diaryDataSetupData.WakeUpFreshness;
-                    entry.Mood = diaryDataSetupData.Mood;
-                    entry.Stress = diaryDataSetupData.Stress;
-                    entry.Tiredness = diaryDataSetupData.Tiredness;
-                    entry.Dream = diaryDataSetupData.Dream;
-                    entry.SchoolQuestions = diaryDataSetupData.SchoolQuestions;
-                    entry.CoffeeQuestions = diaryDataSetupData.CoffeeQuestions;
-                    entry.AlcoholQuestions = diaryDataSetupData.AlcoholQuestions;
-                    entry.NapQuestions = diaryDataSetupData.NapQuestions;
-                    entry.DigDeviceDurationQuestion = diaryDataSetupData.DigDeviceDurationQuestion;
-                    entry.GameDurationQuestion = diaryDataSetupData.GameDurationQuestion;
-                    entry.SocialMediaDurationQuestion = diaryDataSetupData.SocialMediaDurationQuestion;
-                    entry.SocialActivityDurationQuestion = diaryDataSetupData.SocialActivityDurationQuestion;
-                    entry.MusicDurationQuestion = diaryDataSetupData.MusicDurationQuestion;
-                    entry.TVDurationQuestion = diaryDataSetupData.TVDurationQuestion;
-                    entry.WorkQuestions = diaryDataSetupData.WorkQuestions;
-                    entry.ExersiseQuestions = diaryDataSetupData.ExersiseQuestions;
-                    entry.FoodQuestions = diaryDataSetupData.FoodQuestions;
-                    entry.GenderHormoneQuestion = entry.GenderHormoneQuestion;
-                }
+                /*
+                entry.WakeUpFreshness = diaryDataSetupData.WakeUpFreshness;
+                entry.Mood = diaryDataSetupData.Mood;
+                entry.Stress = diaryDataSetupData.Stress;
+                entry.Tiredness = diaryDataSetupData.Tiredness;
+                entry.Dream = diaryDataSetupData.Dream;
+                entry.SchoolQuestions = diaryDataSetupData.SchoolQuestions;
+                entry.CoffeeQuestions = diaryDataSetupData.CoffeeQuestions;
+                entry.AlcoholQuestions = diaryDataSetupData.AlcoholQuestions;
+                entry.NapQuestions = diaryDataSetupData.NapQuestions;
+                entry.DigDeviceDurationQuestion = diaryDataSetupData.DigDeviceDurationQuestion;
+                entry.GameDurationQuestion = diaryDataSetupData.GameDurationQuestion;
+                entry.SocialMediaDurationQuestion = diaryDataSetupData.SocialMediaDurationQuestion;
+                entry.SocialActivityDurationQuestion = diaryDataSetupData.SocialActivityDurationQuestion;
+                entry.MusicDurationQuestion = diaryDataSetupData.MusicDurationQuestion;
+                entry.TVDurationQuestion = diaryDataSetupData.TVDurationQuestion;
+                entry.WorkQuestions = diaryDataSetupData.WorkQuestions;
+                entry.ExersiseQuestions = diaryDataSetupData.ExersiseQuestions;
+                entry.FoodQuestions = diaryDataSetupData.FoodQuestions;
+                entry.GenderHormoneQuestion = entry.GenderHormoneQuestion;
+                */
+                dataQuery = diaryDataSetupData.userQuestions;
+               // }
             }
 
-                UserQuestion newValue = new UserQuestion()
-                {
-                    AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
-                    WakeUpFreshness = diaryDataSetupData.WakeUpFreshness,
-                    Mood = diaryDataSetupData.Mood,
-                    Stress = diaryDataSetupData.Stress,
-                    Tiredness = diaryDataSetupData.Tiredness,
-                    Dream = diaryDataSetupData.Dream,
-                    SchoolQuestions = diaryDataSetupData.SchoolQuestions,
-                    CoffeeQuestions = diaryDataSetupData.CoffeeQuestions,
-                    AlcoholQuestions = diaryDataSetupData.AlcoholQuestions,
-                    NapQuestions = diaryDataSetupData.NapQuestions,
-                    DigDeviceDurationQuestion = diaryDataSetupData.DigDeviceDurationQuestion,
-                    GameDurationQuestion = diaryDataSetupData.GameDurationQuestion,
-                    SocialMediaDurationQuestion = diaryDataSetupData.SocialMediaDurationQuestion,
-                    SocialActivityDurationQuestion = diaryDataSetupData.SocialActivityDurationQuestion,
-                    MusicDurationQuestion = diaryDataSetupData.MusicDurationQuestion,
-                    TVDurationQuestion = diaryDataSetupData.TVDurationQuestion,
-                    WorkQuestions = diaryDataSetupData.WorkQuestions,
-                    ExersiseQuestions = diaryDataSetupData.ExersiseQuestions,
-                    FoodQuestions = diaryDataSetupData.FoodQuestions,
-                    GenderHormoneQuestion = diaryDataSetupData.GenderHormoneQuestion
-                };
+
             if (recordPresent == false)
             {
-                Db.UserQuestions.InsertOnSubmit(newValue);
+
+                /*         UserQuestion newValue = new UserQuestion()
+                         {
+                             AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
+                             WakeUpFreshness = diaryDataSetupData.WakeUpFreshness,
+                             Mood = diaryDataSetupData.Mood,
+                             Stress = diaryDataSetupData.Stress,
+                             Tiredness = diaryDataSetupData.Tiredness,
+                             Dream = diaryDataSetupData.Dream,
+                             SchoolQuestions = diaryDataSetupData.SchoolQuestions,
+                             CoffeeQuestions = diaryDataSetupData.CoffeeQuestions,
+                             AlcoholQuestions = diaryDataSetupData.AlcoholQuestions,
+                             NapQuestions = diaryDataSetupData.NapQuestions,
+                             DigDeviceDurationQuestion = diaryDataSetupData.DigDeviceDurationQuestion,
+                             GameDurationQuestion = diaryDataSetupData.GameDurationQuestion,
+                             SocialMediaDurationQuestion = diaryDataSetupData.SocialMediaDurationQuestion,
+                             SocialActivityDurationQuestion = diaryDataSetupData.SocialActivityDurationQuestion,
+                             MusicDurationQuestion = diaryDataSetupData.MusicDurationQuestion,
+                             TVDurationQuestion = diaryDataSetupData.TVDurationQuestion,
+                             WorkQuestions = diaryDataSetupData.WorkQuestions,
+                             ExersiseQuestions = diaryDataSetupData.ExersiseQuestions,
+                             FoodQuestions = diaryDataSetupData.FoodQuestions,
+                             GenderHormoneQuestion = diaryDataSetupData.GenderHormoneQuestion
+                         };
+                         */
+                // Db.UserQuestions.InsertOnSubmit(newValue);
+                Db.UserQuestions.InsertOnSubmit(diaryDataSetupData.userQuestions);
             }
 
             Db.SubmitChanges();

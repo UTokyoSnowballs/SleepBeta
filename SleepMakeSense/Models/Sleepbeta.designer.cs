@@ -23,13 +23,19 @@ namespace SleepMakeSense.Models
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="sleepexplorer-database")]
-	public partial class SleepBetaDataContext : System.Data.Linq.DataContext
+	public partial class SleepbetaDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertAspNetUser(AspNetUser instance);
+    partial void UpdateAspNetUser(AspNetUser instance);
+    partial void DeleteAspNetUser(AspNetUser instance);
+    partial void InsertDiaryData(DiaryData instance);
+    partial void UpdateDiaryData(DiaryData instance);
+    partial void DeleteDiaryData(DiaryData instance);
     partial void InsertFitbitData(FitbitData instance);
     partial void UpdateFitbitData(FitbitData instance);
     partial void DeleteFitbitData(FitbitData instance);
@@ -39,42 +45,52 @@ namespace SleepMakeSense.Models
     partial void InsertUserQuestion(UserQuestion instance);
     partial void UpdateUserQuestion(UserQuestion instance);
     partial void DeleteUserQuestion(UserQuestion instance);
-    partial void InsertDiaryData(DiaryData instance);
-    partial void UpdateDiaryData(DiaryData instance);
-    partial void DeleteDiaryData(DiaryData instance);
-    partial void InsertAspNetUser(AspNetUser instance);
-    partial void UpdateAspNetUser(AspNetUser instance);
-    partial void DeleteAspNetUser(AspNetUser instance);
     #endregion
 		
-		public SleepBetaDataContext() : 
+		public SleepbetaDataContext() : 
 				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["sleepexplorer_databaseConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public SleepBetaDataContext(string connection) : 
+		public SleepbetaDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public SleepBetaDataContext(System.Data.IDbConnection connection) : 
+		public SleepbetaDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public SleepBetaDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public SleepbetaDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public SleepBetaDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public SleepbetaDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
+		}
+		
+		public System.Data.Linq.Table<AspNetUser> AspNetUsers
+		{
+			get
+			{
+				return this.GetTable<AspNetUser>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DiaryData> DiaryDatas
+		{
+			get
+			{
+				return this.GetTable<DiaryData>();
+			}
 		}
 		
 		public System.Data.Linq.Table<FitbitData> FitbitDatas
@@ -100,20 +116,1337 @@ namespace SleepMakeSense.Models
 				return this.GetTable<UserQuestion>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AspNetUsers")]
+	public partial class AspNetUser : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<DiaryData> DiaryDatas
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Id;
+		
+		private string _Email;
+		
+		private bool _EmailConfirmed;
+		
+		private string _PasswordHash;
+		
+		private string _SecurityStamp;
+		
+		private string _PhoneNumber;
+		
+		private bool _PhoneNumberConfirmed;
+		
+		private bool _TwoFactorEnabled;
+		
+		private System.Nullable<System.DateTime> _LockoutEndDateUtc;
+		
+		private bool _LockoutEnabled;
+		
+		private int _AccessFailedCount;
+		
+		private string _UserName;
+		
+		private EntitySet<TokenManagement> _TokenManagements;
+		
+		private EntitySet<UserQuestion> _UserQuestions;
+		
+		private EntitySet<FitbitData> _FitbitDatas;
+		
+		private EntitySet<DiaryData> _DiaryDatas;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(string value);
+    partial void OnIdChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnEmailConfirmedChanging(bool value);
+    partial void OnEmailConfirmedChanged();
+    partial void OnPasswordHashChanging(string value);
+    partial void OnPasswordHashChanged();
+    partial void OnSecurityStampChanging(string value);
+    partial void OnSecurityStampChanged();
+    partial void OnPhoneNumberChanging(string value);
+    partial void OnPhoneNumberChanged();
+    partial void OnPhoneNumberConfirmedChanging(bool value);
+    partial void OnPhoneNumberConfirmedChanged();
+    partial void OnTwoFactorEnabledChanging(bool value);
+    partial void OnTwoFactorEnabledChanged();
+    partial void OnLockoutEndDateUtcChanging(System.Nullable<System.DateTime> value);
+    partial void OnLockoutEndDateUtcChanged();
+    partial void OnLockoutEnabledChanging(bool value);
+    partial void OnLockoutEnabledChanged();
+    partial void OnAccessFailedCountChanging(int value);
+    partial void OnAccessFailedCountChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    #endregion
+		
+		public AspNetUser()
+		{
+			this._TokenManagements = new EntitySet<TokenManagement>(new Action<TokenManagement>(this.attach_TokenManagements), new Action<TokenManagement>(this.detach_TokenManagements));
+			this._UserQuestions = new EntitySet<UserQuestion>(new Action<UserQuestion>(this.attach_UserQuestions), new Action<UserQuestion>(this.detach_UserQuestions));
+			this._FitbitDatas = new EntitySet<FitbitData>(new Action<FitbitData>(this.attach_FitbitDatas), new Action<FitbitData>(this.detach_FitbitDatas));
+			this._DiaryDatas = new EntitySet<DiaryData>(new Action<DiaryData>(this.attach_DiaryDatas), new Action<DiaryData>(this.detach_DiaryDatas));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="NVarChar(128) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Id
 		{
 			get
 			{
-				return this.GetTable<DiaryData>();
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
 			}
 		}
 		
-		public System.Data.Linq.Table<AspNetUser> AspNetUsers
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(256)")]
+		public string Email
 		{
 			get
 			{
-				return this.GetTable<AspNetUser>();
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailConfirmed", DbType="Bit NOT NULL")]
+		public bool EmailConfirmed
+		{
+			get
+			{
+				return this._EmailConfirmed;
+			}
+			set
+			{
+				if ((this._EmailConfirmed != value))
+				{
+					this.OnEmailConfirmedChanging(value);
+					this.SendPropertyChanging();
+					this._EmailConfirmed = value;
+					this.SendPropertyChanged("EmailConfirmed");
+					this.OnEmailConfirmedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordHash", DbType="NVarChar(MAX)")]
+		public string PasswordHash
+		{
+			get
+			{
+				return this._PasswordHash;
+			}
+			set
+			{
+				if ((this._PasswordHash != value))
+				{
+					this.OnPasswordHashChanging(value);
+					this.SendPropertyChanging();
+					this._PasswordHash = value;
+					this.SendPropertyChanged("PasswordHash");
+					this.OnPasswordHashChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecurityStamp", DbType="NVarChar(MAX)")]
+		public string SecurityStamp
+		{
+			get
+			{
+				return this._SecurityStamp;
+			}
+			set
+			{
+				if ((this._SecurityStamp != value))
+				{
+					this.OnSecurityStampChanging(value);
+					this.SendPropertyChanging();
+					this._SecurityStamp = value;
+					this.SendPropertyChanged("SecurityStamp");
+					this.OnSecurityStampChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="NVarChar(MAX)")]
+		public string PhoneNumber
+		{
+			get
+			{
+				return this._PhoneNumber;
+			}
+			set
+			{
+				if ((this._PhoneNumber != value))
+				{
+					this.OnPhoneNumberChanging(value);
+					this.SendPropertyChanging();
+					this._PhoneNumber = value;
+					this.SendPropertyChanged("PhoneNumber");
+					this.OnPhoneNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumberConfirmed", DbType="Bit NOT NULL")]
+		public bool PhoneNumberConfirmed
+		{
+			get
+			{
+				return this._PhoneNumberConfirmed;
+			}
+			set
+			{
+				if ((this._PhoneNumberConfirmed != value))
+				{
+					this.OnPhoneNumberConfirmedChanging(value);
+					this.SendPropertyChanging();
+					this._PhoneNumberConfirmed = value;
+					this.SendPropertyChanged("PhoneNumberConfirmed");
+					this.OnPhoneNumberConfirmedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TwoFactorEnabled", DbType="Bit NOT NULL")]
+		public bool TwoFactorEnabled
+		{
+			get
+			{
+				return this._TwoFactorEnabled;
+			}
+			set
+			{
+				if ((this._TwoFactorEnabled != value))
+				{
+					this.OnTwoFactorEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._TwoFactorEnabled = value;
+					this.SendPropertyChanged("TwoFactorEnabled");
+					this.OnTwoFactorEnabledChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockoutEndDateUtc", DbType="DateTime")]
+		public System.Nullable<System.DateTime> LockoutEndDateUtc
+		{
+			get
+			{
+				return this._LockoutEndDateUtc;
+			}
+			set
+			{
+				if ((this._LockoutEndDateUtc != value))
+				{
+					this.OnLockoutEndDateUtcChanging(value);
+					this.SendPropertyChanging();
+					this._LockoutEndDateUtc = value;
+					this.SendPropertyChanged("LockoutEndDateUtc");
+					this.OnLockoutEndDateUtcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockoutEnabled", DbType="Bit NOT NULL")]
+		public bool LockoutEnabled
+		{
+			get
+			{
+				return this._LockoutEnabled;
+			}
+			set
+			{
+				if ((this._LockoutEnabled != value))
+				{
+					this.OnLockoutEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._LockoutEnabled = value;
+					this.SendPropertyChanged("LockoutEnabled");
+					this.OnLockoutEnabledChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessFailedCount", DbType="Int NOT NULL")]
+		public int AccessFailedCount
+		{
+			get
+			{
+				return this._AccessFailedCount;
+			}
+			set
+			{
+				if ((this._AccessFailedCount != value))
+				{
+					this.OnAccessFailedCountChanging(value);
+					this.SendPropertyChanging();
+					this._AccessFailedCount = value;
+					this.SendPropertyChanged("AccessFailedCount");
+					this.OnAccessFailedCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_TokenManagement", Storage="_TokenManagements", ThisKey="Id", OtherKey="AspNetUserId")]
+		public EntitySet<TokenManagement> TokenManagements
+		{
+			get
+			{
+				return this._TokenManagements;
+			}
+			set
+			{
+				this._TokenManagements.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_UserQuestion", Storage="_UserQuestions", ThisKey="Id", OtherKey="AspNetUserId")]
+		public EntitySet<UserQuestion> UserQuestions
+		{
+			get
+			{
+				return this._UserQuestions;
+			}
+			set
+			{
+				this._UserQuestions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_FitbitData", Storage="_FitbitDatas", ThisKey="Id", OtherKey="AspNetUserId")]
+		public EntitySet<FitbitData> FitbitDatas
+		{
+			get
+			{
+				return this._FitbitDatas;
+			}
+			set
+			{
+				this._FitbitDatas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_DiaryData", Storage="_DiaryDatas", ThisKey="Id", OtherKey="AspNetUserId")]
+		public EntitySet<DiaryData> DiaryDatas
+		{
+			get
+			{
+				return this._DiaryDatas;
+			}
+			set
+			{
+				this._DiaryDatas.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TokenManagements(TokenManagement entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = this;
+		}
+		
+		private void detach_TokenManagements(TokenManagement entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = null;
+		}
+		
+		private void attach_UserQuestions(UserQuestion entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = this;
+		}
+		
+		private void detach_UserQuestions(UserQuestion entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = null;
+		}
+		
+		private void attach_FitbitDatas(FitbitData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = this;
+		}
+		
+		private void detach_FitbitDatas(FitbitData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = null;
+		}
+		
+		private void attach_DiaryDatas(DiaryData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = this;
+		}
+		
+		private void detach_DiaryDatas(DiaryData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DiaryData")]
+	public partial class DiaryData : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _AspNetUserId;
+		
+		private System.DateTime _DateStamp;
+		
+		private string _WakeUpFreshness;
+		
+		private string _Mood;
+		
+		private string _Stress;
+		
+		private string _Tiredness;
+		
+		private string _Dream;
+		
+		private string _BodyTemp;
+		
+		private string _Hormone;
+		
+		private string _SchoolStress;
+		
+		private string _CoffeeAmt;
+		
+		private string _CoffeeTime;
+		
+		private string _AlcoholAmt;
+		
+		private string _AlcoholTime;
+		
+		private string _NapTime;
+		
+		private string _NapDuration;
+		
+		private string _DigDeviceDuration;
+		
+		private string _GamesDuration;
+		
+		private string _SocialActivites;
+		
+		private string _SocialActivity;
+		
+		private string _MusicDuration;
+		
+		private string _TVDuration;
+		
+		private string _WorkTime;
+		
+		private string _WorkDuration;
+		
+		private string _ExerciseDuration;
+		
+		private string _ExerciseIntensity;
+		
+		private string _DinnerTime;
+		
+		private string _SnackTime;
+		
+		private string _AmbientTemp;
+		
+		private string _AmbientHumd;
+		
+		private string _Light;
+		
+		private string _SunRiseTime;
+		
+		private string _SunSetTime;
+		
+		private EntityRef<AspNetUser> _AspNetUser;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnAspNetUserIdChanging(string value);
+    partial void OnAspNetUserIdChanged();
+    partial void OnDateStampChanging(System.DateTime value);
+    partial void OnDateStampChanged();
+    partial void OnWakeUpFreshnessChanging(string value);
+    partial void OnWakeUpFreshnessChanged();
+    partial void OnMoodChanging(string value);
+    partial void OnMoodChanged();
+    partial void OnStressChanging(string value);
+    partial void OnStressChanged();
+    partial void OnTirednessChanging(string value);
+    partial void OnTirednessChanged();
+    partial void OnDreamChanging(string value);
+    partial void OnDreamChanged();
+    partial void OnBodyTempChanging(string value);
+    partial void OnBodyTempChanged();
+    partial void OnHormoneChanging(string value);
+    partial void OnHormoneChanged();
+    partial void OnSchoolStressChanging(string value);
+    partial void OnSchoolStressChanged();
+    partial void OnCoffeeAmtChanging(string value);
+    partial void OnCoffeeAmtChanged();
+    partial void OnCoffeeTimeChanging(string value);
+    partial void OnCoffeeTimeChanged();
+    partial void OnAlcoholAmtChanging(string value);
+    partial void OnAlcoholAmtChanged();
+    partial void OnAlcoholTimeChanging(string value);
+    partial void OnAlcoholTimeChanged();
+    partial void OnNapTimeChanging(string value);
+    partial void OnNapTimeChanged();
+    partial void OnNapDurationChanging(string value);
+    partial void OnNapDurationChanged();
+    partial void OnDigDeviceDurationChanging(string value);
+    partial void OnDigDeviceDurationChanged();
+    partial void OnGamesDurationChanging(string value);
+    partial void OnGamesDurationChanged();
+    partial void OnSocialActivitesChanging(string value);
+    partial void OnSocialActivitesChanged();
+    partial void OnSocialActivityChanging(string value);
+    partial void OnSocialActivityChanged();
+    partial void OnMusicDurationChanging(string value);
+    partial void OnMusicDurationChanged();
+    partial void OnTVDurationChanging(string value);
+    partial void OnTVDurationChanged();
+    partial void OnWorkTimeChanging(string value);
+    partial void OnWorkTimeChanged();
+    partial void OnWorkDurationChanging(string value);
+    partial void OnWorkDurationChanged();
+    partial void OnExerciseDurationChanging(string value);
+    partial void OnExerciseDurationChanged();
+    partial void OnExerciseIntensityChanging(string value);
+    partial void OnExerciseIntensityChanged();
+    partial void OnDinnerTimeChanging(string value);
+    partial void OnDinnerTimeChanged();
+    partial void OnSnackTimeChanging(string value);
+    partial void OnSnackTimeChanged();
+    partial void OnAmbientTempChanging(string value);
+    partial void OnAmbientTempChanged();
+    partial void OnAmbientHumdChanging(string value);
+    partial void OnAmbientHumdChanged();
+    partial void OnLightChanging(string value);
+    partial void OnLightChanged();
+    partial void OnSunRiseTimeChanging(string value);
+    partial void OnSunRiseTimeChanged();
+    partial void OnSunSetTimeChanging(string value);
+    partial void OnSunSetTimeChanged();
+    #endregion
+		
+		public DiaryData()
+		{
+			this._AspNetUser = default(EntityRef<AspNetUser>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AspNetUserId", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string AspNetUserId
+		{
+			get
+			{
+				return this._AspNetUserId;
+			}
+			set
+			{
+				if ((this._AspNetUserId != value))
+				{
+					if (this._AspNetUser.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAspNetUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._AspNetUserId = value;
+					this.SendPropertyChanged("AspNetUserId");
+					this.OnAspNetUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStamp", DbType="DateTime NOT NULL")]
+		public System.DateTime DateStamp
+		{
+			get
+			{
+				return this._DateStamp;
+			}
+			set
+			{
+				if ((this._DateStamp != value))
+				{
+					this.OnDateStampChanging(value);
+					this.SendPropertyChanging();
+					this._DateStamp = value;
+					this.SendPropertyChanged("DateStamp");
+					this.OnDateStampChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WakeUpFreshness", DbType="NVarChar(50)")]
+		public string WakeUpFreshness
+		{
+			get
+			{
+				return this._WakeUpFreshness;
+			}
+			set
+			{
+				if ((this._WakeUpFreshness != value))
+				{
+					this.OnWakeUpFreshnessChanging(value);
+					this.SendPropertyChanging();
+					this._WakeUpFreshness = value;
+					this.SendPropertyChanged("WakeUpFreshness");
+					this.OnWakeUpFreshnessChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mood", DbType="NVarChar(50)")]
+		public string Mood
+		{
+			get
+			{
+				return this._Mood;
+			}
+			set
+			{
+				if ((this._Mood != value))
+				{
+					this.OnMoodChanging(value);
+					this.SendPropertyChanging();
+					this._Mood = value;
+					this.SendPropertyChanged("Mood");
+					this.OnMoodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stress", DbType="NVarChar(50)")]
+		public string Stress
+		{
+			get
+			{
+				return this._Stress;
+			}
+			set
+			{
+				if ((this._Stress != value))
+				{
+					this.OnStressChanging(value);
+					this.SendPropertyChanging();
+					this._Stress = value;
+					this.SendPropertyChanged("Stress");
+					this.OnStressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tiredness", DbType="NVarChar(50)")]
+		public string Tiredness
+		{
+			get
+			{
+				return this._Tiredness;
+			}
+			set
+			{
+				if ((this._Tiredness != value))
+				{
+					this.OnTirednessChanging(value);
+					this.SendPropertyChanging();
+					this._Tiredness = value;
+					this.SendPropertyChanged("Tiredness");
+					this.OnTirednessChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dream", DbType="NVarChar(50)")]
+		public string Dream
+		{
+			get
+			{
+				return this._Dream;
+			}
+			set
+			{
+				if ((this._Dream != value))
+				{
+					this.OnDreamChanging(value);
+					this.SendPropertyChanging();
+					this._Dream = value;
+					this.SendPropertyChanged("Dream");
+					this.OnDreamChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BodyTemp", DbType="NVarChar(50)")]
+		public string BodyTemp
+		{
+			get
+			{
+				return this._BodyTemp;
+			}
+			set
+			{
+				if ((this._BodyTemp != value))
+				{
+					this.OnBodyTempChanging(value);
+					this.SendPropertyChanging();
+					this._BodyTemp = value;
+					this.SendPropertyChanged("BodyTemp");
+					this.OnBodyTempChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hormone", DbType="NVarChar(50)")]
+		public string Hormone
+		{
+			get
+			{
+				return this._Hormone;
+			}
+			set
+			{
+				if ((this._Hormone != value))
+				{
+					this.OnHormoneChanging(value);
+					this.SendPropertyChanging();
+					this._Hormone = value;
+					this.SendPropertyChanged("Hormone");
+					this.OnHormoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SchoolStress", DbType="NVarChar(50)")]
+		public string SchoolStress
+		{
+			get
+			{
+				return this._SchoolStress;
+			}
+			set
+			{
+				if ((this._SchoolStress != value))
+				{
+					this.OnSchoolStressChanging(value);
+					this.SendPropertyChanging();
+					this._SchoolStress = value;
+					this.SendPropertyChanged("SchoolStress");
+					this.OnSchoolStressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoffeeAmt", DbType="NVarChar(50)")]
+		public string CoffeeAmt
+		{
+			get
+			{
+				return this._CoffeeAmt;
+			}
+			set
+			{
+				if ((this._CoffeeAmt != value))
+				{
+					this.OnCoffeeAmtChanging(value);
+					this.SendPropertyChanging();
+					this._CoffeeAmt = value;
+					this.SendPropertyChanged("CoffeeAmt");
+					this.OnCoffeeAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoffeeTime", DbType="NVarChar(50)")]
+		public string CoffeeTime
+		{
+			get
+			{
+				return this._CoffeeTime;
+			}
+			set
+			{
+				if ((this._CoffeeTime != value))
+				{
+					this.OnCoffeeTimeChanging(value);
+					this.SendPropertyChanging();
+					this._CoffeeTime = value;
+					this.SendPropertyChanged("CoffeeTime");
+					this.OnCoffeeTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlcoholAmt", DbType="NVarChar(50)")]
+		public string AlcoholAmt
+		{
+			get
+			{
+				return this._AlcoholAmt;
+			}
+			set
+			{
+				if ((this._AlcoholAmt != value))
+				{
+					this.OnAlcoholAmtChanging(value);
+					this.SendPropertyChanging();
+					this._AlcoholAmt = value;
+					this.SendPropertyChanged("AlcoholAmt");
+					this.OnAlcoholAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlcoholTime", DbType="NVarChar(50)")]
+		public string AlcoholTime
+		{
+			get
+			{
+				return this._AlcoholTime;
+			}
+			set
+			{
+				if ((this._AlcoholTime != value))
+				{
+					this.OnAlcoholTimeChanging(value);
+					this.SendPropertyChanging();
+					this._AlcoholTime = value;
+					this.SendPropertyChanged("AlcoholTime");
+					this.OnAlcoholTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NapTime", DbType="NVarChar(50)")]
+		public string NapTime
+		{
+			get
+			{
+				return this._NapTime;
+			}
+			set
+			{
+				if ((this._NapTime != value))
+				{
+					this.OnNapTimeChanging(value);
+					this.SendPropertyChanging();
+					this._NapTime = value;
+					this.SendPropertyChanged("NapTime");
+					this.OnNapTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NapDuration", DbType="NVarChar(50)")]
+		public string NapDuration
+		{
+			get
+			{
+				return this._NapDuration;
+			}
+			set
+			{
+				if ((this._NapDuration != value))
+				{
+					this.OnNapDurationChanging(value);
+					this.SendPropertyChanging();
+					this._NapDuration = value;
+					this.SendPropertyChanged("NapDuration");
+					this.OnNapDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DigDeviceDuration", DbType="NVarChar(50)")]
+		public string DigDeviceDuration
+		{
+			get
+			{
+				return this._DigDeviceDuration;
+			}
+			set
+			{
+				if ((this._DigDeviceDuration != value))
+				{
+					this.OnDigDeviceDurationChanging(value);
+					this.SendPropertyChanging();
+					this._DigDeviceDuration = value;
+					this.SendPropertyChanged("DigDeviceDuration");
+					this.OnDigDeviceDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GamesDuration", DbType="NVarChar(50)")]
+		public string GamesDuration
+		{
+			get
+			{
+				return this._GamesDuration;
+			}
+			set
+			{
+				if ((this._GamesDuration != value))
+				{
+					this.OnGamesDurationChanging(value);
+					this.SendPropertyChanging();
+					this._GamesDuration = value;
+					this.SendPropertyChanged("GamesDuration");
+					this.OnGamesDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivites", DbType="NVarChar(50)")]
+		public string SocialActivites
+		{
+			get
+			{
+				return this._SocialActivites;
+			}
+			set
+			{
+				if ((this._SocialActivites != value))
+				{
+					this.OnSocialActivitesChanging(value);
+					this.SendPropertyChanging();
+					this._SocialActivites = value;
+					this.SendPropertyChanged("SocialActivites");
+					this.OnSocialActivitesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivity", DbType="NVarChar(50)")]
+		public string SocialActivity
+		{
+			get
+			{
+				return this._SocialActivity;
+			}
+			set
+			{
+				if ((this._SocialActivity != value))
+				{
+					this.OnSocialActivityChanging(value);
+					this.SendPropertyChanging();
+					this._SocialActivity = value;
+					this.SendPropertyChanged("SocialActivity");
+					this.OnSocialActivityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MusicDuration", DbType="NVarChar(50)")]
+		public string MusicDuration
+		{
+			get
+			{
+				return this._MusicDuration;
+			}
+			set
+			{
+				if ((this._MusicDuration != value))
+				{
+					this.OnMusicDurationChanging(value);
+					this.SendPropertyChanging();
+					this._MusicDuration = value;
+					this.SendPropertyChanged("MusicDuration");
+					this.OnMusicDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TVDuration", DbType="NVarChar(50)")]
+		public string TVDuration
+		{
+			get
+			{
+				return this._TVDuration;
+			}
+			set
+			{
+				if ((this._TVDuration != value))
+				{
+					this.OnTVDurationChanging(value);
+					this.SendPropertyChanging();
+					this._TVDuration = value;
+					this.SendPropertyChanged("TVDuration");
+					this.OnTVDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkTime", DbType="NVarChar(50)")]
+		public string WorkTime
+		{
+			get
+			{
+				return this._WorkTime;
+			}
+			set
+			{
+				if ((this._WorkTime != value))
+				{
+					this.OnWorkTimeChanging(value);
+					this.SendPropertyChanging();
+					this._WorkTime = value;
+					this.SendPropertyChanged("WorkTime");
+					this.OnWorkTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkDuration", DbType="NVarChar(50)")]
+		public string WorkDuration
+		{
+			get
+			{
+				return this._WorkDuration;
+			}
+			set
+			{
+				if ((this._WorkDuration != value))
+				{
+					this.OnWorkDurationChanging(value);
+					this.SendPropertyChanging();
+					this._WorkDuration = value;
+					this.SendPropertyChanged("WorkDuration");
+					this.OnWorkDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExerciseDuration", DbType="NVarChar(50)")]
+		public string ExerciseDuration
+		{
+			get
+			{
+				return this._ExerciseDuration;
+			}
+			set
+			{
+				if ((this._ExerciseDuration != value))
+				{
+					this.OnExerciseDurationChanging(value);
+					this.SendPropertyChanging();
+					this._ExerciseDuration = value;
+					this.SendPropertyChanged("ExerciseDuration");
+					this.OnExerciseDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExerciseIntensity", DbType="NVarChar(50)")]
+		public string ExerciseIntensity
+		{
+			get
+			{
+				return this._ExerciseIntensity;
+			}
+			set
+			{
+				if ((this._ExerciseIntensity != value))
+				{
+					this.OnExerciseIntensityChanging(value);
+					this.SendPropertyChanging();
+					this._ExerciseIntensity = value;
+					this.SendPropertyChanged("ExerciseIntensity");
+					this.OnExerciseIntensityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DinnerTime", DbType="NVarChar(50)")]
+		public string DinnerTime
+		{
+			get
+			{
+				return this._DinnerTime;
+			}
+			set
+			{
+				if ((this._DinnerTime != value))
+				{
+					this.OnDinnerTimeChanging(value);
+					this.SendPropertyChanging();
+					this._DinnerTime = value;
+					this.SendPropertyChanged("DinnerTime");
+					this.OnDinnerTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SnackTime", DbType="NVarChar(50)")]
+		public string SnackTime
+		{
+			get
+			{
+				return this._SnackTime;
+			}
+			set
+			{
+				if ((this._SnackTime != value))
+				{
+					this.OnSnackTimeChanging(value);
+					this.SendPropertyChanging();
+					this._SnackTime = value;
+					this.SendPropertyChanged("SnackTime");
+					this.OnSnackTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AmbientTemp", DbType="NVarChar(50)")]
+		public string AmbientTemp
+		{
+			get
+			{
+				return this._AmbientTemp;
+			}
+			set
+			{
+				if ((this._AmbientTemp != value))
+				{
+					this.OnAmbientTempChanging(value);
+					this.SendPropertyChanging();
+					this._AmbientTemp = value;
+					this.SendPropertyChanged("AmbientTemp");
+					this.OnAmbientTempChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AmbientHumd", DbType="NVarChar(50)")]
+		public string AmbientHumd
+		{
+			get
+			{
+				return this._AmbientHumd;
+			}
+			set
+			{
+				if ((this._AmbientHumd != value))
+				{
+					this.OnAmbientHumdChanging(value);
+					this.SendPropertyChanging();
+					this._AmbientHumd = value;
+					this.SendPropertyChanged("AmbientHumd");
+					this.OnAmbientHumdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Light", DbType="NVarChar(50)")]
+		public string Light
+		{
+			get
+			{
+				return this._Light;
+			}
+			set
+			{
+				if ((this._Light != value))
+				{
+					this.OnLightChanging(value);
+					this.SendPropertyChanging();
+					this._Light = value;
+					this.SendPropertyChanged("Light");
+					this.OnLightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SunRiseTime", DbType="NVarChar(50)")]
+		public string SunRiseTime
+		{
+			get
+			{
+				return this._SunRiseTime;
+			}
+			set
+			{
+				if ((this._SunRiseTime != value))
+				{
+					this.OnSunRiseTimeChanging(value);
+					this.SendPropertyChanging();
+					this._SunRiseTime = value;
+					this.SendPropertyChanged("SunRiseTime");
+					this.OnSunRiseTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SunSetTime", DbType="NVarChar(50)")]
+		public string SunSetTime
+		{
+			get
+			{
+				return this._SunSetTime;
+			}
+			set
+			{
+				if ((this._SunSetTime != value))
+				{
+					this.OnSunSetTimeChanging(value);
+					this.SendPropertyChanging();
+					this._SunSetTime = value;
+					this.SendPropertyChanged("SunSetTime");
+					this.OnSunSetTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_DiaryData", Storage="_AspNetUser", ThisKey="AspNetUserId", OtherKey="Id", IsForeignKey=true)]
+		public AspNetUser AspNetUser
+		{
+			get
+			{
+				return this._AspNetUser.Entity;
+			}
+			set
+			{
+				AspNetUser previousValue = this._AspNetUser.Entity;
+				if (((previousValue != value) 
+							|| (this._AspNetUser.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AspNetUser.Entity = null;
+						previousValue.DiaryDatas.Remove(this);
+					}
+					this._AspNetUser.Entity = value;
+					if ((value != null))
+					{
+						value.DiaryDatas.Add(this);
+						this._AspNetUserId = value.Id;
+					}
+					else
+					{
+						this._AspNetUserId = default(string);
+					}
+					this.SendPropertyChanged("AspNetUser");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -1054,43 +2387,43 @@ namespace SleepMakeSense.Models
 		
 		private string _AspNetUserId;
 		
-		private System.Nullable<bool> _WakeUpFreshness;
+		private bool _WakeUpFreshness;
 		
-		private System.Nullable<bool> _Mood;
+		private bool _Mood;
 		
-		private System.Nullable<bool> _Stress;
+		private bool _Stress;
 		
-		private System.Nullable<bool> _Tiredness;
+		private bool _Tiredness;
 		
-		private System.Nullable<bool> _Dream;
+		private bool _Dream;
 		
-		private System.Nullable<bool> _SchoolQuestions;
+		private bool _SchoolQuestions;
 		
-		private System.Nullable<bool> _CoffeeQuestions;
+		private bool _CoffeeQuestions;
 		
-		private System.Nullable<bool> _AlcoholQuestions;
+		private bool _AlcoholQuestions;
 		
-		private System.Nullable<bool> _NapQuestions;
+		private bool _NapQuestions;
 		
-		private System.Nullable<bool> _DigDeviceDurationQuestion;
+		private bool _DigDeviceDurationQuestion;
 		
-		private System.Nullable<bool> _GameDurationQuestion;
+		private bool _GameDurationQuestion;
 		
-		private System.Nullable<bool> _SocialMediaDurationQuestion;
+		private bool _SocialMediaDurationQuestion;
 		
-		private System.Nullable<bool> _SocialActivityDurationQuestion;
+		private bool _SocialActivityDurationQuestion;
 		
-		private System.Nullable<bool> _MusicDurationQuestion;
+		private bool _MusicDurationQuestion;
 		
-		private System.Nullable<bool> _TVDurationQuestion;
+		private bool _TVDurationQuestion;
 		
-		private System.Nullable<bool> _WorkQuestions;
+		private bool _WorkQuestions;
 		
-		private System.Nullable<bool> _ExersiseQuestions;
+		private bool _ExersiseQuestions;
 		
-		private System.Nullable<bool> _FoodQuestions;
+		private bool _FoodQuestions;
 		
-		private System.Nullable<bool> _GenderHormoneQuestion;
+		private bool _GenderHormoneQuestion;
 		
 		private EntityRef<AspNetUser> _AspNetUser;
 		
@@ -1102,43 +2435,43 @@ namespace SleepMakeSense.Models
     partial void OnIdChanged();
     partial void OnAspNetUserIdChanging(string value);
     partial void OnAspNetUserIdChanged();
-    partial void OnWakeUpFreshnessChanging(System.Nullable<bool> value);
+    partial void OnWakeUpFreshnessChanging(bool value);
     partial void OnWakeUpFreshnessChanged();
-    partial void OnMoodChanging(System.Nullable<bool> value);
+    partial void OnMoodChanging(bool value);
     partial void OnMoodChanged();
-    partial void OnStressChanging(System.Nullable<bool> value);
+    partial void OnStressChanging(bool value);
     partial void OnStressChanged();
-    partial void OnTirednessChanging(System.Nullable<bool> value);
+    partial void OnTirednessChanging(bool value);
     partial void OnTirednessChanged();
-    partial void OnDreamChanging(System.Nullable<bool> value);
+    partial void OnDreamChanging(bool value);
     partial void OnDreamChanged();
-    partial void OnSchoolQuestionsChanging(System.Nullable<bool> value);
+    partial void OnSchoolQuestionsChanging(bool value);
     partial void OnSchoolQuestionsChanged();
-    partial void OnCoffeeQuestionsChanging(System.Nullable<bool> value);
+    partial void OnCoffeeQuestionsChanging(bool value);
     partial void OnCoffeeQuestionsChanged();
-    partial void OnAlcoholQuestionsChanging(System.Nullable<bool> value);
+    partial void OnAlcoholQuestionsChanging(bool value);
     partial void OnAlcoholQuestionsChanged();
-    partial void OnNapQuestionsChanging(System.Nullable<bool> value);
+    partial void OnNapQuestionsChanging(bool value);
     partial void OnNapQuestionsChanged();
-    partial void OnDigDeviceDurationQuestionChanging(System.Nullable<bool> value);
+    partial void OnDigDeviceDurationQuestionChanging(bool value);
     partial void OnDigDeviceDurationQuestionChanged();
-    partial void OnGameDurationQuestionChanging(System.Nullable<bool> value);
+    partial void OnGameDurationQuestionChanging(bool value);
     partial void OnGameDurationQuestionChanged();
-    partial void OnSocialMediaDurationQuestionChanging(System.Nullable<bool> value);
+    partial void OnSocialMediaDurationQuestionChanging(bool value);
     partial void OnSocialMediaDurationQuestionChanged();
-    partial void OnSocialActivityDurationQuestionChanging(System.Nullable<bool> value);
+    partial void OnSocialActivityDurationQuestionChanging(bool value);
     partial void OnSocialActivityDurationQuestionChanged();
-    partial void OnMusicDurationQuestionChanging(System.Nullable<bool> value);
+    partial void OnMusicDurationQuestionChanging(bool value);
     partial void OnMusicDurationQuestionChanged();
-    partial void OnTVDurationQuestionChanging(System.Nullable<bool> value);
+    partial void OnTVDurationQuestionChanging(bool value);
     partial void OnTVDurationQuestionChanged();
-    partial void OnWorkQuestionsChanging(System.Nullable<bool> value);
+    partial void OnWorkQuestionsChanging(bool value);
     partial void OnWorkQuestionsChanged();
-    partial void OnExersiseQuestionsChanging(System.Nullable<bool> value);
+    partial void OnExersiseQuestionsChanging(bool value);
     partial void OnExersiseQuestionsChanged();
-    partial void OnFoodQuestionsChanging(System.Nullable<bool> value);
+    partial void OnFoodQuestionsChanging(bool value);
     partial void OnFoodQuestionsChanged();
-    partial void OnGenderHormoneQuestionChanging(System.Nullable<bool> value);
+    partial void OnGenderHormoneQuestionChanging(bool value);
     partial void OnGenderHormoneQuestionChanged();
     #endregion
 		
@@ -1192,8 +2525,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WakeUpFreshness", DbType="Bit")]
-		public System.Nullable<bool> WakeUpFreshness
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WakeUpFreshness", DbType="Bit NOT NULL")]
+		public bool WakeUpFreshness
 		{
 			get
 			{
@@ -1212,8 +2545,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mood", DbType="Bit")]
-		public System.Nullable<bool> Mood
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mood", DbType="Bit NOT NULL")]
+		public bool Mood
 		{
 			get
 			{
@@ -1232,8 +2565,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stress", DbType="Bit")]
-		public System.Nullable<bool> Stress
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stress", DbType="Bit NOT NULL")]
+		public bool Stress
 		{
 			get
 			{
@@ -1252,8 +2585,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tiredness", DbType="Bit")]
-		public System.Nullable<bool> Tiredness
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tiredness", DbType="Bit NOT NULL")]
+		public bool Tiredness
 		{
 			get
 			{
@@ -1272,8 +2605,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dream", DbType="Bit")]
-		public System.Nullable<bool> Dream
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dream", DbType="Bit NOT NULL")]
+		public bool Dream
 		{
 			get
 			{
@@ -1292,8 +2625,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SchoolQuestions", DbType="Bit")]
-		public System.Nullable<bool> SchoolQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SchoolQuestions", DbType="Bit NOT NULL")]
+		public bool SchoolQuestions
 		{
 			get
 			{
@@ -1312,8 +2645,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoffeeQuestions", DbType="Bit")]
-		public System.Nullable<bool> CoffeeQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoffeeQuestions", DbType="Bit NOT NULL")]
+		public bool CoffeeQuestions
 		{
 			get
 			{
@@ -1332,8 +2665,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlcoholQuestions", DbType="Bit")]
-		public System.Nullable<bool> AlcoholQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlcoholQuestions", DbType="Bit NOT NULL")]
+		public bool AlcoholQuestions
 		{
 			get
 			{
@@ -1352,8 +2685,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NapQuestions", DbType="Bit")]
-		public System.Nullable<bool> NapQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NapQuestions", DbType="Bit NOT NULL")]
+		public bool NapQuestions
 		{
 			get
 			{
@@ -1372,8 +2705,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DigDeviceDurationQuestion", DbType="Bit")]
-		public System.Nullable<bool> DigDeviceDurationQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DigDeviceDurationQuestion", DbType="Bit NOT NULL")]
+		public bool DigDeviceDurationQuestion
 		{
 			get
 			{
@@ -1392,8 +2725,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameDurationQuestion", DbType="Bit")]
-		public System.Nullable<bool> GameDurationQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameDurationQuestion", DbType="Bit NOT NULL")]
+		public bool GameDurationQuestion
 		{
 			get
 			{
@@ -1412,8 +2745,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialMediaDurationQuestion", DbType="Bit")]
-		public System.Nullable<bool> SocialMediaDurationQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialMediaDurationQuestion", DbType="Bit NOT NULL")]
+		public bool SocialMediaDurationQuestion
 		{
 			get
 			{
@@ -1432,8 +2765,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivityDurationQuestion", DbType="Bit")]
-		public System.Nullable<bool> SocialActivityDurationQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivityDurationQuestion", DbType="Bit NOT NULL")]
+		public bool SocialActivityDurationQuestion
 		{
 			get
 			{
@@ -1452,8 +2785,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MusicDurationQuestion", DbType="Bit")]
-		public System.Nullable<bool> MusicDurationQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MusicDurationQuestion", DbType="Bit NOT NULL")]
+		public bool MusicDurationQuestion
 		{
 			get
 			{
@@ -1472,8 +2805,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TVDurationQuestion", DbType="Bit")]
-		public System.Nullable<bool> TVDurationQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TVDurationQuestion", DbType="Bit NOT NULL")]
+		public bool TVDurationQuestion
 		{
 			get
 			{
@@ -1492,8 +2825,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkQuestions", DbType="Bit")]
-		public System.Nullable<bool> WorkQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkQuestions", DbType="Bit NOT NULL")]
+		public bool WorkQuestions
 		{
 			get
 			{
@@ -1512,8 +2845,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExersiseQuestions", DbType="Bit")]
-		public System.Nullable<bool> ExersiseQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExersiseQuestions", DbType="Bit NOT NULL")]
+		public bool ExersiseQuestions
 		{
 			get
 			{
@@ -1532,8 +2865,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodQuestions", DbType="Bit")]
-		public System.Nullable<bool> FoodQuestions
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodQuestions", DbType="Bit NOT NULL")]
+		public bool FoodQuestions
 		{
 			get
 			{
@@ -1552,8 +2885,8 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GenderHormoneQuestion", DbType="Bit")]
-		public System.Nullable<bool> GenderHormoneQuestion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GenderHormoneQuestion", DbType="Bit NOT NULL")]
+		public bool GenderHormoneQuestion
 		{
 			get
 			{
@@ -1624,1339 +2957,6 @@ namespace SleepMakeSense.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DiaryData")]
-	public partial class DiaryData : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _AspNetUserId;
-		
-		private System.DateTime _DateStamp;
-		
-		private string _WakeUpFreshness;
-		
-		private string _Mood;
-		
-		private string _Stress;
-		
-		private string _Tiredness;
-		
-		private string _Dream;
-		
-		private string _BodyTemp;
-		
-		private string _Hormone;
-		
-		private string _SchoolStress;
-		
-		private string _CoffeeAmt;
-		
-		private string _CoffeeTime;
-		
-		private string _AlcoholAmt;
-		
-		private string _AlcoholTime;
-		
-		private string _NapTime;
-		
-		private string _NapDuration;
-		
-		private string _DigDeviceDuration;
-		
-		private string _GamesDuration;
-		
-		private string _SocialActivites;
-		
-		private string _SocialActivity;
-		
-		private string _MusicDuration;
-		
-		private string _TVDuration;
-		
-		private string _WorkTime;
-		
-		private string _WorkDuration;
-		
-		private string _ExerciseDuration;
-		
-		private string _ExerciseIntensity;
-		
-		private string _DinnerTime;
-		
-		private string _SnackTime;
-		
-		private string _AmbientTemp;
-		
-		private string _AmbientHumd;
-		
-		private string _Light;
-		
-		private string _SunRiseTime;
-		
-		private string _SunSetTime;
-		
-		private EntityRef<AspNetUser> _AspNetUser;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnAspNetUserIdChanging(string value);
-    partial void OnAspNetUserIdChanged();
-    partial void OnDateStampChanging(System.DateTime value);
-    partial void OnDateStampChanged();
-    partial void OnWakeUpFreshnessChanging(string value);
-    partial void OnWakeUpFreshnessChanged();
-    partial void OnMoodChanging(string value);
-    partial void OnMoodChanged();
-    partial void OnStressChanging(string value);
-    partial void OnStressChanged();
-    partial void OnTirednessChanging(string value);
-    partial void OnTirednessChanged();
-    partial void OnDreamChanging(string value);
-    partial void OnDreamChanged();
-    partial void OnBodyTempChanging(string value);
-    partial void OnBodyTempChanged();
-    partial void OnHormoneChanging(string value);
-    partial void OnHormoneChanged();
-    partial void OnSchoolStressChanging(string value);
-    partial void OnSchoolStressChanged();
-    partial void OnCoffeeAmtChanging(string value);
-    partial void OnCoffeeAmtChanged();
-    partial void OnCoffeeTimeChanging(string value);
-    partial void OnCoffeeTimeChanged();
-    partial void OnAlcoholAmtChanging(string value);
-    partial void OnAlcoholAmtChanged();
-    partial void OnAlcoholTimeChanging(string value);
-    partial void OnAlcoholTimeChanged();
-    partial void OnNapTimeChanging(string value);
-    partial void OnNapTimeChanged();
-    partial void OnNapDurationChanging(string value);
-    partial void OnNapDurationChanged();
-    partial void OnDigDeviceDurationChanging(string value);
-    partial void OnDigDeviceDurationChanged();
-    partial void OnGamesDurationChanging(string value);
-    partial void OnGamesDurationChanged();
-    partial void OnSocialActivitesChanging(string value);
-    partial void OnSocialActivitesChanged();
-    partial void OnSocialActivityChanging(string value);
-    partial void OnSocialActivityChanged();
-    partial void OnMusicDurationChanging(string value);
-    partial void OnMusicDurationChanged();
-    partial void OnTVDurationChanging(string value);
-    partial void OnTVDurationChanged();
-    partial void OnWorkTimeChanging(string value);
-    partial void OnWorkTimeChanged();
-    partial void OnWorkDurationChanging(string value);
-    partial void OnWorkDurationChanged();
-    partial void OnExerciseDurationChanging(string value);
-    partial void OnExerciseDurationChanged();
-    partial void OnExerciseIntensityChanging(string value);
-    partial void OnExerciseIntensityChanged();
-    partial void OnDinnerTimeChanging(string value);
-    partial void OnDinnerTimeChanged();
-    partial void OnSnackTimeChanging(string value);
-    partial void OnSnackTimeChanged();
-    partial void OnAmbientTempChanging(string value);
-    partial void OnAmbientTempChanged();
-    partial void OnAmbientHumdChanging(string value);
-    partial void OnAmbientHumdChanged();
-    partial void OnLightChanging(string value);
-    partial void OnLightChanged();
-    partial void OnSunRiseTimeChanging(string value);
-    partial void OnSunRiseTimeChanged();
-    partial void OnSunSetTimeChanging(string value);
-    partial void OnSunSetTimeChanged();
-    #endregion
-		
-		public DiaryData()
-		{
-			this._AspNetUser = default(EntityRef<AspNetUser>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AspNetUserId", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
-		public string AspNetUserId
-		{
-			get
-			{
-				return this._AspNetUserId;
-			}
-			set
-			{
-				if ((this._AspNetUserId != value))
-				{
-					if (this._AspNetUser.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAspNetUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._AspNetUserId = value;
-					this.SendPropertyChanged("AspNetUserId");
-					this.OnAspNetUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStamp", DbType="DateTime NOT NULL")]
-		public System.DateTime DateStamp
-		{
-			get
-			{
-				return this._DateStamp;
-			}
-			set
-			{
-				if ((this._DateStamp != value))
-				{
-					this.OnDateStampChanging(value);
-					this.SendPropertyChanging();
-					this._DateStamp = value;
-					this.SendPropertyChanged("DateStamp");
-					this.OnDateStampChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WakeUpFreshness", DbType="NVarChar(50)")]
-		public string WakeUpFreshness
-		{
-			get
-			{
-				return this._WakeUpFreshness;
-			}
-			set
-			{
-				if ((this._WakeUpFreshness != value))
-				{
-					this.OnWakeUpFreshnessChanging(value);
-					this.SendPropertyChanging();
-					this._WakeUpFreshness = value;
-					this.SendPropertyChanged("WakeUpFreshness");
-					this.OnWakeUpFreshnessChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mood", DbType="NVarChar(50)")]
-		public string Mood
-		{
-			get
-			{
-				return this._Mood;
-			}
-			set
-			{
-				if ((this._Mood != value))
-				{
-					this.OnMoodChanging(value);
-					this.SendPropertyChanging();
-					this._Mood = value;
-					this.SendPropertyChanged("Mood");
-					this.OnMoodChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stress", DbType="NVarChar(50)")]
-		public string Stress
-		{
-			get
-			{
-				return this._Stress;
-			}
-			set
-			{
-				if ((this._Stress != value))
-				{
-					this.OnStressChanging(value);
-					this.SendPropertyChanging();
-					this._Stress = value;
-					this.SendPropertyChanged("Stress");
-					this.OnStressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tiredness", DbType="NVarChar(50)")]
-		public string Tiredness
-		{
-			get
-			{
-				return this._Tiredness;
-			}
-			set
-			{
-				if ((this._Tiredness != value))
-				{
-					this.OnTirednessChanging(value);
-					this.SendPropertyChanging();
-					this._Tiredness = value;
-					this.SendPropertyChanged("Tiredness");
-					this.OnTirednessChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dream", DbType="NVarChar(50)")]
-		public string Dream
-		{
-			get
-			{
-				return this._Dream;
-			}
-			set
-			{
-				if ((this._Dream != value))
-				{
-					this.OnDreamChanging(value);
-					this.SendPropertyChanging();
-					this._Dream = value;
-					this.SendPropertyChanged("Dream");
-					this.OnDreamChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BodyTemp", DbType="NVarChar(50)")]
-		public string BodyTemp
-		{
-			get
-			{
-				return this._BodyTemp;
-			}
-			set
-			{
-				if ((this._BodyTemp != value))
-				{
-					this.OnBodyTempChanging(value);
-					this.SendPropertyChanging();
-					this._BodyTemp = value;
-					this.SendPropertyChanged("BodyTemp");
-					this.OnBodyTempChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hormone", DbType="NVarChar(50)")]
-		public string Hormone
-		{
-			get
-			{
-				return this._Hormone;
-			}
-			set
-			{
-				if ((this._Hormone != value))
-				{
-					this.OnHormoneChanging(value);
-					this.SendPropertyChanging();
-					this._Hormone = value;
-					this.SendPropertyChanged("Hormone");
-					this.OnHormoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SchoolStress", DbType="NVarChar(50)")]
-		public string SchoolStress
-		{
-			get
-			{
-				return this._SchoolStress;
-			}
-			set
-			{
-				if ((this._SchoolStress != value))
-				{
-					this.OnSchoolStressChanging(value);
-					this.SendPropertyChanging();
-					this._SchoolStress = value;
-					this.SendPropertyChanged("SchoolStress");
-					this.OnSchoolStressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoffeeAmt", DbType="NVarChar(50)")]
-		public string CoffeeAmt
-		{
-			get
-			{
-				return this._CoffeeAmt;
-			}
-			set
-			{
-				if ((this._CoffeeAmt != value))
-				{
-					this.OnCoffeeAmtChanging(value);
-					this.SendPropertyChanging();
-					this._CoffeeAmt = value;
-					this.SendPropertyChanged("CoffeeAmt");
-					this.OnCoffeeAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoffeeTime", DbType="NVarChar(50)")]
-		public string CoffeeTime
-		{
-			get
-			{
-				return this._CoffeeTime;
-			}
-			set
-			{
-				if ((this._CoffeeTime != value))
-				{
-					this.OnCoffeeTimeChanging(value);
-					this.SendPropertyChanging();
-					this._CoffeeTime = value;
-					this.SendPropertyChanged("CoffeeTime");
-					this.OnCoffeeTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlcoholAmt", DbType="NVarChar(50)")]
-		public string AlcoholAmt
-		{
-			get
-			{
-				return this._AlcoholAmt;
-			}
-			set
-			{
-				if ((this._AlcoholAmt != value))
-				{
-					this.OnAlcoholAmtChanging(value);
-					this.SendPropertyChanging();
-					this._AlcoholAmt = value;
-					this.SendPropertyChanged("AlcoholAmt");
-					this.OnAlcoholAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlcoholTime", DbType="NVarChar(50)")]
-		public string AlcoholTime
-		{
-			get
-			{
-				return this._AlcoholTime;
-			}
-			set
-			{
-				if ((this._AlcoholTime != value))
-				{
-					this.OnAlcoholTimeChanging(value);
-					this.SendPropertyChanging();
-					this._AlcoholTime = value;
-					this.SendPropertyChanged("AlcoholTime");
-					this.OnAlcoholTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NapTime", DbType="NVarChar(50)")]
-		public string NapTime
-		{
-			get
-			{
-				return this._NapTime;
-			}
-			set
-			{
-				if ((this._NapTime != value))
-				{
-					this.OnNapTimeChanging(value);
-					this.SendPropertyChanging();
-					this._NapTime = value;
-					this.SendPropertyChanged("NapTime");
-					this.OnNapTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NapDuration", DbType="NVarChar(50)")]
-		public string NapDuration
-		{
-			get
-			{
-				return this._NapDuration;
-			}
-			set
-			{
-				if ((this._NapDuration != value))
-				{
-					this.OnNapDurationChanging(value);
-					this.SendPropertyChanging();
-					this._NapDuration = value;
-					this.SendPropertyChanged("NapDuration");
-					this.OnNapDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DigDeviceDuration", DbType="NVarChar(50)")]
-		public string DigDeviceDuration
-		{
-			get
-			{
-				return this._DigDeviceDuration;
-			}
-			set
-			{
-				if ((this._DigDeviceDuration != value))
-				{
-					this.OnDigDeviceDurationChanging(value);
-					this.SendPropertyChanging();
-					this._DigDeviceDuration = value;
-					this.SendPropertyChanged("DigDeviceDuration");
-					this.OnDigDeviceDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GamesDuration", DbType="NVarChar(50)")]
-		public string GamesDuration
-		{
-			get
-			{
-				return this._GamesDuration;
-			}
-			set
-			{
-				if ((this._GamesDuration != value))
-				{
-					this.OnGamesDurationChanging(value);
-					this.SendPropertyChanging();
-					this._GamesDuration = value;
-					this.SendPropertyChanged("GamesDuration");
-					this.OnGamesDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivites", DbType="NVarChar(50)")]
-		public string SocialActivites
-		{
-			get
-			{
-				return this._SocialActivites;
-			}
-			set
-			{
-				if ((this._SocialActivites != value))
-				{
-					this.OnSocialActivitesChanging(value);
-					this.SendPropertyChanging();
-					this._SocialActivites = value;
-					this.SendPropertyChanged("SocialActivites");
-					this.OnSocialActivitesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivity", DbType="NVarChar(50)")]
-		public string SocialActivity
-		{
-			get
-			{
-				return this._SocialActivity;
-			}
-			set
-			{
-				if ((this._SocialActivity != value))
-				{
-					this.OnSocialActivityChanging(value);
-					this.SendPropertyChanging();
-					this._SocialActivity = value;
-					this.SendPropertyChanged("SocialActivity");
-					this.OnSocialActivityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MusicDuration", DbType="NVarChar(50)")]
-		public string MusicDuration
-		{
-			get
-			{
-				return this._MusicDuration;
-			}
-			set
-			{
-				if ((this._MusicDuration != value))
-				{
-					this.OnMusicDurationChanging(value);
-					this.SendPropertyChanging();
-					this._MusicDuration = value;
-					this.SendPropertyChanged("MusicDuration");
-					this.OnMusicDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TVDuration", DbType="NVarChar(50)")]
-		public string TVDuration
-		{
-			get
-			{
-				return this._TVDuration;
-			}
-			set
-			{
-				if ((this._TVDuration != value))
-				{
-					this.OnTVDurationChanging(value);
-					this.SendPropertyChanging();
-					this._TVDuration = value;
-					this.SendPropertyChanged("TVDuration");
-					this.OnTVDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkTime", DbType="NVarChar(50)")]
-		public string WorkTime
-		{
-			get
-			{
-				return this._WorkTime;
-			}
-			set
-			{
-				if ((this._WorkTime != value))
-				{
-					this.OnWorkTimeChanging(value);
-					this.SendPropertyChanging();
-					this._WorkTime = value;
-					this.SendPropertyChanged("WorkTime");
-					this.OnWorkTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkDuration", DbType="NVarChar(50)")]
-		public string WorkDuration
-		{
-			get
-			{
-				return this._WorkDuration;
-			}
-			set
-			{
-				if ((this._WorkDuration != value))
-				{
-					this.OnWorkDurationChanging(value);
-					this.SendPropertyChanging();
-					this._WorkDuration = value;
-					this.SendPropertyChanged("WorkDuration");
-					this.OnWorkDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExerciseDuration", DbType="NVarChar(50)")]
-		public string ExerciseDuration
-		{
-			get
-			{
-				return this._ExerciseDuration;
-			}
-			set
-			{
-				if ((this._ExerciseDuration != value))
-				{
-					this.OnExerciseDurationChanging(value);
-					this.SendPropertyChanging();
-					this._ExerciseDuration = value;
-					this.SendPropertyChanged("ExerciseDuration");
-					this.OnExerciseDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExerciseIntensity", DbType="NVarChar(50)")]
-		public string ExerciseIntensity
-		{
-			get
-			{
-				return this._ExerciseIntensity;
-			}
-			set
-			{
-				if ((this._ExerciseIntensity != value))
-				{
-					this.OnExerciseIntensityChanging(value);
-					this.SendPropertyChanging();
-					this._ExerciseIntensity = value;
-					this.SendPropertyChanged("ExerciseIntensity");
-					this.OnExerciseIntensityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DinnerTime", DbType="NVarChar(50)")]
-		public string DinnerTime
-		{
-			get
-			{
-				return this._DinnerTime;
-			}
-			set
-			{
-				if ((this._DinnerTime != value))
-				{
-					this.OnDinnerTimeChanging(value);
-					this.SendPropertyChanging();
-					this._DinnerTime = value;
-					this.SendPropertyChanged("DinnerTime");
-					this.OnDinnerTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SnackTime", DbType="NVarChar(50)")]
-		public string SnackTime
-		{
-			get
-			{
-				return this._SnackTime;
-			}
-			set
-			{
-				if ((this._SnackTime != value))
-				{
-					this.OnSnackTimeChanging(value);
-					this.SendPropertyChanging();
-					this._SnackTime = value;
-					this.SendPropertyChanged("SnackTime");
-					this.OnSnackTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AmbientTemp", DbType="NVarChar(50)")]
-		public string AmbientTemp
-		{
-			get
-			{
-				return this._AmbientTemp;
-			}
-			set
-			{
-				if ((this._AmbientTemp != value))
-				{
-					this.OnAmbientTempChanging(value);
-					this.SendPropertyChanging();
-					this._AmbientTemp = value;
-					this.SendPropertyChanged("AmbientTemp");
-					this.OnAmbientTempChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AmbientHumd", DbType="NVarChar(50)")]
-		public string AmbientHumd
-		{
-			get
-			{
-				return this._AmbientHumd;
-			}
-			set
-			{
-				if ((this._AmbientHumd != value))
-				{
-					this.OnAmbientHumdChanging(value);
-					this.SendPropertyChanging();
-					this._AmbientHumd = value;
-					this.SendPropertyChanged("AmbientHumd");
-					this.OnAmbientHumdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Light", DbType="NVarChar(50)")]
-		public string Light
-		{
-			get
-			{
-				return this._Light;
-			}
-			set
-			{
-				if ((this._Light != value))
-				{
-					this.OnLightChanging(value);
-					this.SendPropertyChanging();
-					this._Light = value;
-					this.SendPropertyChanged("Light");
-					this.OnLightChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SunRiseTime", DbType="NVarChar(50)")]
-		public string SunRiseTime
-		{
-			get
-			{
-				return this._SunRiseTime;
-			}
-			set
-			{
-				if ((this._SunRiseTime != value))
-				{
-					this.OnSunRiseTimeChanging(value);
-					this.SendPropertyChanging();
-					this._SunRiseTime = value;
-					this.SendPropertyChanged("SunRiseTime");
-					this.OnSunRiseTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SunSetTime", DbType="NVarChar(50)")]
-		public string SunSetTime
-		{
-			get
-			{
-				return this._SunSetTime;
-			}
-			set
-			{
-				if ((this._SunSetTime != value))
-				{
-					this.OnSunSetTimeChanging(value);
-					this.SendPropertyChanging();
-					this._SunSetTime = value;
-					this.SendPropertyChanged("SunSetTime");
-					this.OnSunSetTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_DiaryData", Storage="_AspNetUser", ThisKey="AspNetUserId", OtherKey="Id", IsForeignKey=true)]
-		public AspNetUser AspNetUser
-		{
-			get
-			{
-				return this._AspNetUser.Entity;
-			}
-			set
-			{
-				AspNetUser previousValue = this._AspNetUser.Entity;
-				if (((previousValue != value) 
-							|| (this._AspNetUser.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AspNetUser.Entity = null;
-						previousValue.DiaryDatas.Remove(this);
-					}
-					this._AspNetUser.Entity = value;
-					if ((value != null))
-					{
-						value.DiaryDatas.Add(this);
-						this._AspNetUserId = value.Id;
-					}
-					else
-					{
-						this._AspNetUserId = default(string);
-					}
-					this.SendPropertyChanged("AspNetUser");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AspNetUsers")]
-	public partial class AspNetUser : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Id;
-		
-		private string _Email;
-		
-		private bool _EmailConfirmed;
-		
-		private string _PasswordHash;
-		
-		private string _SecurityStamp;
-		
-		private string _PhoneNumber;
-		
-		private bool _PhoneNumberConfirmed;
-		
-		private bool _TwoFactorEnabled;
-		
-		private System.Nullable<System.DateTime> _LockoutEndDateUtc;
-		
-		private bool _LockoutEnabled;
-		
-		private int _AccessFailedCount;
-		
-		private string _UserName;
-		
-		private EntitySet<TokenManagement> _TokenManagements;
-		
-		private EntitySet<UserQuestion> _UserQuestions;
-		
-		private EntitySet<DiaryData> _DiaryDatas;
-		
-		private EntitySet<FitbitData> _FitbitDatas;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(string value);
-    partial void OnIdChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnEmailConfirmedChanging(bool value);
-    partial void OnEmailConfirmedChanged();
-    partial void OnPasswordHashChanging(string value);
-    partial void OnPasswordHashChanged();
-    partial void OnSecurityStampChanging(string value);
-    partial void OnSecurityStampChanged();
-    partial void OnPhoneNumberChanging(string value);
-    partial void OnPhoneNumberChanged();
-    partial void OnPhoneNumberConfirmedChanging(bool value);
-    partial void OnPhoneNumberConfirmedChanged();
-    partial void OnTwoFactorEnabledChanging(bool value);
-    partial void OnTwoFactorEnabledChanged();
-    partial void OnLockoutEndDateUtcChanging(System.Nullable<System.DateTime> value);
-    partial void OnLockoutEndDateUtcChanged();
-    partial void OnLockoutEnabledChanging(bool value);
-    partial void OnLockoutEnabledChanged();
-    partial void OnAccessFailedCountChanging(int value);
-    partial void OnAccessFailedCountChanged();
-    partial void OnUserNameChanging(string value);
-    partial void OnUserNameChanged();
-    #endregion
-		
-		public AspNetUser()
-		{
-			this._TokenManagements = new EntitySet<TokenManagement>(new Action<TokenManagement>(this.attach_TokenManagements), new Action<TokenManagement>(this.detach_TokenManagements));
-			this._UserQuestions = new EntitySet<UserQuestion>(new Action<UserQuestion>(this.attach_UserQuestions), new Action<UserQuestion>(this.detach_UserQuestions));
-			this._DiaryDatas = new EntitySet<DiaryData>(new Action<DiaryData>(this.attach_DiaryDatas), new Action<DiaryData>(this.detach_DiaryDatas));
-			this._FitbitDatas = new EntitySet<FitbitData>(new Action<FitbitData>(this.attach_FitbitDatas), new Action<FitbitData>(this.detach_FitbitDatas));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="NVarChar(128) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(256)")]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailConfirmed", DbType="Bit NOT NULL")]
-		public bool EmailConfirmed
-		{
-			get
-			{
-				return this._EmailConfirmed;
-			}
-			set
-			{
-				if ((this._EmailConfirmed != value))
-				{
-					this.OnEmailConfirmedChanging(value);
-					this.SendPropertyChanging();
-					this._EmailConfirmed = value;
-					this.SendPropertyChanged("EmailConfirmed");
-					this.OnEmailConfirmedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordHash", DbType="NVarChar(MAX)")]
-		public string PasswordHash
-		{
-			get
-			{
-				return this._PasswordHash;
-			}
-			set
-			{
-				if ((this._PasswordHash != value))
-				{
-					this.OnPasswordHashChanging(value);
-					this.SendPropertyChanging();
-					this._PasswordHash = value;
-					this.SendPropertyChanged("PasswordHash");
-					this.OnPasswordHashChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecurityStamp", DbType="NVarChar(MAX)")]
-		public string SecurityStamp
-		{
-			get
-			{
-				return this._SecurityStamp;
-			}
-			set
-			{
-				if ((this._SecurityStamp != value))
-				{
-					this.OnSecurityStampChanging(value);
-					this.SendPropertyChanging();
-					this._SecurityStamp = value;
-					this.SendPropertyChanged("SecurityStamp");
-					this.OnSecurityStampChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="NVarChar(MAX)")]
-		public string PhoneNumber
-		{
-			get
-			{
-				return this._PhoneNumber;
-			}
-			set
-			{
-				if ((this._PhoneNumber != value))
-				{
-					this.OnPhoneNumberChanging(value);
-					this.SendPropertyChanging();
-					this._PhoneNumber = value;
-					this.SendPropertyChanged("PhoneNumber");
-					this.OnPhoneNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumberConfirmed", DbType="Bit NOT NULL")]
-		public bool PhoneNumberConfirmed
-		{
-			get
-			{
-				return this._PhoneNumberConfirmed;
-			}
-			set
-			{
-				if ((this._PhoneNumberConfirmed != value))
-				{
-					this.OnPhoneNumberConfirmedChanging(value);
-					this.SendPropertyChanging();
-					this._PhoneNumberConfirmed = value;
-					this.SendPropertyChanged("PhoneNumberConfirmed");
-					this.OnPhoneNumberConfirmedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TwoFactorEnabled", DbType="Bit NOT NULL")]
-		public bool TwoFactorEnabled
-		{
-			get
-			{
-				return this._TwoFactorEnabled;
-			}
-			set
-			{
-				if ((this._TwoFactorEnabled != value))
-				{
-					this.OnTwoFactorEnabledChanging(value);
-					this.SendPropertyChanging();
-					this._TwoFactorEnabled = value;
-					this.SendPropertyChanged("TwoFactorEnabled");
-					this.OnTwoFactorEnabledChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockoutEndDateUtc", DbType="DateTime")]
-		public System.Nullable<System.DateTime> LockoutEndDateUtc
-		{
-			get
-			{
-				return this._LockoutEndDateUtc;
-			}
-			set
-			{
-				if ((this._LockoutEndDateUtc != value))
-				{
-					this.OnLockoutEndDateUtcChanging(value);
-					this.SendPropertyChanging();
-					this._LockoutEndDateUtc = value;
-					this.SendPropertyChanged("LockoutEndDateUtc");
-					this.OnLockoutEndDateUtcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockoutEnabled", DbType="Bit NOT NULL")]
-		public bool LockoutEnabled
-		{
-			get
-			{
-				return this._LockoutEnabled;
-			}
-			set
-			{
-				if ((this._LockoutEnabled != value))
-				{
-					this.OnLockoutEnabledChanging(value);
-					this.SendPropertyChanging();
-					this._LockoutEnabled = value;
-					this.SendPropertyChanged("LockoutEnabled");
-					this.OnLockoutEnabledChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessFailedCount", DbType="Int NOT NULL")]
-		public int AccessFailedCount
-		{
-			get
-			{
-				return this._AccessFailedCount;
-			}
-			set
-			{
-				if ((this._AccessFailedCount != value))
-				{
-					this.OnAccessFailedCountChanging(value);
-					this.SendPropertyChanging();
-					this._AccessFailedCount = value;
-					this.SendPropertyChanged("AccessFailedCount");
-					this.OnAccessFailedCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
-		public string UserName
-		{
-			get
-			{
-				return this._UserName;
-			}
-			set
-			{
-				if ((this._UserName != value))
-				{
-					this.OnUserNameChanging(value);
-					this.SendPropertyChanging();
-					this._UserName = value;
-					this.SendPropertyChanged("UserName");
-					this.OnUserNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_TokenManagement", Storage="_TokenManagements", ThisKey="Id", OtherKey="AspNetUserId")]
-		public EntitySet<TokenManagement> TokenManagements
-		{
-			get
-			{
-				return this._TokenManagements;
-			}
-			set
-			{
-				this._TokenManagements.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_UserQuestion", Storage="_UserQuestions", ThisKey="Id", OtherKey="AspNetUserId")]
-		public EntitySet<UserQuestion> UserQuestions
-		{
-			get
-			{
-				return this._UserQuestions;
-			}
-			set
-			{
-				this._UserQuestions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_DiaryData", Storage="_DiaryDatas", ThisKey="Id", OtherKey="AspNetUserId")]
-		public EntitySet<DiaryData> DiaryDatas
-		{
-			get
-			{
-				return this._DiaryDatas;
-			}
-			set
-			{
-				this._DiaryDatas.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_FitbitData", Storage="_FitbitDatas", ThisKey="Id", OtherKey="AspNetUserId")]
-		public EntitySet<FitbitData> FitbitDatas
-		{
-			get
-			{
-				return this._FitbitDatas;
-			}
-			set
-			{
-				this._FitbitDatas.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TokenManagements(TokenManagement entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = this;
-		}
-		
-		private void detach_TokenManagements(TokenManagement entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = null;
-		}
-		
-		private void attach_UserQuestions(UserQuestion entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = this;
-		}
-		
-		private void detach_UserQuestions(UserQuestion entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = null;
-		}
-		
-		private void attach_DiaryDatas(DiaryData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = this;
-		}
-		
-		private void detach_DiaryDatas(DiaryData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = null;
-		}
-		
-		private void attach_FitbitDatas(FitbitData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = this;
-		}
-		
-		private void detach_FitbitDatas(FitbitData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = null;
 		}
 	}
 }

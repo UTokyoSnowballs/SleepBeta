@@ -1,63 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12.625" name="SleepBeta">
-  <DataContextMoniker Name="/SleepBetaDataContext" />
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.375" name="Sleepbeta">
+  <DataContextMoniker Name="/SleepbetaDataContext" />
   <nestedChildShapes>
-    <classShape Id="60ea4170-74a1-4922-a827-da8819fb4c0d" absoluteBounds="7.625, 3.125, 2, 5.4246240234375">
-      <DataClassMoniker Name="/SleepBetaDataContext/FitbitData" />
+    <classShape Id="2066aad4-fb85-43d6-9126-caef9a42583a" absoluteBounds="2.75, 2.625, 2, 3.1170068359375">
+      <DataClassMoniker Name="/SleepbetaDataContext/AspNetUser" />
       <nestedChildShapes>
-        <elementListCompartment Id="26513c46-1e62-474d-8ecc-6a1e35a586e4" absoluteBounds="7.64, 3.585, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ab792098-2c3b-44d4-b553-7c567cb397b7" absoluteBounds="2.765, 3.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ed360b1a-255c-456d-bfcb-8fe041e159ac" absoluteBounds="5.25, 5.5, 2, 2.3478011067708335">
-      <DataClassMoniker Name="/SleepBetaDataContext/TokenManagement" />
+    <classShape Id="bf8f83c0-7538-4744-a5ba-ff07db89f040" absoluteBounds="5.125, 3.75, 2, 7.3476383463541657">
+      <DataClassMoniker Name="/SleepbetaDataContext/DiaryData" />
       <nestedChildShapes>
-        <elementListCompartment Id="f86c459c-2b1f-4757-aef6-50a2866088c6" absoluteBounds="5.265, 5.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="6b30b8fb-235e-4630-b8d7-b4a6c559ec0c" absoluteBounds="5.14, 4.21, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="06e350b0-e787-401f-810b-f763e3f738d1" absoluteBounds="2.75, 5.375, 2, 4.8477197265625">
-      <DataClassMoniker Name="/SleepBetaDataContext/UserQuestion" />
+    <classShape Id="fe685a04-7dcc-4975-b269-94c23bec991c" absoluteBounds="7.375, 2, 2, 5.4246240234375">
+      <DataClassMoniker Name="/SleepbetaDataContext/FitbitData" />
       <nestedChildShapes>
-        <elementListCompartment Id="6533b1ab-6373-4ea9-bedf-9357c0a0712d" absoluteBounds="2.7649999999999997, 5.835, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ec62466c-263e-4edf-978a-75ebe22f8230" absoluteBounds="7.39, 2.46, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f9170ace-849f-45b7-aaec-8c54203e1b68" absoluteBounds="0.625, 5, 2, 7.3476383463541657">
-      <DataClassMoniker Name="/SleepBetaDataContext/DiaryData" />
+    <classShape Id="caccaa99-2d9a-413b-b675-5277342c014d" absoluteBounds="2.75, 6.625, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/SleepbetaDataContext/TokenManagement" />
       <nestedChildShapes>
-        <elementListCompartment Id="98fd278d-e492-4168-9b6c-17ef2de34a0b" absoluteBounds="0.63999999999999968, 5.46, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f10fbc10-947e-4b16-99eb-20bd16dcd109" absoluteBounds="2.765, 7.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="52920463-d9e9-4480-9fab-c74e009b34d7" absoluteBounds="1.375, 1.375, 2, 3.1170068359375">
-      <DataClassMoniker Name="/SleepBetaDataContext/AspNetUser" />
-      <nestedChildShapes>
-        <elementListCompartment Id="37e3970d-e7dd-4add-8b3b-efb142d1c91a" absoluteBounds="1.3899999999999997, 1.835, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(3.375 : 2.56049920898438); (6.25 : 2.56049920898438); (6.25 : 5.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/SleepBetaDataContext/AspNetUser/AspNetUser_TokenManagement" />
+    <associationConnector edgePoints="[(3.65625 : 5.7420068359375); (3.65625 : 6.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SleepbetaDataContext/AspNetUser/AspNetUser_TokenManagement" />
       <nodes>
-        <classShapeMoniker Id="52920463-d9e9-4480-9fab-c74e009b34d7" />
-        <classShapeMoniker Id="ed360b1a-255c-456d-bfcb-8fe041e159ac" />
+        <classShapeMoniker Id="2066aad4-fb85-43d6-9126-caef9a42583a" />
+        <classShapeMoniker Id="caccaa99-2d9a-413b-b675-5277342c014d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.0625 : 4.4920068359375); (3.0625 : 5.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/SleepBetaDataContext/AspNetUser/AspNetUser_UserQuestion" />
+    <classShape Id="4f9ba8b1-61af-4e26-b2d7-b49a14689d21" absoluteBounds="0.5, 2.625, 2, 4.8477197265625">
+      <DataClassMoniker Name="/SleepbetaDataContext/UserQuestion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d8694f7e-ee96-4f9f-9365-71c7e6a18768" absoluteBounds="0.51500000000000012, 3.085, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 4.18350341796875); (2.5 : 4.18350341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SleepbetaDataContext/AspNetUser/AspNetUser_UserQuestion" />
       <nodes>
-        <classShapeMoniker Id="52920463-d9e9-4480-9fab-c74e009b34d7" />
-        <classShapeMoniker Id="06e350b0-e787-401f-810b-f763e3f738d1" />
+        <classShapeMoniker Id="2066aad4-fb85-43d6-9126-caef9a42583a" />
+        <classShapeMoniker Id="4f9ba8b1-61af-4e26-b2d7-b49a14689d21" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2 : 4.4920068359375); (2 : 5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/SleepBetaDataContext/AspNetUser/AspNetUser_DiaryData" />
+    <associationConnector edgePoints="[(4.75 : 3.15625); (7.375 : 3.15625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SleepbetaDataContext/AspNetUser/AspNetUser_FitbitData" />
       <nodes>
-        <classShapeMoniker Id="52920463-d9e9-4480-9fab-c74e009b34d7" />
-        <classShapeMoniker Id="f9170ace-849f-45b7-aaec-8c54203e1b68" />
+        <classShapeMoniker Id="2066aad4-fb85-43d6-9126-caef9a42583a" />
+        <classShapeMoniker Id="fe685a04-7dcc-4975-b269-94c23bec991c" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.375 : 3.80850341796875); (6.16666666666667 : 3.80850341796875 : JumpStart); (6.33333333333333 : 3.80850341796875 : JumpEnd); (7.625 : 3.80850341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/SleepBetaDataContext/AspNetUser/AspNetUser_FitbitData" />
+    <associationConnector edgePoints="[(4.75 : 4.74600341796875); (5.125 : 4.74600341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SleepbetaDataContext/AspNetUser/AspNetUser_DiaryData" />
       <nodes>
-        <classShapeMoniker Id="52920463-d9e9-4480-9fab-c74e009b34d7" />
-        <classShapeMoniker Id="60ea4170-74a1-4922-a827-da8819fb4c0d" />
+        <classShapeMoniker Id="2066aad4-fb85-43d6-9126-caef9a42583a" />
+        <classShapeMoniker Id="bf8f83c0-7538-4744-a5ba-ff07db89f040" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

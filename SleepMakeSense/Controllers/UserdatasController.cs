@@ -29,7 +29,7 @@ namespace SleepMakeSense.Controllers
 
         // 20161105 Pandita
         // private ApplicationDbContext db = new ApplicationDbContext();
-        private SleepBetaDataContext Db = new SleepBetaDataContext();
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
 
 
         /*

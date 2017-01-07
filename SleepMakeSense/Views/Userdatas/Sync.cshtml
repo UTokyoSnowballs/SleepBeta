@@ -74,13 +74,13 @@
 
 @helper CoefficientList(List<CorrList> corrList, String type)
 {
-int counter = corrList.Count;
+    int counter = corrList.Count;
 
-if (corrList.Count > 0)
-{
+    if (corrList.Count > 0)
+    {
         <div style="overflow-x:auto;">
             <table>
-                <tr>
+                <div>
                     @foreach (SleepMakeSense.Models.CorrList corr in corrList)
                     {
 
@@ -101,19 +101,25 @@ if (corrList.Count > 0)
                         {
                             color = "#459ee8";
                         }
+                        if ((counter % 2) == 1)
+                        {
+                            WriteLiteral("<tr>");
+                        }
                         <td data-toggle="tooltip" title=@corr.Note data-placement="right" style=" color @color "><i class=@corr.Picture></i>    @corr.Name </td>
-
                         counter++;
-
+                        if ((counter % 2) == 1)
+                        {
+                            WriteLiteral("</tr>");
+                        }
                     }
-                </tr>
+                </div>
             </table>
             </div>
             }
             else
             {
             String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
-            @Message
+@Message
             }
 
             }

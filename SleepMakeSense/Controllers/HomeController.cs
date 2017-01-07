@@ -45,7 +45,7 @@ namespace SleepMakeSense.Controllers
                 {
                     foreach (DiaryData diaryData in lastSynced)
                     {
-                        if (diaryData.AspNetUserId == userId && diaryData.DateStamp == DateTime.UtcNow.Date)
+                        if (diaryData.AspNetUserId == userId && diaryData.DateStamp.Date == DateTime.UtcNow.Date)
                         {
                             viewModel.TodayDiaryEntry = true;
                         }

@@ -12,7 +12,7 @@ namespace SleepMakeSense.Models
 
         public QuestionsSelections QUESTIONSELECTION { get; set; }
 
-        public DiaryData diaryData { get; set; }
+        public DiaryData DiaryData { get; set; }
 
     }
 }

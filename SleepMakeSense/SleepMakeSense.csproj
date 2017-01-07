@@ -338,7 +338,6 @@
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\Fitbit.Portable.csprojResolveAssemblyReference.cache" />
-    <Content Include="obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache" />
     <Content Include="obj\Release\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Release\InsertEFCodeFirstDeploy\original\Web.config" />

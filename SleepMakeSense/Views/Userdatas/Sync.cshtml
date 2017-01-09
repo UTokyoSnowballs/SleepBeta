@@ -15,12 +15,31 @@
             stroke: #747F97;
             shape-rendering: crispEdges;
         }
+
         .axis {
             font-size: 14px;
         }
+
         .x.axis path {
             display: none;
         }
+
+        .svg-container {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* aspect ratio */
+            vertical-align: top;
+            overflow: hidden;
+        }
+
+        .svg-content-responsive {
+            display: inline-block;
+            position: absolute;
+            top: 10px;
+            left: 0;
+        }
+
         .tooltip-timeseries {
             width: 160px;
             height: 36px;
@@ -37,6 +56,7 @@
             pointer-events: none;
             position: absolute;
         }
+
         .tooltip {
             position: absolute;
             text-align: left;
@@ -53,26 +73,28 @@
             border-radius: 8px;
             pointer-events: none;
         }
-            .tooltip-bubble h4 {
-                text-align: left;
-                color: white;
-            }
 
-        td, tr  {
-                padding-right: 15px;
-                padding-left: 15px;
-                padding-top: 15px;
-                width: 200px;
-                height: 100px;
-                position center
-                te
+        .tooltip-bubble h4 {
+            text-align: left;
+            color: white;
+        }
+
+        td, tr {
+            padding-right: 15px;
+            padding-left: 15px;
+            padding-top: 15px;
+            width: 200px;
+            height: 100px;
+            position: center;
+            font-size: large;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div id="DataProcessing">
 
-@helper CoefficientList(List<CorrList> corrList, String type)
+        @helper CoefficientList(List<CorrList> corrList, String type)
 {
     int counter = corrList.Count;
 
@@ -105,7 +127,7 @@
                         {
                             WriteLiteral("<tr>");
                         }
-                        <td data-toggle="tooltip" title=@corr.Note data-placement="right" style=" color @color "><i class=@corr.Picture></i>    @corr.Name </td>
+                        <td data-toggle="tooltip" title="@corr.Name" data-placement="right"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name</text></td>
                         counter++;
                         if ((counter % 2) == 1)
                         {
@@ -114,17 +136,17 @@
                     }
                 </div>
             </table>
-            </div>
-            }
-            else
-            {
-            String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
-@Message
-            }
+        </div>
+}
+else
+{
+    String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
+        @Message
+}
 
-            }
+}
 
-            <script type="text/javascript">
+        <script type="text/javascript">
 
                 var factorList = [];
                 var MinutesAsleep = [];
@@ -279,8 +301,8 @@
                                 .style("opacity", 0);
                          });
                 }
-            </script>
-        </div>
+        </script>
+    </div>
 
     <div class="container">
         <div class="row">

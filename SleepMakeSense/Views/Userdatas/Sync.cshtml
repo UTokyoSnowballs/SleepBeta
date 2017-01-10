@@ -46,10 +46,10 @@
             padding: 2px;
             font: 12px sans-serif;
             color: white;
-            background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
-            background: linear-gradient(141deg, #F74657, #459EE8);
-            background: -o-linear-gradient(141deg, #F74657, #459EE8);
-            background: -moz-linear-gradient(141deg, #F74657, #459EE8);
+            background: -webkit-linear-gradient(141deg, #F74657, #459EE8) !important;
+            background: linear-gradient(141deg, #F74657, #459EE8)!important;
+            background: -o-linear-gradient(141deg, #F74657, #459EE8) !important;
+            background: -moz-linear-gradient(141deg, #F74657, #459EE8) !important;
             border: 0px;
             border-radius: 8px;
             text-align: center;
@@ -57,7 +57,8 @@
             position: absolute;
         }
 
-        .tooltip {
+        .tooltip.fade
+        {
             position: absolute;
             text-align: left;
             width: 200px;
@@ -65,13 +66,16 @@
             padding: 16px;
             font: 12px sans-serif;
             color: white;
-            background: -webkit-linear-gradient(141deg, #F74657, #459EE8);
-            background: linear-gradient(141deg, #F74657, #459EE8);
-            background: -o-linear-gradient(141deg, #F74657, #459EE8);
-            background: -moz-linear-gradient(141deg, #F74657, #459EE8);
-            border: 6px;
+            background: -webkit-linear-gradient(141deg, #F74657, #459EE8) !important;
+            background: linear-gradient(141deg, #F74657, #459EE8) !important;
+            background: -o-linear-gradient(141deg, #F74657, #459EE8) !important;
+            background: -moz-linear-gradient(141deg, #F74657, #459EE8) !important;
+            border: 0px;
             border-radius: 8px;
+            text-align: center;
             pointer-events: none;
+
+
         }
 
         .tooltip-bubble h4 {
@@ -79,7 +83,11 @@
             color: white;
         }
 
+
+
         td, tr {
+            border-collapse:separate;
+            border-spacing:15px;
             padding-right: 15px;
             padding-left: 15px;
             padding-top: 15px;
@@ -123,13 +131,13 @@
                         {
                             color = "#459ee8";
                         }
-                        if ((counter % 2) == 1)
+                        if ((counter % 3) == 1)
                         {
                             WriteLiteral("<tr>");
                         }
-                        <td data-toggle="tooltip" title="@corr.Name" data-placement="right"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name</text></td>
+                        <td data-toggle="tooltip" title="@corr.Note" data-placement="right"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name</text></td>
                         counter++;
-                        if ((counter % 2) == 1)
+                        if ((counter % 3) == 1)
                         {
                             WriteLiteral("</tr>");
                         }
@@ -155,6 +163,10 @@ else
                 var facCoff = 0;
                 var quest2 = false;
                 var quest3 = false;
+
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                })
 
                 @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
                 {
@@ -349,7 +361,7 @@ else
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="AffectingFactorsMinutesAsleep">
+                                <div id="AffectingFactorsMinutesAsleep" style="position:center">
                                     @CoefficientList(Model.MinutesAsleepCorrList, "Hours Asleep")
                                 </div>
                             </div>

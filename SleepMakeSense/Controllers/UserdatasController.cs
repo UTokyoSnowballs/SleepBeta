@@ -3911,23 +3911,44 @@ namespace SleepMakeSense.Controllers
 
             foreach (var entry in minutesAsleepCorrList)
             {
-                entry.Coefficient = (entry.Coefficient + 1) / 2;
-
+                if (entry.Coefficient < 0)
+                {
+                    entry.Coefficient = (entry.Coefficient) * -1;
+                    entry.Positive = false;
+                }
+                else
+                {
+                    entry.Positive = true;
+                }
             }
-            foreach (var entry in awakeCountCorrList)
+            foreach (var entry in minutesAsleepCorrList)
             {
-                entry.Coefficient = (entry.Coefficient + 1) / 2;
-
+                if (entry.Coefficient < 0)
+                {
+                    entry.Coefficient = (entry.Coefficient) * -1;
+                    entry.Positive = false;
+                }
+                else
+                {
+                    entry.Positive = true;
+                }
             }
-            foreach (var entry in sleepEffiencyCorrList)
+            foreach (var entry in minutesAsleepCorrList)
             {
-                entry.Coefficient = (entry.Coefficient + 1) / 2;
-
+                if (entry.Coefficient < 0)
+                {
+                    entry.Coefficient = (entry.Coefficient) * -1;
+                    entry.Positive = false;
+                }
+                else
+                {
+                    entry.Positive = true;
+                }
             }
 
-            syncViewModel.MinutesAsleepCorrList = minutesAsleepCorrList.OrderBy(o => o.Coefficient).ToList();
-            syncViewModel.AwakeCountCorrList = awakeCountCorrList.OrderBy(o => o.Coefficient).ToList();
-            syncViewModel.SleepEffiencyCorrList = sleepEffiencyCorrList.OrderBy(o => o.Coefficient).ToList();
+            syncViewModel.MinutesAsleepCorrList = minutesAsleepCorrList.OrderByDescending(o => o.Coefficient).ToList();
+            syncViewModel.AwakeCountCorrList = awakeCountCorrList.OrderByDescending(o => o.Coefficient).ToList();
+            syncViewModel.SleepEffiencyCorrList = sleepEffiencyCorrList.OrderByDescending(o => o.Coefficient).ToList();
 
             return syncViewModel;
 

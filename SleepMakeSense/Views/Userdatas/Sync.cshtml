@@ -7,6 +7,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Sync</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style type="text/css">
@@ -40,6 +41,8 @@
             left: 0;
         }
 
+        
+
         .tooltip-timeseries {
             width: 160px;
             height: 36px;
@@ -57,7 +60,7 @@
             position: absolute;
         }
 
-        .tooltip.fade
+        .tooltip.bottom,
         {
             position: absolute;
             text-align: left;
@@ -83,17 +86,20 @@
             color: white;
         }
 
-
+        table.corrList{
+            border-collapse:separate;
+            border-spacing:15px 15px;
+            background-color:  #373E4F ;
+            position:center;
+        }
+        td.blank{
+            background-color: #373E4F;
+        }
 
         td, tr {
-            border-collapse:separate;
-            border-spacing:15px;
-            padding-right: 15px;
-            padding-left: 15px;
-            padding-top: 15px;
+            background-color:#2C3041;
             width: 200px;
             height: 100px;
-            position: center;
             font-size: large;
             text-align: center;
         }
@@ -104,45 +110,57 @@
 
         @helper CoefficientList(List<CorrList> corrList, String type)
 {
-    int counter = corrList.Count;
+    int counter = 1;
 
     if (corrList.Count > 0)
     {
-        <div style="overflow-x:auto;">
-            <table>
-                <div>
+        <div class="im-centered">
+            <table class="corrList">
                     @foreach (SleepMakeSense.Models.CorrList corr in corrList)
                     {
-
                         var color = "#ffffff";
-                        if (corr.Coefficient >= 0 && corr.Coefficient < 2.25)
+                        if (corr.Coefficient >= 0 && corr.Coefficient < 0.6)
                         {
-                            color = "#f74657";
+                            if (corr.Positive)
+                            {
+                                color = "#a4d0f4";
+                            }
+                            else
+                            {
+                                color = "#fa8590";
+                            }
                         }
-                        else if (corr.Coefficient >= 0.225 && corr.Coefficient <= 0.45)
+                        else if (corr.Coefficient >= 0.6 && corr.Coefficient < 1)
                         {
-                            color = "#fa8590";
+                            if (corr.Positive)
+                            {
+                                color = "#459ee8";
+                            }
+                            else
+                            {
+                                color = "#f74657";
+                            }
                         }
-                        else if (corr.Coefficient >= 0.55 && corr.Coefficient < 0.725)
-                        {
-                            color = "#a4d0f4";
-                        }
-                        else if (corr.Coefficient >= 0.725 && corr.Coefficient < 1)
-                        {
-                            color = "#459ee8";
-                        }
-                        if ((counter % 3) == 1)
+
+                        if ((counter % 2) == 1 || counter == 1)
                         {
                             WriteLiteral("<tr>");
                         }
-                        <td data-toggle="tooltip" title="@corr.Note" data-placement="right"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name</text></td>
+                        <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name</text></td>
                         counter++;
-                        if ((counter % 3) == 1)
+                        if ((counter % 2) == 1 && counter != (corrList.Count + 1))
                         {
                             WriteLiteral("</tr>");
                         }
                     }
-                </div>
+                    @if ((corrList.Count % 2) != 0)
+                    {
+                        WriteLiteral("<td class='blank'></td></tr>");
+                    }
+                    else
+                    {
+                        WriteLiteral("</tr>");
+                    }
             </table>
         </div>
 }
@@ -361,7 +379,7 @@ else
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="AffectingFactorsMinutesAsleep" style="position:center">
+                                <div>
                                     @CoefficientList(Model.MinutesAsleepCorrList, "Hours Asleep")
                                 </div>
                             </div>
@@ -375,7 +393,7 @@ else
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="AffectingFactorsAwakeCount">
+                                <div>
                                     @CoefficientList(Model.AwakeCountCorrList, "Awakening Count")
                                 </div>
                             </div>
@@ -389,7 +407,7 @@ else
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="AffectingFactorsSleepEfficiency">
+                                <div>
                                     @CoefficientList(Model.SleepEffiencyCorrList, "Sleep Efficiency")
                                 </div>
                             </div>

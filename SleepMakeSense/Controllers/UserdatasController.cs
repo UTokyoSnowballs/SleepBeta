@@ -434,10 +434,10 @@ namespace SleepMakeSense.Controllers
 
             List<Userdata> userDatas = UserDatas(userId, numOfDays);
             bool todaySync = true;
-
+            ViewBag.todaySync = true;
             /* Todo: Pandita 
              * // Sean -- Good idea :)
-             * We could use the View Model instead
+             * We could use the Viewbag instead
             if (ViewBag.FitbitSynced == true) {
                 //NoDataSync();
                 return View("Sync");
@@ -446,8 +446,12 @@ namespace SleepMakeSense.Controllers
             {*/
             foreach (Userdata userData in userDatas)
             {
-                if (userData.DateStamp == DateTime.UtcNow.Date) todaySync = false;
+                if (userData.DateStamp >= DateTime.UtcNow.Date.AddDays(-1))
+                {
+                    todaySync = false;
+                }
             }
+
 
             if (todaySync)
             {
@@ -455,6 +459,7 @@ namespace SleepMakeSense.Controllers
                 await FitbitDataSync(userId);
                 //Retrieves the Data
             }
+
 
             SyncViewModel model = DataModelCreation(userDatas);
             return View(model);

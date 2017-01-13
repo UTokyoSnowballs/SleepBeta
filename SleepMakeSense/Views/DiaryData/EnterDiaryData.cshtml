@@ -55,14 +55,14 @@
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.Dream? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-cloud fa-2x"></i><span>Dream</span></td>
-                    <td class="diaryquestion"> How Well did your remember your dream last night? (1 not at all - 5 very)</td>
+                    <td class="diaryquestion"> How well did your remember your dream last night? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.Dream, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.SchoolQuestions ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>School</span></td>
-                    <td class="diaryquestion"> How Stressed are your from assignment/exams? (1 not at all - 5 very)</td>
+                    <td class="diaryquestion"> How stressed are your from assignment/exams? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.SchoolStress, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
                     </td>

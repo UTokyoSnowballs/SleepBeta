@@ -40,8 +40,15 @@
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.Tiredness ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Wake Up Freshness</span></td>
+                    <td class="diaryquestion"> How fresh did you feel waking up today? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.WakeUpFreshness, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.Tiredness ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Tired</span></td>
-                    <td class="diaryquestion"> How tired/sleepy were you Today? (1 not at all - 5 very)</td>
+                    <td class="diaryquestion"> How tired/sleepy were you before going to bed? (1 not at all - 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.Tiredness, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
                     </td>
@@ -61,29 +68,29 @@
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.CoffeeQuestions ? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
+                    <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffeine</span></td>
                     <td class="diaryquestion">How many coffees and/or energy drinks did you drink yesterday?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.CoffeeAmt, Model.QUESTIONSELECTION.ToTen(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.CoffeeQuestions ? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffine</span></td>
-                    <td class="diaryquestion">When was the last time you had caffine? (energy drink, coffee, etc.)</td>
+                    <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffeine</span></td>
+                    <td class="diaryquestion">When was the last time you had Caffeine? (energy drink, coffee, etc.)</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.CoffeeTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.AlcoholQuestions ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol Amount</span></td>
-                    <td class="diaryquestion">How many drinks did you have today?</td>
+                    <td class="diaryquestion">How many alcoholic drinks did you have today?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.AlcoholAmt, Model.QUESTIONSELECTION.ToTen(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.AlcoholQuestions ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol Time</span></td>
-                    <td class="diaryquestion">How many drinks did you have today?</td>
+                    <td class="diaryquestion">When was the last time you had an alcoholic drink?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.AlcoholTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
                     </td>
@@ -120,19 +127,19 @@
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
                     <td class="diaryquestion">How long did you nap for Today?</td>
                     <td>
-                        @Html.DropDownListFor(model => model.DiaryData.NapDuration, Model.QUESTIONSELECTION.TimeToTen(), "Please Select", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.DiaryData.NapDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.NapQuestions ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
                     <td class="diaryquestion">What Time was your nap?</td>
                     <td>
-                        @Html.DropDownListFor(model => model.DiaryData.NapTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.DiaryData.NapTime, Model.QUESTIONSELECTION.DayHours(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.WorkQuestions ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
-                    <td class="diaryquestion">When did your shift start last night?</td>
+                    <td class="diaryquestion">When did you finish work?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.WorkTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
 
@@ -147,21 +154,28 @@
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.DigDeviceDurationQuestion ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Mobile use</span></td>
-                    <td class="diaryquestion">How many hours did you spend on your phone after 6pm yesterday?</td>
+                    <td class="diaryquestion">How many hours did you spend on your phone after 6pm?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.DigDeviceDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.SocialMediaDurationQuestion ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span></td>
-                    <td class="diaryquestion">How long were you on social media for after 6pm last night?</td>
+                    <td class="diaryquestion">How long were you on social media for after 6pm?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.SocialActivites, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
                     </td>
                 </tr>
                 <tr style="@((bool)Model.UserQuestion.MusicDurationQuestion ? "display:" : "display:none")">
                     <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
-                    <td class="diaryquestion">How long did you listen to music to before sleeping last night?</td>
+                    <td class="diaryquestion">How long did you listen to music after 6pm?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.MusicDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.TVDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-tv fa-2x"></i><span>TV</span></td>
+                    <td class="diaryquestion">How long did you watch TV after 6pm?</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.MusicDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
                     </td>

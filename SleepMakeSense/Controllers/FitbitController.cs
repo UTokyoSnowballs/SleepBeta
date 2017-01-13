@@ -23,6 +23,8 @@ namespace SleepMakeSense.Controllers
         //
         // GET: /Fitbit/
 
+        private SleepbetaDataContext Db = new SleepbetaDataContext();
+
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Home");
@@ -67,91 +69,55 @@ namespace SleepMakeSense.Controllers
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             FitbitClient fitbitClient = GetFitbitClient(accessToken);
 
-            syncFitbitCred(accessToken);
+            SyncFitbitCred(accessToken);
 
-             return RedirectToAction("Index", "Home");
-            //return RedirectToAction("Sync", "UserDatas");
+             //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Sync", "UserDatas");
 
 
         }
 
-        private void syncFitbitCred(OAuth2AccessToken accessToken)
+        private void SyncFitbitCred(OAuth2AccessToken accessToken)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
 
-                Models.Database Db = new Models.Database();
-
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                TokenManagement userToken = (from a in Db.TokenManagements
-                                             where a.AspNetUserId.Equals(userId)
-                                             select a).FirstOrDefault();
+                var userToken = from table in Db.TokenManagements
+                                where table.AspNetUserId.Equals(userId)
+                                select table;
+                bool tokenAvailable = false;
 
-
-                if (userToken == null)
+                foreach (TokenManagement token in userToken)
                 {
-                    userToken = new TokenManagement();
-                    userToken.AspNetUserId = userId;
-                    Db.TokenManagements.Add(userToken);
+                    if (token.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
+                    {
+                        tokenAvailable = true;
+                        token.DateChanged = DateTime.UtcNow;
+                        token.Token = accessToken.Token;
+                        token.TokenType = accessToken.TokenType;
+                        token.ExpiresIn = accessToken.ExpiresIn;
+                        token.RefreshToken = accessToken.RefreshToken;
+                    }
                 }
 
-                userToken.DateChanged = DateTime.UtcNow;
-                userToken.Token = accessToken.Token;
-                userToken.TokenType = accessToken.TokenType;
-                userToken.ExpiresIn = accessToken.ExpiresIn;
-                userToken.RefreshToken = accessToken.RefreshToken;
-
-                Db.SaveChanges();
-
-            }
-        }
-
-
-        public ActionResult ConnectFitbit()
-        {
-            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                throw new Exception("You Must be Loged in to sync Fitbit Data");
-            }
-            Models.Database Db = new Models.Database();
-            bool fitbitConnected = false;
-            OAuth2AccessToken accessToken = new OAuth2AccessToken();
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = from a in Db.TokenManagements
-                             where a.AspNetUserId.Equals(userId)
-                             select a;
-            foreach (TokenManagement data in userToken)
-            {
-                if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
+                if (tokenAvailable == false)
                 {
-                    fitbitConnected = true;
-                    accessToken.Token = data.Token;
-                    accessToken.TokenType = data.TokenType;
-                    accessToken.ExpiresIn = data.ExpiresIn;
-                    accessToken.RefreshToken = data.RefreshToken;
-                    accessToken.UserId = data.UserId;
-                    accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
-
-                }
-            }
-
-            if (fitbitConnected == true)
-            {
-                //Loading Session data when the user has does not have Key creds in their session
-                var appCredentials = new FitbitAppCredentials()
-                {
-                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
-                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
+                    TokenManagement token = new TokenManagement()
+                    {
+                    AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
+                    DateChanged = DateTime.UtcNow,
+                    Token = accessToken.Token,
+                    TokenType = accessToken.TokenType,
+                    ExpiresIn = accessToken.ExpiresIn,
+                    RefreshToken = accessToken.RefreshToken
                 };
+                    Db.TokenManagements.InsertOnSubmit(token);
+                }
 
-                GetFitbitClient(accessToken);
-                syncFitbitCred(accessToken);
 
-             return View("Callback");
-              //  return RedirectToAction("Sync", "UserDatas");
+                Db.SubmitChanges();
             }
-
-            return Authorize();
         }
 
         public ActionResult DirectToSync()
@@ -160,12 +126,19 @@ namespace SleepMakeSense.Controllers
             {
                 throw new Exception("You Must be Loged in to sync Fitbit Data");
             }
-            // 20161108 Pandita
-            Models.Database Db = new Models.Database();
-            bool fitbitConnected = false;
+            //Loading Session data when the user has does not have Key creds in their session
+            FitbitAppCredentials appCredentials = new FitbitAppCredentials()
+            {
+                ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
+            };
+            Session["AppCredentials"] = appCredentials;
+
             OAuth2AccessToken accessToken = new OAuth2AccessToken();
+            // 20161108 Pandita
+            bool fitbitConnected = false;
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var userToken = from a in Db.TokenManagements
+            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements
                             where a.AspNetUserId.Equals(userId)
                             select a;
             foreach (TokenManagement data in userToken)
@@ -179,21 +152,13 @@ namespace SleepMakeSense.Controllers
                     accessToken.RefreshToken = data.RefreshToken;
                     accessToken.UserId = data.UserId;
                     accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
-
                 }
             }
-
             if (fitbitConnected == true)
             {
-                //Loading Session data when the user has does not have Key creds in their session
-                var appCredentials = new FitbitAppCredentials()
-                {
-                    ClientId = ConfigurationManager.AppSettings["FitbitClientId"],
-                    ClientSecret = ConfigurationManager.AppSettings["FitbitClientSecret"]
-                };
-
-                GetFitbitClient(accessToken);
-                syncFitbitCred(accessToken);
+                FitbitClient tempSyncClient = GetFitbitClient(accessToken);
+                accessToken = tempSyncClient.AccessToken;
+                SyncFitbitCred(accessToken);
                 //     return View("Callback");
                 return RedirectToAction("Sync", "UserDatas");
             }

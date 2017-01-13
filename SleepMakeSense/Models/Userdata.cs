@@ -8,132 +8,117 @@ namespace SleepMakeSense.Models
 
     public partial class Userdata
     {
-        public int Id { get; set; }
-
-        public string Steps { get; set; }
-
-        public string MinutesAsleep { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        //User Details
 
         public DateTime DateStamp { get; set; }
 
-        public string Water { get; set; }
 
-        public string Distance { get; set; }
+        public double? MinutesAsleep { get; set; }
 
-        public string MinutesSedentary { get; set; }
+        public double? MinutesAwake { get; set; }
 
-        public string MinutesVeryActive { get; set; }
+        public double? AwakeningsCount { get; set; }
 
-        public string AwakeningsCount { get; set; }
+        public double? TimeInBed { get; set; }
 
-        public string TimeEnteredBed { get; set; }
+        public double? MinutesToFallAsleep { get; set; }
 
-        public string Weight { get; set; }
+        public double? MinutesAfterWakeup { get; set; }
 
-        public string MinutesAwake { get; set; }
+        public double? SleepEfficiency { get; set; }
 
-        public string TimeInBed { get; set; }
+        public double? CaloriesIn { get; set; }
 
-        public string MinutesToFallAsleep { get; set; }
+        public double? Water { get; set; }
 
-        public string MinutesAfterWakeup { get; set; }
+        public double? CaloriesOut { get; set; }
 
-        public string CaloriesIn { get; set; }
+        public double? Steps { get; set; }
 
-        public string CaloriesOut { get; set; }
+        public double? Distance { get; set; }
 
-        public string MinutesLightlyActive { get; set; }
+        public double? MinutesSedentary { get; set; }
 
-        public string MinutesFairlyActive { get; set; }
+        public double? MinutesLightlyActive { get; set; }
 
-        public string ActivityCalories { get; set; }
+        public double? MinutesFairlyActive { get; set; }
 
-        public string BMI { get; set; }
+        public double? MinutesVeryActive { get; set; }
 
-        public string Fat { get; set; }
+        public double? ActivityCalories { get; set; }
 
-        public string SleepEfficiency { get; set; }
+        public TimeSpan? TimeEnteredBed { get; set; }
 
-        public string WakeUpFreshness { get; set; }
+        public double? Weight { get; set; }
 
-        public string Coffee { get; set; }
+        public double? BMI { get; set; }
 
-        public string CoffeeTime { get; set; }
+        public double? Fat { get; set; }
 
-        public string Alcohol { get; set; }
+        //Diary Data
+        public double? WakeUpFreshness { get; set; }
 
-        public string Mood { get; set; }
+        public double? Mood { get; set; }
 
-        public string Stress { get; set; }
+        public double? Stress { get; set; }
 
-        public string Tiredness { get; set; }
+        public double? Tiredness { get; set; }
 
-        public string Dream { get; set; }
+        public double? Dream { get; set; }
 
-        public string DigitalDev { get; set; }
+        public double? BodyTemp { get; set; }
 
-        public string Light { get; set; }
+        public double? Hormone { get; set; }
 
-        public string NapDuration { get; set; }
+        public double? SchoolStress { get; set; }
 
-        public string NapTime { get; set; }
+        public double? CoffeeAmt { get; set; }
 
-        public string SocialActivity { get; set; }
+        public DateTime? CoffeeTime { get; set; }
 
-        public string DinnerTime { get; set; }
+        public double? AlcoholAmt { get; set; }
 
-        public string AmbientTemp { get; set; }
+        public DateTime? AlcoholTime { get; set; }
 
-        public string AmbientHumd { get; set; }
+        public DateTime? NapTime { get; set; }
 
-        public string ExerciseTime { get; set; }
+        public double? NapDuration { get; set; }
 
-        public string BodyTemp { get; set; }
+        public double? DigDeviceDuration { get; set; }
 
-        public string Hormone { get; set; }
+        public double? GamesDuration { get; set; }
 
-        public bool FitbitData { get; set; }
+        public double? SocialActivites { get; set; }
 
-        public bool DiaryDataNight { get; set; }
+        public double? SocialActivity { get; set; }
 
-        public string WatchTV { get; set; }
+        public double? MusicDuration { get; set; }
 
-        public string ExerciseDuration { get; set; }
+        public double? TVDuration { get; set; }
 
-        public string ExerciseIntensity { get; set; }
+        public DateTime? WorkTime { get; set; }
 
-        public string ExerciseType { get; set; }
+        public double? WorkDuration { get; set; }
 
-        public string Snack { get; set; }
+        public double? ExerciseDuration { get; set; }
 
-        public string Snack2 { get; set; }
+        public double? ExerciseIntensity { get; set; }
 
-        public string Job { get; set; }
+        public DateTime? DinnerTime { get; set; }
 
-        public string Job2 { get; set; }
+        public DateTime? SnackTime { get; set; }
 
-        public string Phone { get; set; }
+        public double? AmbientTemp { get; set; }
 
-        public string SleepDiary { get; set; }
+        public double? AmbientHumd { get; set; }
 
-        public string Music { get; set; }
+        public double? Light { get; set; }
 
-        public string MusicDuration { get; set; }
+        public DateTime? SunRiseTime { get; set; }
 
-        public string MusicType { get; set; }
+        public DateTime? SunSetTime { get; set; }
 
-        public string SocialMedia { get; set; }
-
-        public string Games { get; set; }
-
-        public string Assessment { get; set; }
-
-     //   public bool DiaryDataMorning { get; set; }
-
-        [Required]
-        [StringLength(128)]
-        public string AspNetUserId { get; set; }
-
-        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

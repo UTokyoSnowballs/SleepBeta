@@ -10,17 +10,6 @@ using System.Data.Sql;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
-
-
-
-
-
-
-
-
-
-
-
 //Refer to Fitbit Library
 
 using Fitbit.Models;
@@ -34,16 +23,22 @@ using MathNet.Numerics.Statistics;
 
 namespace SleepMakeSense.Controllers
 {
-    
+
     public class UserdatasController : Controller
     {
-        
-        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // 20161105 Pandita
+        // private ApplicationDbContext db = new ApplicationDbContext();
+        private Models.Database Db = new Models.Database();
+
 
         // GET: Userdatas
         public ActionResult Index()
         {
-            return View(db.Userdatas.ToList());
+            // 20161107 Pandita
+            // return View(db.Userdatas.ToList());
+            return View(Db.Userdatas.ToList());
+
         }
 
         // GET: Userdatas/Details/5
@@ -53,31 +48,37 @@ namespace SleepMakeSense.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var userdata = db.Userdatas.Find(id);
+            // 20161107 Pandita
+            // var userdata = db.Userdatas.Find(id);
+            var userdata = Db.Userdatas.Find(id);
+
             if (userdata == null)
             {
                 return HttpNotFound();
             }
             return View(userdata);
         }
-
         public ActionResult FactorQuestions()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 MyViewModel viewModel = new MyViewModel();
-                Models.Database Db = new Models.Database();
+
+                // 20161107 Pandita
+                // Models.Database Db = new Models.Database();
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+                // 20161108 Pandita: what if no entry for this user exist in database?
                 var dataQuery = from a in Db.UserQuestions
-                                 where a.AspNetUserId.Equals(userId)
-                                 select a;
+                                where a.AspNetUserId.Equals(userId)
+                                select a;
 
                 viewModel.questionSelection = new QuestionsSelections();
 
 
                 foreach (UserQuestion data in dataQuery)
                 {
-                    if(data.AspNetUserId == userId)
+                    if (data.AspNetUserId == userId)
                     {
                         ViewBag.Message = "Enter Your Daily Habits";
 
@@ -89,7 +90,9 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
+                // 20161108 Pandita: Here is the problem ????????????????????????????????
                 return View(Sync());
+
             }
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
@@ -102,7 +105,10 @@ namespace SleepMakeSense.Controllers
             data.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             data.DiaryDataNight = true;
             data.DateStamp = DateTime.UtcNow.Date;
-            Models.Database Db = new Models.Database();
+
+            // 20161107 Pandita
+            // Models.Database Db = new Models.Database();
+
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
             bool update = false;
             var lastSynced = from a in Db.Userdatas
@@ -143,10 +149,13 @@ namespace SleepMakeSense.Controllers
             }
             if (update == false)
             {
-                db.Userdatas.Add(data);
+                Db.Userdatas.Add(data);
+
             }
             //   else db.Userdatas.Add(data);
-            db.SaveChanges();
+
+            Db.SaveChanges();
+
             TempData["notice"] = "Successfully Saved";
 
             return RedirectToAction("Index", "Home");
@@ -169,13 +178,17 @@ namespace SleepMakeSense.Controllers
         // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserdataId,DateStamp,MinutesAsleep,MinutesAwake,AwakeningsCount,TimeInBed,MinutesToFallAsleep,MinutesAfterWakeup,SleepEfficiency,CaloriesIn,Water,CaloriesOut,Steps,Distance,MinutesSedentary,MinutesLightlyActive,MinutesFairlyActive,MinutesVeryActive,ActivityCalories,Floors,TimeEnteredBed,Weight,BMI,Fat")] Userdata userdata)
+        public ActionResult Create([Bind(Include = "Steps, MinutesAsleep, DateStamp, Water, Distance, MinutesSedentary, MinutesVeryActive, AwakeningsCount, TimeEnteredBed, Weight, MinutesAwake, TimeInBed, MinutesToFallAsleep, MinutesAfterWakeUp, CaloriesIn, CaloriesOut, MinutesLightlyActive, MinutesFairlyActive, ActivityCalories, BMI,Fat,SleepEfficiency,WakeUpFreshness,Coffee,CoffeeTime,Alcohol,Mood,Stress,Tiredness,Dream,DigitalDev, Light,NapDuration,NapTime,SocialActivity,DinnerTime,AmbientTemp,AmbientHumd,ExerciseTime,BodyTemp,Hormone,FitbitData,DiaryDataNight,WatchTV,ExerciseDuration,ExerciseIntensity,ExerciseType,Snack,Snack2,Job,Job2,Phone,SleepDiary,Music,MusicDuration,MusicType,SocialMedia,Games,Assessment,AspNetUserId")] Userdata userdata)
         {
             var data = userdata;
             if (ModelState.IsValid)
             {
-                db.Userdatas.Add(data);
-                db.SaveChanges();
+                // 20161107 Pandita
+                // db.Userdatas.Add(data);
+                // db.SaveChanges();
+
+                Db.Userdatas.Add(data);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -189,7 +202,10 @@ namespace SleepMakeSense.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var userdata = db.Userdatas.Find(id);
+            // 20161107 Pandita
+            // var userdata = db.Userdatas.Find(id);
+            var userdata = Db.Userdatas.Find(id);
+
             if (userdata == null)
             {
                 return HttpNotFound();
@@ -202,12 +218,16 @@ namespace SleepMakeSense.Controllers
         // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserdataId,DateStamp,MinutesAsleep,MinutesAwake,AwakeningsCount,TimeInBed,MinutesToFallAsleep,MinutesAfterWakeup,SleepEfficiency,CaloriesIn,Water,CaloriesOut,Steps,Distance,MinutesSedentary,MinutesLightlyActive,MinutesFairlyActive,MinutesVeryActive,ActivityCalories,Floors,TimeEnteredBed,Weight,BMI,Fat")] Userdata userdata)
+        public ActionResult Edit([Bind(Include = "Steps, MinutesAsleep, DateStamp, Water, Distance, MinutesSedentary, MinutesVeryActive, AwakeningsCount, TimeEnteredBed, Weight, MinutesAwake, TimeInBed, MinutesToFallAsleep, MinutesAfterWakeUp, CaloriesIn, CaloriesOut, MinutesLightlyActive, MinutesFairlyActive, ActivityCalories, BMI,Fat,SleepEfficiency,WakeUpFreshness,Coffee,CoffeeTime,Alcohol,Mood,Stress,Tiredness,Dream,DigitalDev, Light,NapDuration,NapTime,SocialActivity,DinnerTime,AmbientTemp,AmbientHumd,ExerciseTime,BodyTemp,Hormone,FitbitData,DiaryDataNight,WatchTV,ExerciseDuration,ExerciseIntensity,ExerciseType,Snack,Snack2,Job,Job2,Phone,SleepDiary,Music,MusicDuration,MusicType,SocialMedia,Games,Assessment,AspNetUserId")] Userdata userdata)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userdata).State = EntityState.Modified;
-                db.SaveChanges();
+                // 20161107 Pandita
+                // db.Entry(userdata).State = EntityState.Modified;
+                // db.SaveChanges();
+
+                Db.Entry(userdata).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(userdata);
@@ -220,7 +240,10 @@ namespace SleepMakeSense.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var userdata = db.Userdatas.Find(id);
+            // 20161107 Pandita
+            // var userdata = db.Userdatas.Find(id);
+            var userdata = Db.Userdatas.Find(id);
+
             if (userdata == null)
             {
                 return HttpNotFound();
@@ -233,9 +256,15 @@ namespace SleepMakeSense.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var userdata = db.Userdatas.Find(id);
-            db.Userdatas.Remove(userdata);
-            db.SaveChanges();
+            // 20161107 Pandita
+            // var userdata = db.Userdatas.Find(id);
+            // db.Userdatas.Remove(userdata);
+            // db.SaveChanges();
+
+            var userdata = Db.Userdatas.Find(id);
+            Db.Userdatas.Remove(userdata);
+            Db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -243,7 +272,10 @@ namespace SleepMakeSense.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                // 20161107 Pandita
+                // db.Dispose();
+                Db.Dispose();
+
             }
             base.Dispose(disposing);
         }
@@ -282,280 +314,301 @@ namespace SleepMakeSense.Controllers
         /// <param name="query"></param>
         /// <param name="item"></param>
 
-        /*
-        private void UpdateFitbitData (Userdata item)
+
+        private void UpdateFitbitData(Userdata item)
         {
-            var updateQuery = from a in db.Userdatas
-                                    where a.AspNetUser == item.AspNetUser && a.DateStamp == item.DateStamp
-                                    select a;
-            //Update database
-            foreach (Userdata data in updateQuery)
+            var updateQuery = from a in Db.Userdatas
+                              where a.AspNetUser == item.AspNetUser && a.DateStamp == item.DateStamp
+                              select a;
+            if (updateQuery != null)
             {
-                if (data.FitbitData == false)
+                // Pandita: why could there be more than 1 entry for a day?
+                foreach (Userdata data in updateQuery)
                 {
-                    data.MinutesAsleep = item.MinutesAsleep;
-                    data.MinutesAwake = item.MinutesAwake;
-                    data.AwakeningsCount = item.AwakeningsCount;
-                    data.TimeInBed = item.TimeInBed;
-                    data.MinutesToFallAsleep = item.MinutesToFallAsleep;
-                    data.MinutesAfterWakeup = item.MinutesAfterWakeup;
-                    data.SleepEfficiency = item.SleepEfficiency;
-                    data.CaloriesIn = item.CaloriesIn;
-                    data.Water = item.Water;
-                    data.CaloriesOut = item.CaloriesOut;
-                    data.Steps = item.Steps;
-                    data.Distance = item.Distance;
-                    data.MinutesSedentary = item.MinutesSedentary;
-                    data.MinutesLightlyActive = item.MinutesLightlyActive;
-                    data.MinutesFairlyActive = item.MinutesFairlyActive;
-                    data.MinutesVeryActive = item.MinutesVeryActive;
-                    data.ActivityCalories = item.ActivityCalories;
-                    data.TimeEnteredBed = item.TimeEnteredBed;
-                    data.Weight = item.Weight;
-                    data.BMI = item.BMI;
-                    data.Fat = item.Fat;
-                    data.FitbitData = true;
-                    db.SaveChanges();
+                    if (data.FitbitData == false)
+                    {
+                        data.MinutesAsleep = item.MinutesAsleep;
+                        data.MinutesAwake = item.MinutesAwake;
+                        data.AwakeningsCount = item.AwakeningsCount;
+                        data.TimeInBed = item.TimeInBed;
+                        data.MinutesToFallAsleep = item.MinutesToFallAsleep;
+                        data.MinutesAfterWakeup = item.MinutesAfterWakeup;
+                        data.SleepEfficiency = item.SleepEfficiency;
+                        data.CaloriesIn = item.CaloriesIn;
+                        data.Water = item.Water;
+                        data.CaloriesOut = item.CaloriesOut;
+                        data.Steps = item.Steps;
+                        data.Distance = item.Distance;
+                        data.MinutesSedentary = item.MinutesSedentary;
+                        data.MinutesLightlyActive = item.MinutesLightlyActive;
+                        data.MinutesFairlyActive = item.MinutesFairlyActive;
+                        data.MinutesVeryActive = item.MinutesVeryActive;
+                        data.ActivityCalories = item.ActivityCalories;
+                        data.TimeEnteredBed = item.TimeEnteredBed;
+                        data.Weight = item.Weight;
+                        data.BMI = item.BMI;
+                        data.Fat = item.Fat;
+                        data.FitbitData = true;
+                        Db.SaveChanges();
+                    }
                 }
             }
-            db.SaveChanges();
+            else
+            {
+                Db.Userdatas.Add(item);
+            }
+            Db.SaveChanges();
         }
-        */
-    
-        private async Task<ActionResult> FitbitDataSync(string userId )
+
+
+        private async Task<ActionResult> FitbitDataSync(string userId)
         {
-            ViewBag.FitbitSynced = true;
+
+            // Step 1: Retrieve 40 days data and store in "results"
             FitbitClient client = GetFitbitClient();
             bool userLogedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-            Models.Database Db = new Models.Database();
 
+            List<Userdata> results = new List<Userdata>();
 
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-40);
 
-            List<Userdata> results = (from a in db.Userdatas
-                                  where a.AspNetUserId == userId && a.DateStamp >= dateStop
-                                  select a).ToList();
-
             var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, dateStop, DateTime.UtcNow);
-                var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, dateStop, DateTime.UtcNow);
-                var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, dateStop, DateTime.UtcNow);
-                var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, dateStop, DateTime.UtcNow);
-                var minutesToFallAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesToFallAsleep, dateStop, DateTime.UtcNow);
-                var minutesAfterWakeup = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAfterWakeup, dateStop, DateTime.UtcNow);
-                var sleepEfficiency = await client.GetTimeSeriesAsync(TimeSeriesResourceType.SleepEfficiency, dateStop, DateTime.UtcNow);
-                var caloriesIn = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesIn, dateStop, DateTime.UtcNow);
-                var water = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Water, dateStop, DateTime.UtcNow);
-                var caloriesOut = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesOut, dateStop, DateTime.UtcNow);
-                var steps = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Steps, dateStop, DateTime.UtcNow);
-                var distance = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Distance, dateStop, DateTime.UtcNow);
-                var minutesSedentary = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesSedentary, dateStop, DateTime.UtcNow);
-                var minutesLightlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesLightlyActive, dateStop, DateTime.UtcNow);
-                var minutesFairlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesFairlyActive, dateStop, DateTime.UtcNow);
-                var minutesVeryActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesVeryActive, dateStop, DateTime.UtcNow);
-                var activityCalories = await client.GetTimeSeriesAsync(TimeSeriesResourceType.ActivityCalories, dateStop, DateTime.UtcNow);
-                var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, dateStop, DateTime.UtcNow);
-                var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, dateStop, DateTime.UtcNow);
-                var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, dateStop, DateTime.UtcNow);
-                var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, DateTime.UtcNow);
+            var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, dateStop, DateTime.UtcNow);
+            var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, dateStop, DateTime.UtcNow);
+            var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, dateStop, DateTime.UtcNow);
+            var minutesToFallAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesToFallAsleep, dateStop, DateTime.UtcNow);
+            var minutesAfterWakeup = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAfterWakeup, dateStop, DateTime.UtcNow);
+            var sleepEfficiency = await client.GetTimeSeriesAsync(TimeSeriesResourceType.SleepEfficiency, dateStop, DateTime.UtcNow);
+            var caloriesIn = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesIn, dateStop, DateTime.UtcNow);
+            var water = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Water, dateStop, DateTime.UtcNow);
+            var caloriesOut = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesOut, dateStop, DateTime.UtcNow);
+            var steps = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Steps, dateStop, DateTime.UtcNow);
+            var distance = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Distance, dateStop, DateTime.UtcNow);
+            var minutesSedentary = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesSedentary, dateStop, DateTime.UtcNow);
+            var minutesLightlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesLightlyActive, dateStop, DateTime.UtcNow);
+            var minutesFairlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesFairlyActive, dateStop, DateTime.UtcNow);
+            var minutesVeryActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesVeryActive, dateStop, DateTime.UtcNow);
+            var activityCalories = await client.GetTimeSeriesAsync(TimeSeriesResourceType.ActivityCalories, dateStop, DateTime.UtcNow);
+            var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, dateStop, DateTime.UtcNow);
+            var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, dateStop, DateTime.UtcNow);
+            var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, dateStop, DateTime.UtcNow);
+            var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, DateTime.UtcNow);
 
-                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
+            foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
+            {
+
+                if (Convert.ToDouble(data.Value) > 0)  // Remove entries with no sleep log (e.g. due to battery issue)
                 {
-                bool addData = true;
-                    foreach(Userdata dataBaseResult in results.ToList())
-                {
-                    if (data.DateTime.Date.AddDays(-1) == dataBaseResult.DateStamp && dataBaseResult.FitbitData == false)
+                    results.Add(new Userdata()
                     {
-                        addData = false;
-                        results.Add(new Userdata()
-                        {
-                            MinutesAsleep = data.Value,
-                            FitbitData = true
-                        });
-                     }
+                        DateStamp = data.DateTime.Date.AddDays(-1),
+                        MinutesAsleep = data.Value,
+                        MinutesAwake = null,
+                        AwakeningsCount = null,
+                        TimeInBed = null,
+                        MinutesToFallAsleep = null,
+                        MinutesAfterWakeup = null,
+                        SleepEfficiency = null,
+                        WakeUpFreshness = null,
+                        Coffee = null,
+                        CoffeeTime = null,
+                        Alcohol = null,
+                        Mood = null,
+                        Stress = null,
+                        Tiredness = null,
+                        Dream = null,
+                        DigitalDev = null,
+                        Light = null,
+                        NapDuration = null,
+                        NapTime = null,
+                        SocialActivity = null,
+                        DinnerTime = null,
+                        AmbientTemp = null,
+                        AmbientHumd = null,
+                        ExerciseTime = null,
+                        BodyTemp = null,
+                        Hormone = null,
+                        CaloriesIn = null,
+                        Water = null,
+                        CaloriesOut = null,
+                        Steps = null,
+                        Distance = null,
+                        MinutesSedentary = null,
+                        MinutesLightlyActive = null,
+                        MinutesFairlyActive = null,
+                        MinutesVeryActive = null,
+                        ActivityCalories = null,
+                        TimeEnteredBed = null,
+                        Weight = null,
+                        BMI = null,
+                        Fat = null,
+                        AspNetUserId = userId,
+                        FitbitData = true
+                    });
                 }
-                if (addData)
+            }
+            //}
+
+            foreach (Userdata item in results)
+            {
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAwake.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
                 {
-                    if (Convert.ToDouble(data.Value) > 0)  // Remove entries with no sleep log (e.g. due to battery issue)
-                    {
-                        results.Add(new Userdata()
-                        {
-                            DateStamp = data.DateTime.Date.AddDays(-1),
-                            MinutesAsleep = data.Value,
-                            MinutesAwake = null,
-                            AwakeningsCount = null,
-                            TimeInBed = null,
-                            MinutesToFallAsleep = null,
-                            MinutesAfterWakeup = null,
-                            SleepEfficiency = null,
-                            WakeUpFreshness = null,
-                            Coffee = null,
-                            CoffeeTime = null,
-                            Alcohol = null,
-                            Mood = null,
-                            Stress = null,
-                            Tiredness = null,
-                            Dream = null,
-                            DigitalDev = null,
-                            Light = null,
-                            NapDuration = null,
-                            NapTime = null,
-                            SocialActivity = null,
-                            DinnerTime = null,
-                            AmbientTemp = null,
-                            AmbientHumd = null,
-                            ExerciseTime = null,
-                            BodyTemp = null,
-                            Hormone = null,
-                            CaloriesIn = null,
-                            Water = null,
-                            CaloriesOut = null,
-                            Steps = null,
-                            Distance = null,
-                            MinutesSedentary = null,
-                            MinutesLightlyActive = null,
-                            MinutesFairlyActive = null,
-                            MinutesVeryActive = null,
-                            ActivityCalories = null,
-                            TimeEnteredBed = null,
-                            Weight = null,
-                            BMI = null,
-                            Fat = null,
-                            AspNetUserId = userId,
-                            FitbitData = true
-                        });
-                    }
-                }
+                    item.MinutesAwake = data.Value;
                 }
 
-                foreach (Userdata item in results)
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in awakeningsCount.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
                 {
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAwake.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                    {
-                        item.MinutesAwake = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in awakeningsCount.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                    {
-                        item.AwakeningsCount = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeInBed.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                    {
-                        item.TimeInBed = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesToFallAsleep.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                    {
-                        item.MinutesToFallAsleep = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAfterWakeup.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                    {
-                        item.MinutesAfterWakeup = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in sleepEfficiency.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
-                    {
-                        item.SleepEfficiency = data.Value;
-                    }
-
-                    // Potential impacting factors; need filter out untracked factors.
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesIn.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.CaloriesIn = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in water.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.Water = data.Value;
-                    }
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesOut.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.CaloriesOut = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in steps.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.Steps = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in distance.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.Distance = data.Value;
-                    }
-
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesSedentary.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.MinutesSedentary = data.Value;
-                        //if (Convert.ToDouble(item.MinutesSedentary) > 0) CNTminutesSedentary++; 
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesLightlyActive.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.MinutesLightlyActive = data.Value;
-                        //if (Convert.ToDouble(item.MinutesLightlyActive) > 0) CNTminutesLightlyActive++; 
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesFairlyActive.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.MinutesFairlyActive = data.Value;
-                        //if (Convert.ToDouble(item.MinutesFairlyActive) > 0) CNTminutesFairlyActive++; 
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesVeryActive.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.MinutesVeryActive = data.Value;
-                        //if (Convert.ToDouble(item.MinutesVeryActive) > 0) CNTminutesVeryActive++; 
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in activityCalories.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.ActivityCalories = data.Value;
-                        //if (Convert.ToDouble(item.ActivityCalories) > 0) CNTactivityCalories++; 
-                    }
-
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeEnteredBed.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.TimeEnteredBed = data.Value;
-                        //if (Convert.ToDouble(item.TimeEnteredBed) > 0) CNTtimeEnteredBed++; 
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in weight.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.Weight = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in bmi.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.BMI = data.Value;
-                    }
-
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in fat.DataList.Where(data => data.DateTime == item.DateStamp))
-                    {
-                        item.Fat = data.Value;
-                    }
+                    item.AwakeningsCount = data.Value;
                 }
 
-            db.SaveChanges();
-            
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeInBed.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
+                {
+                    item.TimeInBed = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesToFallAsleep.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
+                {
+                    item.MinutesToFallAsleep = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAfterWakeup.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
+                {
+                    item.MinutesAfterWakeup = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in sleepEfficiency.DataList.Where(data => data.DateTime.AddDays(-1) == item.DateStamp))
+                {
+                    item.SleepEfficiency = data.Value;
+                }
+
+                // Potential impacting factors; need filter out untracked factors.
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesIn.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.CaloriesIn = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in water.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.Water = data.Value;
+                }
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in caloriesOut.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.CaloriesOut = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in steps.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.Steps = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in distance.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.Distance = data.Value;
+                }
+
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesSedentary.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.MinutesSedentary = data.Value;
+                    //if (Convert.ToDouble(item.MinutesSedentary) > 0) CNTminutesSedentary++; 
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesLightlyActive.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.MinutesLightlyActive = data.Value;
+                    //if (Convert.ToDouble(item.MinutesLightlyActive) > 0) CNTminutesLightlyActive++; 
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesFairlyActive.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.MinutesFairlyActive = data.Value;
+                    //if (Convert.ToDouble(item.MinutesFairlyActive) > 0) CNTminutesFairlyActive++; 
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesVeryActive.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.MinutesVeryActive = data.Value;
+                    //if (Convert.ToDouble(item.MinutesVeryActive) > 0) CNTminutesVeryActive++; 
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in activityCalories.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.ActivityCalories = data.Value;
+                    //if (Convert.ToDouble(item.ActivityCalories) > 0) CNTactivityCalories++; 
+                }
+
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeEnteredBed.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.TimeEnteredBed = data.Value;
+                    //if (Convert.ToDouble(item.TimeEnteredBed) > 0) CNTtimeEnteredBed++; 
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in weight.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.Weight = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in bmi.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.BMI = data.Value;
+                }
+
+                foreach (Fitbit.Models.TimeSeriesDataList.Data data in fat.DataList.Where(data => data.DateTime == item.DateStamp))
+                {
+                    item.Fat = data.Value;
+                }
+            }
+
+            // Pandita: "db" is an instance of "ApplicationDbContext", not the newly created "Db", an instance of "Database" !!! Probably remove ApplicationDbContext? Or keep it and remove the tables related to user management in Database?
+            // db.SaveChanges(); 
+
+            // Step 2: Add entries to database if not exist, or update entries if exist
+
+            /* 20161107 Pandita
+                      List<Userdata> results = (from a in db.Userdatas
+                      where a.AspNetUserId == userId && a.DateStamp >= dateStop
+                      select a).ToList();
+                      */
+
+            // Userdata DBentry = new Models.Userdata();
+
+            foreach (SleepMakeSense.Models.Userdata item in results)
+            {
+                //UpdateFitbitData(item);
+                Db.Userdatas.Add(item);
+            }
+
+
+            Db.SaveChanges();
+            ViewBag.FitbitSynced = true;
+
             return View();
         }
 
         public async Task<ActionResult> Sync()
         {
+
+            /* Todo: Pandita
+            if (ViewBag.FitbitSynced == true) {
+                //NoDataSync();
+                return View("Sync");
+            }
+            else
+            {*/
+
             //Comment out the bellow line to disable getting the current logged in user data
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             //UnComment the bellow line to select a specific use to show the users sync page screen
             //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
 
-            //Enable Fitbit Data SYNC
-           await FitbitDataSync(userId);
 
+            //Enable Fitbit Data SYNC
+            await FitbitDataSync(userId);
             //Retrieves the Data
             MyViewModel model = DataModelCreation(userId);
             return View(model);
+
         }
 
         /*
@@ -570,29 +623,30 @@ namespace SleepMakeSense.Controllers
         {
             return View("Sync");
         }
-/*
-        public async Task<ActionResult> DataSync()
-        {
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
-            FitbitClient client = GetFitbitClient();
-            await FitbitDataSync(client, userId);
-            MyViewModel model = DataModelCreation(userId);
-            return Sync();
-        }
-        */
+        /*
+                public async Task<ActionResult> DataSync()
+                {
+                    string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); ;
+                    FitbitClient client = GetFitbitClient();
+                    await FitbitDataSync(client, userId);
+                    MyViewModel model = DataModelCreation(userId);
+                    return Sync();
+                }
+                */
         public MyViewModel DataModelCreation(string userId)
         {
             ViewBag.FitbitSynced = true;
             //Need to define it here. Cannot use the one defined in FitbitController.cs.
 
-            Models.Database Db = new Models.Database();
+            // 20161107 Pandita
+            // Models.Database Db = new Models.Database();
 
             DateTime date = DateTime.UtcNow.AddDays(-40);
 
             List<Userdata> results = (from a in Db.Userdatas
                                       where a.AspNetUserId == userId && a.DateStamp >= date && a.FitbitData == true
-                                     orderby  a.DateStamp
-                                            select a).ToList();
+                                      orderby a.DateStamp
+                                      select a).ToList();
 
             var model = new MyViewModel();
 
@@ -628,28 +682,28 @@ namespace SleepMakeSense.Controllers
 
             foreach (Userdata item in results)
             {
-                    if (Convert.ToDouble(item.WakeUpFreshness) >= 0) CNTwakeUpFreshness++;
-                    if (Convert.ToDouble(item.Coffee) >= 0) CNTcoffee++;
-                    if (Convert.ToDouble(item.CoffeeTime) > 0) CNTcoffeeTime++;
-                    if (Convert.ToDouble(item.Alcohol) >= 0) CNTalcohol++;
-                    if (Convert.ToDouble(item.Mood) >= 0) CNTmood++;
-                    if (Convert.ToDouble(item.Stress) >= 0) CNTstress++;
-                    if (Convert.ToDouble(item.Tiredness) >= 0) CNTtiredness++;
-                    if (Convert.ToDouble(item.Dream) >= 0) CNTdream++;
-                    if (Convert.ToDouble(item.DigitalDev) >= 0) CNTdigitalDev++;
-                    if (Convert.ToDouble(item.Light) >= 0) CNTlight++;
-                    if (Convert.ToDouble(item.NapDuration) > 0) CNTnapDuration++;
-                    if (Convert.ToDouble(item.NapTime) > 0) CNTnapTime++;
-                    if (Convert.ToDouble(item.SocialActivity) >= 0) CNTsocialActivity++;
-                    if (Convert.ToDouble(item.DinnerTime) > 0) CNTdinnerTime++;
-                    if (Convert.ToDouble(item.ExerciseTime) > 0) CNTexerciseTime++;
-                    if (Convert.ToDouble(item.AmbientTemp) > 0) CNTambientTemp++;
-                    if (Convert.ToDouble(item.AmbientHumd) > 0) CNTambientHumd++;
-                    if (Convert.ToDouble(item.BodyTemp) > 0) CNTbodyTemp++;
-                    if (Convert.ToDouble(item.Hormone) > 0) CNThormone++;
+                if (Convert.ToDouble(item.WakeUpFreshness) >= 0) CNTwakeUpFreshness++;
+                if (Convert.ToDouble(item.Coffee) >= 0) CNTcoffee++;
+                if (Convert.ToDouble(item.CoffeeTime) > 0) CNTcoffeeTime++;
+                if (Convert.ToDouble(item.Alcohol) >= 0) CNTalcohol++;
+                if (Convert.ToDouble(item.Mood) >= 0) CNTmood++;
+                if (Convert.ToDouble(item.Stress) >= 0) CNTstress++;
+                if (Convert.ToDouble(item.Tiredness) >= 0) CNTtiredness++;
+                if (Convert.ToDouble(item.Dream) >= 0) CNTdream++;
+                if (Convert.ToDouble(item.DigitalDev) >= 0) CNTdigitalDev++;
+                if (Convert.ToDouble(item.Light) >= 0) CNTlight++;
+                if (Convert.ToDouble(item.NapDuration) > 0) CNTnapDuration++;
+                if (Convert.ToDouble(item.NapTime) > 0) CNTnapTime++;
+                if (Convert.ToDouble(item.SocialActivity) >= 0) CNTsocialActivity++;
+                if (Convert.ToDouble(item.DinnerTime) > 0) CNTdinnerTime++;
+                if (Convert.ToDouble(item.ExerciseTime) > 0) CNTexerciseTime++;
+                if (Convert.ToDouble(item.AmbientTemp) > 0) CNTambientTemp++;
+                if (Convert.ToDouble(item.AmbientHumd) > 0) CNTambientHumd++;
+                if (Convert.ToDouble(item.BodyTemp) > 0) CNTbodyTemp++;
+                if (Convert.ToDouble(item.Hormone) > 0) CNThormone++;
 
 
-                    //new data
+                //new data
                 if (Convert.ToDouble(item.WatchTV) >= 0) CNTWatchTV++;
                 if (Convert.ToDouble(item.ExerciseDuration) >= 0) CNTExerciseDuration++;
                 if (Convert.ToDouble(item.ExerciseIntensity) > 0) CNTExerciseIntensity++;
@@ -778,6 +832,9 @@ namespace SleepMakeSense.Controllers
                 //System.Diagnostics.Trace.Write(item); // didnt work!!!!
 
                 // ******** Add entry to DB !!! *************         
+
+                // 20161105 Pandita: Not necessary here? 
+                Db.Userdatas.Add(item);
 
                 MinutesAsleep[iMinutesAsleep++] = Convert.ToDouble(item.MinutesAsleep);
                 MinutesAwake[iMinutesAwake++] = Convert.ToDouble(item.MinutesAwake);
@@ -1395,11 +1452,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesSedentary > 0)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Note = "The more sedentary your were, the longer you were asleep during night." });
+                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Minutes Sedentary", Coefficient = rMinutesSedentary, Note = "The more sedentary your were, the longer you were asleep during night." });
                 }
                 else if (rMinutesSedentary < 0)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Note = "The more sedentary your were, the shorter you were asleep during night." });
+                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Minutes Sedentary", Coefficient = rMinutesSedentary, Note = "The more sedentary your were, the shorter you were asleep during night." });
                 }
             }
 
@@ -1412,7 +1469,7 @@ namespace SleepMakeSense.Controllers
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Note = "The more light exercise your did, the shorter you were asleep during night." });
+                    CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Minutes Lightly Active", Coefficient = rMinutesLightlyActive, Note = "The more light exercise your did, the shorter you were asleep during night." });
                 }
             }
 
@@ -1762,7 +1819,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Steps = new double[CNTsteps];
                 double[] tempMinutesAsleepSteps = new double[CNTsteps];
-                double[] tempAwakeningsCountSteps = new double[CNTsteps];;
+                double[] tempAwakeningsCountSteps = new double[CNTsteps]; ;
                 double[] tempSleepEfficiencySteps = new double[CNTsteps];
 
                 // counters back to zero
@@ -3301,11 +3358,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson });
                     }
                 }
 
@@ -3319,7 +3376,7 @@ namespace SleepMakeSense.Controllers
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson });
                     }
                 }
 
@@ -3329,7 +3386,7 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "Snack Time", Name = "Exercise Duration", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
@@ -3375,11 +3432,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Snack Type", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Snack Type", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Snack Type", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "Snack Type", Coefficient = pearson });
                     }
                 }
 
@@ -3389,11 +3446,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Snack Type", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Snack Type", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Snack Type", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Snack Type", Coefficient = pearson });
                     }
                 }
 
@@ -3403,11 +3460,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Snack Type", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Snack Type", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Snack Type", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "Snack Type", Coefficient = pearson });
                     }
                 }
 
@@ -3670,11 +3727,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "SleepDiary", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "SleepDiary", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "SleepDiary", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "MinutesAsleep", Name = "SleepDiary", Coefficient = pearson });
                     }
                 }
 
@@ -3684,11 +3741,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "SleepDiary", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "SleepDiary", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "SleepDiary", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "SleepDiary", Coefficient = pearson });
                     }
                 }
 
@@ -3698,11 +3755,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "SleepDiary", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "SleepDiary", Coefficient = pearson });
                     }
                     else if (pearson < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "SleepDiary", Coefficient = pearson});
+                        CoefficientList.Add(new CorrList() { Belong = "SleepEfficiency", Name = "SleepDiary", Coefficient = pearson });
                     }
                 }
 
@@ -3874,7 +3931,7 @@ namespace SleepMakeSense.Controllers
                         tempValue = Convert.ToDouble(item.SocialMedia);
                         if (tempValue > 0)
                         {
-                            SocialMedia [temp] = tempValue;
+                            SocialMedia[temp] = tempValue;
                             tempMinutesAsleepSocialMedia[temp] = MinutesAsleep[identifier];
                             tempAwakeningsCountSocialMedia[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencySocialMedia[temp] = SleepEfficiency[identifier];
@@ -3980,7 +4037,7 @@ namespace SleepMakeSense.Controllers
                     if (pearson > 0)
                     {
                         CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Video Games", Coefficient = pearson });
-                        }
+                    }
                     else if (pearson < 0)
                     {
                         CoefficientList.Add(new CorrList() { Belong = "AwakeningsCount", Name = "Video Games", Coefficient = pearson });
@@ -4088,7 +4145,6 @@ namespace SleepMakeSense.Controllers
 
             return model;
 
-        }   
-    }    
+        }
+    }
 }
-

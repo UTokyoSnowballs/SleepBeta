@@ -146,7 +146,7 @@
                         {
                             WriteLiteral("<tr>");
                         }
-                        <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name</text></td>
+                        <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name  @corr.Coefficient</text></td>
                         counter++;
                         if ((counter % 2) == 1 && counter != (corrList.Count + 1))
                         {

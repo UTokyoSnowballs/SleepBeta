@@ -940,8 +940,6 @@ C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\System.Web.WebPages.Razor.xml
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\System.Web.Optimization.xml
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\EntityFramework.resources.dll
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\EntityFramework.SqlServer.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.EntityFramework.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Owin.resources.dll
@@ -962,5 +960,5 @@ C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.pdb
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.initial.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test.resources
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache

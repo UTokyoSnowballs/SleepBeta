@@ -881,8 +881,6 @@ C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\System.Web.WebPages.Razor.xml
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\System.Web.Optimization.xml
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\EntityFramework.resources.dll
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\EntityFramework.SqlServer.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.EntityFramework.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\Microsoft.AspNet.Identity.Owin.resources.dll
@@ -901,7 +899,7 @@ C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\System.Web.WebPages.Razor.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\bin\ja\System.Web.Optimization.resources.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.csprojResolveAssemblyReference.cache
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.csproj.GenerateResource.Cache
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.pdb
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.Migrations.initial.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.Migrations.test.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.csproj.GenerateResource.Cache

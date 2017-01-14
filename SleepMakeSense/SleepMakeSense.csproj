@@ -286,6 +286,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701141011357_test.cs" />
+    <Compile Include="Migrations\201701141011357_test.Designer.cs">
+      <DependentUpon>201701141011357_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DiaryDataSetupModel.cs" />
     <Compile Include="Models\DiaryDataViewClass.cs" />
@@ -342,7 +347,6 @@
     <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Release\InsertEFCodeFirstDeploy\original\Web.config" />
     <Content Include="obj\Release\InsertEFCodeFirstDeploy\transformed\Web.config" />
-    <Content Include="obj\Release\SleepMakeSense.csproj.GenerateResource.Cache" />
     <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
@@ -463,6 +467,11 @@
     <None Include="Models\Sleepbeta.dbml.layout">
       <DependentUpon>Sleepbeta.dbml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701141011357_test.resx">
+      <DependentUpon>201701141011357_test.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

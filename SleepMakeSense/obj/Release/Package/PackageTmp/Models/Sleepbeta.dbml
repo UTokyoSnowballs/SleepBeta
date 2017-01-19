@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="sleepexplorer-database" Class="SleepbetaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=sleepexplorer-database-server.database.windows.net;Initial Catalog=sleepexplorer-database;Persist Security Info=True;User ID=SleepMakeSensev2db" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="sleepexplorer_databaseConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sleepexplorerdbserver.database.windows.net;Initial Catalog=SleepBeta;Persist Security Info=True;User ID=DBadmin" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SleepBetaConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
     <Type Name="AspNetUser">
       <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -14,10 +14,10 @@
       <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_DiaryData" Member="DiaryDatas" ThisKey="Id" OtherKey="AspNetUserId" Type="DiaryData" />
+      <Association Name="AspNetUser_FitbitData" Member="FitbitDatas" ThisKey="Id" OtherKey="AspNetUserId" Type="FitbitData" />
       <Association Name="AspNetUser_TokenManagement" Member="TokenManagements" ThisKey="Id" OtherKey="AspNetUserId" Type="TokenManagement" />
       <Association Name="AspNetUser_UserQuestion" Member="UserQuestions" ThisKey="Id" OtherKey="AspNetUserId" Type="UserQuestion" />
-      <Association Name="AspNetUser_FitbitData" Member="FitbitDatas" ThisKey="Id" OtherKey="AspNetUserId" Type="FitbitData" />
-      <Association Name="AspNetUser_DiaryData" Member="DiaryDatas" ThisKey="Id" OtherKey="AspNetUserId" Type="DiaryData" />
     </Type>
   </Table>
   <Table Name="dbo.DiaryData" Member="DiaryDatas">

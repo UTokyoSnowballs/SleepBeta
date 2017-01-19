@@ -960,5 +960,3 @@ C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.csprojResolveAssemblyReference.cache
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.dll
 C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.pdb
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.test.resources
-C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache

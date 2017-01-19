@@ -48,7 +48,7 @@ namespace SleepMakeSense.Models
     #endregion
 		
 		public SleepbetaDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["sleepexplorer_databaseConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["SleepBetaConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -148,13 +148,13 @@ namespace SleepMakeSense.Models
 		
 		private string _UserName;
 		
-		private EntitySet<TokenManagement> _TokenManagements;
-		
-		private EntitySet<UserQuestion> _UserQuestions;
+		private EntitySet<DiaryData> _DiaryDatas;
 		
 		private EntitySet<FitbitData> _FitbitDatas;
 		
-		private EntitySet<DiaryData> _DiaryDatas;
+		private EntitySet<TokenManagement> _TokenManagements;
+		
+		private EntitySet<UserQuestion> _UserQuestions;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -188,10 +188,10 @@ namespace SleepMakeSense.Models
 		
 		public AspNetUser()
 		{
+			this._DiaryDatas = new EntitySet<DiaryData>(new Action<DiaryData>(this.attach_DiaryDatas), new Action<DiaryData>(this.detach_DiaryDatas));
+			this._FitbitDatas = new EntitySet<FitbitData>(new Action<FitbitData>(this.attach_FitbitDatas), new Action<FitbitData>(this.detach_FitbitDatas));
 			this._TokenManagements = new EntitySet<TokenManagement>(new Action<TokenManagement>(this.attach_TokenManagements), new Action<TokenManagement>(this.detach_TokenManagements));
 			this._UserQuestions = new EntitySet<UserQuestion>(new Action<UserQuestion>(this.attach_UserQuestions), new Action<UserQuestion>(this.detach_UserQuestions));
-			this._FitbitDatas = new EntitySet<FitbitData>(new Action<FitbitData>(this.attach_FitbitDatas), new Action<FitbitData>(this.detach_FitbitDatas));
-			this._DiaryDatas = new EntitySet<DiaryData>(new Action<DiaryData>(this.attach_DiaryDatas), new Action<DiaryData>(this.detach_DiaryDatas));
 			OnCreated();
 		}
 		
@@ -435,6 +435,32 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_DiaryData", Storage="_DiaryDatas", ThisKey="Id", OtherKey="AspNetUserId")]
+		public EntitySet<DiaryData> DiaryDatas
+		{
+			get
+			{
+				return this._DiaryDatas;
+			}
+			set
+			{
+				this._DiaryDatas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_FitbitData", Storage="_FitbitDatas", ThisKey="Id", OtherKey="AspNetUserId")]
+		public EntitySet<FitbitData> FitbitDatas
+		{
+			get
+			{
+				return this._FitbitDatas;
+			}
+			set
+			{
+				this._FitbitDatas.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_TokenManagement", Storage="_TokenManagements", ThisKey="Id", OtherKey="AspNetUserId")]
 		public EntitySet<TokenManagement> TokenManagements
 		{
@@ -461,32 +487,6 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_FitbitData", Storage="_FitbitDatas", ThisKey="Id", OtherKey="AspNetUserId")]
-		public EntitySet<FitbitData> FitbitDatas
-		{
-			get
-			{
-				return this._FitbitDatas;
-			}
-			set
-			{
-				this._FitbitDatas.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_DiaryData", Storage="_DiaryDatas", ThisKey="Id", OtherKey="AspNetUserId")]
-		public EntitySet<DiaryData> DiaryDatas
-		{
-			get
-			{
-				return this._DiaryDatas;
-			}
-			set
-			{
-				this._DiaryDatas.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -505,6 +505,30 @@ namespace SleepMakeSense.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_DiaryDatas(DiaryData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = this;
+		}
+		
+		private void detach_DiaryDatas(DiaryData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = null;
+		}
+		
+		private void attach_FitbitDatas(FitbitData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = this;
+		}
+		
+		private void detach_FitbitDatas(FitbitData entity)
+		{
+			this.SendPropertyChanging();
+			entity.AspNetUser = null;
 		}
 		
 		private void attach_TokenManagements(TokenManagement entity)
@@ -526,30 +550,6 @@ namespace SleepMakeSense.Models
 		}
 		
 		private void detach_UserQuestions(UserQuestion entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = null;
-		}
-		
-		private void attach_FitbitDatas(FitbitData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = this;
-		}
-		
-		private void detach_FitbitDatas(FitbitData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = null;
-		}
-		
-		private void attach_DiaryDatas(DiaryData entity)
-		{
-			this.SendPropertyChanging();
-			entity.AspNetUser = this;
-		}
-		
-		private void detach_DiaryDatas(DiaryData entity)
 		{
 			this.SendPropertyChanging();
 			entity.AspNetUser = null;

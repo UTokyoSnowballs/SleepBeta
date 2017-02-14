@@ -41,8 +41,8 @@
       <Column Name="NapDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="DigDeviceDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="GamesDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SocialActivites" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SocialActivity" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SocialActivites" Member="SocialFamily" Storage="_SocialActivites" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SocialActivity" Member="SocialFriend" Storage="_SocialActivity" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="MusicDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="TVDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="WorkTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -56,6 +56,7 @@
       <Column Name="Light" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="SunRiseTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="SunSetTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SocialMedia" Type="System.String" CanBeNull="false" />
       <Association Name="AspNetUser_DiaryData" Member="AspNetUser" ThisKey="AspNetUserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" />
     </Type>
   </Table>

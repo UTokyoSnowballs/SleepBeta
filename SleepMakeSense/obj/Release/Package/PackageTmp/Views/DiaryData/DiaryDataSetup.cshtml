@@ -52,11 +52,18 @@
                       @Html.CheckBoxFor(Model => Model.userQuestions.Stress)
                     </td>
                 </tr>
-                <tr>
+                <tr class="tr-noborder">
                     <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Tiredness</span></td>
                     <td class="diaryquestion">Asked Question - How tired/sleepy were you Today? (1 not at all - 5 very)</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.Tiredness)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Mood</span></td>
+                    <td class="diaryquestion">Asked Question - How was your moode before bed? (1 very bad - 5 very good)</td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.Mood)
                     </td>
                 </tr>
                 <tr>
@@ -88,31 +95,31 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="diaryfactor"><i class="fa fa-users fa-2x"></i><span>Social Activities Question</span></td>
+                    <td class="diaryquestion">Asked Question - How long did you spend with your family or friends after 6pm?</td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.SocialActivityDurationQuestion)
+                    </td>
+                </tr>
+                <tr>
                     <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Digital Device Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did spend on your phone/tablet for after 6pm?</td>
+                    <td class="diaryquestion">Asked Question - How long did you spend on your phone/tablet for after 6pm?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.DigDeviceDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-gamepad fa-2x"></i><span>Games Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did spend on Video Games for after 6pm?</td>
+                    <td class="diaryquestion">Asked Question - How long did you spend on Video Games for after 6pm?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.GameDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-facebook fa-2x"></i><span>Social Media Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did spend on Social Media for after 6pm?</td>
+                    <td class="diaryquestion">Asked Question - How long did you spend on Social Media for after 6pm?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.SocialMediaDurationQuestion)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="diaryfactor"><i class="fa fa-users fa-2x"></i><span>Social Activities Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did spend on Social Activities for after 6pm?</td>
-                    <td>
-                        @Html.CheckBoxFor(Model => Model.userQuestions.SocialActivityDurationQuestion)
                     </td>
                 </tr>
                 <tr>

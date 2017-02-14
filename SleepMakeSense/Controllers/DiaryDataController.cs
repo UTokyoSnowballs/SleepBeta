@@ -65,10 +65,11 @@ namespace SleepMakeSense.Controllers
             {
             if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
                 {
-                    // 19 categories
-                recordPresent = true;
+                    // 19 categories, hormone not appear on UI for the time being, need to implement a drop-down list for it with date. So in total, 18 categories to choose from.
+                    // careful!! some are "question" and others are "questions"
+                    recordPresent = true;
                 entry.WakeUpFreshness = diaryDataSetupData.userQuestions.WakeUpFreshness;
-                entry.Mood = diaryDataSetupData.userQuestions.Mood;
+                entry.Mood = diaryDataSetupData.userQuestions.Mood; // 20170214 Pandita: this one not appear on UI
                 entry.Stress = diaryDataSetupData.userQuestions.Stress;
                 entry.Tiredness = diaryDataSetupData.userQuestions.Tiredness;
                 entry.Dream = diaryDataSetupData.userQuestions.Dream;
@@ -85,7 +86,7 @@ namespace SleepMakeSense.Controllers
                 entry.WorkQuestions = diaryDataSetupData.userQuestions.WorkQuestions;
                 entry.ExersiseQuestions = diaryDataSetupData.userQuestions.ExersiseQuestions;
                 entry.FoodQuestions = diaryDataSetupData.userQuestions.FoodQuestions;
-                entry.GenderHormoneQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.GenderHormoneQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion; // 20170214 Pandita: this one not appear on UI, too sensitive?
                 }
             }
 
@@ -155,8 +156,8 @@ namespace SleepMakeSense.Controllers
         [HttpPost]
         public ActionResult EnterDiaryData(DiaryDataViewClass model)
         {
-            // 20161107 Pandita
-            // Models.Database Db = new Models.Database();
+            // 20170214 Pandita
+            // This function is used to log new data as well as update already logged entry; however, it basically just added a new entry no matter whether it's the first log or just update
             //Database lookup of the last 5 days
             DateTime dateNow = DateTime.UtcNow;
             bool update = false;
@@ -168,6 +169,7 @@ namespace SleepMakeSense.Controllers
         //checking for a previous entry from the same day
         foreach (DiaryData query in lastSynced)
         {
+                // 26 questions, 
                 update = true;
                 query.DateStamp = dateNow;
                 query.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
@@ -175,8 +177,8 @@ namespace SleepMakeSense.Controllers
                 query.Stress = model.DiaryData.Stress;
                 query.Tiredness = model.DiaryData.Tiredness;
                 query.Dream = model.DiaryData.Dream;
-                query.BodyTemp = model.DiaryData.BodyTemp;
-                query.Hormone = model.DiaryData.Hormone;
+                query.BodyTemp = model.DiaryData.BodyTemp; // not appear
+                query.Hormone = model.DiaryData.Hormone; // not appear
                 query.SchoolStress = model.DiaryData.SchoolStress;
                 query.CoffeeAmt = model.DiaryData.CoffeeAmt;
                 query.CoffeeTime = model.DiaryData.CoffeeTime;
@@ -186,8 +188,11 @@ namespace SleepMakeSense.Controllers
                 query.NapDuration = model.DiaryData.NapDuration;
                 query.DigDeviceDuration = model.DiaryData.DigDeviceDuration;
                 query.GamesDuration = model.DiaryData.GamesDuration;
-                query.SocialActivites = model.DiaryData.SocialActivites;
-                query.SocialActivity = model.DiaryData.SocialActivity;
+                // 20170214 Pandita: Added time spent with family and friend before bed; added time spent on social media before bed.
+                query.SocialFamily = model.DiaryData.SocialFamily; 
+                query.SocialFriend = model.DiaryData.SocialFriend;
+                query.SocialMedia = model.DiaryData.SocialMedia;
+
                 query.MusicDuration = model.DiaryData.MusicDuration;
                 query.TVDuration = model.DiaryData.TVDuration;
                 query.WorkTime = model.DiaryData.WorkTime;

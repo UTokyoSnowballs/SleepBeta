@@ -600,9 +600,9 @@ namespace SleepMakeSense.Models
 		
 		private string _GamesDuration;
 		
-		private string _SocialActivites;
+		private string _SocialFamily;
 		
-		private string _SocialActivity;
+		private string _SocialFriend;
 		
 		private string _MusicDuration;
 		
@@ -629,6 +629,8 @@ namespace SleepMakeSense.Models
 		private string _SunRiseTime;
 		
 		private string _SunSetTime;
+		
+		private string _SocialMedia;
 		
 		private EntityRef<AspNetUser> _AspNetUser;
 		
@@ -674,10 +676,10 @@ namespace SleepMakeSense.Models
     partial void OnDigDeviceDurationChanged();
     partial void OnGamesDurationChanging(string value);
     partial void OnGamesDurationChanged();
-    partial void OnSocialActivitesChanging(string value);
-    partial void OnSocialActivitesChanged();
-    partial void OnSocialActivityChanging(string value);
-    partial void OnSocialActivityChanged();
+    partial void OnSocialFamilyChanging(string value);
+    partial void OnSocialFamilyChanged();
+    partial void OnSocialFriendChanging(string value);
+    partial void OnSocialFriendChanged();
     partial void OnMusicDurationChanging(string value);
     partial void OnMusicDurationChanged();
     partial void OnTVDurationChanging(string value);
@@ -704,6 +706,8 @@ namespace SleepMakeSense.Models
     partial void OnSunRiseTimeChanged();
     partial void OnSunSetTimeChanging(string value);
     partial void OnSunSetTimeChanged();
+    partial void OnSocialMediaChanging(string value);
+    partial void OnSocialMediaChanged();
     #endregion
 		
 		public DiaryData()
@@ -1096,42 +1100,42 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivites", DbType="NVarChar(50)")]
-		public string SocialActivites
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name= "SocialFamily", Storage= "_SocialFamily", DbType="NVarChar(50)")]
+		public string SocialFamily
 		{
 			get
 			{
-				return this._SocialActivites;
+				return this._SocialFamily;
 			}
 			set
 			{
-				if ((this._SocialActivites != value))
+				if ((this._SocialFamily != value))
 				{
-					this.OnSocialActivitesChanging(value);
+					this.OnSocialFamilyChanging(value);
 					this.SendPropertyChanging();
-					this._SocialActivites = value;
-					this.SendPropertyChanged("SocialActivites");
-					this.OnSocialActivitesChanged();
+					this._SocialFamily = value;
+					this.SendPropertyChanged("SocialFamily");
+					this.OnSocialFamilyChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialActivity", DbType="NVarChar(50)")]
-		public string SocialActivity
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="SocialFriend", Storage= "_SocialFriend", DbType="NVarChar(50)")]
+		public string SocialFriend
 		{
 			get
 			{
-				return this._SocialActivity;
+				return this._SocialFriend;
 			}
 			set
 			{
-				if ((this._SocialActivity != value))
+				if ((this._SocialFriend != value))
 				{
-					this.OnSocialActivityChanging(value);
+					this.OnSocialFriendChanging(value);
 					this.SendPropertyChanging();
-					this._SocialActivity = value;
-					this.SendPropertyChanged("SocialActivity");
-					this.OnSocialActivityChanged();
+					this._SocialFriend = value;
+					this.SendPropertyChanged("SocialFriend");
+					this.OnSocialFriendChanged();
 				}
 			}
 		}
@@ -1392,6 +1396,26 @@ namespace SleepMakeSense.Models
 					this._SunSetTime = value;
 					this.SendPropertyChanged("SunSetTime");
 					this.OnSunSetTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SocialMedia", CanBeNull=false)]
+		public string SocialMedia
+		{
+			get
+			{
+				return this._SocialMedia;
+			}
+			set
+			{
+				if ((this._SocialMedia != value))
+				{
+					this.OnSocialMediaChanging(value);
+					this.SendPropertyChanging();
+					this._SocialMedia = value;
+					this.SendPropertyChanged("SocialMedia");
+					this.OnSocialMediaChanged();
 				}
 			}
 		}

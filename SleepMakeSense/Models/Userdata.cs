@@ -86,13 +86,19 @@ namespace SleepMakeSense.Models
 
         public double? NapDuration { get; set; }
 
+        // 230170214 Pandita: added social time spent with family and friends before bed time
+        public double? SocialFamily { get; set; }
+
+        public double? SocialFriend { get; set; }
+
         public double? DigDeviceDuration { get; set; }
 
         public double? GamesDuration { get; set; }
 
-        public double? SocialActivites { get; set; }
+        // 20170214 Pandita: added social media
+        public double? SocialMedia { get; set; }
 
-        public double? SocialActivity { get; set; }
+        //public double? SocialActivity { get; set; }
 
         public double? MusicDuration { get; set; }
 

@@ -291,6 +291,9 @@
     <Compile Include="Models\DiaryDataViewClass.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Sleepbeta.cs">
+      <DependentUpon>Sleepbeta.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Sleepbeta.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

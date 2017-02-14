@@ -154,10 +154,6 @@ namespace SleepMakeSense.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            // 20161107 Pandita
-            // var userdata = db.Userdatas.Find(id);
-            // db.Userdatas.Remove(userdata);
-            // db.SaveChanges();
 
             var userdata = Db.Userdatas.Find(id);
             Db.Userdatas.Remove(userdata);
@@ -166,12 +162,15 @@ namespace SleepMakeSense.Controllers
             return RedirectToAction("Index");
         }
          */
+
+        // For releasing "unmanaged" resources(for example, sockets, file handles, Bitmap handles, etc), 
+        // and if it's being called outside a finalizer (that's what the disposing flag signifies, BTW), 
+        // for disposing other IDisposable objects it holds that are no longer useful. 
+        // can be found throughout the .net framework
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                // 20161107 Pandita
-                // db.Dispose();
                 Db.Dispose();
 
             }
@@ -208,9 +207,7 @@ namespace SleepMakeSense.Controllers
 
         private DateTime FindingDateStop(string userId)
         {
-            // 20170213 Pandita: test the effect of datestop ????
-            // DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-68);
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
 
             IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
                                                      where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
@@ -218,9 +215,7 @@ namespace SleepMakeSense.Controllers
 
             foreach (FitbitData daysData in lastSyncedData)
             {
-                // if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp.AddDays(1);
-                // 20170213 Pandita: change!!! Cuz it kept on syncing the latest day again and again ???
-                if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp;
+                if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp.AddDays(1);
             }
             return dateStop;
         }
@@ -276,7 +271,8 @@ namespace SleepMakeSense.Controllers
                         fitbitInputDatas.Add(new FitbitData()
                         {
                             Id = Guid.NewGuid(),
-                            DateStamp = data.DateTime.Date.AddDays(-1),
+                            // DateStamp = data.DateTime.Date.AddDays(-1),
+                            DateStamp = data.DateTime.Date, // In QUT study, participants will fill in the diary in the morning, not before going to bed. 
                             MinutesAsleep = data.Value,
                             MinutesAwake = null,
                             AwakeningsCount = null,
@@ -306,32 +302,32 @@ namespace SleepMakeSense.Controllers
 
                 foreach (FitbitData fitbitInputData in fitbitInputDatas)
                 {
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAwake.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
+                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAwake.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.MinutesAwake = data.Value;
                     }
 
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in awakeningsCount.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
+                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in awakeningsCount.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.AwakeningsCount = data.Value;
                     }
 
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeInBed.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
+                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in timeInBed.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.TimeInBed = data.Value;
                     }
 
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesToFallAsleep.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
+                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesToFallAsleep.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.MinutesToFallAsleep = data.Value;
                     }
 
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAfterWakeup.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
+                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAfterWakeup.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.MinutesAfterWakeup = data.Value;
                     }
 
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in sleepEfficiency.DataList.Where(data => data.DateTime.AddDays(-1) == fitbitInputData.DateStamp))
+                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in sleepEfficiency.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.SleepEfficiency = data.Value;
                     }
@@ -430,7 +426,8 @@ namespace SleepMakeSense.Controllers
         public async Task<ActionResult> Sync()
         {
 
-            // 20170213 Pandita: I feel this was overshadowed by dateStop ??????
+            // Get numofDays data entries to correlation analysis
+            // 20170214 Pandita: I feel this is parameter can be tweeked, but 40 sounds like a good value for the time being
             int numOfDays = 40;
 
             //Comment out the bellow line to disable getting the current logged in user data
@@ -439,34 +436,24 @@ namespace SleepMakeSense.Controllers
             //string userId = "862a567a-a845-4d48-a2c2-91b2e7627924";
 
             List<Userdata> userDatas = UserDatas(userId, numOfDays);
-            bool todaySync = true;
+            // bool todaySync = true;
+            bool todaySync = false;
             ViewBag.todaySync = true;
-            /* Todo: Pandita 
-             * // Sean -- Good idea :)
-             * We could use the Viewbag instead
-            if (ViewBag.FitbitSynced == true) {
-                //NoDataSync();
-                return View("Sync");
-            }
-            else
-            {*/
+
             foreach (Userdata userData in userDatas)
             {
-                if (userData.DateStamp >= DateTime.UtcNow.Date.AddDays(-1)) // 20170213 Pandita: Fitbit Date minus 1!!!
+                if (userData.DateStamp >= DateTime.UtcNow)
                 {
-                    todaySync = false;
+                    todaySync = true;
                 }
             }
 
             // 20170213 Pandita: If today not synced, sync data; if today already synced, not sync data??? 
             // But, it kept on syncing the latest day!!! Also, need to check if an entry for a certain day already exists to avoid writing multiple entries for a same day.
-            if (todaySync)
+            if (!todaySync)
             {
-                //Enable Fitbit Data SYNC
                 await FitbitDataSync(userId);
-                //Retrieves the Data
             }
-
 
             SyncViewModel model = DataModelCreation(userDatas);
             return View(model);

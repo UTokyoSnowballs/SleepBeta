@@ -171,7 +171,10 @@ namespace SleepMakeSense.Controllers
         {
                 // 26 questions, 
                 update = true;
-                query.DateStamp = dateNow;
+                // 20170214 Pandita: the date stamp of diary data is the day when the data was logged.
+                // In Melbourne study, participants logged data before going to bed; that's why the datestamp of Fitbit data got minus 1 day to keep consistent with the datestamp of diary data.
+                // In QUT study, participants will log the data after getting up, no need to adjust the datestamp of Fitbit data. 
+                query.DateStamp = dateNow; 
                 query.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
                 query.Mood = model.DiaryData.Mood;
                 query.Stress = model.DiaryData.Stress;

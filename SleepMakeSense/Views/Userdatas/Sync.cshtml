@@ -430,15 +430,17 @@ else
         </div>
     </div>
 
-    @* for debugging only
+    @* for debugging only *@
     <h2>Retrieved Sleep Structure</h2>
     <table>
         <tr>
             <td>Date</td>
             <td>MinutesAsleep</td>
+            <td>MinutesAwake</td>
             <td>AwakeningsCount </td>
             <td>SleepEfficiency  </td>
-            <td>Stress  </td>
+            <td>SOL </td>
+            <td>BedTime </td>
         </tr>
 
         @foreach (SleepMakeSense.Models.Userdata result in Model.UserData)
@@ -446,12 +448,16 @@ else
             <tr>
                 <td>@result.DateStamp</td>
                 <td>@result.MinutesAsleep</td>
+                <td>@result.MinutesAwake</td>
                 <td>@result.AwakeningsCount</td>
                 <td>@result.SleepEfficiency </td>
+                <td>@result.MinutesToFallAsleep </td>
+                <td>@result.TimeEnteredBed </td>
             </tr>
         }
     </table>
 
+    @*
     <h2>Retrieved Correlation List</h2>
     <table>
         <tr>

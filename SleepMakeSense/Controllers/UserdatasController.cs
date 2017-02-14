@@ -208,7 +208,9 @@ namespace SleepMakeSense.Controllers
 
         private DateTime FindingDateStop(string userId)
         {
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-40);
+            // 20170213 Pandita: test the effect of datestop ????
+            //DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-6);
 
             IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
                                                      where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
@@ -216,7 +218,9 @@ namespace SleepMakeSense.Controllers
 
             foreach (FitbitData daysData in lastSyncedData)
             {
-                if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp.AddDays(1);
+                // if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp.AddDays(1);
+                // 20170213 Pandita: change!!! Cuz it kept on syncing the latest day again and again ???
+                if (daysData.DateStamp >= dateStop) dateStop = daysData.DateStamp;
             }
             return dateStop;
         }
@@ -425,6 +429,8 @@ namespace SleepMakeSense.Controllers
 
         public async Task<ActionResult> Sync()
         {
+
+            // 20170213 Pandita: I feel this was overshadowed by dateStop ??????
             int numOfDays = 40;
 
             //Comment out the bellow line to disable getting the current logged in user data
@@ -446,13 +452,14 @@ namespace SleepMakeSense.Controllers
             {*/
             foreach (Userdata userData in userDatas)
             {
-                if (userData.DateStamp >= DateTime.UtcNow.Date.AddDays(-1))
+                if (userData.DateStamp >= DateTime.UtcNow.Date.AddDays(-1)) // 20170213 Pandita: Fitbit Date minus 1!!!
                 {
                     todaySync = false;
                 }
             }
 
-
+            // 20170213 Pandita: If today not synced, sync data; if today already synced, not sync data??? 
+            // But, it kept on syncing the latest day!!! Also, need to check if an entry for a certain day already exists to avoid writing multiple entries for a same day.
             if (todaySync)
             {
                 //Enable Fitbit Data SYNC
@@ -474,6 +481,7 @@ namespace SleepMakeSense.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
 
+            // 20170213 Pandita: merge Fitbit data and diary data for correlation analysis
         private List<Userdata> UserDatas(string userId, int numOfDays)
         {
             //Item Stup
@@ -525,6 +533,7 @@ namespace SleepMakeSense.Controllers
             {
                 foreach (DiaryData diaryData in diaryDatas.Where(diaryData => diaryData.DateStamp == userdata.DateStamp))
                 {
+                    // 31 questions in total
                     userdata.WakeUpFreshness = Convert.ToDouble(diaryData.WakeUpFreshness);
                     userdata.Mood = Convert.ToDouble(diaryData.Mood);
                     userdata.Stress = Convert.ToDouble(diaryData.Stress);
@@ -561,7 +570,7 @@ namespace SleepMakeSense.Controllers
             return userDatas;
         }
 
-
+        // 20170213 Pandita: Prepare data to be passed to front end
         private SyncViewModel DataModelCreation(List<Userdata> userDatas)
         {
             /*Fixing the data to make it easier to work on in the future.

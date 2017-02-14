@@ -60,7 +60,7 @@
             position: absolute;
         }
 
-        .tooltip.bottom,
+        .tooltip.bottom
         {
             position: absolute;
             text-align: left;
@@ -105,19 +105,22 @@
         }
     </style>
 </head>
+
 <body>
     <div id="DataProcessing">
 
         @helper CoefficientList(List<CorrList> corrList, String type)
 {
-    int counter = 1;
+    // 20170213 Pandita: What's the function of the "counter" ???
+int counter = 1;
 
-    if (corrList.Count > 0)
-    {
+if (corrList.Count > 0)
+{
         <div class="im-centered">
             <table class="corrList">
                     @foreach (SleepMakeSense.Models.CorrList corr in corrList)
                     {
+
                         var color = "#ffffff";
                         if (corr.Coefficient >= 0 && corr.Coefficient < 0.6)
                         {
@@ -146,7 +149,10 @@
                         {
                             WriteLiteral("<tr>");
                         }
-                        <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name  @corr.Coefficient</text></td>
+
+                    <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name  @corr.Coefficient</text></td>
+
+
                         counter++;
                         if ((counter % 2) == 1 && counter != (corrList.Count + 1))
                         {
@@ -170,7 +176,7 @@ else
         @Message
 }
 
-}
+}   
 
         <script type="text/javascript">
 
@@ -188,8 +194,8 @@ else
 
                 @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
                 {
-                        var dateOnly = m.DateStamp.ToShortDateString();
-                        var weekday = m.DateStamp.DayOfWeek;
+                    var dateOnly = m.DateStamp.ToShortDateString();
+                    var weekday = m.DateStamp.DayOfWeek;
 
                         @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.MinutesAsleep" });
                                         @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });
@@ -197,7 +203,7 @@ else
 
                  }
 
-                alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
+            alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
 
 
                 function PlotTimeseries(myData, section, mark, sFeature) {
@@ -208,10 +214,14 @@ else
 
                     var w = 500;
                     var h = 350;
-                    var margin = { top: 30, right: 20, bottom: 50, left: 40 };
+
+                    var margin = { top: 30, right: 20, bottom: 50, left: 40 },
                     width = w - margin.left - margin.right,
                     height = h - margin.top - margin.bottom;
-                    parseDate = d3.time.format("%d/%m/%Y").parse;
+
+                    // 20170213 Pandita: the order of day and month !! 
+                    //parseDate = d3.time.format("%d/%m/%Y").parse;
+                    var parseDate = d3.time.format("%m/%d/%Y").parse;
 
                     var chart = d3.select(section).append("svg")
                   .attr("width", w)
@@ -220,9 +230,12 @@ else
                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                     myData.forEach(function (d) {
+                        // 20170213 Pandita: date parse sorted.
                         d.Date = parseDate(d.Date);
+                        // console.log(d.Value);
                         if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
                         else d.Value = +d.Value;
+                        //console.log(d.Value);
                     });
 
                     var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
@@ -233,7 +246,8 @@ else
                                   .scale(xRange)
                                   .orient("bottom")
                                   .ticks(8)
-                                  .tickFormat(d3.time.format("%d/%m"));
+                                  .tickFormat(d3.time.format("%m-%d"));
+                    //.tickFormat(d3.time.format("%b-%d"));
 
                     var yAxis = d3.svg.axis()
                                   .scale(yRange)
@@ -263,9 +277,6 @@ else
                         .style("text-anchor", "end")
                         .text(sFeature);
 
-
-
-
                     var div = d3.select(section).append("div")
                                 .attr("class", "tooltip-timeseries")
                                 .style("opacity", 0);
@@ -284,8 +295,8 @@ else
                          .attr("fill", function (d) {
                              if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
                                  //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                             else if (mark == "MinutesAsleep" && (d.Value < 8)) { return red; }
-                             else if (mark == "MinutesAsleep" && (d.Value > 10)) { return red; }
+                             else if (mark == "MinutesAsleep" && (d.Value < 8.0)) { return red; } // 20170213 Pandita: a proper threshold for teenageer
+                             else if (mark == "MinutesAsleep" && (d.Value > 10.0)) { return red; }
                              else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
                              else return blue;
                          })
@@ -322,7 +333,7 @@ else
                                .attr("fill", function (d) {
                                    if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
                                        //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                                   else if (mark == "MinutesAsleep" && ((d.Value > 10) || (d.Value < 8))) { return red; }
+                                   else if (mark == "MinutesAsleep" && ((d.Value > 10.0) || (d.Value < 8.0))) { return red; }
                                    else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
                                    else return blue;
                                });
@@ -331,8 +342,9 @@ else
                                 .style("opacity", 0);
                          });
                 }
-        </script>
+                        </script>
     </div>
+
 
     <div class="container">
         <div class="row">
@@ -417,6 +429,53 @@ else
             </div>
         </div>
     </div>
+
+    @* for debugging only
+    <h2>Retrieved Sleep Structure</h2>
+    <table>
+        <tr>
+            <td>Date</td>
+            <td>MinutesAsleep</td>
+            <td>AwakeningsCount </td>
+            <td>SleepEfficiency  </td>
+            <td>Stress  </td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.Userdata result in Model.UserData)
+            {
+            <tr>
+                <td>@result.DateStamp</td>
+                <td>@result.MinutesAsleep</td>
+                <td>@result.AwakeningsCount</td>
+                <td>@result.SleepEfficiency </td>
+            </tr>
+        }
+    </table>
+
+    <h2>Retrieved Correlation List</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Coefficient</td>
+            <td>Note</td>
+            <td>Positive</td>
+            <td>Picture</td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.CorrList cor in Model.MinutesAsleepCorrList)
+            {
+            <tr>
+                <td>@cor.Name</td>
+                <td>@cor.Coefficient</td>
+                <td>@cor.Note</td>
+                <td>@cor.Positive</td>
+                <td>@cor.Picture</td>
+            </tr>
+        }
+    </table>
+    *@
+
+
 
 </body>
 

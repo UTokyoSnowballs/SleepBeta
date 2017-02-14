@@ -72,11 +72,12 @@ namespace SleepMakeSense.Controllers
             SyncFitbitCred(accessToken);
 
              //return RedirectToAction("Index", "Home");
-            return RedirectToAction("Sync", "UserDatas");
+            return RedirectToAction("Sync", "UserDatas"); // redirect to UserdatasController.cs/Sync().
 
 
         }
 
+        // Add user token to the the TokenManagement Table in DB
         private void SyncFitbitCred(OAuth2AccessToken accessToken)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -137,8 +138,8 @@ namespace SleepMakeSense.Controllers
             OAuth2AccessToken accessToken = new OAuth2AccessToken();
             // 20161108 Pandita
             bool fitbitConnected = false;
-            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements
+            string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); // Get user ID
+            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements // Get user token
                             where a.AspNetUserId.Equals(userId)
                             select a;
             foreach (TokenManagement data in userToken)
@@ -153,17 +154,17 @@ namespace SleepMakeSense.Controllers
                     accessToken.UserId = data.UserId;
                     accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
                 }
-            }
+            } // 20170213 Pandita: Possibly more than one Token stored for a user? 
             if (fitbitConnected == true)
             {
                 FitbitClient tempSyncClient = GetFitbitClient(accessToken);
                 accessToken = tempSyncClient.AccessToken;
-                SyncFitbitCred(accessToken);
+                SyncFitbitCred(accessToken); // 20170213 Pandita: Add token again to DB.TokenManagements?????
                 //     return View("Callback");
-                return RedirectToAction("Sync", "UserDatas");
+                return RedirectToAction("Sync", "UserDatas"); // 20170213 Pandita: Should redirect to UserDatas/Sync() or UserDatas/FitbitDataSync(string UserID) ?????
             }
 
-            return Authorize();
+            return Authorize(); // If no token is found, direct user to Fitbit authorization page. 
         }
 
 

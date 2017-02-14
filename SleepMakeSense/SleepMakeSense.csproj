@@ -360,6 +360,7 @@
       <LastGenOutput>Sleepbeta.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Properties\PublishProfiles\SleepBeta-v1.pubxml" />
     <Content Include="obj\Debug\Fitbit.Portable.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Fitbit.Portable.dll" />

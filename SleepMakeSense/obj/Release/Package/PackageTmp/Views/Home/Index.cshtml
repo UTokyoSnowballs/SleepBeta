@@ -29,18 +29,17 @@
         else
         {
             <p>@Html.ActionLink("See My Sleeping Habits", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg" })</p>
+
             if (!Model.TodayDiaryEntry && Model.DiarySetup)
             {<p>@Html.ActionLink("Log today's Diary Info", "EnterDiaryData", "DiaryData", new { }, new { @class = "btn btn-primary btn-lg" })</p>}
-
-
             else if (Model.TodayDiaryEntry && Model.DiarySetup)
             {
+                <!--script type="text/javascript">console.log("@Model.TodayDiaryEntry")</script-->
+
                 <i style="font-size:small ">Today has already had todays diary infromation saved.</i>
                 <p>@Html.ActionLink("Log today's Diary Info", "EnterDiaryData", "DiaryData", new { }, new { @class = "btn btn-success btn-sm" })</p>
                 <i style="font-size:small ">Do you want to update it?</i>
             }
-
-
             if (!Model.DiarySetup)
             {<p>@Html.ActionLink("Setup Diary Data", "DiaryDataSetup", "DiaryData", new { }, new { @class = "btn btn-primary btn-lg" })</p>}
         }

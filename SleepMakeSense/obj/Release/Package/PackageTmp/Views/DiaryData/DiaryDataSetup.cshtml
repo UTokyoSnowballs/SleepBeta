@@ -31,13 +31,6 @@
 
             <table class="table">
                 <tr class="tr-noborder">
-                    <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
-                    <td class="diaryquestion">Asked Question - How anxious/stressed were you Today? (1 not at all - 5 very)</td>
-                    <td>
-                      @Html.CheckBoxFor(Model => Model.userQuestions.Stress)
-                    </td>
-                </tr>
-                <tr class="tr-noborder">
                     <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Wake Up Freshness</span></td>
                     <td class="diaryquestion">Asked Question - How fresh did you feel from last nights sleep? (1 not at all - 5 very)</td>
                     <td>
@@ -45,17 +38,25 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Tiredness</span></td>
-                    <td class="diaryquestion">Asked Question - How tired/sleepy were you Today? (1 not at all - 5 very)</td>
-                    <td>
-                        @Html.CheckBoxFor(Model => Model.userQuestions.Tiredness)
-                    </td>
-                </tr>
-                <tr>
                     <td class="diaryfactor"><i class="fa fa-cloud fa-2x"></i><span>Dream</span></td>
                     <td class="diaryquestion">Asked Question - How well did you rember your dream? (1 not at all - 5 very)</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.Dream)
+                    </td>
+                </tr>
+
+                <tr class="tr-noborder">
+                    <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
+                    <td class="diaryquestion">Asked Question - How anxious/stressed were you Today? (1 not at all - 5 very)</td>
+                    <td>
+                      @Html.CheckBoxFor(Model => Model.userQuestions.Stress)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Tiredness</span></td>
+                    <td class="diaryquestion">Asked Question - How tired/sleepy were you Today? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.Tiredness)
                     </td>
                 </tr>
                 <tr>

@@ -44,6 +44,8 @@ namespace SleepMakeSense.Controllers
 
             return View(diaryDataSetupData);//);
         }
+
+        // Retrieve action from browser and stored in db
         /// <summary>
         /// This Method submits the questions to ask the user.
         /// this is done by looking for any previous entry and updating it.
@@ -63,6 +65,7 @@ namespace SleepMakeSense.Controllers
             {
             if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
                 {
+                    // 19 categories
                 recordPresent = true;
                 entry.WakeUpFreshness = diaryDataSetupData.userQuestions.WakeUpFreshness;
                 entry.Mood = diaryDataSetupData.userQuestions.Mood;
@@ -95,6 +98,8 @@ namespace SleepMakeSense.Controllers
             Db.SubmitChanges();
             return RedirectToAction("Index", "Home");
         }
+
+
         [HttpGet]
         public ActionResult EnterDiaryData()
         {
@@ -106,6 +111,7 @@ namespace SleepMakeSense.Controllers
 
                 //Getting the current User for DB lookup
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                // 20170213 Pandita: why is this maginc number 5 ???
                 DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
 
                 //Looking up the questions for the user
@@ -145,7 +151,7 @@ namespace SleepMakeSense.Controllers
             else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-
+        // Everytime user update a diary log for the same day, a new entry would be added to the db rather than updating the entry that's already in the db
         [HttpPost]
         public ActionResult EnterDiaryData(DiaryDataViewClass model)
         {
@@ -159,46 +165,46 @@ namespace SleepMakeSense.Controllers
                                                  orderby table.DateStamp
                              select table;
 
-
-            //checking for a previous entry from the same day
-            foreach (DiaryData query in lastSynced)
-            {
-                    update = true;
-                    query.DateStamp = dateNow;
-                    query.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
-                    query.Mood = model.DiaryData.Mood;
-                    query.Stress = model.DiaryData.Stress;
-                    query.Tiredness = model.DiaryData.Tiredness;
-                    query.Dream = model.DiaryData.Dream;
-                    query.BodyTemp = model.DiaryData.BodyTemp;
-                    query.Hormone = model.DiaryData.Hormone;
-                    query.SchoolStress = model.DiaryData.SchoolStress;
-                    query.CoffeeAmt = model.DiaryData.CoffeeAmt;
-                    query.CoffeeTime = model.DiaryData.CoffeeTime;
-                    query.AlcoholAmt = model.DiaryData.AlcoholAmt;
-                    query.AlcoholTime = model.DiaryData.AlcoholTime;
-                    query.NapTime = model.DiaryData.NapTime;
-                    query.NapDuration = model.DiaryData.NapDuration;
-                    query.DigDeviceDuration = model.DiaryData.DigDeviceDuration;
-                    query.GamesDuration = model.DiaryData.GamesDuration;
-                    query.SocialActivites = model.DiaryData.SocialActivites;
-                    query.SocialActivity = model.DiaryData.SocialActivity;
-                    query.MusicDuration = model.DiaryData.MusicDuration;
-                    query.TVDuration = model.DiaryData.TVDuration;
-                    query.WorkTime = model.DiaryData.WorkTime;
-                    query.WorkDuration = model.DiaryData.WorkDuration;
-                    query.ExerciseDuration = model.DiaryData.ExerciseDuration;
-                    query.ExerciseIntensity = model.DiaryData.ExerciseIntensity;
-                    query.DinnerTime = model.DiaryData.DinnerTime;
-                    query.SnackTime = model.DiaryData.SnackTime;                
-            }
-            //Updating the database if no match in date is found
-            if (!update)
-            {
-                model.DiaryData.DateStamp = dateNow;
-                model.DiaryData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                Db.DiaryDatas.InsertOnSubmit(model.DiaryData);
-            }
+        //checking for a previous entry from the same day
+        foreach (DiaryData query in lastSynced)
+        {
+                update = true;
+                query.DateStamp = dateNow;
+                query.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
+                query.Mood = model.DiaryData.Mood;
+                query.Stress = model.DiaryData.Stress;
+                query.Tiredness = model.DiaryData.Tiredness;
+                query.Dream = model.DiaryData.Dream;
+                query.BodyTemp = model.DiaryData.BodyTemp;
+                query.Hormone = model.DiaryData.Hormone;
+                query.SchoolStress = model.DiaryData.SchoolStress;
+                query.CoffeeAmt = model.DiaryData.CoffeeAmt;
+                query.CoffeeTime = model.DiaryData.CoffeeTime;
+                query.AlcoholAmt = model.DiaryData.AlcoholAmt;
+                query.AlcoholTime = model.DiaryData.AlcoholTime;
+                query.NapTime = model.DiaryData.NapTime;
+                query.NapDuration = model.DiaryData.NapDuration;
+                query.DigDeviceDuration = model.DiaryData.DigDeviceDuration;
+                query.GamesDuration = model.DiaryData.GamesDuration;
+                query.SocialActivites = model.DiaryData.SocialActivites;
+                query.SocialActivity = model.DiaryData.SocialActivity;
+                query.MusicDuration = model.DiaryData.MusicDuration;
+                query.TVDuration = model.DiaryData.TVDuration;
+                query.WorkTime = model.DiaryData.WorkTime;
+                query.WorkDuration = model.DiaryData.WorkDuration;
+                query.ExerciseDuration = model.DiaryData.ExerciseDuration;
+                query.ExerciseIntensity = model.DiaryData.ExerciseIntensity;
+                query.DinnerTime = model.DiaryData.DinnerTime;
+                query.SnackTime = model.DiaryData.SnackTime;                
+        }
+        //Updating the database if no match in date is found
+        if (!update)
+        {
+            model.DiaryData.DateStamp = dateNow;
+            model.DiaryData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            Db.DiaryDatas.InsertOnSubmit(model.DiaryData);
+            //System.Diagnostics.Debug.WriteLine("update=", update);
+        }
             //   else db.Userdatas.Add(data);
             //Commiting to database
             Db.SubmitChanges();

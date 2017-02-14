@@ -209,8 +209,8 @@ namespace SleepMakeSense.Controllers
         private DateTime FindingDateStop(string userId)
         {
             // 20170213 Pandita: test the effect of datestop ????
-            //DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-6);
+            // DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-68);
 
             IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
                                                      where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
@@ -607,7 +607,7 @@ namespace SleepMakeSense.Controllers
                 CNTSchoolStress = 0,
                 CNTCoffeeAmt = 0, CNTCoffeeTime = 0, CNTAlcoholAmt = 0, CNTAlcoholTime = 0,
                 CNTNapTime = 0, CNTNapDuration = 0,
-                CNTDigDeviceDuration = 0, CNTGamesDuration = 0, CNTSocialFriend = 0, CNTSocialFamily = 0, CNTSocialMediaActivity = 0, CNTMusicDuration = 0, CNTTVDuration = 0,
+                CNTDigDeviceDuration = 0, CNTGamesDuration = 0, CNTSocialFriend = 0, CNTSocialFamily = 0, CNTSocialMedia = 0, CNTMusicDuration = 0, CNTTVDuration = 0,
                 CNTWorkTime = 0, CNTWorkDuration = 0, CNTExerciseDuration = 0, CNTExerciseIntensity = 0,
                 CNTDinnerTime = 0, CNTSnackTime = 0,
                 CNTAmbientTemp = 0, CNTAmbientHumd = 0, CNTLight = 0, CNTSunRiseTime = 0, CNTSunSetTime = 0;
@@ -648,7 +648,7 @@ namespace SleepMakeSense.Controllers
                 if (userData.GamesDuration > 0) CNTGamesDuration++;
                 if (userData.SocialFriend > 0) CNTSocialFriend++;
                 if (userData.SocialFamily > 0) CNTSocialFamily++;
-                // if (Convert.ToDouble(userData.SocialMediaActivity) > 0) CNTSocialMediaActivity++;  Need to Fix the DB and the view for this one
+                if (userData.SocialMedia > 0) CNTSocialMedia++;  
                 if (userData.MusicDuration >= 0) CNTMusicDuration++;
                 if (userData.TVDuration > 0) CNTTVDuration++;
                 if (userData.WorkTime != null) CNTWorkTime++;
@@ -725,6 +725,7 @@ namespace SleepMakeSense.Controllers
             double[] WakeUpFreshnessGamesDuration = new double[CNTGamesDuration];
             double[] WakeUpFreshnessSocialFriend = new double[CNTSocialFriend];
             double[] WakeUpFreshnessSocialFamily = new double[CNTSocialFamily];
+            double[] WakeUpFreshnessSocialMedia = new double[CNTSocialMedia];
             double[] WakeUpFreshnessMusicDuration = new double[CNTMusicDuration];
             double[] WakeUpFreshnessTVDuration = new double[CNTTVDuration];
             double[] WakeUpFreshnessWorkTime = new double[CNTWorkTime];
@@ -774,6 +775,7 @@ namespace SleepMakeSense.Controllers
             double[] tmpGamesDuration = new double[CNTGamesDuration];
             double[] tmpSocialFriend = new double[CNTSocialFriend];
             double[] tmpSocialFamily = new double[CNTSocialFamily];
+            double[] tmpSocialMedia = new double[CNTSocialMedia];
             double[] tmpMusicDuration = new double[CNTMusicDuration];
             double[] tmpTVDuration = new double[CNTTVDuration];
             double[] tmpWorkTime = new double[CNTWorkTime];
@@ -804,7 +806,7 @@ namespace SleepMakeSense.Controllers
                 iSchoolStress = 0,
                 iCoffeeAmt = 0, iCoffeeTime = 0, iAlcoholAmt = 0, iAlcoholTime = 0,
                 iNapTime = 0, iNapDuration = 0,
-                iDigDeviceDuration = 0, iGamesDuration = 0, iSocialFriend = 0, iSocialFamily = 0, iSocialMediaActivity = 0, iMusicDuration = 0, iTVDuration = 0,
+                iDigDeviceDuration = 0, iGamesDuration = 0, iSocialFriend = 0, iSocialFamily = 0, iSocialMedia = 0, iMusicDuration = 0, iTVDuration = 0,
                 iWorkTime = 0, iWorkDuration = 0, iExerciseDuration = 0, iExerciseIntensity = 0,
                 iDinnerTime = 0, iSnackTime = 0,
                 iAmbientTemp = 0, iAmbientHumd = 0, iLight = 0, iSunRiseTime = 0, iSunSetTime = 0;
@@ -825,7 +827,7 @@ namespace SleepMakeSense.Controllers
                 iWakeUpFreshnessSchoolStress = 0,
                 iWakeUpFreshnessCoffeeAmt = 0, iWakeUpFreshnessCoffeeTime = 0, iWakeUpFreshnessAlcoholAmt = 0, iWakeUpFreshnessAlcoholTime = 0,
                 iWakeUpFreshnessNapTime = 0, iWakeUpFreshnessNapDuration = 0,
-                iWakeUpFreshnessDigDeviceDuration = 0, iWakeUpFreshnessGamesDuration = 0, iWakeUpFreshnessSocialFriend = 0, iWakeUpFreshnessSocialFamily = 0, iWakeUpFreshnessSocialMediaActivity = 0, iWakeUpFreshnessMusicDuration = 0, iWakeUpFreshnessTVDuration = 0,
+                iWakeUpFreshnessDigDeviceDuration = 0, iWakeUpFreshnessGamesDuration = 0, iWakeUpFreshnessSocialFriend = 0, iWakeUpFreshnessSocialFamily = 0, iWakeUpFreshnessSocialMedia = 0, iWakeUpFreshnessMusicDuration = 0, iWakeUpFreshnessTVDuration = 0,
                 iWakeUpFreshnessWorkTime = 0, iWakeUpFreshnessWorkDuration = 0, iWakeUpFreshnessExerciseDuration = 0, iWakeUpFreshnessExerciseIntensity = 0,
                 iWakeUpFreshnessDinnerTime = 0, iWakeUpFreshnessSnackTime = 0,
                 iWakeUpFreshnessAmbientTemp = 0, iWakeUpFreshnessAmbientHumd = 0, iWakeUpFreshnessLight = 0, iWakeUpFreshnessSunRiseTime = 0, iWakeUpFreshnessSunSetTime = 0;
@@ -1022,6 +1024,7 @@ namespace SleepMakeSense.Controllers
                         tmpGamesDuration[iWakeUpFreshnessGamesDuration] = Convert.ToDouble(daysData.GamesDuration);
                         iWakeUpFreshnessGamesDuration++;
                     }
+                    // 20170214 Pandita: added time spent with family and friend, as well as time spent on social media
                     if (Convert.ToDouble(daysData.SocialFriend) > 0)
                     {
                         WakeUpFreshnessSocialFriend[iWakeUpFreshnessSocialFriend] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1033,6 +1036,12 @@ namespace SleepMakeSense.Controllers
                         WakeUpFreshnessSocialFamily[iWakeUpFreshnessSocialFamily] = Convert.ToDouble(daysData.WakeUpFreshness);
                         tmpSocialFamily[iWakeUpFreshnessSocialFamily] = Convert.ToDouble(daysData.SocialFamily);
                         iWakeUpFreshnessSocialFamily++;
+                    }
+                    if (Convert.ToDouble(daysData.SocialMedia) > 0)
+                    {
+                        WakeUpFreshnessSocialMedia[iWakeUpFreshnessSocialMedia] = Convert.ToDouble(daysData.WakeUpFreshness);
+                        tmpSocialMedia[iWakeUpFreshnessSocialMedia] = Convert.ToDouble(daysData.SocialMedia);
+                        iWakeUpFreshnessSocialMedia++;
                     }
 
 
@@ -2894,21 +2903,127 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAsleepSocialFamily, SocialFamily);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "SocialFamily", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
 
                 pearson = Correlation.Pearson(tempAwakeningsCountSocialFamily, SocialFamily);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "SocialFamily", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    awakeCountCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
 
                 pearson = Correlation.Pearson(tempSleepEfficiencySocialFamily, SocialFamily);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "SocialFamily", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                }
+
+            }
+
+            // SocialFriend -- DONE YEAH!!
+
+            if (CNTSocialFriend > 4)
+            {
+                double[] SocialFriend = new double[CNTSocialFriend];
+                double[] tempMinutesAsleepSocialFriend = new double[CNTSocialFriend];
+                double[] tempAwakeningsCountSocialFriend = new double[CNTSocialFriend];
+                double[] tempSleepEfficiencySocialFriend = new double[CNTSocialFriend];
+
+                // counters back to zero
+                temp = 0;
+                identifier = 0;
+
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
+                {
+                    if (daysData.SocialFriend != null)
+                    {
+                        tempValue = Convert.ToDouble(daysData.SocialFriend);
+                        if (tempValue >= 0)
+                        {
+                            SocialFriend[temp] = tempValue;
+                            tempMinutesAsleepSocialFriend[temp] = MinutesAsleep[identifier];
+                            tempAwakeningsCountSocialFriend[temp] = AwakeningsCount[identifier];
+                            tempSleepEfficiencySocialFriend[temp] = SleepEfficiency[identifier];
+
+                            temp++;
+                        }
+                    }
+                    identifier++;
+                }
+
+                pearson = Correlation.Pearson(tempMinutesAsleepSocialFriend, SocialFriend);
+                if (Math.Abs(pearson) >= 0.3)
+                {
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                }
+
+
+                pearson = Correlation.Pearson(tempAwakeningsCountSocialFriend, SocialFriend);
+                if (Math.Abs(pearson) >= 0.3)
+                {
+                    awakeCountCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                }
+
+
+                pearson = Correlation.Pearson(tempSleepEfficiencySocialFriend, SocialFriend);
+                if (Math.Abs(pearson) >= 0.3)
+                {
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                }
+
+            }
+
+            // SocialFriend -- DONE YEAH!!
+
+            if (CNTSocialMedia > 4)
+            {
+                double[] SocialMedia = new double[CNTSocialMedia];
+                double[] tempMinutesAsleepSocialMedia = new double[CNTSocialMedia];
+                double[] tempAwakeningsCountSocialMedia = new double[CNTSocialMedia];
+                double[] tempSleepEfficiencySocialMedia = new double[CNTSocialMedia];
+
+                // counters back to zero
+                temp = 0;
+                identifier = 0;
+
+                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
+                {
+                    if (daysData.SocialMedia != null)
+                    {
+                        tempValue = Convert.ToDouble(daysData.SocialMedia);
+                        if (tempValue >= 0)
+                        {
+                            SocialMedia[temp] = tempValue;
+                            tempMinutesAsleepSocialMedia[temp] = MinutesAsleep[identifier];
+                            tempAwakeningsCountSocialMedia[temp] = AwakeningsCount[identifier];
+                            tempSleepEfficiencySocialMedia[temp] = SleepEfficiency[identifier];
+
+                            temp++;
+                        }
+                    }
+                    identifier++;
+                }
+
+                pearson = Correlation.Pearson(tempMinutesAsleepSocialMedia, SocialMedia);
+                if (Math.Abs(pearson) >= 0.3)
+                {
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                }
+
+
+                pearson = Correlation.Pearson(tempAwakeningsCountSocialMedia, SocialMedia);
+                if (Math.Abs(pearson) >= 0.3)
+                {
+                    awakeCountCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                }
+
+
+                pearson = Correlation.Pearson(tempSleepEfficiencySocialMedia, SocialMedia);
+                if (Math.Abs(pearson) >= 0.3)
+                {
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
             }

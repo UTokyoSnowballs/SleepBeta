@@ -159,7 +159,12 @@ namespace SleepMakeSense.Controllers
             // 20170214 Pandita
             // This function is used to log new data as well as update already logged entry; however, it basically just added a new entry no matter whether it's the first log or just update
             //Database lookup of the last 5 days
+
+            // 20170216 Pandita: diary data was logged in UTC time, change to local time!
+            // System.Globalization.CultureInfo.CurrentCulture.ClearCachedData();
+            // DateTime dateNow = DateTime.Now;
             DateTime dateNow = DateTime.UtcNow;
+
             bool update = false;
             IEnumerable <DiaryData> lastSynced = from table in Db.DiaryDatas
                              where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId()) && table.DateStamp == DateTime.UtcNow.Date
@@ -174,6 +179,8 @@ namespace SleepMakeSense.Controllers
                 // 20170214 Pandita: the date stamp of diary data is the day when the data was logged.
                 // In Melbourne study, participants logged data before going to bed; that's why the datestamp of Fitbit data got minus 1 day to keep consistent with the datestamp of diary data.
                 // In QUT study, participants will log the data after getting up, no need to adjust the datestamp of Fitbit data. 
+
+                // 20170216 Pandita: diary data was logged in UTC time, change to local time!
                 query.DateStamp = dateNow; 
                 query.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
                 query.Mood = model.DiaryData.Mood;

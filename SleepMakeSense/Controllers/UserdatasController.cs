@@ -1662,11 +1662,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesSedentary > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the more often you were awake during night." });
                 }
                 else if (rMinutesSedentary < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the less often you were awake during night." });
                 }
             }
 
@@ -1676,11 +1676,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesLightlyActive > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the more often you were awake during night." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the less often you were awake during night." });
                 }
             }
 
@@ -1689,11 +1689,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesFairlyActive > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the more often you were awake during night." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the less often you were awake during night." });
                 }
             }
 
@@ -1702,11 +1702,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesVeryActive > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the more often you were awake during night." });
                 }
                 else if (rMinutesVeryActive < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the less often you were awake during night." });
                 }
             }
 
@@ -2904,7 +2904,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempSleepEfficiencySocialFamily, SocialFamily);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
             }
@@ -2957,7 +2957,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempSleepEfficiencySocialFriend, SocialFriend);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
             }
@@ -3010,7 +3010,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempSleepEfficiencySocialMedia, SocialMedia);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
             }
@@ -3280,7 +3280,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempSleepEfficiencyBodyTemp, BodyTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "Body Temp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "Body Temp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
                 }
 
             }
@@ -4027,8 +4027,27 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
+            // 20170216 Pandita: Correlation Coefficients are all positive values!!! "positive" indicates color
+            foreach (var entry in minutesAsleepCorrList)
+            {
+                if (entry.Coefficient < 0)
+                {
+                    //entry.Coefficient = (entry.Coefficient) * -1;
+                    entry.Positive = false;
+                    // 20170216 Pandita: bad factor, red color
+                }
+                else
+                {
+                    entry.Positive = true; // good factor, blue color
+                                           // rather than "Positive", maybe "Good" is more expressive?
 
-            foreach (var entry in minutesAsleepCorrList)
+                }
+            }
+            // 20170216 Pandita: red color indicates bad factor, not negative correlation. 
+            // So for awakeCount, negatively correlated factor should be blue color, 
+            // as it's a good factor for this sleep metric and lower value of this factor is preferred 
+            /*
+            foreach (var entry in awakeCountCorrList)
             {
                 if (entry.Coefficient < 0)
                 {
@@ -4039,24 +4058,24 @@ namespace SleepMakeSense.Controllers
                 {
                     entry.Positive = true;
                 }
-            }
-            foreach (var entry in minutesAsleepCorrList)
+            }*/
+            foreach (var entry in awakeCountCorrList)
             {
                 if (entry.Coefficient < 0)
                 {
-                    entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = false;
+                    //entry.Coefficient = (entry.Coefficient) * -1;
+                    entry.Positive = true; // if negatively correlated, then a good factor
                 }
                 else
                 {
-                    entry.Positive = true;
+                    entry.Positive = false;
                 }
             }
-            foreach (var entry in minutesAsleepCorrList)
+            foreach (var entry in sleepEffiencyCorrList)
             {
                 if (entry.Coefficient < 0)
                 {
-                    entry.Coefficient = (entry.Coefficient) * -1;
+                    //entry.Coefficient = (entry.Coefficient) * -1;
                     entry.Positive = false;
                 }
                 else

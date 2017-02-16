@@ -122,7 +122,8 @@ if (corrList.Count > 0)
                     {
 
                         var color = "#ffffff";
-                        if (corr.Coefficient >= 0 && corr.Coefficient < 0.6)
+                        var absCoeff = Math.Abs(corr.Coefficient);
+                        if (absCoeff >= 0 && absCoeff < 0.6)
                         {
                             if (corr.Positive)
                             {
@@ -133,7 +134,7 @@ if (corrList.Count > 0)
                                 color = "#fa8590";
                             }
                         }
-                        else if (corr.Coefficient >= 0.6 && corr.Coefficient < 1)
+                        else if (absCoeff >= 0.6 && absCoeff < 1)
                         {
                             if (corr.Positive)
                             {
@@ -150,7 +151,11 @@ if (corrList.Count > 0)
                             WriteLiteral("<tr>");
                         }
 
-                    <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name  @corr.Coefficient</text></td>
+                        @*
+    <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name @corr.Coefficient @absCoeff</text></td>
+                        *@
+
+                    <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name </text></td>
 
 
                         counter++;
@@ -431,6 +436,7 @@ else
     </div>
 
     @* for debugging only *@
+    @*
     <h2>Retrieved Sleep Structure</h2>
     <table>
         <tr>
@@ -457,8 +463,8 @@ else
         }
     </table>
 
-    @*
-    <h2>Retrieved Correlation List</h2>
+
+    <h2>Retrieved Correlation List for MinutesAsleep</h2>
     <table>
         <tr>
             <td>Name</td>
@@ -479,8 +485,51 @@ else
             </tr>
         }
     </table>
-    *@
 
+    <h2>Retrieved Correlation List for Awake Count</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Coefficient</td>
+            <td>Note</td>
+            <td>Positive</td>
+            <td>Picture</td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.CorrList cor in Model.AwakeCountCorrList)
+            {
+            <tr>
+                <td>@cor.Name</td>
+                <td>@cor.Coefficient</td>
+                <td>@cor.Note</td>
+                <td>@cor.Positive</td>
+                <td>@cor.Picture</td>
+            </tr>
+        }
+    </table>
+
+    <h2>Retrieved Correlation List for Sleep Efficiency</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Coefficient</td>
+            <td>Note</td>
+            <td>Positive</td>
+            <td>Picture</td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.CorrList cor in Model.SleepEffiencyCorrList)
+            {
+            <tr>
+                <td>@cor.Name</td>
+                <td>@cor.Coefficient</td>
+                <td>@cor.Note</td>
+                <td>@cor.Positive</td>
+                <td>@cor.Picture</td>
+            </tr>
+        }
+    </table>
+    *@
 
 
 </body>

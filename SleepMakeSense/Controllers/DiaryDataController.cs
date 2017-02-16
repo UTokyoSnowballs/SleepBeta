@@ -163,7 +163,13 @@ namespace SleepMakeSense.Controllers
             // 20170216 Pandita: diary data was logged in UTC time, change to local time!
             // System.Globalization.CultureInfo.CurrentCulture.ClearCachedData();
             // DateTime dateNow = DateTime.Now;
-            DateTime dateNow = DateTime.UtcNow;
+
+            DateTime baseTime = DateTime.UtcNow;
+            baseTime = DateTime.SpecifyKind(baseTime, DateTimeKind.Unspecified);
+
+            TimeSpan offset = TimeZoneInfo.FindSystemTimeZoneById("E. Australia Standard Time").GetUtcOffset(baseTime); // offset value is between -14.0 (towards easthemisphere) ~ 14.0 (towards westhemisphere)
+            DateTimeOffset sourceTime = new DateTimeOffset(baseTime, -offset);
+            DateTime dateNow = sourceTime.LocalDateTime;
 
             bool update = false;
             IEnumerable <DiaryData> lastSynced = from table in Db.DiaryDatas

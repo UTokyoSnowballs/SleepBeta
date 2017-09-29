@@ -207,7 +207,10 @@ namespace SleepMakeSense.Controllers
 
         private DateTime FindingDateStop(string userId)
         {
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
+            // Pandita 20170824: going back too many days cause Gateway Timeout error? Then let's just go back 40 days
+            // DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-60);
+
 
             IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
                                                      where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
@@ -224,13 +227,20 @@ namespace SleepMakeSense.Controllers
         private async Task<ActionResult> FitbitDataSync(string userId)
         {
 
-            // Step 1: Retrieve 40 days data and store in "results"
             FitbitClient client = GetFitbitClient();
             DateTime dateStop = FindingDateStop(userId);
 
+            // 20170302 Pandita: use local time
+            DateTime baseTime = DateTime.UtcNow;
+            baseTime = DateTime.SpecifyKind(baseTime, DateTimeKind.Unspecified);
+
+            TimeSpan offset = TimeZoneInfo.FindSystemTimeZoneById("E. Australia Standard Time").GetUtcOffset(baseTime); // offset value is between -14.0 (towards easthemisphere) ~ 14.0 (towards westhemisphere)
+            DateTimeOffset sourceTime = new DateTimeOffset(baseTime, -offset);
+            DateTime dateNow = sourceTime.LocalDateTime;
+
             bool syncRequired = false;
 
-            if (dateStop < DateTime.UtcNow.Date)
+            if (dateStop < dateNow)
             {
                 syncRequired = true;
             }
@@ -241,27 +251,27 @@ namespace SleepMakeSense.Controllers
 
                 //Each set is 1 call - calling 40 or 60 only increase the size by a small amount
                 //21 calls
-                var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, dateStop, DateTime.UtcNow);
-                var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, dateStop, DateTime.UtcNow);
-                var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, dateStop, DateTime.UtcNow);
-                var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, dateStop, DateTime.UtcNow);
-                var minutesToFallAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesToFallAsleep, dateStop, DateTime.UtcNow);
-                var minutesAfterWakeup = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAfterWakeup, dateStop, DateTime.UtcNow);
-                var sleepEfficiency = await client.GetTimeSeriesAsync(TimeSeriesResourceType.SleepEfficiency, dateStop, DateTime.UtcNow);
-                var caloriesIn = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesIn, dateStop, DateTime.UtcNow);
-                var water = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Water, dateStop, DateTime.UtcNow);
-                var caloriesOut = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesOut, dateStop, DateTime.UtcNow);
-                var steps = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Steps, dateStop, DateTime.UtcNow);
-                var distance = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Distance, dateStop, DateTime.UtcNow);
-                var minutesSedentary = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesSedentary, dateStop, DateTime.UtcNow);
-                var minutesLightlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesLightlyActive, dateStop, DateTime.UtcNow);
-                var minutesFairlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesFairlyActive, dateStop, DateTime.UtcNow);
-                var minutesVeryActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesVeryActive, dateStop, DateTime.UtcNow);
-                var activityCalories = await client.GetTimeSeriesAsync(TimeSeriesResourceType.ActivityCalories, dateStop, DateTime.UtcNow);
-                var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, dateStop, DateTime.UtcNow);
-                var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, dateStop, DateTime.UtcNow);
-                var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, dateStop, DateTime.UtcNow);
-                var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, DateTime.UtcNow);
+                var minutesAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAsleep, dateStop, dateNow);
+                var minutesAwake = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAwake, dateStop, dateNow);
+                var awakeningsCount = await client.GetTimeSeriesAsync(TimeSeriesResourceType.AwakeningsCount, dateStop, dateNow);
+                var timeInBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeInBed, dateStop, dateNow);
+                var minutesToFallAsleep = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesToFallAsleep, dateStop, dateNow);
+                var minutesAfterWakeup = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesAfterWakeup, dateStop, dateNow);
+                var sleepEfficiency = await client.GetTimeSeriesAsync(TimeSeriesResourceType.SleepEfficiency, dateStop, dateNow);
+                var caloriesIn = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesIn, dateStop, dateNow);
+                var water = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Water, dateStop, dateNow);
+                var caloriesOut = await client.GetTimeSeriesAsync(TimeSeriesResourceType.CaloriesOut, dateStop, dateNow);
+                var steps = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Steps, dateStop, dateNow);
+                var distance = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Distance, dateStop, dateNow);
+                var minutesSedentary = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesSedentary, dateStop, dateNow);
+                var minutesLightlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesLightlyActive, dateStop, dateNow);
+                var minutesFairlyActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesFairlyActive, dateStop, dateNow);
+                var minutesVeryActive = await client.GetTimeSeriesAsync(TimeSeriesResourceType.MinutesVeryActive, dateStop, dateNow);
+                var activityCalories = await client.GetTimeSeriesAsync(TimeSeriesResourceType.ActivityCalories, dateStop, dateNow);
+                var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, dateStop, dateNow);
+                var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, dateStop, dateNow);
+                var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, dateStop, dateNow);
+                var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, dateNow);
 
                 foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
                 {
@@ -430,6 +440,14 @@ namespace SleepMakeSense.Controllers
             // 20170214 Pandita: I feel this is parameter can be tweeked, but 40 sounds like a good value for the time being
             int numOfDays = 40;
 
+            // 20170302 Pandita: use local time
+            DateTime baseTime = DateTime.UtcNow;
+            baseTime = DateTime.SpecifyKind(baseTime, DateTimeKind.Unspecified);
+
+            TimeSpan offset = TimeZoneInfo.FindSystemTimeZoneById("E. Australia Standard Time").GetUtcOffset(baseTime); // offset value is between -14.0 (towards easthemisphere) ~ 14.0 (towards westhemisphere)
+            DateTimeOffset sourceTime = new DateTimeOffset(baseTime, -offset);
+            DateTime dateNow = sourceTime.LocalDateTime;
+
             //Comment out the bellow line to disable getting the current logged in user data
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             //UnComment the bellow line to select a specific use to show the users sync page screen
@@ -442,7 +460,7 @@ namespace SleepMakeSense.Controllers
 
             foreach (Userdata userData in userDatas)
             {
-                if (userData.DateStamp >= DateTime.UtcNow)
+                if (userData.DateStamp >= dateNow)
                 {
                     todaySync = true;
                 }

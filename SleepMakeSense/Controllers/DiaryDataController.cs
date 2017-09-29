@@ -161,7 +161,6 @@ namespace SleepMakeSense.Controllers
             //Database lookup of the last 5 days
 
             // 20170216 Pandita: diary data was logged in UTC time, change to local time!
-            // System.Globalization.CultureInfo.CurrentCulture.ClearCachedData();
             // DateTime dateNow = DateTime.Now;
 
             DateTime baseTime = DateTime.UtcNow;
@@ -172,22 +171,33 @@ namespace SleepMakeSense.Controllers
             DateTime dateNow = sourceTime.LocalDateTime;
 
             bool update = false;
+            // 20170217 Pandita: fix the double entry problem
+            /*
             IEnumerable <DiaryData> lastSynced = from table in Db.DiaryDatas
                              where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId()) && table.DateStamp == DateTime.UtcNow.Date
                                                  orderby table.DateStamp
                              select table;
+                             */
+                             
 
-        //checking for a previous entry from the same day
-        foreach (DiaryData query in lastSynced)
-        {
+            IEnumerable<DiaryData> lastSynced = from table in Db.DiaryDatas
+                                                where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId()) && table.DateStamp.Date == dateNow.Date
+                                                orderby table.DateStamp
+                                                select table;
+            
+            /*
+
+            //checking for a previous entry from the same day
+            foreach (DiaryData query in lastSynced)
+            {
+                
                 // 26 questions, 
                 update = true;
                 // 20170214 Pandita: the date stamp of diary data is the day when the data was logged.
                 // In Melbourne study, participants logged data before going to bed; that's why the datestamp of Fitbit data got minus 1 day to keep consistent with the datestamp of diary data.
                 // In QUT study, participants will log the data after getting up, no need to adjust the datestamp of Fitbit data. 
 
-                // 20170216 Pandita: diary data was logged in UTC time, change to local time!
-                query.DateStamp = dateNow; 
+                query.DateStamp = dateNow;
                 query.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
                 query.Mood = model.DiaryData.Mood;
                 query.Stress = model.DiaryData.Stress;
@@ -205,7 +215,7 @@ namespace SleepMakeSense.Controllers
                 query.DigDeviceDuration = model.DiaryData.DigDeviceDuration;
                 query.GamesDuration = model.DiaryData.GamesDuration;
                 // 20170214 Pandita: Added time spent with family and friend before bed; added time spent on social media before bed.
-                query.SocialFamily = model.DiaryData.SocialFamily; 
+                query.SocialFamily = model.DiaryData.SocialFamily;
                 query.SocialFriend = model.DiaryData.SocialFriend;
                 query.SocialMedia = model.DiaryData.SocialMedia;
 
@@ -216,22 +226,29 @@ namespace SleepMakeSense.Controllers
                 query.ExerciseDuration = model.DiaryData.ExerciseDuration;
                 query.ExerciseIntensity = model.DiaryData.ExerciseIntensity;
                 query.DinnerTime = model.DiaryData.DinnerTime;
-                query.SnackTime = model.DiaryData.SnackTime;                
-        }
-        //Updating the database if no match in date is found
-        if (!update)
-        {
-            model.DiaryData.DateStamp = dateNow;
-            model.DiaryData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            Db.DiaryDatas.InsertOnSubmit(model.DiaryData);
-            //System.Diagnostics.Debug.WriteLine("update=", update);
-        }
-            //   else db.Userdatas.Add(data);
+                query.SnackTime = model.DiaryData.SnackTime;
+              
+
+                Db.DiaryDatas.DeleteOnSubmit(query);
+                Db.SubmitChanges();
+            }
+
+            */
+            //Updating the database if no match in date is found
+            if (!update)
+            {
+                model.DiaryData.DateStamp = dateNow;
+                model.DiaryData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                Db.DiaryDatas.InsertOnSubmit(model.DiaryData);
+                //System.Diagnostics.Debug.WriteLine("update=", update);
+            }
+
             //Commiting to database
             Db.SubmitChanges();
             //redirection to homepage
             TempData["notice"] = "Successfully Saved";
             return RedirectToAction("Index", "Home");
+
         }
 
     }

@@ -66,6 +66,10 @@ namespace SleepMakeSense.Controllers
 
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
 
+            Console.WriteLine("Zilu-debug");
+            Console.Write(accessToken);
+            Console.WriteLine(accessToken);
+
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             FitbitClient fitbitClient = GetFitbitClient(accessToken);
 
@@ -142,6 +146,9 @@ namespace SleepMakeSense.Controllers
             IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements // Get user token
                             where a.AspNetUserId.Equals(userId)
                             select a;
+
+            // 20170828 Pandita: BUG!! should not retrieve token from DB, instead, should replace the token in DB by the new token
+            // ************************** TO BE REVISED ********************************************************
             foreach (TokenManagement data in userToken)
             {
                 if (data.AspNetUserId == userId && data.ExpiresIn == 28800)
@@ -155,6 +162,7 @@ namespace SleepMakeSense.Controllers
                     accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
                 }
             } // 20170213 Pandita: Possibly more than one Token stored for a user? 
+              // 20170828 Pandita: should renew the token in DB?
             if (fitbitConnected == true)
             {
                 FitbitClient tempSyncClient = GetFitbitClient(accessToken);

@@ -164,6 +164,7 @@ if (corrList.Count > 0)
                             WriteLiteral("</tr>");
                         }
                     }
+
                     @if ((corrList.Count % 2) != 0)
                     {
                         WriteLiteral("<td class='blank'></td></tr>");
@@ -237,10 +238,10 @@ else
                     myData.forEach(function (d) {
                         // 20170213 Pandita: date parse sorted.
                         d.Date = parseDate(d.Date);
-                        // console.log(d.Value);
+                         console.log(d.Value);
                         if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
                         else d.Value = +d.Value;
-                        //console.log(d.Value);
+                        console.log(d.Value);
                     });
 
                     var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
@@ -437,6 +438,7 @@ else
 
     @* for debugging only *@
     @*
+
     <h2>Retrieved Sleep Structure</h2>
     <table>
         <tr>
@@ -462,6 +464,10 @@ else
             </tr>
         }
     </table>
+    *@
+    
+
+    @*
 
 
     <h2>Retrieved Correlation List for MinutesAsleep</h2>

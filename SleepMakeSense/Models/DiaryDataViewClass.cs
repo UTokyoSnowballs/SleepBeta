@@ -8,7 +8,7 @@ namespace SleepMakeSense.Models
 {
     public class DiaryDataViewClass
     {
-       public  UserQuestion UserQuestion { get; set; }
+       public  UserQuestions UserQuestion { get; set; }
 
         public QuestionsSelections QUESTIONSELECTION { get; set; }
 

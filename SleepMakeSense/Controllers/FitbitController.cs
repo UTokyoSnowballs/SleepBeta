@@ -15,6 +15,8 @@ using System.Net;
 using System.Web;
 using MathNet.Numerics.Statistics;
 using Microsoft.AspNet.Identity;
+using SleepMakeSense.DataAccessLayer;
+using System.Data.Sql;
 
 namespace SleepMakeSense.Controllers
 {
@@ -66,21 +68,24 @@ namespace SleepMakeSense.Controllers
 
             OAuth2AccessToken accessToken = await authenticator.ExchangeAuthCodeForAccessTokenAsync(code);
 
-            Console.WriteLine("Zilu-debug");
+            /*Console.WriteLine("Zilu-debug");
             Console.Write(accessToken);
-            Console.WriteLine(accessToken);
+            Console.WriteLine(accessToken);*/
 
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             FitbitClient fitbitClient = GetFitbitClient(accessToken);
 
-            SyncFitbitCred(accessToken);
+            //20171025 Pandita: removed saving tokens
+            //SyncFitbitCred(accessToken);
 
-             //return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
             return RedirectToAction("Sync", "UserDatas"); // redirect to UserdatasController.cs/Sync().
 
 
         }
 
+        // 20171026 Pandita: Mejor no poner token en DB
+        /*
         // Add user token to the the TokenManagement Table in DB
         private void SyncFitbitCred(OAuth2AccessToken accessToken)
         {
@@ -88,7 +93,7 @@ namespace SleepMakeSense.Controllers
             {
 
                 string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                var userToken = from table in Db.TokenManagements
+                var userToken = from table in Db.TokenManagement
                                 where table.AspNetUserId.Equals(userId)
                                 select table;
                 bool tokenAvailable = false;
@@ -117,14 +122,18 @@ namespace SleepMakeSense.Controllers
                     ExpiresIn = accessToken.ExpiresIn,
                     RefreshToken = accessToken.RefreshToken
                 };
-                    Db.TokenManagements.InsertOnSubmit(token);
+                    
+                    //Db.TokenManagement.InsertOnSubmit(token);
+                    Db.TokenManagement.Add(token);
                 }
 
 
-                Db.SubmitChanges();
+                // 20171022 Pandita: unify with EF
+                // Db.SubmitChanges();
+                Db.SaveChanges();
             }
         }
-
+        */
         public ActionResult DirectToSync()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -140,10 +149,12 @@ namespace SleepMakeSense.Controllers
             Session["AppCredentials"] = appCredentials;
 
             OAuth2AccessToken accessToken = new OAuth2AccessToken();
+            /*
             // 20161108 Pandita
             bool fitbitConnected = false;
+
             string userId = System.Web.HttpContext.Current.User.Identity.GetUserId(); // Get user ID
-            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagements // Get user token
+            IEnumerable <TokenManagement> userToken = from a in Db.TokenManagement // Get user token
                             where a.AspNetUserId.Equals(userId)
                             select a;
 
@@ -161,16 +172,19 @@ namespace SleepMakeSense.Controllers
                     accessToken.UserId = data.UserId;
                     accessToken.UtcExpirationDate = data.DateChanged.AddSeconds(data.ExpiresIn);
                 }
-            } // 20170213 Pandita: Possibly more than one Token stored for a user? 
-              // 20170828 Pandita: should renew the token in DB?
+            } 
+            
+            // 20170213 Pandita: Possibly more than one Token stored for a user? 
+            // 20170828 Pandita: should renew the token in DB?
             if (fitbitConnected == true)
             {
                 FitbitClient tempSyncClient = GetFitbitClient(accessToken);
                 accessToken = tempSyncClient.AccessToken;
-                SyncFitbitCred(accessToken); // 20170213 Pandita: Add token again to DB.TokenManagements?????
+                // 20171026 Pandita: removed
+                // SyncFitbitCred(accessToken); // 20170213 Pandita: Add token again to DB.TokenManagements?????
                 //     return View("Callback");
                 return RedirectToAction("Sync", "UserDatas"); // 20170213 Pandita: Should redirect to UserDatas/Sync() or UserDatas/FitbitDataSync(string UserID) ?????
-            }
+            }*/
 
             return Authorize(); // If no token is found, direct user to Fitbit authorization page. 
         }

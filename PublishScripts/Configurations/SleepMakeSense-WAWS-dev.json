@@ -1,20 +1,20 @@
 {
     "environmentSettings": {
         "webSite": {
-            "name": "SleepBeta",
-            "location": "East Asia"
+            "name": "DeepSleep",
+            "location": "Central US"
         },
         "databases": [
           {
             "connectionStringName": "DefaultConnection",
-            "databaseName": "SleepExplorer_db",
-            "serverName": "sleepexplorerdbserver",
-            "user": "DBadmin",
-            "password": "2016Augosto9@",
+            "databaseName": "deepsleep_db",
+            "serverName": "deepsleep",
+            "user": "db_admin",
+            "password": "12345",
             "edition": "",
             "size": "",
             "collation": "",
-            "location": "East Asia"
+            "location": "Central US"
           }
         ]
     }

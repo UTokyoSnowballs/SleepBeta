@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using SleepMakeSense.Models;
 using Microsoft.AspNet.Identity;
+using SleepMakeSense.DataAccessLayer;
+
+using System.Threading.Tasks;
+using System.Data.Entity.Core.Objects;
 
 namespace SleepMakeSense.Controllers
 {
@@ -24,16 +28,16 @@ namespace SleepMakeSense.Controllers
 
                 //Getting Table Data
                 
-                IEnumerable<UserQuestion> userQuestions = from table in Db.UserQuestions
+                IEnumerable<UserQuestions> userQuestions = from table in Db.UserQuestions
                                     where table.AspNetUserId.Equals(userId)
                                     select table;
                                     
-                IEnumerable<DiaryData> lastSynced = from table in Db.DiaryDatas
+                IEnumerable<DiaryData> lastSynced = from table in Db.DiaryData
                                  where table.AspNetUserId.Equals(userId) && table.DateStamp >= endStop
                                  orderby table.DateStamp
                                  select table;
                 
-                foreach (UserQuestion userQuestion in userQuestions)
+                foreach (UserQuestions userQuestion in userQuestions)
                 {
                     if (userQuestion.AspNetUserId == userId )
                     {

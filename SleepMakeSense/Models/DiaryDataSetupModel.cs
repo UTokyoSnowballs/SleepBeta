@@ -9,7 +9,7 @@ namespace SleepMakeSense.Models
     public class DiaryDataSetupModel
     {
 
-        public UserQuestion userQuestions { get; set; }
+        public UserQuestions userQuestions { get; set; }
 
     }
 }

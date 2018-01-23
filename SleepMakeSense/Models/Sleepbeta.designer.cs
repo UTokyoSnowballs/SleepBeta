@@ -600,9 +600,9 @@ namespace SleepMakeSense.Models
 		
 		private string _GamesDuration;
 		
-		private string _SocialFamily;
+		private string _SocialActivites;
 		
-		private string _SocialFriend;
+		private string _SocialActivity;
 		
 		private string _MusicDuration;
 		
@@ -1100,40 +1100,40 @@ namespace SleepMakeSense.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name= "SocialFamily", Storage= "_SocialFamily", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="SocialActivites", Storage="_SocialActivites", DbType="NVarChar(50)")]
 		public string SocialFamily
 		{
 			get
 			{
-				return this._SocialFamily;
+				return this._SocialActivites;
 			}
 			set
 			{
-				if ((this._SocialFamily != value))
+				if ((this._SocialActivites != value))
 				{
 					this.OnSocialFamilyChanging(value);
 					this.SendPropertyChanging();
-					this._SocialFamily = value;
+					this._SocialActivites = value;
 					this.SendPropertyChanged("SocialFamily");
 					this.OnSocialFamilyChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="SocialFriend", Storage= "_SocialFriend", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="SocialActivity", Storage="_SocialActivity", DbType="NVarChar(50)")]
 		public string SocialFriend
 		{
 			get
 			{
-				return this._SocialFriend;
+				return this._SocialActivity;
 			}
 			set
 			{
-				if ((this._SocialFriend != value))
+				if ((this._SocialActivity != value))
 				{
 					this.OnSocialFriendChanging(value);
 					this.SendPropertyChanging();
-					this._SocialFriend = value;
+					this._SocialActivity = value;
 					this.SendPropertyChanged("SocialFriend");
 					this.OnSocialFriendChanged();
 				}

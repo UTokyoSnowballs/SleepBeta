@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General information about the assembly , by the following set of attributes
 // It is controlled . To change the information associated with the assembly , general information about the assembly , by the following set of attributes
 // Change these attribute values ​​.。
-[assembly: AssemblyTitle("Sleepbeta")]
+[assembly: AssemblyTitle("Deepsleep")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Sleepbeta")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyProduct("Deepsleep")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

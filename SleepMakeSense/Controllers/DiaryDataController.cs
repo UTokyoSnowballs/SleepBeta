@@ -10,7 +10,8 @@ using System.Net;
 using SleepMakeSense.Models;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
-
+using SleepMakeSense.DataAccessLayer;
+using System.Data.Entity.Core.Objects;
 
 namespace SleepMakeSense.Controllers
 {
@@ -24,14 +25,21 @@ namespace SleepMakeSense.Controllers
             DiaryDataSetupModel diaryDataSetupData = new DiaryDataSetupModel();
             // Might want to load the data and assign it to the model.
 
-            IEnumerable<UserQuestion> dataQuery = from table in Db.UserQuestions
-                            where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
-                            select table;
+            // 20171023 Pandita: LINQ-to-SQL replaced by EF
+            //IEnumerable<UserQuestions> dataQuery = from table in Db.UserQuestions
+            //                where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
+            //                select table;
+
+            var CurrentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            IEnumerable<UserQuestions> dataQuery = from table in Db.UserQuestions
+                                                   where table.AspNetUserId.Equals(CurrentUserId)
+                                                   select table;
+
             bool previousEntry = false;
 
-            foreach (UserQuestion entry in dataQuery)
+            foreach (UserQuestions entry in dataQuery)
             {
-                if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
+                if (entry.AspNetUserId == CurrentUserId)
                 {
                     diaryDataSetupData.userQuestions = entry;
                     previousEntry = true;
@@ -39,7 +47,7 @@ namespace SleepMakeSense.Controllers
             }
             if(!previousEntry)
             {
-                diaryDataSetupData.userQuestions = new UserQuestion() { AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId() };
+                diaryDataSetupData.userQuestions = new UserQuestions() { AspNetUserId = CurrentUserId };
             }
 
             return View(diaryDataSetupData);//);
@@ -56,14 +64,20 @@ namespace SleepMakeSense.Controllers
         [HttpPost]
         public ActionResult DiaryDataSetup(DiaryDataSetupModel diaryDataSetupData)
         {
-            IEnumerable<UserQuestion> dataQuery = from table in Db.UserQuestions
-                                                  where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
-                                                  select table;
+            // 20171023 Pandita: refactoring from LINQ-to-SQL to EF
+            //IEnumerable<UserQuestions> dataQuery = from table in Db.UserQuestions
+            //                                      where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId())
+            //                                     select table;
+
+            var CurrentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            IEnumerable<UserQuestions> dataQuery = from table in Db.UserQuestions
+                                                   where table.AspNetUserId.Equals(CurrentUserId)
+                                                   select table;
             bool recordPresent = false;
 
-            foreach (UserQuestion entry in dataQuery)
+            foreach (UserQuestions entry in dataQuery)
             {
-            if (entry.AspNetUserId == System.Web.HttpContext.Current.User.Identity.GetUserId())
+            if (entry.AspNetUserId == CurrentUserId)
                 {
                     // 19 categories, hormone not appear on UI for the time being, need to implement a drop-down list for it with date. So in total, 18 categories to choose from.
                     // careful!! some are "question" and others are "questions"
@@ -92,11 +106,14 @@ namespace SleepMakeSense.Controllers
 
             if (recordPresent == false)
             {
-                diaryDataSetupData.userQuestions.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                Db.UserQuestions.InsertOnSubmit(diaryDataSetupData.userQuestions);
+                diaryDataSetupData.userQuestions.AspNetUserId = CurrentUserId;
+                //Db.UserQuestions.InsertOnSubmit(diaryDataSetupData.userQuestions);
+                Db.UserQuestions.Add(diaryDataSetupData.userQuestions);
             }
 
-            Db.SubmitChanges();
+            // 20171022 Pandita: unified with EF
+            //Db.SubmitChanges();
+            Db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
@@ -116,14 +133,20 @@ namespace SleepMakeSense.Controllers
                 DateTime dateStop = DateTime.UtcNow.Date.AddDays(-5);
 
                 //Looking up the questions for the user
-                UserQuestion userQuestion = (from table in Db.UserQuestions
+                UserQuestions userQuestion = (from table in Db.UserQuestions
                                 where table.AspNetUserId.Equals(userId)
                                 select table).First();
                 viewModel.UserQuestion = userQuestion;
 
                 //Looking up for previously saved data
-                IEnumerable<DiaryData> dataQuery = from table in Db.DiaryDatas
-                                                      where table.AspNetUserId.Equals(userId) && table.DateStamp.Date == DateTime.UtcNow.Date
+                // 20171023 Pandita: refactoring from LINQ-to-SQL to EF
+                // IEnumerable<DiaryData> dataQuery = from table in Db.DiaryData
+                //                                     where table.AspNetUserId.Equals(userId) && table.DateStamp.Date == DateTime.UtcNow.Date
+                //                                   select table;
+
+                var currentTime = DateTime.UtcNow.Date;
+                IEnumerable<DiaryData> dataQuery = from table in Db.DiaryData
+                                                   where table.AspNetUserId.Equals(userId) && System.Data.Entity.DbFunctions.TruncateTime(table.DateStamp) == currentTime
                                                    select table;
 
                 bool todaysData = false;
@@ -178,19 +201,51 @@ namespace SleepMakeSense.Controllers
                                                  orderby table.DateStamp
                              select table;
                              */
-                             
 
-            IEnumerable<DiaryData> lastSynced = from table in Db.DiaryDatas
-                                                where table.AspNetUserId.Equals(System.Web.HttpContext.Current.User.Identity.GetUserId()) && table.DateStamp.Date == dateNow.Date
+            // 20171023 Pandita: Refactoring from LINQ-to-SQL to EF
+            //IEnumerable<DiaryData> lastSynced = from table in Db.DiaryData
+            //                                    where table.AspNetUserId.Equals(CurrentUserId) && table.DateStamp.Date == dateNow.Date
+            //                                    orderby table.DateStamp
+            //                                    select table;
+
+            var CurrentUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
+            IEnumerable<DiaryData> lastSynced = from table in Db.DiaryData
+                                                where table.AspNetUserId.Equals(CurrentUserId) && System.Data.Entity.DbFunctions.TruncateTime(table.DateStamp) == dateNow.Date
                                                 orderby table.DateStamp
                                                 select table;
-            
-            /*
+/*
+            if (lastSynced.Count() != 0)
+            {
+                foreach (DiaryData query in lastSynced)
+                {
+                    {
+                        Db.DiaryData.Attach(query);
+                        Db.Entry(lastSynced).State = EntityState.Modified;
+                        Db.SaveChanges();
+                        update = true;
+                    }
+                }
+            }
+            else
+            {
+                if (!update)
+                {
+                    model.DiaryData.DateStamp = dateNow;
+                    model.DiaryData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                    //Db.DiaryData.InsertOnSubmit(model.DiaryData);
+                    Db.DiaryData.Add(model.DiaryData);
+                    System.Diagnostics.Debug.WriteLine("update=", update);
+                    Db.SaveChanges();
+
+                }
+            }*/
+           
 
             //checking for a previous entry from the same day
             foreach (DiaryData query in lastSynced)
             {
-                
+
                 // 26 questions, 
                 update = true;
                 // 20170214 Pandita: the date stamp of diary data is the day when the data was logged.
@@ -227,24 +282,68 @@ namespace SleepMakeSense.Controllers
                 query.ExerciseIntensity = model.DiaryData.ExerciseIntensity;
                 query.DinnerTime = model.DiaryData.DinnerTime;
                 query.SnackTime = model.DiaryData.SnackTime;
-              
 
-                Db.DiaryDatas.DeleteOnSubmit(query);
-                Db.SubmitChanges();
+                //Db.DiaryDatas.DeleteOnSubmit(query);
+                //Db.SubmitChanges();
+                Db.DiaryData.Attach(query);
+                Db.Entry(query).State = EntityState.Modified;
+                //Db.SaveChanges();
             }
 
-            */
-            //Updating the database if no match in date is found
             if (!update)
             {
+                DiaryData newlog = new DiaryData();
+                newlog.DateStamp = dateNow;
+                newlog.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                newlog.WakeUpFreshness = model.DiaryData.WakeUpFreshness;
+                newlog.Mood = model.DiaryData.Mood;
+                newlog.Stress = model.DiaryData.Stress;
+                newlog.Tiredness = model.DiaryData.Tiredness;
+                newlog.Dream = model.DiaryData.Dream;
+                newlog.BodyTemp = model.DiaryData.BodyTemp; // not appear
+                newlog.Hormone = model.DiaryData.Hormone; // not appear
+                newlog.SchoolStress = model.DiaryData.SchoolStress;
+                newlog.CoffeeAmt = model.DiaryData.CoffeeAmt;
+                newlog.CoffeeTime = model.DiaryData.CoffeeTime;
+                newlog.AlcoholAmt = model.DiaryData.AlcoholAmt;
+                newlog.AlcoholTime = model.DiaryData.AlcoholTime;
+                newlog.NapTime = model.DiaryData.NapTime;
+                newlog.NapDuration = model.DiaryData.NapDuration;
+                newlog.DigDeviceDuration = model.DiaryData.DigDeviceDuration;
+                newlog.GamesDuration = model.DiaryData.GamesDuration;
+                newlog.SocialFamily = model.DiaryData.SocialFamily;
+                newlog.SocialFriend = model.DiaryData.SocialFriend;
+                newlog.SocialMedia = model.DiaryData.SocialMedia;
+
+                newlog.MusicDuration = model.DiaryData.MusicDuration;
+                newlog.TVDuration = model.DiaryData.TVDuration;
+                newlog.WorkTime = model.DiaryData.WorkTime;
+                newlog.WorkDuration = model.DiaryData.WorkDuration;
+                newlog.ExerciseDuration = model.DiaryData.ExerciseDuration;
+                newlog.ExerciseIntensity = model.DiaryData.ExerciseIntensity;
+                newlog.DinnerTime = model.DiaryData.DinnerTime;
+                newlog.SnackTime = model.DiaryData.SnackTime;
+                                
+                Db.DiaryData.Add(newlog);
+
+                /*
                 model.DiaryData.DateStamp = dateNow;
                 model.DiaryData.AspNetUserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                Db.DiaryDatas.InsertOnSubmit(model.DiaryData);
+                //Db.DiaryData.InsertOnSubmit(model.DiaryData);
+                Db.DiaryData.Add(model.DiaryData);
                 //System.Diagnostics.Debug.WriteLine("update=", update);
+                // 20171024 Pandita: Why got error when using Db.SaveChanges() here? 
+                // Does that mean Db.SaveChangs() can only be called to wrap up at the very end?
+                //Db.SaveChanges();
+                */
             }
 
+
             //Commiting to database
-            Db.SubmitChanges();
+            // 20171022 Pandita: unify with EF
+            //Db.SubmitChanges();
+            Db.SaveChanges();
+
             //redirection to homepage
             TempData["notice"] = "Successfully Saved";
             return RedirectToAction("Index", "Home");

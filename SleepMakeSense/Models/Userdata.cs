@@ -9,11 +9,14 @@ namespace SleepMakeSense.Models
     public partial class Userdata
     {
         [Key]
-        public Guid Id { get; set; }
-        //User Details
+        public int Id { get; set; }
+
+        // Foreign key to AspNetUser
+        [ForeignKey("AspNetUser")]
+        public string AspNetUserId { get; set; }
+        public AspNetUser AspNetUser { get; set; }
 
         public DateTime DateStamp { get; set; }
-
 
         public double? MinutesAsleep { get; set; }
 

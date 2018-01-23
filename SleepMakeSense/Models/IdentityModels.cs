@@ -32,11 +32,12 @@ namespace SleepMakeSense.Models
         }
 
         // Pandita: Why here?
-        public System.Data.Entity.DbSet<SleepMakeSense.Models.Userdata> Userdatas { get; set; }
+        public DbSet<SleepMakeSense.Models.Userdata> Userdatas { get; set; }
 
         internal void SaveChanges(int id)
         {
             throw new NotImplementedException();
         }
+
     }
 }

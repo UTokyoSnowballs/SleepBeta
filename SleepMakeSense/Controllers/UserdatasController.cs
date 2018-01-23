@@ -5,15 +5,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Mvc;//
+using System.Web.Mvc;
 using System.Data.Sql;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
 //Refer to Fitbit Library
-
 using Fitbit.Models;
 using SleepMakeSense.Models;
+using SleepMakeSense.DataAccessLayer;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 
@@ -212,7 +212,7 @@ namespace SleepMakeSense.Controllers
             DateTime dateStop = DateTime.UtcNow.Date.AddDays(-60);
 
 
-            IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitDatas
+            IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitData
                                                      where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
                                                      select table;
 
@@ -280,7 +280,7 @@ namespace SleepMakeSense.Controllers
                     {
                         fitbitInputDatas.Add(new FitbitData()
                         {
-                            Id = Guid.NewGuid(),
+                            //Id = Guid.NewGuid(),
                             // DateStamp = data.DateTime.Date.AddDays(-1),
                             DateStamp = data.DateTime.Date, // In QUT study, participants will fill in the diary in the morning, not before going to bed. 
                             MinutesAsleep = data.Value,
@@ -424,9 +424,12 @@ namespace SleepMakeSense.Controllers
 
                 foreach (FitbitData data in fitbitInputDatas)
                 {
-                    Db.FitbitDatas.InsertOnSubmit(data);
+                    //Db.FitbitData.InsertOnSubmit(data);
+                    Db.FitbitData.Add(data);
                 }
-                Db.SubmitChanges();
+
+                //Db.SubmitChanges();
+                Db.SaveChanges();
             }
             ViewBag.FitbitSynced = true;
 
@@ -494,12 +497,12 @@ namespace SleepMakeSense.Controllers
             List<Userdata> userDatas = new List<Userdata>();
 
             //Data retieval
-            var diaryDatas = from table in Db.DiaryDatas
+            var diaryDatas = from table in Db.DiaryData
                              where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
                              orderby table.DateStamp
                              select table;
 
-            var fitbitDatas = from table in Db.FitbitDatas
+            var fitbitDatas = from table in Db.FitbitData
                               where table.AspNetUserId.Equals(userId) && table.DateStamp >= dateStop
                               orderby table.DateStamp
                               select table;
@@ -536,7 +539,7 @@ namespace SleepMakeSense.Controllers
             }
             foreach (Userdata userdata in userDatas)
             {
-                foreach (DiaryData diaryData in diaryDatas.Where(diaryData => diaryData.DateStamp == userdata.DateStamp))
+                foreach (DiaryData diaryData in diaryDatas.Where(diaryData => DbFunctions.TruncateTime(diaryData.DateStamp) == DbFunctions.TruncateTime(userdata.DateStamp)))
                 {
                     // 31 questions in total
                     userdata.WakeUpFreshness = Convert.ToDouble(diaryData.WakeUpFreshness);

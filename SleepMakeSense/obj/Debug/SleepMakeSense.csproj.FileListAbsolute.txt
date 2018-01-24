@@ -1061,3 +1061,6 @@ C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Debug\SleepMake
 C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.ApplicationDbContext.testApplicationDbContext.resources
 C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache
 C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.SleepbetaDbContext.testSleepbetaDbContext.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.ApplicationDbContext.test.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.csproj.GenerateResource.Cache
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Debug\SleepMakeSense.Migrations.SleepbetaDbContext.test1.resources

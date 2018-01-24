@@ -188,7 +188,8 @@ else
 
                 var factorList = [];
                 var MinutesAsleep = [];
-                var AwakeningsCount = [];
+                var MinutesAwake = [];
+                //var AwakeningsCount = [];
                 var SleepEfficiency = [];
                 var facCoff = 0;
                 var quest2 = false;
@@ -204,8 +205,9 @@ else
                     var weekday = m.DateStamp.DayOfWeek;
 
                         @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.MinutesAsleep" });
-                                        @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });
-                                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.SleepEfficiency" });
+                        @:MinutesAwake.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.MinutesAwake" });
+                        //@:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });
+                        @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.SleepEfficiency" });
 
                  }
 
@@ -225,7 +227,7 @@ else
                 width = w - margin.left - margin.right,
                 height = h - margin.top - margin.bottom;
 
-                // 20170213 Pandita: the order of day and month !! 
+                // 20170213 Pandita: the order of day and month !!
                 //parseDate = d3.time.format("%d/%m/%Y").parse;
                 var parseDate = d3.time.format("%m/%d/%Y").parse;
 
@@ -299,11 +301,11 @@ else
                       .attr("height", function (d) { return (height - yRange(d.Value)); })
                       //.attr("fill", "#0000ff")
                       .attr("fill", function (d) {
-                          if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                          if (mark == "SleepEfficiency" && (d.Value < 90)) { return red; }
                               //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
                           else if (mark == "MinutesAsleep" && (d.Value < 8.0)) { return red; } // 20170213 Pandita: a proper threshold for teenageer
                           else if (mark == "MinutesAsleep" && (d.Value > 10.0)) { return red; }
-                          else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                          else if (mark == "MinutesAwake" && (d.Value > 30)) { return red; } 
                           else return blue;
                       })
                       .on("mouseover", function (d) {
@@ -332,10 +334,10 @@ else
                           d3.select(this)
                             //.attr("fill", "#bdbdbd");
                             .attr("fill", function (d) {
-                                if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                                if (mark == "SleepEfficiency" && (d.Value < 90)) { return red; }
                                     //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
                                 else if (mark == "MinutesAsleep" && ((d.Value > 10.0) || (d.Value < 8.0))) { return red; }
-                                else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                                else if (mark == "MinutesAwake" && (d.Value > 30)) { return red; } 
                                 else return blue;
                             });
                           div.transition()
@@ -343,7 +345,7 @@ else
                              .style("opacity", 0);
                       });
 
-                // yPos is the y-position of the divide line; xBox and yBox are the position coordinates of rectangular; xText and yText are the position coordinates of the text box. 
+                // yPos is the y-position of the divide line; xBox and yBox are the position coordinates of rectangular; xText and yText are the position coordinates of the text box.
                 function divideLine(yPos, xBox, yBox, wBox, xText, yText, threshold) {
                     chart.append("line")
                         .style("stroke", "white")
@@ -369,6 +371,7 @@ else
                     .text(threshold);
                 }
 
+                // 20180124: Plot divide lines
                 if (mark == "MinutesAsleep") {
 
                     xBox = width - width / 4;
@@ -388,20 +391,20 @@ else
 
                     divideLine(90, xBox, 90, wBox, xText, yText, "90%");
 
-                } else if (mark == "AwakeningsCount") {
+                } else if (mark == "MinutesAwake") {
 
                     xBox = width - width / 4;
                     wBox = width / 4;
                     xText = width - width / 5;
-                    yText = 0.5;
+                    yText = 5;
 
-                    divideLine(8, xBox, 8, wBox, xText, yText, "8 awakenings");
-
+                    divideLine(30, xBox, 30, wBox, xText, yText, "30 Minutes");
+                    
                 }
 
             }
 
-                        </script>
+    </script>
     </div>
 
 
@@ -417,10 +420,13 @@ else
                 <div class="col-md-12">
                     <ul class="nav nav-tabs" id="mytab">
                         <li class="active">
-                            <a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Hours Asleep</a>
+                            <a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Time Asleep</a>
                         </li>
-                        <li>
+                        <!--li>
                             <a class="AwakeningsCountTimeseries" href="#AwakeningsCountTimeseries" data-toggle="tab">Awake Count</a>
+                        </li-->
+                        <li>
+                            <a class="MinutesAwakeTimeseries" href="#MinutesAwakeTimeseries" data-toggle="tab">Time Awake</a>
                         </li>
                         <li>
                             <a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a>
@@ -451,25 +457,31 @@ else
                         <div class="row">
                             <div class="col-md-12">
                                 <div>
-                                    @CoefficientList(Model.MinutesAsleepCorrList, "Hours Asleep")
+                                    @CoefficientList(Model.MinutesAsleepCorrList, "Time Asleep")
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="AwakeningsCountTimeseries">
+                    <!--div class="tab-pane fade" id="AwakeningsCountTimeseries">
                         <div id="AwakeningsCountTimeseries">
                             <script>
                                 PlotTimeseries(AwakeningsCount, "#AwakeningsCountTimeseries", "AwakeningsCount", "Count");
                             </script>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div>
-                                    @CoefficientList(Model.AwakeCountCorrList, "Awakening Count")
+                        </div-->
+                        <div class="tab-pane fade" id="MinutesAwakeTimeseries">
+                            <div id="MinutesAwakeTimeseries">
+                                <script>
+                                    PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "MinutesAwake", "Minutes");
+                                </script>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        @CoefficientList(Model.MinutesAwakeCorrList, "Time Awake")
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
                         <div id="SleepEfficiencyTimeseries">
                             <script>

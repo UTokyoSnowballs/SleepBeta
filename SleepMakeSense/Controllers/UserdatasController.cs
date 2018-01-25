@@ -802,10 +802,12 @@ namespace SleepMakeSense.Controllers
             int iMinutesAsleep = 0, iMinutesAwake = 0,
             iAwakeningsCount = 0, iMinutesToFallAsleep = 0, iSleepEfficiency = 0;
 
-            int iSteps = 0, iDistance = 0, iMinutesSedentary = 0, iMinutesLightlyActive = 0,
-                iMinutesFairlyActive = 0, iMinutesVeryActive = 0, iWater = 0,
+
+            int iMinutesSedentary = 0, iMinutesLightlyActive = 0,
+                iMinutesFairlyActive = 0, iMinutesVeryActive = 0; /*iSteps = 0, iDistance = 0, iWater = 0,
                 iCaloriesOut = 0, iActivityCalories = 0, iWeight = 0, iBMI = 0, iFat = 0, iCaloriesIn = 0;
 
+            
             //Diary Data incruments
             int iWakeUpFreshness = 0, iMood = 0, iStress = 0, iTiredness = 0,
                 iDream = 0, iBodyTemp = 0, iHormone = 0,
@@ -821,7 +823,7 @@ namespace SleepMakeSense.Controllers
             //int iTimeEnteredBed = 0;
 
             int iWakeUpFreshnessMinutesAsleep = 0, iWakeUpFreshnessMinutesAwake = 0,
-                iWakeUpFreshnessAwakeningsCount = 0, iWakeUpFreshnessMinutesToFallAsleep = 0, iWakeUpFreshnessSleepEfficiency = 0;
+                iWakeUpFreshnessAwakeningsCount = 0, iWakeUpFreshnessMinutesToFallAsleep = 0, iWakeUpFreshnessSleepEfficiency = 0;*/
 
             int iWakeUpFreshnessSteps = 0, iWakeUpFreshnessDistance = 0, iWakeUpFreshnessMinutesSedentary = 0, iWakeUpFreshnessMinutesLightlyActive = 0,
                 iWakeUpFreshnessMinutesFairlyActive = 0, iWakeUpFreshnessMinutesVeryActive = 0, iWakeUpFreshnessWater = 0,
@@ -830,7 +832,7 @@ namespace SleepMakeSense.Controllers
             //Diary Data incruments
             int iWakeUpFreshnessMood = 0, iWakeUpFreshnessStress = 0, iWakeUpFreshnessTiredness = 0,
                 iWakeUpFreshnessDream = 0, iWakeUpFreshnessBodyTemp = 0, iWakeUpFreshnessHormone = 0,
-                iWakeUpFreshnessSchoolStress = 0,
+                //iWakeUpFreshnessSchoolStress = 0,
                 iWakeUpFreshnessCoffeeAmt = 0, iWakeUpFreshnessCoffeeTime = 0, iWakeUpFreshnessAlcoholAmt = 0, iWakeUpFreshnessAlcoholTime = 0,
                 iWakeUpFreshnessNapTime = 0, iWakeUpFreshnessNapDuration = 0,
                 iWakeUpFreshnessDigDeviceDuration = 0, iWakeUpFreshnessGamesDuration = 0, iWakeUpFreshnessSocialFriend = 0, iWakeUpFreshnessSocialFamily = 0, iWakeUpFreshnessSocialMedia = 0, iWakeUpFreshnessMusicDuration = 0, iWakeUpFreshnessTVDuration = 0,
@@ -1144,11 +1146,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "Wake Up Freshness", Name = "Steps", Coefficient = rWakeUpFreshness, Note = "The more steps you walked, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "Wake Up Freshness", Name = "Steps", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you walk more." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Steps", Coefficient = rWakeUpFreshness, Note = "The more steps you walked, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Steps", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you walk more." });
                     }
                 }
             }
@@ -1159,11 +1161,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Stationary", Coefficient = rWakeUpFreshness, Note = "The more time you spent stationary, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Stationary", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are more sedentary in the previous day." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Stationary", Coefficient = rWakeUpFreshness, Note = "The more time you spent stationary, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Stationary", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you are more sedentary in the previous day." });
                     }
                 }
             }
@@ -1174,11 +1176,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Lightly Active", Coefficient = rWakeUpFreshness, Note = "The more light exersise that you did, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Lightly Active", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you do more light exercise." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Lightly Active", Coefficient = rWakeUpFreshness, Note = "The more light exersise that you did, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Lightly Active", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you do more light exercise." });
                     }
                 }
             }
@@ -1189,11 +1191,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Fairly Active", Coefficient = rWakeUpFreshness, Note = "The more moderate exersise that you did, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Fairly Active", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you do more moderate exercise." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Fairly Active", Coefficient = rWakeUpFreshness, Note = "The more moderate exersise that you did, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Fairly Active", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you do more moderate exercise." });
                     }
                 }
             }
@@ -1204,11 +1206,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Very Active", Coefficient = rWakeUpFreshness, Note = "The more intense exercise you did, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Very Active", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you do more intense exercise." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Very Active", Coefficient = rWakeUpFreshness, Note = "The more intense exercise you did, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Minutes Very Active", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you do more intense exercise." });
                     }
                 }
             }
@@ -1219,11 +1221,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "The more water you had in the day, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you drink more water." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "The more water you had in the day, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Water", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you drink more water." });
                     }
                 }
             }
@@ -1234,11 +1236,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Food Intake", Coefficient = rWakeUpFreshness, Note = "The more you ate, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Food Intake", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you eat more." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Food Intake", Coefficient = rWakeUpFreshness, Note = "The more you ate, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Food Intake", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you eat more." });
                     }
                 }
             }
@@ -1249,11 +1251,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Energy Burned", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Energy Burned", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are more active." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Energy Burned", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Energy Burned", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you are more active." });
                     }
                 }
             }
@@ -1264,11 +1266,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Active Moments", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day from exercise, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Active Moments", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you consume more energy in exercises." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Active Moments", Coefficient = rWakeUpFreshness, Note = "The more engery you burn throughout the day from exercise, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Active Moments", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you consume more energy in exercises." });
                     }
                 }
             }
@@ -1279,11 +1281,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "The more you weighted, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you weigh more." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "The more you weighted, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Weight", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you weigh less." });
                     }
                 }
             }
@@ -1294,11 +1296,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BMI", Coefficient = rWakeUpFreshness, Note = "The higher your BMI was, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BMI", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you BMI is higher." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BMI", Coefficient = rWakeUpFreshness, Note = "The higher your BMI was, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BMI", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you BMI is lower." });
                     }
                 }
             }
@@ -1309,11 +1311,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "The more fat you had, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you have more fat." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "The more fat you had, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Fat", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you have less fat." });
                     }
                 }
             }
@@ -1327,11 +1329,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "The better your mood before bed time, the more alert you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are happy." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "The better your mood before bed time, the more dizzy you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Mood", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are groomy." });
                     }
                 }
             }
@@ -1342,11 +1344,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "The more Stressed you felt before bed time, the more alert you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are stressed." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "The more Stressed you felt before bed time, the more dizzy you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Stress", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are relaxed." });
                     }
                 }
             }
@@ -1358,11 +1360,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Tiredness", Coefficient = rWakeUpFreshness, Note = "The more tired you felt before bed time, the more alert you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Tiredness", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you are tired." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Tiredness", Coefficient = rWakeUpFreshness, Note = "The more tired you felt before bed time, the more dizzy you felt when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Tiredness", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you are tired." });
                     }
                 }
             }
@@ -1373,11 +1375,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Dream", Coefficient = rWakeUpFreshness, Note = "Dreaming makes you feel dizzy when woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Dream", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you have more dreams." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Dream", Coefficient = rWakeUpFreshness, Note = "Dreaming makes you feel alert when you woke up the second morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Dream", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you have more dreams." });
                     }
                 }
             }
@@ -1388,11 +1390,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BodyTemp", Coefficient = rWakeUpFreshness, Note = "The higher your body temperature was before bed time, the more alert you felt when you woke up in the morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BodyTemp", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you have higher body temperature." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BodyTemp", Coefficient = rWakeUpFreshness, Note = "The higher your body temperature was before bed time, the less alert you felt when you woke up in the morning." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "BodyTemp", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you have lower body temperature." });
                     }
                 }
             }
@@ -1403,11 +1405,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Hormone", Coefficient = rWakeUpFreshness, Note = "As the next period approaches, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Hormone", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert as the next period approaches." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Hormone", Coefficient = rWakeUpFreshness, Note = "As the next period approaches, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Hormone", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert as the next period approaches." });
                     }
                 }
             }
@@ -1418,11 +1420,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Amount", Coefficient = rWakeUpFreshness, Note = "The more coffee you had, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Amount", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you take more coffee." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Amount", Coefficient = rWakeUpFreshness, Note = "The more coffee you had, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Amount", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you take less coffee." });
                     }
                 }
             }
@@ -1433,11 +1435,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Time", Coefficient = rWakeUpFreshness, Note = "The later you had coffee, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Time", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you take coffee late." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Time", Coefficient = rWakeUpFreshness, Note = "The later you had coffee, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Coffee Time", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you take coffee late." });
                     }
                 }
             }
@@ -1448,11 +1450,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Amount", Coefficient = rWakeUpFreshness, Note = "The more Alcohol you had, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Amount", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you drink more alcohol." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Amount", Coefficient = rWakeUpFreshness, Note = "The more Alcohol you had, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Amount", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you drink more alcohol." });
                     }
                 }
             }
@@ -1463,11 +1465,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Time", Coefficient = rWakeUpFreshness, Note = "The later you had Alcohol, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Time", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you drink until late." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Time", Coefficient = rWakeUpFreshness, Note = "The later you had Alcohol, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Alcohol Time", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you drink until late." });
                     }
                 }
             }
@@ -1478,11 +1480,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Time", Coefficient = rWakeUpFreshness, Note = "The later you had a nap, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Time", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert if you take a nap." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Time", Coefficient = rWakeUpFreshness, Note = "The later you had a nap, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Time", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert if you take a nap." });
                     }
                 }
             }
@@ -1493,11 +1495,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Duration", Coefficient = rWakeUpFreshness, Note = "The longer you had a nap, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Duration", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert if you take a long nap the day before." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Duration", Coefficient = rWakeUpFreshness, Note = "The longer you had a nap, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Nap Duration", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert if you take a long nap the day before." });
                     }
                 }
             }
@@ -1508,11 +1510,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Digital Devices", Coefficient = rWakeUpFreshness, Note = "The heavier you used digital devices before bed time, the more alert you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Digital Devices", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you use digital device before bed time." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Digital Devices", Coefficient = rWakeUpFreshness, Note = "The heavier you used digital devices before bed time, the more dizzy you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Digital Devices", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you use digital device before bed time." });
                     }
                 }
             }
@@ -1523,11 +1525,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Games", Coefficient = rWakeUpFreshness, Note = "The heavier you played games before bed time, the more alert you felt when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Games", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you play games before bed time." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Games", Coefficient = rWakeUpFreshness, Note = "The heavier you played games before bed time, the more dizzy you felt when you woke up.." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Games", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you play games before bed time." });
                     }
                 }
             }
@@ -1538,11 +1540,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Activites", Coefficient = rWakeUpFreshness, Note = "The more social activites you do before bed, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Activites", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you have more social activities the night before." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Activites", Coefficient = rWakeUpFreshness, Note = "The more social activites you do before bed, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Activites", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you have more social activities the night before." });
                     }
                 }
             }
@@ -1553,11 +1555,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Media", Coefficient = rWakeUpFreshness, Note = "The heavier you were on social media before bed time, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Media", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you use social media before bed time." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Media", Coefficient = rWakeUpFreshness, Note = "The heavier you were on social media before bed time, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Social Media", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you use social media before bed time." });
                     }
                 }
             }
@@ -1568,11 +1570,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Music", Coefficient = rWakeUpFreshness, Note = "The longer you had listened to Music, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Music", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you listen to music before bed time." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Music", Coefficient = rWakeUpFreshness, Note = "The longer you had listened to Music, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Music", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you listen to music before bed time." });
                     }
                 }
             }
@@ -1583,11 +1585,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "TV", Coefficient = rWakeUpFreshness, Note = "The longer you had watched TV, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "TV", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you watch TV until late." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "TV", Coefficient = rWakeUpFreshness, Note = "The longer you had watched TV, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "TV", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you watch TV until late." });
                     }
                 }
             }
@@ -1598,11 +1600,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Duration", Coefficient = rWakeUpFreshness, Note = "The longer you Exercised, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Duration", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you exercise more." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Duration", Coefficient = rWakeUpFreshness, Note = "The longer you Exercised, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Duration", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you exercise more." });
                     }
                 }
             }
@@ -1613,11 +1615,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (rWakeUpFreshness > 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Intensity", Coefficient = rWakeUpFreshness, Note = "The more intense you Exercised, you tend to feel more alert when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Intensity", Coefficient = rWakeUpFreshness, Note = "You wake up feeling more alert when you exercise hard." });
                     }
                     else if (rWakeUpFreshness < 0)
                     {
-                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Intensity", Coefficient = rWakeUpFreshness, Note = "The more intense you Exercised, you tend to feel more dizzy when you woke up." });
+                        CoefficientList.Add(new CorrList() { Belong = "WakeUpFreshness", Name = "Exercise Intensity", Coefficient = rWakeUpFreshness, Note = "You wake up feeling less alert when you exercise hard." });
                     }
                 }
             }*/
@@ -1628,11 +1630,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesSedentary > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Sedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary your were, the longer you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Sedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You sleep more when you are more sedentary the day before." });
                 }
                 else if (rMinutesSedentary < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Sedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary your were, the shorter you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Sedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You sleep less when you are more sedentary the day before." });
                 }
             }
 
@@ -1641,11 +1643,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesLightlyActive > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Lightly Active", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise your did, the longer you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Lightly Active", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You sleep more when you do more light exercise." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Lightly Active", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise your did, the shorter you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Lightly Active", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You sleep less when you do more light exercise.." });
                 }
             }
 
@@ -1654,11 +1656,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesFairlyActive > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Fairly Active", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise your did, the longer you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Fairly Active", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You sleep more when you do more moderate exercise." });
                 }
                 else if (rMinutesFairlyActive < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Fairly Active", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise your did, the shorter you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Fairly Active", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You sleep less when you do more moderate exercise.." });
                 }
             }
 
@@ -1667,11 +1669,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesVeryActive > 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Very Active", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise your did, the longer you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Very Active", Coefficient = rMinutesVeryActive, Picture = "", Note = "You sleep more when you do more intense exercise." });
                 }
                 else if (rMinutesVeryActive < 0)
                 {
-                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Very Active", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise your did, the shorter you were asleep during night." });
+                    minutesAsleepCorrList.Add(new CorrList() { Name = "Minutes Very Active", Coefficient = rMinutesVeryActive, Picture = "", Note = "You sleep less when you do more moderate exercise." });
                 }
             }
 
@@ -1681,11 +1683,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesSedentary > 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "Your sleep is more fragmented when you are more sedentary the day before." });
                 }
                 else if (rMinutesSedentary < 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "Your sleep is less fragmented when you are more sedentary the day before." });
                 }
             }
 
@@ -1695,11 +1697,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesLightlyActive > 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "Your sleep is more fragmented when you do more light exercises." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "Your sleep is less fragmented when you do more light exercises." });
                 }
             }
 
@@ -1708,11 +1710,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesFairlyActive > 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "Your sleep is more fragmented when you do more moderate exercises." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "Your sleep is less fragmented when you do more moderate exercises." });
                 }
             }
 
@@ -1721,11 +1723,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesVeryActive > 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the more often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "Your sleep is more fragmented when you do more intense exercises." });
                 }
                 else if (rMinutesVeryActive < 0)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the less often you were awake during night." });
+                    awakeCountCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "Your sleep is less fragmented when you do more intense exercises." });
                 }
             }
 
@@ -1736,11 +1738,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesSedentary > 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You had more minutes awake when you were more sedentary." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You have more wake time when you are sedentary the day before." });
                 }
                 else if (rMinutesSedentary < 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You had less minutes awake when you were more sedentary." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You have less wake time when you are sedentary the day before." });
                 }
             }
 
@@ -1750,11 +1752,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesLightlyActive > 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You had more minutes awake when you did more light exercise." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You have more wake time when you do more light exercise." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You had less minutes awake when you did more light exercise." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You have less wake time when you do more light exercise." });
                 }
             }
 
@@ -1763,11 +1765,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesFairlyActive > 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You had more minutes awake when you did more moderate exercise." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You have more wake time when you do more moderate exercise." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You had less minutes awake when you did more moderate exercise." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You have less wake time when you do more moderate exercise." });
                 }
             }
 
@@ -1776,11 +1778,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesVeryActive > 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "You had more minutes awake when you did more intense exercise." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "You have more wake time when you do more intense exercise." });
                 }
                 else if (rMinutesVeryActive < 0)
                 {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "You had less minutes awake when you did more intense exercise." });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "You have less wake time when you do more intense exercise." });
                 }
             }
 
@@ -1793,11 +1795,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesSedentary > 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The more sedentary you were, the better you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "Your sleep is better when you are more sedentary the day before." });
                 }
                 else if (rMinutesSedentary < 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "The less sedentary you were, the better you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "Your sleep is better when you are less sedentary the day before." });
                 }
             }
 
@@ -1807,11 +1809,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesLightlyActive > 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the better you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "Your sleep is better when you do more light exercise." });
                 }
                 else if (rMinutesLightlyActive < 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "The more light exercise you did, the worse you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "Your sleep is better when you do less light exercise." });
                 }
             }
 
@@ -1820,11 +1822,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesFairlyActive > 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the better you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "Your sleep is better when you do more moderate exercise." });
                 }
                 else if (rMinutesFairlyActive < 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "The more moderate exercise you did, the worse you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "Your sleep is better when you do less moderate exercise." });
                 }
             }
 
@@ -1833,11 +1835,11 @@ namespace SleepMakeSense.Controllers
             {
                 if (rMinutesVeryActive > 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the better you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "Your sleep is better when you do more intense exercise." });
                 }
                 else if (rMinutesVeryActive < 0)
                 {
-                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "The more intense exercise you did, the worse you sleep efficiency was." });
+                    sleepEffiencyCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "Your sleep is better when you do less intense exercise." });
                 }
             }
 
@@ -1874,11 +1876,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you intook, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You sleep more when you eat more.." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you intook, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You sleep less when you eat more." });
                     }
                 }
 
@@ -1887,11 +1889,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you intook, the more often were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You have more wake time when you eat more." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you intook, the less often were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You have less wake time when you eat more." });
                     }
                 }
 
@@ -1900,11 +1902,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you intook, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "Your sleep is better when you eat more." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you intook, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesIn", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "Your sleep is better when you eat less." });
                     }
                 }
 
@@ -1943,11 +1945,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you output, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You sleep more when you are more active." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you output, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You sleep less when you are more active." });
                     }
                 }
 
@@ -1956,11 +1958,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you output, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You have more wake time when you are more active." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you output, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "You have less wake time when you are more active." });
                     }
                 }
 
@@ -1969,11 +1971,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you output, the better you sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "Your sleep is better when you are more active." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "The more calories you output, the worse you sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CaloriesOut", Coefficient = pearson, Picture = "fa fa-cutlery fa-2", Note = "Your sleep is worse when you are more active." });
                     }
                 }
 
@@ -2012,11 +2014,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "The more water you drunk, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "You sleep more when you drink more water." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "The more water you drunk, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "You sleep less when you drink more water." });
                     }
                 }
 
@@ -2025,11 +2027,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "The more water you drunk, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "You have more wake time when you drink more water." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "The more water you drunk, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "You have less wake time when you drink more water." });
                     }
                 }
 
@@ -2038,11 +2040,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "The more water you drunk, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "Your sleep is better when you drink more water." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "The more water you drunk, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Water", Coefficient = pearson, Picture = "fa fa-beer fa-2", Note = "Your sleep is better when you drink less water." });
                     }
                 }
 
@@ -2081,11 +2083,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "The more steps you walked, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "You sleep more when you walk more." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "The more steps you walked, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "You sleep less when you walk more." });
                     }
                 }
 
@@ -2095,11 +2097,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "The more steps you walked, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "You have more wake time when you walk more." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "The more steps you walked, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "You have less wake time when you walk more." });
                     }
                 }
 
@@ -2108,11 +2110,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "The more steps you walked, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "Your sleep is better when you walk more" });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "The more steps you walked, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Steps", Coefficient = pearson, Picture = "fa fa-bicycle fa-2", Note = "Your sleep is worse when you walk more." });
                     }
                 }
 
@@ -2151,11 +2153,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "The heavier your weight was, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "You sleep more when you weigh more." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "The heavier your weight was, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "You sleep more when you weigh less." });
                     }
                 }
 
@@ -2165,11 +2167,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "The heavier your weight was, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "You have more wake time when you weigh more." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "The heavier your weight was, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "You have more wake time when you weigh less." });
                     }
                 }
 
@@ -2179,11 +2181,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "The heavier your weight was, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "Your sleep is better when you weigh more." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "The heavier your weight was, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Weight", Coefficient = pearson, Picture = "fa fa-balance-scale fa-2", Note = "Your sleep is better when you weigh less." });
                     }
                 }
 
@@ -2226,7 +2228,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeFat, Fat);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "Fat", Coefficient = pearson, Picture = "fa fa-child fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "Fat", Coefficient = pearson, Picture = "fa fa-child fa-2" });
                 }
 
                 pearson = Correlation.Pearson(tempSleepEfficiencyFat, Fat);
@@ -2275,11 +2277,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The more coffee you consumed during the day, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You sleep more when you take more coffee." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The more coffee you consumed during the day, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You sleep more when you take less coffee." });
                     }
                 }
 
@@ -2288,11 +2290,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The more coffee you consumed during the day, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You have more wake time when you take more coffee." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The more coffee you consumed during the day, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You have more wake time when you take less coffee." });
                     }
                 }
 
@@ -2301,11 +2303,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The more coffee you consumed during the day, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "Your sleep is better when you take more coffee." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The more coffee you consumed during the day, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Coffee", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "Your sleep is better when you take less coffee." });
                     }
                 }
 
@@ -2351,11 +2353,11 @@ namespace SleepMakeSense.Controllers
                     {
                         if (pearson > 0)
                         {
-                            minutesAsleepCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The earlier you drunk coffee, the shorter time you were asleep during night." });
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You sleep more when you take coffee late." });
                         }
                         else if (pearson < 0)
                         {
-                            minutesAsleepCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The earlier you drunk coffee, the longer time you were asleep during night." });
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You sleep less when you take coffee late." });
                         }
                     }
                 }
@@ -2365,11 +2367,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The earlier you drunk coffee, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You have more wake time when you take coffee late." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The earlier you drunk coffee, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "You have less wake time when you take coffee late." });
                     }
                 }
 
@@ -2378,11 +2380,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The earlier you drunk coffee, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "Your sleep is better when you take coffee late." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "The earlier you drunk coffee, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "CoffeeTime", Coefficient = pearson, Picture = "fa fa-coffee fa-2", Note = "Your sleep is worse when you take coffee late." });
                     }
                 }
 
@@ -2425,11 +2427,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "The more alcohol you consumed, the longer time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "You sleep more when you drink more alcohol." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "The more alcohol you consumed, the shorter time you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "You sleep less when you drink more alcohol." });
                     }
                 }
 
@@ -2439,11 +2441,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "The more alcohol you consumed, the more often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "You have more wake time when you drink more alcohol." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "The more alcohol you consumed, the less often you were awake during night." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "You have less wake time when you drink more alcohol." });
                     }
                 }
 
@@ -2453,11 +2455,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "The more alcohol you consumed, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "Your sleep is better when you drink more alcohol." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "The more alcohol you consumed, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Alcohol", Coefficient = pearson, Picture = "fa fa-glass fa-2", Note = "Your sleep is worse when you drink more alcohol." });
                     }
                 }
 
@@ -2500,11 +2502,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "The happier you felt before bed time, the more minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "You sleep more when you are happy." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "The happier you felt before bed time, the less minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "Oops! You sleep more when you are gloomy." });
                     }
                 }
 
@@ -2514,11 +2516,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "The happier you felt before bed time, the more often you were awake during sleep." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "You have more wake time when you are happy." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "The happier you felt before bed time, the less often you were awake during sleep." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "You have more wake time when you are gloomy." });
                     }
                 }
 
@@ -2528,11 +2530,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "The happier you felt before bed time, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "Your sleep is better when you are happy." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "Oops! The happier you felt before bed time, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Mood", Coefficient = pearson, Picture = "fa fa-smile-o fa-2", Note = "Oops! Your sleep is better when you are gloomy." });
                     }
                 }
 
@@ -2575,11 +2577,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "The more stressed you were, the more minutes you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "You sleep more when you are stressed." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "The more stressed you were, the less minutes you were asleep during night." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "You sleep more when you are relaxed." });
                     }
                 }
 
@@ -2588,11 +2590,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "The more stressed you were, the more awakenings you had." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "You have more wake time when you are stressed." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "The more stressed you were, the less awakenings you had." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "You have more wake time when you are relaxed." });
                     }
                 }
 
@@ -2601,11 +2603,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "The more stressed you were, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "Your sleep is better when you are stressed." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "The less stressed you were, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Stress", Coefficient = pearson, Picture = "fa fa-frown-o fa-2", Note = "Your sleep is better when you are relaxed." });
                     }
                 }
 
@@ -2647,11 +2649,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "The more tired you were before bed time, the more minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "You sleep more when you are tired." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "The more tired you were before bed time, the less minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "You sleep less when you are tired." });
                     }
                 }
 
@@ -2661,11 +2663,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "The more tired you were before bed time, the more often you were awake." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "You have more wake time when you are tired." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "The more tired you were before bed time, the less often you were awake." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "You have less wake time when you are tired" });
                     }
                 }
 
@@ -2674,11 +2676,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "The more tired you were before bed time, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "Your sleep is better when you are tired." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "The more tired you were before bed time, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Tiredness", Coefficient = pearson, Picture = "fa fa-bed fa-2", Note = "Your sleep is worse when you are tired." });
                     }
                 }
 
@@ -2722,11 +2724,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "The more you dreamed, the less minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "You sleep more when you have more dreams." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "The more you dreamed, the more minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "You sleep less when you have more dreams." });
                     }
                 }
 
@@ -2735,11 +2737,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "The more you dreamed, the less often you were awake." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "You have more wake time when you have more dreams." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "The more you dreamed, the more often you were awake." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "You have less wake time when you have more dreams." });
                     }
                 }
 
@@ -2748,11 +2750,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "The more you dreamed, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "Your sleep is better when you have more dreams." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "The more you dreamed, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Dream", Coefficient = pearson, Picture = "fa fa-cloud fa-2", Note = "Your sleep is better when you have less dreams." });
                     }
                 }
 
@@ -2793,11 +2795,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "The heavier you used digital devices before bed time, the more minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "You sleep more when you use digital device before bed time." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "The heavier you used digital devices before bed time, the less minutes you were asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "You sleep less when you use digital device before bed time." });
                     }
                 }
 
@@ -2806,11 +2808,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "The heavier you used digital devices before bed time, the more often you were awake." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "You have more wake time when you use digital device before bed time." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "The heavier you used digital devices before bed time, the less often you were awake." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "You have less wake time when you use digital device before bed time." });
                     }
                 }
 
@@ -2819,11 +2821,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "The heavier you used digital devices before bed time, the better your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "Your sleep is better when you use digital device before bed time." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "The heavier you used digital devices before bed time, the worse your sleep efficiency was." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "DigitalDevices", Coefficient = pearson, Picture = "fa fa-mobile fa-2", Note = "Your sleep is worse when you use digital device before bed time." });
                     }
                 }
 
@@ -2870,7 +2872,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeNapDuration, NapDuration);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "NapDuration", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "NapDuration", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
                 }
 
                 pearson = Correlation.Pearson(tempSleepEfficiencyNapDuration, NapDuration);
@@ -2922,7 +2924,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeNapTime, NapTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "NapTime", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "NapTime", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
                 }
 
                 pearson = Correlation.Pearson(tempSleepEfficiencyNapTime, NapTime);
@@ -2974,7 +2976,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeSocialFamily, SocialFamily);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
 
@@ -3027,7 +3029,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeSocialFriend, SocialFriend);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
 
@@ -3080,7 +3082,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeSocialMedia, SocialMedia);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
                 }
 
 
@@ -3132,7 +3134,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeDinnerTime, DinnerTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "DinnerTime", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "DinnerTime", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
                 }
 
                 pearson = Correlation.Pearson(tempSleepEfficiencyDinnerTime, DinnerTime);
@@ -3183,7 +3185,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeExerciseTime, ExerciseTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "ExerciseTime", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "ExerciseTime", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2" });
                 }
 
 
@@ -3239,7 +3241,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeAmbientTemp, AmbientTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "AmbientTemp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "AmbientTemp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
                 }
 
 
@@ -3293,7 +3295,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeAmbientHumd, AmbientHumd);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "AmbientHumd", Coefficient = pearson, Picture = "fa fa-tint fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "AmbientHumd", Coefficient = pearson, Picture = "fa fa-tint fa-2" });
                 }
 
 
@@ -3351,7 +3353,7 @@ namespace SleepMakeSense.Controllers
                 pearson = Correlation.Pearson(tempMinutesAwakeBodyTemp, BodyTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
-                    awakeCountCorrList.Add(new CorrList() { Name = "Body Temp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
+                    minutesAwakeCorrList.Add(new CorrList() { Name = "Body Temp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
                 }
 
                 pearson = Correlation.Pearson(tempSleepEfficiencyBodyTemp, BodyTemp);
@@ -3403,11 +3405,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "As the next period approaches, you tend to have longer time asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "You sleep more as the next period approaches." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "As the next period approaches, you tend to have shorter time asleep.." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "You sleep less as the next period approaches." });
                     }
                 }
 
@@ -3417,11 +3419,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "As the next period approaches, you tend to have more awakenings." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "You have more wake time as the next period approaches." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "As the next period approaches, you tend to have less awakenings." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "You have less wake time as the next period approaches." });
                     }
                 }
 
@@ -3431,11 +3433,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "As the next period approaches, your sleep efficiency tends to become better." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "Your sleep is better as the next period approaches." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "As the next period approaches, your sleep efficiency tends to become worse." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Hormone", Coefficient = pearson, Picture = "fa fa-female fa-2", Note = "Your sleep is worse as the next period approaches." });
                     }
                 }
 
@@ -3477,11 +3479,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "As you watch more TV, you tend to have longer time asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "You sleep more when you watch TV until late." });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "As you watch more TV, you tend to have shorter time asleep.." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "You sleep less when you watch TV until late." });
                     }
                 }
 
@@ -3491,11 +3493,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "As you watch more TV, you tend to have more awakenings." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "You have more wake time when you watch TV until late." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "As you watch more TV, you tend to have less awakenings." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "You have less wake time when you watch TV until late." });
                     }
                 }
 
@@ -3505,11 +3507,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "As you watch more TV, your sleep efficiency tends to become better." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "Your sleep is better when you watch TV until late." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "As you watch more TV, your sleep efficiency tends to become worse." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "WatchTV", Coefficient = pearson, Picture = "fa fa-television fa-2", Note = "Your sleep is worse when you watch TV until late." });
                     }
                 }
 
@@ -3551,11 +3553,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "If your workout is longer, you tend to have longer time asleep." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "You sleep more when you workout more" });
                     }
                     else if (pearson < 0)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "If your workout is longer, you tend to have shorter time asleep.." });
+                        minutesAsleepCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "You sleep less when you work out more." });
                     }
                 }
 
@@ -3565,11 +3567,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "If your workout is longer, you tend to have more awakenings." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "You have more wake time when you workout more." });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "If your workout is longer, you tend to have less awakenings." });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "You have less wake time when you workout more." });
                     }
                 }
 
@@ -3579,11 +3581,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "If your workout is longer, your sleep efficiency tends to become better." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "Your sleep is better when you workout more." });
                     }
                     else if (pearson < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "If your workout is longer, your sleep efficiency tends to become worse." });
+                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Exercise Duration", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2", Note = "Oops! Your sleep is worse when you workout more." });
                     }
                 }
 
@@ -3639,11 +3641,11 @@ namespace SleepMakeSense.Controllers
                 {
                     if (pearson > 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Snack Time", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Snack Time", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
                     }
                     else if (pearson < 0)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Snack Time", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
+                        minutesAwakeCorrList.Add(new CorrList() { Name = "Snack Time", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
                     }
                 }
 
@@ -3662,525 +3664,529 @@ namespace SleepMakeSense.Controllers
                 }
 
             }
-            // WorkTime -- DONE YEAH!!
 
-            if (CNTWorkTime > 4)
-            {
-                double[] WorkTime = new double[CNTWorkTime];
-                double[] tempMinutesAsleepWorkTime = new double[CNTWorkTime];
-                double[] tempMinutesAwakeWorkTime = new double[CNTWorkTime];
-                double[] tempSleepEfficiencyWorkTime = new double[CNTWorkTime];
+            /*
+          // WorkTime -- DONE YEAH!!
 
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
+          if (CNTWorkTime > 4)
+          {
+              double[] WorkTime = new double[CNTWorkTime];
+              double[] tempMinutesAsleepWorkTime = new double[CNTWorkTime];
+              double[] tempMinutesAwakeWorkTime = new double[CNTWorkTime];
+              double[] tempSleepEfficiencyWorkTime = new double[CNTWorkTime];
 
-                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
-                {
-                    if (daysData.WorkTime != null)
-                    {
-                        tempValue = Convert.ToDouble(daysData.WorkTime);
-                        if (tempValue > 0)
-                        {
-                            WorkTime[temp] = tempValue;
-                            tempMinutesAsleepWorkTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeWorkTime[temp] = MinutesAwake[identifier];
-                            tempSleepEfficiencyWorkTime[temp] = SleepEfficiency[identifier];
+              // counters back to zero
+              temp = 0;
+              identifier = 0;
 
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
+              foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
+              {
+                  if (daysData.WorkTime != null)
+                  {
+                      tempValue = Convert.ToDouble(daysData.WorkTime);
+                      if (tempValue > 0)
+                      {
+                          WorkTime[temp] = tempValue;
+                          tempMinutesAsleepWorkTime[temp] = MinutesAsleep[identifier];
+                          tempMinutesAwakeWorkTime[temp] = MinutesAwake[identifier];
+                          tempSleepEfficiencyWorkTime[temp] = SleepEfficiency[identifier];
 
-                pearson = Correlation.Pearson(tempMinutesAsleepWorkTime, WorkTime);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have longer time asleep." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have shorter time asleep.." });
-                    }
-                }
+                          temp++;
+                      }
+                  }
+                  identifier++;
+              }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWorkTime, WorkTime);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have more awakenings." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have less awakenings." });
-                    }
-                }
+
+              pearson = Correlation.Pearson(tempMinutesAsleepWorkTime, WorkTime);
+              if (Math.Abs(pearson) >= 0.3)
+              {
+                  if (pearson > 0)
+                  {
+                      minutesAsleepCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have longer time asleep." });
+                  }
+                  else if (pearson < 0)
+                  {
+                      minutesAsleepCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have shorter time asleep.." });
+                  }
+              }
 
 
-                pearson = Correlation.Pearson(tempSleepEfficiencyWorkTime, WorkTime);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, your sleep efficiency tends to become better." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, your sleep efficiency tends to become worse." });
-                    }
-                }
-
-            }
-            // Work Duration -- DONE YEAH!!
-
-            if (CNTWorkDuration > 4)
-            {
-                double[] WorkDuration = new double[CNTWorkDuration];
-                double[] tempMinutesAsleepWorkDuration = new double[CNTWorkDuration];
-                double[] tempMinutesAwakeWorkDuration = new double[CNTWorkDuration];
-                double[] tempSleepEfficiencyWorkDuration = new double[CNTWorkDuration];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
-                {
-                    if (daysData.WorkDuration != null)
-                    {
-                        tempValue = Convert.ToDouble(daysData.WorkDuration);
-                        if (tempValue > 0)
-                        {
-                            WorkDuration[temp] = tempValue;
-                            tempMinutesAsleepWorkDuration[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeWorkDuration[temp] = MinutesAwake[identifier];
-                            tempSleepEfficiencyWorkDuration[temp] = SleepEfficiency[identifier];
-
-                            temp++;
-                        }
-                    }
-                    identifier++;
-                }
-
-                pearson = Correlation.Pearson(tempMinutesAsleepWorkDuration, WorkDuration);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have longer time asleep." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have shorter time asleep.." });
-                    }
-                }
+              pearson = Correlation.Pearson(tempMinutesAwakeWorkTime, WorkTime);
+              if (Math.Abs(pearson) >= 0.3)
+              {
+                  if (pearson > 0)
+                  {
+                      minutesAwakeCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have more awakenings." });
+                  }
+                  else if (pearson < 0)
+                  {
+                      minutesAwakeCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, you tend to have less awakenings." });
+                  }
+              }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWorkDuration, WorkDuration);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have more awakenings." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have less awakenings." });
-                    }
-                }
+              pearson = Correlation.Pearson(tempSleepEfficiencyWorkTime, WorkTime);
+              if (Math.Abs(pearson) >= 0.3)
+              {
+                  if (pearson > 0)
+                  {
+                      sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, your sleep efficiency tends to become better." });
+                  }
+                  else if (pearson < 0)
+                  {
+                      sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Time", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "When your work is later, your sleep efficiency tends to become worse." });
+                  }
+              }
+
+          }
+          // Work Duration -- DONE YEAH!!
+
+          if (CNTWorkDuration > 4)
+          {
+              double[] WorkDuration = new double[CNTWorkDuration];
+              double[] tempMinutesAsleepWorkDuration = new double[CNTWorkDuration];
+              double[] tempMinutesAwakeWorkDuration = new double[CNTWorkDuration];
+              double[] tempSleepEfficiencyWorkDuration = new double[CNTWorkDuration];
+
+              // counters back to zero
+              temp = 0;
+              identifier = 0;
+
+              foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
+              {
+                  if (daysData.WorkDuration != null)
+                  {
+                      tempValue = Convert.ToDouble(daysData.WorkDuration);
+                      if (tempValue > 0)
+                      {
+                          WorkDuration[temp] = tempValue;
+                          tempMinutesAsleepWorkDuration[temp] = MinutesAsleep[identifier];
+                          tempMinutesAwakeWorkDuration[temp] = MinutesAwake[identifier];
+                          tempSleepEfficiencyWorkDuration[temp] = SleepEfficiency[identifier];
+
+                          temp++;
+                      }
+                  }
+                  identifier++;
+              }
+
+              pearson = Correlation.Pearson(tempMinutesAsleepWorkDuration, WorkDuration);
+              if (Math.Abs(pearson) >= 0.3)
+              {
+                  if (pearson > 0)
+                  {
+                      minutesAsleepCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have longer time asleep." });
+                  }
+                  else if (pearson < 0)
+                  {
+                      minutesAsleepCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have shorter time asleep.." });
+                  }
+              }
 
 
-                pearson = Correlation.Pearson(tempSleepEfficiencyWorkDuration, WorkDuration);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, your sleep efficiency tends to become better." });
-                    }
-                    else if (pearson < 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, your sleep efficiency tends to become worse." });
-                    }
-                }
+              pearson = Correlation.Pearson(tempMinutesAwakeWorkDuration, WorkDuration);
+              if (Math.Abs(pearson) >= 0.3)
+              {
+                  if (pearson > 0)
+                  {
+                      minutesAwakeCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have more awakenings." });
+                  }
+                  else if (pearson < 0)
+                  {
+                      minutesAwakeCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, you tend to have less awakenings." });
+                  }
+              }
 
-            }
+
+              pearson = Correlation.Pearson(tempSleepEfficiencyWorkDuration, WorkDuration);
+              if (Math.Abs(pearson) >= 0.3)
+              {
+                  if (pearson > 0)
+                  {
+                      sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, your sleep efficiency tends to become better." });
+                  }
+                  else if (pearson < 0)
+                  {
+                      sleepEffiencyCorrList.Add(new CorrList() { Name = "Work Duration", Coefficient = pearson, Picture = "fa fa-briefcase fa-2", Note = "Working longer, your sleep efficiency tends to become worse." });
+                  }
+              }
+
+          }
+          */
 
             // Music -- DONE YEAH!!
 
             if (CNTMusicDuration > 4)
-            {
-                double[] Music = new double[CNTMusicDuration];
-                double[] tempMinutesAsleepMusic = new double[CNTMusicDuration];
-                double[] tempMinutesAwakeMusic = new double[CNTMusicDuration];
-                double[] tempSleepEfficiencyMusic = new double[CNTMusicDuration];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
-                    if (daysData.MusicDuration != null)
-                    {
-                        tempValue = Convert.ToDouble(daysData.MusicDuration);
-                        if (tempValue > 0)
-                        {
-                            Music[temp] = tempValue;
-                            tempMinutesAsleepMusic[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeMusic[temp] = MinutesAwake[identifier];
-                            tempSleepEfficiencyMusic[temp] = SleepEfficiency[identifier];
+                    double[] Music = new double[CNTMusicDuration];
+                    double[] tempMinutesAsleepMusic = new double[CNTMusicDuration];
+                    double[] tempMinutesAwakeMusic = new double[CNTMusicDuration];
+                    double[] tempSleepEfficiencyMusic = new double[CNTMusicDuration];
 
-                            temp++;
+                    // counters back to zero
+                    temp = 0;
+                    identifier = 0;
+
+                    foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
+                    {
+                        if (daysData.MusicDuration != null)
+                        {
+                            tempValue = Convert.ToDouble(daysData.MusicDuration);
+                            if (tempValue > 0)
+                            {
+                                Music[temp] = tempValue;
+                                tempMinutesAsleepMusic[temp] = MinutesAsleep[identifier];
+                                tempMinutesAwakeMusic[temp] = MinutesAwake[identifier];
+                                tempSleepEfficiencyMusic[temp] = SleepEfficiency[identifier];
+
+                                temp++;
+                            }
+                        }
+                        identifier++;
+                    }
+
+                    pearson = Correlation.Pearson(tempMinutesAsleepMusic, Music);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
                         }
                     }
-                    identifier++;
-                }
 
-                pearson = Correlation.Pearson(tempMinutesAsleepMusic, Music);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
+
+                    pearson = Correlation.Pearson(tempMinutesAwakeMusic, Music);
+                    if (Math.Abs(pearson) >= 0.3)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempMinutesAwakeMusic, Music);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencyMusic, Music);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
-                    }
-                }
-
-            }
-            // Social Media-- DONE YEAH!!
-
-            if (CNTSocialFriend > 4)
-            {
-                double[] SocialMedia = new double[CNTSocialFriend];
-                double[] tempMinutesAsleepSocialMedia = new double[CNTSocialFriend];
-                double[] tempMinutesAwakeSocialMedia = new double[CNTSocialFriend];
-                double[] tempSleepEfficiencySocialMedia = new double[CNTSocialFriend];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
-                {
-                    if (daysData.SocialFriend != null)
-                    {
-                        tempValue = Convert.ToDouble(daysData.SocialFriend);
-                        if (tempValue > 0)
+                        if (pearson > 0)
                         {
-                            SocialMedia[temp] = tempValue;
-                            tempMinutesAsleepSocialMedia[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeSocialMedia[temp] = MinutesAwake[identifier];
-                            tempSleepEfficiencySocialMedia[temp] = SleepEfficiency[identifier];
-
-                            temp++;
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
                         }
                     }
-                    identifier++;
-                }
 
-                pearson = Correlation.Pearson(tempMinutesAsleepSocialMedia, SocialMedia);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
+
+                    pearson = Correlation.Pearson(tempSleepEfficiencyMusic, Music);
+                    if (Math.Abs(pearson) >= 0.3)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempMinutesAwakeSocialMedia, SocialMedia);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencySocialMedia, SocialMedia);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
-                    }
-                }
-
-            }
-
-
-            // Social Media-- DONE YEAH!!
-
-            if (CNTGamesDuration > 4)
-            {
-                double[] VideoGames = new double[CNTGamesDuration];
-                double[] tempMinutesAsleepVideoGames = new double[CNTGamesDuration];
-                double[] tempMinutesAwakeVideoGames = new double[CNTGamesDuration];
-                double[] tempSleepEfficiencyVideoGames = new double[CNTGamesDuration];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
-                {
-                    if (daysData.GamesDuration != null)
-                    {
-                        tempValue = Convert.ToDouble(daysData.GamesDuration);
-                        if (tempValue > 0)
+                        if (pearson > 0)
                         {
-                            VideoGames[temp] = tempValue;
-                            tempMinutesAsleepVideoGames[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeVideoGames[temp] = MinutesAwake[identifier];
-                            tempSleepEfficiencyVideoGames[temp] = SleepEfficiency[identifier];
-
-                            temp++;
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Music", Coefficient = pearson, Picture = "fa fa-headphones fa-2" });
                         }
                     }
-                    identifier++;
+
                 }
+                // Social Media-- DONE YEAH!!
 
-                pearson = Correlation.Pearson(tempMinutesAsleepVideoGames, VideoGames);
-                if (Math.Abs(pearson) >= 0.3)
+                if (CNTSocialFriend > 4)
                 {
-                    if (pearson > 0)
+                    double[] SocialMedia = new double[CNTSocialFriend];
+                    double[] tempMinutesAsleepSocialMedia = new double[CNTSocialFriend];
+                    double[] tempMinutesAwakeSocialMedia = new double[CNTSocialFriend];
+                    double[] tempSleepEfficiencySocialMedia = new double[CNTSocialFriend];
+
+                    // counters back to zero
+                    temp = 0;
+                    identifier = 0;
+
+                    foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempMinutesAwakeVideoGames, VideoGames);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
-                    }
-                }
-
-
-                pearson = Correlation.Pearson(tempSleepEfficiencyVideoGames, VideoGames);
-                if (Math.Abs(pearson) >= 0.3)
-                {
-                    if (pearson > 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
-                    }
-                    else if (pearson < 0)
-                    {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
-                    }
-                }
-
-            }
-
-            // Social Media-- DONE YEAH!!
-
-            if (CNTSchoolStress > 4)
-            {
-                double[] Assignments = new double[CNTSchoolStress];
-                double[] tempMinutesAsleepAssignments = new double[CNTSchoolStress];
-                double[] tempMinutesAwakeAssignments = new double[CNTSchoolStress];
-                double[] tempSleepEfficiencyAssignments = new double[CNTSchoolStress];
-
-                // counters back to zero
-                temp = 0;
-                identifier = 0;
-
-                foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
-                {
-                    if (daysData.SchoolStress != null)
-                    {
-                        tempValue = Convert.ToDouble(daysData.SchoolStress);
-                        if (tempValue > 0)
+                        if (daysData.SocialFriend != null)
                         {
-                            Assignments[temp] = tempValue;
-                            tempMinutesAsleepAssignments[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeAssignments[temp] = MinutesAwake[identifier];
-                            tempSleepEfficiencyAssignments[temp] = SleepEfficiency[identifier];
+                            tempValue = Convert.ToDouble(daysData.SocialFriend);
+                            if (tempValue > 0)
+                            {
+                                SocialMedia[temp] = tempValue;
+                                tempMinutesAsleepSocialMedia[temp] = MinutesAsleep[identifier];
+                                tempMinutesAwakeSocialMedia[temp] = MinutesAwake[identifier];
+                                tempSleepEfficiencySocialMedia[temp] = SleepEfficiency[identifier];
 
-                            temp++;
+                                temp++;
+                            }
+                        }
+                        identifier++;
+                    }
+
+                    pearson = Correlation.Pearson(tempMinutesAsleepSocialMedia, SocialMedia);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
                         }
                     }
-                    identifier++;
+
+
+                    pearson = Correlation.Pearson(tempMinutesAwakeSocialMedia, SocialMedia);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
+                        }
+                    }
+
+
+                    pearson = Correlation.Pearson(tempSleepEfficiencySocialMedia, SocialMedia);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Social Media", Coefficient = pearson, Picture = "fa fa-facebook fa-2" });
+                        }
+                    }
+
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAsleepAssignments, Assignments);
-                if (Math.Abs(pearson) >= 0.3)
+
+                // Social Media-- DONE YEAH!!
+
+                if (CNTGamesDuration > 4)
                 {
-                    if (pearson > 0)
+                    double[] VideoGames = new double[CNTGamesDuration];
+                    double[] tempMinutesAsleepVideoGames = new double[CNTGamesDuration];
+                    double[] tempMinutesAwakeVideoGames = new double[CNTGamesDuration];
+                    double[] tempSleepEfficiencyVideoGames = new double[CNTGamesDuration];
+
+                    // counters back to zero
+                    temp = 0;
+                    identifier = 0;
+
+                    foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        if (daysData.GamesDuration != null)
+                        {
+                            tempValue = Convert.ToDouble(daysData.GamesDuration);
+                            if (tempValue > 0)
+                            {
+                                VideoGames[temp] = tempValue;
+                                tempMinutesAsleepVideoGames[temp] = MinutesAsleep[identifier];
+                                tempMinutesAwakeVideoGames[temp] = MinutesAwake[identifier];
+                                tempSleepEfficiencyVideoGames[temp] = SleepEfficiency[identifier];
+
+                                temp++;
+                            }
+                        }
+                        identifier++;
                     }
-                    else if (pearson < 0)
+
+                    pearson = Correlation.Pearson(tempMinutesAsleepVideoGames, VideoGames);
+                    if (Math.Abs(pearson) >= 0.3)
                     {
-                        minutesAsleepCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        if (pearson > 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
+                        }
                     }
+
+
+                    pearson = Correlation.Pearson(tempMinutesAwakeVideoGames, VideoGames);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
+                        }
+                    }
+
+
+                    pearson = Correlation.Pearson(tempSleepEfficiencyVideoGames, VideoGames);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Video Games", Coefficient = pearson, Picture = "fa fa-gamepad fa-2" });
+                        }
+                    }
+
                 }
 
+                // Social Media-- DONE YEAH!!
 
-                pearson = Correlation.Pearson(tempMinutesAwakeAssignments, Assignments);
-                if (Math.Abs(pearson) >= 0.3)
+                if (CNTSchoolStress > 4)
                 {
-                    if (pearson > 0)
+                    double[] Assignments = new double[CNTSchoolStress];
+                    double[] tempMinutesAsleepAssignments = new double[CNTSchoolStress];
+                    double[] tempMinutesAwakeAssignments = new double[CNTSchoolStress];
+                    double[] tempSleepEfficiencyAssignments = new double[CNTSchoolStress];
+
+                    // counters back to zero
+                    temp = 0;
+                    identifier = 0;
+
+                    foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        if (daysData.SchoolStress != null)
+                        {
+                            tempValue = Convert.ToDouble(daysData.SchoolStress);
+                            if (tempValue > 0)
+                            {
+                                Assignments[temp] = tempValue;
+                                tempMinutesAsleepAssignments[temp] = MinutesAsleep[identifier];
+                                tempMinutesAwakeAssignments[temp] = MinutesAwake[identifier];
+                                tempSleepEfficiencyAssignments[temp] = SleepEfficiency[identifier];
+
+                                temp++;
+                            }
+                        }
+                        identifier++;
                     }
-                    else if (pearson < 0)
+
+                    pearson = Correlation.Pearson(tempMinutesAsleepAssignments, Assignments);
+                    if (Math.Abs(pearson) >= 0.3)
                     {
-                        awakeCountCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        if (pearson > 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAsleepCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        }
+                    }
+
+
+                    pearson = Correlation.Pearson(tempMinutesAwakeAssignments, Assignments);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            minutesAwakeCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        }
+                    }
+
+
+                    pearson = Correlation.Pearson(tempSleepEfficiencyAssignments, Assignments);
+                    if (Math.Abs(pearson) >= 0.3)
+                    {
+                        if (pearson > 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        }
+                        else if (pearson < 0)
+                        {
+                            sleepEffiencyCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        }
                     }
                 }
 
-
-                pearson = Correlation.Pearson(tempSleepEfficiencyAssignments, Assignments);
-                if (Math.Abs(pearson) >= 0.3)
+                // 20170216 Pandita: Correlation Coefficients are all positive values!!! "positive" indicates color
+                foreach (var entry in minutesAsleepCorrList)
                 {
-                    if (pearson > 0)
+                    if (entry.Coefficient < 0)
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        //entry.Coefficient = (entry.Coefficient) * -1;
+                        entry.Positive = false;
+                        // 20170216 Pandita: bad factor, red color
                     }
-                    else if (pearson < 0)
+                    else
                     {
-                        sleepEffiencyCorrList.Add(new CorrList() { Name = "Assignments & Exams", Coefficient = pearson, Picture = "fa fa-graduation-cap fa-2" });
+                        entry.Positive = true; // good factor, blue color
+                                               // rather than "Positive", maybe "Good" is more expressive?
+
                     }
                 }
+                // 20170216 Pandita: red color indicates bad factor, not negative correlation. 
+                // So for awakeCount, negatively correlated factor should be blue color, 
+                // as it's a good factor for this sleep metric and lower value of this factor is preferred 
+                /*
+                foreach (var entry in awakeCountCorrList)
+                {
+                    if (entry.Coefficient < 0)
+                    {
+                        entry.Coefficient = (entry.Coefficient) * -1;
+                        entry.Positive = false;
+                    }
+                    else
+                    {
+                        entry.Positive = true;
+                    }
+                }*/
+                foreach (var entry in awakeCountCorrList)
+                {
+                    if (entry.Coefficient < 0)
+                    {
+                        //entry.Coefficient = (entry.Coefficient) * -1;
+                        entry.Positive = true; // if negatively correlated, then a good factor
+                    }
+                    else
+                    {
+                        entry.Positive = false;
+                    }
+                }
+                foreach (var entry in minutesAwakeCorrList)
+                {
+                    if (entry.Coefficient < 0)
+                    {
+                        //entry.Coefficient = (entry.Coefficient) * -1;
+                        entry.Positive = true; // if negatively correlated, then a good factor
+                    }
+                    else
+                    {
+                        entry.Positive = false;
+                    }
+                }
+                foreach (var entry in sleepEffiencyCorrList)
+                {
+                    if (entry.Coefficient < 0)
+                    {
+                        //entry.Coefficient = (entry.Coefficient) * -1;
+                        entry.Positive = false;
+                    }
+                    else
+                    {
+                        entry.Positive = true;
+                    }
+                }
+
+                syncViewModel.MinutesAsleepCorrList = minutesAsleepCorrList.OrderByDescending(o => o.Coefficient).ToList();
+                //syncViewModel.AwakeCountCorrList = awakeCountCorrList.OrderByDescending(o => o.Coefficient).ToList();
+                syncViewModel.SleepEffiencyCorrList = sleepEffiencyCorrList.OrderByDescending(o => o.Coefficient).ToList();
+                syncViewModel.MinutesAwakeCorrList = minutesAwakeCorrList.OrderByDescending(o => o.Coefficient).ToList();
+
+                return syncViewModel;
+
             }
-
-            // 20170216 Pandita: Correlation Coefficients are all positive values!!! "positive" indicates color
-            foreach (var entry in minutesAsleepCorrList)
-            {
-                if (entry.Coefficient < 0)
-                {
-                    //entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = false;
-                    // 20170216 Pandita: bad factor, red color
-                }
-                else
-                {
-                    entry.Positive = true; // good factor, blue color
-                                           // rather than "Positive", maybe "Good" is more expressive?
-
-                }
-            }
-            // 20170216 Pandita: red color indicates bad factor, not negative correlation. 
-            // So for awakeCount, negatively correlated factor should be blue color, 
-            // as it's a good factor for this sleep metric and lower value of this factor is preferred 
-            /*
-            foreach (var entry in awakeCountCorrList)
-            {
-                if (entry.Coefficient < 0)
-                {
-                    entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = false;
-                }
-                else
-                {
-                    entry.Positive = true;
-                }
-            }*/
-            foreach (var entry in awakeCountCorrList)
-            {
-                if (entry.Coefficient < 0)
-                {
-                    //entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = true; // if negatively correlated, then a good factor
-                }
-                else
-                {
-                    entry.Positive = false;
-                }
-            }
-            foreach (var entry in minutesAwakeCorrList)
-            {
-                if (entry.Coefficient < 0)
-                {
-                    //entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = true; // if negatively correlated, then a good factor
-                }
-                else
-                {
-                    entry.Positive = false;
-                }
-            }
-            foreach (var entry in sleepEffiencyCorrList)
-            {
-                if (entry.Coefficient < 0)
-                {
-                    //entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = false;
-                }
-                else
-                {
-                    entry.Positive = true;
-                }
-            }
-
-            syncViewModel.MinutesAsleepCorrList = minutesAsleepCorrList.OrderByDescending(o => o.Coefficient).ToList();
-            //syncViewModel.AwakeCountCorrList = awakeCountCorrList.OrderByDescending(o => o.Coefficient).ToList();
-            syncViewModel.SleepEffiencyCorrList = sleepEffiencyCorrList.OrderByDescending(o => o.Coefficient).ToList();
-            syncViewModel.MinutesAwakeCorrList = minutesAwakeCorrList.OrderByDescending(o => o.Coefficient).ToList();
-
-            return syncViewModel;
-
         }
     }
-}
-

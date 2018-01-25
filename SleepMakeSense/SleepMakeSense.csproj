@@ -289,16 +289,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\ApplicationDbContext\201801240510161_test.cs" />
-    <Compile Include="Migrations\ApplicationDbContext\201801240510161_test.Designer.cs">
-      <DependentUpon>201801240510161_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ApplicationDbContext\ConfigApplicationDbContext.cs" />
-    <Compile Include="Migrations\SleepbetaDbContext\201801240514296_test1.cs" />
-    <Compile Include="Migrations\SleepbetaDbContext\201801240514296_test1.Designer.cs">
-      <DependentUpon>201801240514296_test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SleepbetaDbContext\ConfigSleepbetaDbContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\DiaryData.cs" />
@@ -468,14 +458,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\ApplicationDbContext\201801240510161_test.resx">
-      <DependentUpon>201801240510161_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201801240514296_test1.resx">
-      <DependentUpon>201801240514296_test1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

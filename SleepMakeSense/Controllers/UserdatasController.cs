@@ -76,7 +76,7 @@ namespace SleepMakeSense.Controllers
         // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Steps, MinutesAsleep, DateStamp, Water, Distance, MinutesSedentary, MinutesVeryActive, MinutesAwake, TimeEnteredBed, Weight, MinutesAwake, TimeInBed, MinutesToFallAsleep, MinutesAfterWakeUp, CaloriesIn, CaloriesOut, MinutesLightlyActive, MinutesFairlyActive, ActivityCalories, BMI,Fat,SleepEfficiency,WakeUpFreshness,Coffee,CoffeeTime,Alcohol,Mood,Stress,Tiredness,Dream,DigitalDev, Light,NapDuration,NapTime,SocialFamily,DinnerTime,AmbientTemp,AmbientHumd,ExerciseTime,BodyTemp,Hormone,FitbitData,DiaryDataNight,WatchTV,ExerciseDuration,ExerciseIntensity,ExerciseType,Snack,Snack2,Job,Job2,Phone,SleepDiary,Music,MusicDuration,MusicType,SocialMedia,Games,Assessment,AspNetUserId")] Userdata userdata)
+        public ActionResult Create([Bind(Include = "Steps, MinutesAsleep, DateStamp, Water, Distance, MinutesSedentary, MinutesVeryActive, AwakeningsCount, TimeEnteredBed, Weight, MinutesAwake, TimeInBed, MinutesToFallAsleep, MinutesAfterWakeUp, CaloriesIn, CaloriesOut, MinutesLightlyActive, MinutesFairlyActive, ActivityCalories, BMI,Fat,SleepEfficiency,WakeUpFreshness,Coffee,CoffeeTime,Alcohol,Mood,Stress,Tiredness,Dream,DigitalDev, Light,NapDuration,NapTime,SocialFamily,DinnerTime,AmbientTemp,AmbientHumd,ExerciseTime,BodyTemp,Hormone,FitbitData,DiaryDataNight,WatchTV,ExerciseDuration,ExerciseIntensity,ExerciseType,Snack,Snack2,Job,Job2,Phone,SleepDiary,Music,MusicDuration,MusicType,SocialMedia,Games,Assessment,AspNetUserId")] Userdata userdata)
         {
             var data = userdata;
             if (ModelState.IsValid)
@@ -116,7 +116,7 @@ namespace SleepMakeSense.Controllers
         // For more information , http: Please refer to the //go.microsoft.com/fwlink/ LinkId = 317598?.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Steps, MinutesAsleep, DateStamp, Water, Distance, MinutesSedentary, MinutesVeryActive, MinutesAwake, TimeEnteredBed, Weight, MinutesAwake, TimeInBed, MinutesToFallAsleep, MinutesAfterWakeUp, CaloriesIn, CaloriesOut, MinutesLightlyActive, MinutesFairlyActive, ActivityCalories, BMI,Fat,SleepEfficiency,WakeUpFreshness,Coffee,CoffeeTime,Alcohol,Mood,Stress,Tiredness,Dream,DigitalDev, Light,NapDuration,NapTime,SocialFamily,DinnerTime,AmbientTemp,AmbientHumd,ExerciseTime,BodyTemp,Hormone,FitbitData,DiaryDataNight,WatchTV,ExerciseDuration,ExerciseIntensity,ExerciseType,Snack,Snack2,Job,Job2,Phone,SleepDiary,Music,MusicDuration,MusicType,SocialMedia,Games,Assessment,AspNetUserId")] Userdata userdata)
+        public ActionResult Edit([Bind(Include = "Steps, MinutesAsleep, DateStamp, Water, Distance, MinutesSedentary, MinutesVeryActive, AwakeningsCount, TimeEnteredBed, Weight, MinutesAwake, TimeInBed, MinutesToFallAsleep, MinutesAfterWakeUp, CaloriesIn, CaloriesOut, MinutesLightlyActive, MinutesFairlyActive, ActivityCalories, BMI,Fat,SleepEfficiency,WakeUpFreshness,Coffee,CoffeeTime,Alcohol,Mood,Stress,Tiredness,Dream,DigitalDev, Light,NapDuration,NapTime,SocialFamily,DinnerTime,AmbientTemp,AmbientHumd,ExerciseTime,BodyTemp,Hormone,FitbitData,DiaryDataNight,WatchTV,ExerciseDuration,ExerciseIntensity,ExerciseType,Snack,Snack2,Job,Job2,Phone,SleepDiary,Music,MusicDuration,MusicType,SocialMedia,Games,Assessment,AspNetUserId")] Userdata userdata)
         {
             if (ModelState.IsValid)
             {
@@ -600,7 +600,6 @@ namespace SleepMakeSense.Controllers
             List<CorrList> minutesAsleepCorrList = new List<CorrList>();
             List<CorrList> awakeCountCorrList = new List<CorrList>();
             List<CorrList> sleepEffiencyCorrList = new List<CorrList>();
-            List<CorrList> minutesAwakeCorrList = new List<CorrList>();
             ViewBag.FitbitSynced = true;
 
 
@@ -685,6 +684,9 @@ namespace SleepMakeSense.Controllers
 
 
             int countOfDaysData = userDatas.Count;
+
+
+
 
             double[] MinutesAsleep = new double[countOfDaysData];
             double[] MinutesAwake = new double[countOfDaysData];
@@ -1729,64 +1731,6 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-
-            // MinutesAwake
-            rMinutesSedentary = Correlation.Pearson(MinutesAwake, MinutesSedentary);
-            if (Math.Abs(rMinutesSedentary) >= 0.3)
-            {
-                if (rMinutesSedentary > 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You had more minutes awake when you were more sedentary." });
-                }
-                else if (rMinutesSedentary < 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesSedentary", Coefficient = rMinutesSedentary, Picture = "", Note = "You had less minutes awake when you were more sedentary." });
-                }
-            }
-
-
-            rMinutesLightlyActive = Correlation.Pearson(MinutesAwake, MinutesLightlyActive);
-            if (Math.Abs(rMinutesLightlyActive) >= 0.3)
-            {
-                if (rMinutesLightlyActive > 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You had more minutes awake when you did more light exercise." });
-                }
-                else if (rMinutesLightlyActive < 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesLightlyActive", Coefficient = rMinutesLightlyActive, Picture = "", Note = "You had less minutes awake when you did more light exercise." });
-                }
-            }
-
-            rMinutesFairlyActive = Correlation.Pearson(MinutesAwake, MinutesFairlyActive);
-            if (Math.Abs(rMinutesFairlyActive) >= 0.3)
-            {
-                if (rMinutesFairlyActive > 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You had more minutes awake when you did more moderate exercise." });
-                    }
-                else if (rMinutesLightlyActive < 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesFairlyActive", Coefficient = rMinutesFairlyActive, Picture = "", Note = "You had less minutes awake when you did more moderate exercise." });
-                }
-            }
-
-            rMinutesVeryActive = Correlation.Pearson(MinutesAwake, MinutesVeryActive);
-            if (Math.Abs(rMinutesVeryActive) >= 0.3)
-            {
-                if (rMinutesVeryActive > 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "You had more minutes awake when you did more intense exercise." });
-                }
-                else if (rMinutesVeryActive < 0)
-                {
-                    minutesAwakeCorrList.Add(new CorrList() { Name = "MinutesVeryActive", Coefficient = rMinutesVeryActive, Picture = "", Note = "You had less minutes awake when you did more intense exercise." });
-                }
-            }
-
-
-
-
             // SleepEfficiency
             rMinutesSedentary = Correlation.Pearson(SleepEfficiency, MinutesSedentary);
             if (Math.Abs(rMinutesSedentary) >= 0.3)
@@ -1850,7 +1794,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] CaloriesIn = new double[CNTCaloriesIn];
                 double[] tempMinutesAsleepCalariesIn = new double[CNTCaloriesIn];
-                double[] tempMinutesAwakeCalariesIn = new double[CNTCaloriesIn];
+                double[] tempAwakeningsCountCalariesIn = new double[CNTCaloriesIn];
                 double[] tempSleepEfficiencyCalariesIn = new double[CNTCaloriesIn];
 
                 foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
@@ -1861,7 +1805,7 @@ namespace SleepMakeSense.Controllers
                     {
                         CaloriesIn[temp] = tempValue;
                         tempMinutesAsleepCalariesIn[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeCalariesIn[temp] = MinutesAwake[identifier];
+                        tempAwakeningsCountCalariesIn[temp] = AwakeningsCount[identifier];
                         tempSleepEfficiencyCalariesIn[temp] = SleepEfficiency[identifier];
 
                         temp++;
@@ -1882,7 +1826,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeCalariesIn, CaloriesIn);
+                pearson = Correlation.Pearson(tempAwakeningsCountCalariesIn, CaloriesIn);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -1916,7 +1860,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] CaloriesOut = new double[CNTCaloriesOut];
                 double[] tempMinutesAsleepCalariesOut = new double[CNTCaloriesOut];
-                double[] tempMinutesAwakeCalariesOut = new double[CNTCaloriesOut];
+                double[] tempAwakeningsCountCalariesOut = new double[CNTCaloriesOut];
                 double[] tempSleepEfficiencyCalariesOut = new double[CNTCaloriesOut];
 
                 // counters back to zero
@@ -1930,7 +1874,7 @@ namespace SleepMakeSense.Controllers
                     {
                         CaloriesOut[temp] = tempValue;
                         tempMinutesAsleepCalariesOut[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeCalariesOut[temp] = MinutesAwake[identifier];
+                        tempAwakeningsCountCalariesOut[temp] = AwakeningsCount[identifier];
                         tempSleepEfficiencyCalariesOut[temp] = SleepEfficiency[identifier];
 
                         temp++;
@@ -1951,7 +1895,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeCalariesOut, CaloriesOut);
+                pearson = Correlation.Pearson(tempAwakeningsCountCalariesOut, CaloriesOut);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -1985,7 +1929,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Water = new double[CNTWater];
                 double[] tempMinutesAsleepWater = new double[CNTWater];
-                double[] tempMinutesAwakeWater = new double[CNTWater];
+                double[] tempAwakeningsCountWater = new double[CNTWater];
                 double[] tempSleepEfficiencyWater = new double[CNTWater];
 
                 // counters back to zero
@@ -1999,7 +1943,7 @@ namespace SleepMakeSense.Controllers
                     {
                         Water[temp] = tempValue;
                         tempMinutesAsleepWater[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeWater[temp] = MinutesAwake[identifier];
+                        tempAwakeningsCountWater[temp] = AwakeningsCount[identifier];
                         tempSleepEfficiencyWater[temp] = SleepEfficiency[identifier];
 
                         temp++;
@@ -2020,7 +1964,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWater, Water);
+                pearson = Correlation.Pearson(tempAwakeningsCountWater, Water);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2054,7 +1998,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Steps = new double[CNTSteps];
                 double[] tempMinutesAsleepSteps = new double[CNTSteps];
-                double[] tempMinutesAwakeSteps = new double[CNTSteps]; ;
+                double[] tempAwakeningsCountSteps = new double[CNTSteps]; ;
                 double[] tempSleepEfficiencySteps = new double[CNTSteps];
 
                 // counters back to zero
@@ -2068,7 +2012,7 @@ namespace SleepMakeSense.Controllers
                     {
                         Steps[temp] = tempValue;
                         tempMinutesAsleepSteps[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeSteps[temp] = MinutesAwake[identifier];
+                        tempAwakeningsCountSteps[temp] = AwakeningsCount[identifier];
                         tempSleepEfficiencySteps[temp] = SleepEfficiency[identifier];
 
                         temp++;
@@ -2090,7 +2034,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeSteps, Steps);
+                pearson = Correlation.Pearson(tempAwakeningsCountSteps, Steps);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2124,7 +2068,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Weight = new double[CNTWeight];
                 double[] tempMinutesAsleepWeight = new double[CNTWeight];
-                double[] tempMinutesAwakeWeight = new double[CNTWeight];
+                double[] tempAwakeningsCountWeight = new double[CNTWeight];
                 double[] tempSleepEfficiencyWeight = new double[CNTWeight];
 
                 // counters back to zero
@@ -2138,7 +2082,7 @@ namespace SleepMakeSense.Controllers
                     {
                         Weight[temp] = tempValue;
                         tempMinutesAsleepWeight[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeWeight[temp] = MinutesAwake[identifier];
+                        tempAwakeningsCountWeight[temp] = AwakeningsCount[identifier];
                         tempSleepEfficiencyWeight[temp] = SleepEfficiency[identifier];
 
                         temp++;
@@ -2160,7 +2104,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWeight, Weight);
+                pearson = Correlation.Pearson(tempAwakeningsCountWeight, Weight);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2195,7 +2139,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Fat = new double[CNTFat];
                 double[] tempMinutesAsleepFat = new double[CNTFat];
-                double[] tempMinutesAwakeFat = new double[CNTFat];
+                double[] tempAwakeningsCountFat = new double[CNTFat];
                 double[] tempSleepEfficiencyFat = new double[CNTFat];
 
                 // counters back to zero
@@ -2209,7 +2153,7 @@ namespace SleepMakeSense.Controllers
                     {
                         Fat[temp] = tempValue;
                         tempMinutesAsleepFat[temp] = MinutesAsleep[identifier];
-                        tempMinutesAwakeFat[temp] = MinutesAwake[identifier];
+                        tempAwakeningsCountFat[temp] = AwakeningsCount[identifier];
                         tempSleepEfficiencyFat[temp] = SleepEfficiency[identifier];
 
                         temp++;
@@ -2223,7 +2167,7 @@ namespace SleepMakeSense.Controllers
                     minutesAsleepCorrList.Add(new CorrList() { Name = "Fat", Coefficient = pearson, Picture = "fa fa-child fa-2" });
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeFat, Fat);
+                pearson = Correlation.Pearson(tempAwakeningsCountFat, Fat);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "Fat", Coefficient = pearson, Picture = "fa fa-child fa-2" });
@@ -2245,7 +2189,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Coffee = new double[CNTCoffeeAmt];
                 double[] tempMinutesAsleepCoffee = new double[CNTCoffeeAmt];
-                double[] tempMinutesAwakeCoffee = new double[CNTCoffeeAmt];
+                double[] tempAwakeningsCountCoffee = new double[CNTCoffeeAmt];
                 double[] tempSleepEfficiencyCoffee = new double[CNTCoffeeAmt];
 
                 // counters back to zero
@@ -2261,7 +2205,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Coffee[temp] = tempValue;
                             tempMinutesAsleepCoffee[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeCoffee[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountCoffee[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyCoffee[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2283,7 +2227,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeCoffee, Coffee);
+                pearson = Correlation.Pearson(tempAwakeningsCountCoffee, Coffee);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2319,7 +2263,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] CoffeeTime = new double[CNTCoffeeTime];
                 double[] tempMinutesAsleepCoffeeTime = new double[CNTCoffeeTime];
-                double[] tempMinutesAwakeCoffeeTime = new double[CNTCoffeeTime];
+                double[] tempAwakeningsCountCoffeeTime = new double[CNTCoffeeTime];
                 double[] tempSleepEfficiencyCoffeeTime = new double[CNTCoffeeTime];
 
                 // counters back to zero
@@ -2335,7 +2279,7 @@ namespace SleepMakeSense.Controllers
                         {
                             CoffeeTime[temp] = tempValue;
                             tempMinutesAsleepCoffeeTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeCoffeeTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountCoffeeTime[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyCoffeeTime[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2360,7 +2304,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeCoffeeTime, CoffeeTime);
+                pearson = Correlation.Pearson(tempAwakeningsCountCoffeeTime, CoffeeTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2394,7 +2338,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Alcohol = new double[CNTAlcoholAmt];
                 double[] tempMinutesAsleepAlcohol = new double[CNTAlcoholAmt];
-                double[] tempMinutesAwakeAlcohol = new double[CNTAlcoholAmt];
+                double[] tempAwakeningsCountAlcohol = new double[CNTAlcoholAmt];
                 double[] tempSleepEfficiencyAlcohol = new double[CNTAlcoholAmt];
 
                 // counters back to zero
@@ -2410,7 +2354,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Alcohol[temp] = tempValue;
                             tempMinutesAsleepAlcohol[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeAlcohol[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAlcohol[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyAlcohol[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2434,7 +2378,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeAlcohol, Alcohol);
+                pearson = Correlation.Pearson(tempAwakeningsCountAlcohol, Alcohol);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2470,7 +2414,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Mood = new double[CNTMood];
                 double[] tempMinutesAsleepMood = new double[CNTMood];
-                double[] tempMinutesAwakeMood = new double[CNTMood];
+                double[] tempAwakeningsCountMood = new double[CNTMood];
                 double[] tempSleepEfficiencyMood = new double[CNTMood];
 
                 // counters back to zero
@@ -2486,7 +2430,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Mood[temp] = tempValue;
                             tempMinutesAsleepMood[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeMood[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountMood[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyMood[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2509,7 +2453,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeMood, Mood);
+                pearson = Correlation.Pearson(tempAwakeningsCountMood, Mood);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2545,7 +2489,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Stress = new double[CNTStress];
                 double[] tempMinutesAsleepStress = new double[CNTStress];
-                double[] tempMinutesAwakeStress = new double[CNTStress];
+                double[] tempAwakeningsCountStress = new double[CNTStress];
                 double[] tempSleepEfficiencyStress = new double[CNTStress];
 
                 // counters back to zero
@@ -2561,7 +2505,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Stress[temp] = tempValue;
                             tempMinutesAsleepStress[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeStress[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountStress[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyStress[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2583,7 +2527,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeStress, Stress);
+                pearson = Correlation.Pearson(tempAwakeningsCountStress, Stress);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2617,7 +2561,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Tiredness = new double[CNTTiredness];
                 double[] tempMinutesAsleepTiredness = new double[CNTTiredness];
-                double[] tempMinutesAwakeTiredness = new double[CNTTiredness];
+                double[] tempAwakeningsCountTiredness = new double[CNTTiredness];
                 double[] tempSleepEfficiencyTiredness = new double[CNTTiredness];
 
                 // counters back to zero
@@ -2633,7 +2577,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Tiredness[temp] = tempValue;
                             tempMinutesAsleepTiredness[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeTiredness[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountTiredness[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyTiredness[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2656,7 +2600,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeTiredness, Tiredness);
+                pearson = Correlation.Pearson(tempAwakeningsCountTiredness, Tiredness);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2692,7 +2636,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Dream = new double[CNTDream];
                 double[] tempMinutesAsleepDream = new double[CNTDream];
-                double[] tempMinutesAwakeDream = new double[CNTDream];
+                double[] tempAwakeningsCountDream = new double[CNTDream];
                 double[] tempSleepEfficiencyDream = new double[CNTDream];
 
                 // counters back to zero
@@ -2708,7 +2652,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Dream[temp] = tempValue;
                             tempMinutesAsleepDream[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeDream[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountDream[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyDream[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2730,7 +2674,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeDream, Dream);
+                pearson = Correlation.Pearson(tempAwakeningsCountDream, Dream);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2764,7 +2708,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] DigitalDev = new double[CNTDigDeviceDuration];
                 double[] tempMinutesAsleepDigitalDev = new double[CNTDigDeviceDuration];
-                double[] tempMinutesAwakeDigitalDev = new double[CNTDigDeviceDuration];
+                double[] tempAwakeningsCountDigitalDev = new double[CNTDigDeviceDuration];
                 double[] tempSleepEfficiencyDigitalDev = new double[CNTDigDeviceDuration];
 
                 // counters back to zero
@@ -2780,7 +2724,7 @@ namespace SleepMakeSense.Controllers
                         {
                             DigitalDev[temp] = tempValue;
                             tempMinutesAsleepDigitalDev[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeDigitalDev[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountDigitalDev[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyDigitalDev[temp] = SleepEfficiency[identifier];
                             temp++;
                         }
@@ -2801,7 +2745,7 @@ namespace SleepMakeSense.Controllers
                     }
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeDigitalDev, DigitalDev);
+                pearson = Correlation.Pearson(tempAwakeningsCountDigitalDev, DigitalDev);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -2836,7 +2780,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] NapDuration = new double[CNTNapDuration];
                 double[] tempMinutesAsleepNapDuration = new double[CNTNapDuration];
-                double[] tempMinutesAwakeNapDuration = new double[CNTNapDuration];
+                double[] tempAwakeningsCountNapDuration = new double[CNTNapDuration];
                 double[] tempSleepEfficiencyNapDuration = new double[CNTNapDuration];
 
                 // counters back to zero
@@ -2852,7 +2796,7 @@ namespace SleepMakeSense.Controllers
                         {
                             NapDuration[temp] = tempValue;
                             tempMinutesAsleepNapDuration[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeNapDuration[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountNapDuration[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyNapDuration[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2867,7 +2811,7 @@ namespace SleepMakeSense.Controllers
                     minutesAsleepCorrList.Add(new CorrList() { Name = "NapDuration", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeNapDuration, NapDuration);
+                pearson = Correlation.Pearson(tempAwakeningsCountNapDuration, NapDuration);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "NapDuration", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
@@ -2888,7 +2832,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] NapTime = new double[CNTNapTime];
                 double[] tempMinutesAsleepNapTime = new double[CNTNapTime];
-                double[] tempMinutesAwakeNapTime = new double[CNTNapTime];
+                double[] tempAwakeningsCountNapTime = new double[CNTNapTime];
                 double[] tempSleepEfficiencyNapTime = new double[CNTNapTime];
 
                 // counters back to zero
@@ -2904,7 +2848,7 @@ namespace SleepMakeSense.Controllers
                         {
                             NapTime[temp] = tempValue;
                             tempMinutesAsleepNapTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeNapTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountNapTime[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyNapTime[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2919,7 +2863,7 @@ namespace SleepMakeSense.Controllers
                     minutesAsleepCorrList.Add(new CorrList() { Name = "NapTime", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeNapTime, NapTime);
+                pearson = Correlation.Pearson(tempAwakeningsCountNapTime, NapTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "NapTime", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
@@ -2939,7 +2883,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] SocialFamily = new double[CNTSocialFamily];
                 double[] tempMinutesAsleepSocialFamily = new double[CNTSocialFamily];
-                double[] tempMinutesAwakeSocialFamily = new double[CNTSocialFamily];
+                double[] tempAwakeningsCountSocialFamily = new double[CNTSocialFamily];
                 double[] tempSleepEfficiencySocialFamily = new double[CNTSocialFamily];
 
                 // counters back to zero
@@ -2955,7 +2899,7 @@ namespace SleepMakeSense.Controllers
                         {
                             SocialFamily[temp] = tempValue;
                             tempMinutesAsleepSocialFamily[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeSocialFamily[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountSocialFamily[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencySocialFamily[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -2971,7 +2915,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeSocialFamily, SocialFamily);
+                pearson = Correlation.Pearson(tempAwakeningsCountSocialFamily, SocialFamily);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "Time with Family", Coefficient = pearson, Picture = "fa fa-users fa-2" });
@@ -2992,7 +2936,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] SocialFriend = new double[CNTSocialFriend];
                 double[] tempMinutesAsleepSocialFriend = new double[CNTSocialFriend];
-                double[] tempMinutesAwakeSocialFriend = new double[CNTSocialFriend];
+                double[] tempAwakeningsCountSocialFriend = new double[CNTSocialFriend];
                 double[] tempSleepEfficiencySocialFriend = new double[CNTSocialFriend];
 
                 // counters back to zero
@@ -3008,7 +2952,7 @@ namespace SleepMakeSense.Controllers
                         {
                             SocialFriend[temp] = tempValue;
                             tempMinutesAsleepSocialFriend[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeSocialFriend[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountSocialFriend[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencySocialFriend[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3024,7 +2968,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeSocialFriend, SocialFriend);
+                pearson = Correlation.Pearson(tempAwakeningsCountSocialFriend, SocialFriend);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "Time with Friend", Coefficient = pearson, Picture = "fa fa-users fa-2" });
@@ -3045,7 +2989,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] SocialMedia = new double[CNTSocialMedia];
                 double[] tempMinutesAsleepSocialMedia = new double[CNTSocialMedia];
-                double[] tempMinutesAwakeSocialMedia = new double[CNTSocialMedia];
+                double[] tempAwakeningsCountSocialMedia = new double[CNTSocialMedia];
                 double[] tempSleepEfficiencySocialMedia = new double[CNTSocialMedia];
 
                 // counters back to zero
@@ -3061,7 +3005,7 @@ namespace SleepMakeSense.Controllers
                         {
                             SocialMedia[temp] = tempValue;
                             tempMinutesAsleepSocialMedia[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeSocialMedia[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountSocialMedia[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencySocialMedia[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3077,7 +3021,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeSocialMedia, SocialMedia);
+                pearson = Correlation.Pearson(tempAwakeningsCountSocialMedia, SocialMedia);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "Time on social media", Coefficient = pearson, Picture = "fa fa-users fa-2" });
@@ -3098,7 +3042,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] DinnerTime = new double[CNTDinnerTime];
                 double[] tempMinutesAsleepDinnerTime = new double[CNTDinnerTime];
-                double[] tempMinutesAwakeDinnerTime = new double[CNTDinnerTime];
+                double[] tempAwakeningsCountDinnerTime = new double[CNTDinnerTime];
                 double[] tempSleepEfficiencyDinnerTime = new double[CNTDinnerTime];
 
                 // counters back to zero
@@ -3114,7 +3058,7 @@ namespace SleepMakeSense.Controllers
                         {
                             DinnerTime[temp] = tempValue;
                             tempMinutesAsleepDinnerTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeDinnerTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountDinnerTime[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyDinnerTime[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3129,7 +3073,7 @@ namespace SleepMakeSense.Controllers
                     minutesAsleepCorrList.Add(new CorrList() { Name = "DinnerTime", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeDinnerTime, DinnerTime);
+                pearson = Correlation.Pearson(tempAwakeningsCountDinnerTime, DinnerTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "DinnerTime", Coefficient = pearson, Picture = "fa fa-cutlery fa-2" });
@@ -3149,7 +3093,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] ExerciseTime = new double[CNTExerciseDuration];
                 double[] tempMinutesAsleepExerciseTime = new double[CNTExerciseDuration];
-                double[] tempMinutesAwakeExerciseTime = new double[CNTExerciseDuration];
+                double[] tempAwakeningsCountExerciseTime = new double[CNTExerciseDuration];
                 double[] tempSleepEfficiencyExerciseTime = new double[CNTExerciseDuration];
 
                 // counters back to zero
@@ -3165,7 +3109,7 @@ namespace SleepMakeSense.Controllers
                         {
                             ExerciseTime[temp] = tempValue;
                             tempMinutesAsleepExerciseTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeExerciseTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountExerciseTime[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyExerciseTime[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3180,7 +3124,7 @@ namespace SleepMakeSense.Controllers
                     minutesAsleepCorrList.Add(new CorrList() { Name = "ExerciseTime", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2" });
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeExerciseTime, ExerciseTime);
+                pearson = Correlation.Pearson(tempAwakeningsCountExerciseTime, ExerciseTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "ExerciseTime", Coefficient = pearson, Picture = "fa fa-futbol-o fa-2" });
@@ -3202,8 +3146,8 @@ namespace SleepMakeSense.Controllers
             {
                 double[] AmbientTemp = new double[CNTAmbientTemp];
                 double[] tempMinutesAsleepAmbientTemp = new double[CNTAmbientTemp];
-                double[] tempAwakeningsCountAmbientTemp = new double[CNTAmbientTemp];
                 double[] tempMinutesAwakeAmbientTemp = new double[CNTAmbientTemp];
+                double[] tempAwakeningsCountAmbientTemp = new double[CNTAmbientTemp];
                 double[] tempMinutesToFallAsleepAmbientTemp = new double[CNTAmbientTemp];
                 double[] tempSleepEfficiencyAmbientTemp = new double[CNTAmbientTemp];
 
@@ -3220,7 +3164,7 @@ namespace SleepMakeSense.Controllers
                         {
                             AmbientTemp[temp] = tempValue;
                             tempMinutesAsleepAmbientTemp[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeAmbientTemp[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAmbientTemp[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyAmbientTemp[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3236,7 +3180,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeAmbientTemp, AmbientTemp);
+                pearson = Correlation.Pearson(tempAwakeningsCountAmbientTemp, AmbientTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "AmbientTemp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
@@ -3258,7 +3202,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] AmbientHumd = new double[CNTAmbientHumd];
                 double[] tempMinutesAsleepAmbientHumd = new double[CNTAmbientHumd];
-                double[] tempMinutesAwakeAmbientHumd = new double[CNTAmbientHumd];
+                double[] tempAwakeningsCountAmbientHumd = new double[CNTAmbientHumd];
                 double[] tempSleepEfficiencyAmbientHumd = new double[CNTAmbientHumd];
 
                 // counters back to zero
@@ -3274,7 +3218,7 @@ namespace SleepMakeSense.Controllers
                         {
                             AmbientHumd[temp] = tempValue;
                             tempMinutesAsleepAmbientHumd[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeAmbientHumd[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAmbientHumd[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyAmbientHumd[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3290,7 +3234,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeAmbientHumd, AmbientHumd);
+                pearson = Correlation.Pearson(tempAwakeningsCountAmbientHumd, AmbientHumd);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "AmbientHumd", Coefficient = pearson, Picture = "fa fa-tint fa-2" });
@@ -3332,7 +3276,7 @@ namespace SleepMakeSense.Controllers
                             BodyTemp[temp] = tempValue;
                             tempMinutesAsleepBodyTemp[temp] = MinutesAsleep[identifier];
                             tempMinutesAwakeBodyTemp[temp] = MinutesAwake[identifier];
-                            tempMinutesAwakeBodyTemp[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountBodyTemp[temp] = AwakeningsCount[identifier];
                             tempMinutesToFallAsleepBodyTemp[temp] = MinutesToFallAsleep[identifier];
                             tempSleepEfficiencyBodyTemp[temp] = SleepEfficiency[identifier];
 
@@ -3348,7 +3292,7 @@ namespace SleepMakeSense.Controllers
                     minutesAsleepCorrList.Add(new CorrList() { Name = "Body Temp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
                 }
 
-                pearson = Correlation.Pearson(tempMinutesAwakeBodyTemp, BodyTemp);
+                pearson = Correlation.Pearson(tempAwakeningsCountBodyTemp, BodyTemp);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     awakeCountCorrList.Add(new CorrList() { Name = "Body Temp", Coefficient = pearson, Picture = "fa fa-thermometer-full fa-2" });
@@ -3388,7 +3332,7 @@ namespace SleepMakeSense.Controllers
                             Hormone[temp] = tempValue;
                             tempMinutesAsleepHormone[temp] = MinutesAsleep[identifier];
                             tempMinutesAwakeHormone[temp] = MinutesAwake[identifier];
-                            tempMinutesAwakeHormone[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountHormone[temp] = AwakeningsCount[identifier];
                             tempMinutesToFallAsleepHormone[temp] = MinutesToFallAsleep[identifier];
                             tempSleepEfficiencyHormone[temp] = SleepEfficiency[identifier];
 
@@ -3412,7 +3356,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeHormone, Hormone);
+                pearson = Correlation.Pearson(tempAwakeningsCountHormone, Hormone);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3447,7 +3391,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] WatchTV = new double[CNTTVDuration];
                 double[] tempMinutesAsleepWatchTV = new double[CNTTVDuration];
-                double[] tempMinutesAwakeWatchTV = new double[CNTTVDuration];
+                double[] tempAwakeningsCountWatchTV = new double[CNTTVDuration];
                 double[] tempSleepEfficiencyWatchTV = new double[CNTTVDuration];
 
                 // counters back to zero
@@ -3463,7 +3407,7 @@ namespace SleepMakeSense.Controllers
                         {
                             WatchTV[temp] = tempValue;
                             tempMinutesAsleepWatchTV[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeWatchTV[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountWatchTV[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyWatchTV[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3486,7 +3430,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWatchTV, WatchTV);
+                pearson = Correlation.Pearson(tempAwakeningsCountWatchTV, WatchTV);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3521,7 +3465,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] ExerciseDuration = new double[CNTExerciseIntensity];
                 double[] tempMinutesAsleepExerciseDuration = new double[CNTExerciseIntensity];
-                double[] tempMinutesAwakeExerciseDuration = new double[CNTExerciseIntensity];
+                double[] tempAwakeningsCountExerciseDuration = new double[CNTExerciseIntensity];
                 double[] tempSleepEfficiencyExerciseDuration = new double[CNTExerciseIntensity];
 
                 // counters back to zero
@@ -3537,7 +3481,7 @@ namespace SleepMakeSense.Controllers
                         {
                             ExerciseDuration[temp] = tempValue;
                             tempMinutesAsleepExerciseDuration[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeExerciseDuration[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountExerciseDuration[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyExerciseDuration[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3560,7 +3504,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeExerciseDuration, ExerciseDuration);
+                pearson = Correlation.Pearson(tempAwakeningsCountExerciseDuration, ExerciseDuration);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3595,7 +3539,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] SnackTime = new double[CNTSnackTime];
                 double[] tempMinutesAsleepSnackTime = new double[CNTSnackTime];
-                double[] tempMinutesAwakeSnackTime = new double[CNTSnackTime];
+                double[] tempAwakeningsCountSnackTime = new double[CNTSnackTime];
                 double[] tempSleepEfficiencySnackTime = new double[CNTSnackTime];
 
                 // counters back to zero
@@ -3611,7 +3555,7 @@ namespace SleepMakeSense.Controllers
                         {
                             SnackTime[temp] = tempValue;
                             tempMinutesAsleepSnackTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeSnackTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountSnackTime[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencySnackTime[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3634,7 +3578,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeSnackTime, SnackTime);
+                pearson = Correlation.Pearson(tempAwakeningsCountSnackTime, SnackTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3668,7 +3612,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] WorkTime = new double[CNTWorkTime];
                 double[] tempMinutesAsleepWorkTime = new double[CNTWorkTime];
-                double[] tempMinutesAwakeWorkTime = new double[CNTWorkTime];
+                double[] tempAwakeningsCountWorkTime = new double[CNTWorkTime];
                 double[] tempSleepEfficiencyWorkTime = new double[CNTWorkTime];
 
                 // counters back to zero
@@ -3684,7 +3628,7 @@ namespace SleepMakeSense.Controllers
                         {
                             WorkTime[temp] = tempValue;
                             tempMinutesAsleepWorkTime[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeWorkTime[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountWorkTime[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyWorkTime[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3707,7 +3651,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWorkTime, WorkTime);
+                pearson = Correlation.Pearson(tempAwakeningsCountWorkTime, WorkTime);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3741,7 +3685,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] WorkDuration = new double[CNTWorkDuration];
                 double[] tempMinutesAsleepWorkDuration = new double[CNTWorkDuration];
-                double[] tempMinutesAwakeWorkDuration = new double[CNTWorkDuration];
+                double[] tempAwakeningsCountWorkDuration = new double[CNTWorkDuration];
                 double[] tempSleepEfficiencyWorkDuration = new double[CNTWorkDuration];
 
                 // counters back to zero
@@ -3757,7 +3701,7 @@ namespace SleepMakeSense.Controllers
                         {
                             WorkDuration[temp] = tempValue;
                             tempMinutesAsleepWorkDuration[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeWorkDuration[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountWorkDuration[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyWorkDuration[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3780,7 +3724,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeWorkDuration, WorkDuration);
+                pearson = Correlation.Pearson(tempAwakeningsCountWorkDuration, WorkDuration);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3815,7 +3759,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Music = new double[CNTMusicDuration];
                 double[] tempMinutesAsleepMusic = new double[CNTMusicDuration];
-                double[] tempMinutesAwakeMusic = new double[CNTMusicDuration];
+                double[] tempAwakeningsCountMusic = new double[CNTMusicDuration];
                 double[] tempSleepEfficiencyMusic = new double[CNTMusicDuration];
 
                 // counters back to zero
@@ -3831,7 +3775,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Music[temp] = tempValue;
                             tempMinutesAsleepMusic[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeMusic[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountMusic[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyMusic[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3854,7 +3798,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeMusic, Music);
+                pearson = Correlation.Pearson(tempAwakeningsCountMusic, Music);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3888,7 +3832,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] SocialMedia = new double[CNTSocialFriend];
                 double[] tempMinutesAsleepSocialMedia = new double[CNTSocialFriend];
-                double[] tempMinutesAwakeSocialMedia = new double[CNTSocialFriend];
+                double[] tempAwakeningsCountSocialMedia = new double[CNTSocialFriend];
                 double[] tempSleepEfficiencySocialMedia = new double[CNTSocialFriend];
 
                 // counters back to zero
@@ -3904,7 +3848,7 @@ namespace SleepMakeSense.Controllers
                         {
                             SocialMedia[temp] = tempValue;
                             tempMinutesAsleepSocialMedia[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeSocialMedia[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountSocialMedia[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencySocialMedia[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -3927,7 +3871,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeSocialMedia, SocialMedia);
+                pearson = Correlation.Pearson(tempAwakeningsCountSocialMedia, SocialMedia);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -3963,7 +3907,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] VideoGames = new double[CNTGamesDuration];
                 double[] tempMinutesAsleepVideoGames = new double[CNTGamesDuration];
-                double[] tempMinutesAwakeVideoGames = new double[CNTGamesDuration];
+                double[] tempAwakeningsCountVideoGames = new double[CNTGamesDuration];
                 double[] tempSleepEfficiencyVideoGames = new double[CNTGamesDuration];
 
                 // counters back to zero
@@ -3979,7 +3923,7 @@ namespace SleepMakeSense.Controllers
                         {
                             VideoGames[temp] = tempValue;
                             tempMinutesAsleepVideoGames[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeVideoGames[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountVideoGames[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyVideoGames[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -4002,7 +3946,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeVideoGames, VideoGames);
+                pearson = Correlation.Pearson(tempAwakeningsCountVideoGames, VideoGames);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -4037,7 +3981,7 @@ namespace SleepMakeSense.Controllers
             {
                 double[] Assignments = new double[CNTSchoolStress];
                 double[] tempMinutesAsleepAssignments = new double[CNTSchoolStress];
-                double[] tempMinutesAwakeAssignments = new double[CNTSchoolStress];
+                double[] tempAwakeningsCountAssignments = new double[CNTSchoolStress];
                 double[] tempSleepEfficiencyAssignments = new double[CNTSchoolStress];
 
                 // counters back to zero
@@ -4053,7 +3997,7 @@ namespace SleepMakeSense.Controllers
                         {
                             Assignments[temp] = tempValue;
                             tempMinutesAsleepAssignments[temp] = MinutesAsleep[identifier];
-                            tempMinutesAwakeAssignments[temp] = MinutesAwake[identifier];
+                            tempAwakeningsCountAssignments[temp] = AwakeningsCount[identifier];
                             tempSleepEfficiencyAssignments[temp] = SleepEfficiency[identifier];
 
                             temp++;
@@ -4076,7 +4020,7 @@ namespace SleepMakeSense.Controllers
                 }
 
 
-                pearson = Correlation.Pearson(tempMinutesAwakeAssignments, Assignments);
+                pearson = Correlation.Pearson(tempAwakeningsCountAssignments, Assignments);
                 if (Math.Abs(pearson) >= 0.3)
                 {
                     if (pearson > 0)
@@ -4148,18 +4092,6 @@ namespace SleepMakeSense.Controllers
                     entry.Positive = false;
                 }
             }
-            foreach (var entry in minutesAwakeCorrList)
-            {
-                if (entry.Coefficient < 0)
-                {
-                    //entry.Coefficient = (entry.Coefficient) * -1;
-                    entry.Positive = true; // if negatively correlated, then a good factor
-                }
-                else
-                {
-                    entry.Positive = false;
-                }
-            }
             foreach (var entry in sleepEffiencyCorrList)
             {
                 if (entry.Coefficient < 0)
@@ -4174,9 +4106,8 @@ namespace SleepMakeSense.Controllers
             }
 
             syncViewModel.MinutesAsleepCorrList = minutesAsleepCorrList.OrderByDescending(o => o.Coefficient).ToList();
-            //syncViewModel.AwakeCountCorrList = awakeCountCorrList.OrderByDescending(o => o.Coefficient).ToList();
+            syncViewModel.AwakeCountCorrList = awakeCountCorrList.OrderByDescending(o => o.Coefficient).ToList();
             syncViewModel.SleepEffiencyCorrList = sleepEffiencyCorrList.OrderByDescending(o => o.Coefficient).ToList();
-            syncViewModel.MinutesAwakeCorrList = minutesAwakeCorrList.OrderByDescending(o => o.Coefficient).ToList();
 
             return syncViewModel;
 

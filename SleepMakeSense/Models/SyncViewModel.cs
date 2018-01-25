@@ -12,9 +12,6 @@ namespace SleepMakeSense.Models
 
         public List<CorrList> AwakeCountCorrList { get; set; }
 
-        public List<CorrList> MinutesAwakeCorrList { get; set; }
-
-
         public List<CorrList> SleepEffiencyCorrList { get; set; }
 
         public List<Userdata> UserData { get; set; }

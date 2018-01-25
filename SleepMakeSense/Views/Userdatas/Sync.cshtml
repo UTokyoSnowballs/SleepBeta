@@ -212,142 +212,195 @@ else
             alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
 
 
-                function PlotTimeseries(myData, section, mark, sFeature) {
+            function PlotTimeseries(myData, section, mark, sFeature) {
 
-                    d3.select(section).selectAll("*").remove();
-                    var red = "#F74657";
-                    var blue = "#459EE8";
+                d3.select(section).selectAll("*").remove();
+                var red = "#F74657";
+                var blue = "#459EE8";
 
-                    var w = 500;
-                    var h = 350;
+                var w = 500;
+                var h = 350;
 
-                    var margin = { top: 30, right: 20, bottom: 50, left: 40 },
-                    width = w - margin.left - margin.right,
-                    height = h - margin.top - margin.bottom;
+                var margin = { top: 30, right: 20, bottom: 50, left: 40 },
+                width = w - margin.left - margin.right,
+                height = h - margin.top - margin.bottom;
 
-                    // 20170213 Pandita: the order of day and month !! 
-                    //parseDate = d3.time.format("%d/%m/%Y").parse;
-                    var parseDate = d3.time.format("%m/%d/%Y").parse;
+                // 20170213 Pandita: the order of day and month !! 
+                //parseDate = d3.time.format("%d/%m/%Y").parse;
+                var parseDate = d3.time.format("%m/%d/%Y").parse;
 
-                    var chart = d3.select(section).append("svg")
-                  .attr("width", w)
-                  .attr("height", h)
-                  .append("g")
-                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                var chart = d3.select(section).append("svg")
+                              .attr("width", w)
+                              .attr("height", h)
+                              .append("g")
+                              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                    myData.forEach(function (d) {
-                        // 20170213 Pandita: date parse sorted.
-                        d.Date = parseDate(d.Date);
-                         console.log(d.Value);
-                        if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
-                        else d.Value = +d.Value;
-                        console.log(d.Value);
-                    });
+                myData.forEach(function (d) {
+                    // 20170213 Pandita: date parse sorted.
+                    d.Date = parseDate(d.Date);
+                    console.log(d.Value);
+                    if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
+                    else d.Value = +d.Value;
+                    console.log(d.Value);
+                });
 
-                    var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
+                var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
 
-                    var yRange = d3.scale.linear().range([height, 0]);
+                var yRange = d3.scale.linear().range([height, 0]);
 
-                    var xAxis = d3.svg.axis()
-                                  .scale(xRange)
-                                  .orient("bottom")
-                                  .ticks(8)
-                                  .tickFormat(d3.time.format("%m-%d"));
-                    //.tickFormat(d3.time.format("%b-%d"));
+                var xAxis = d3.svg.axis()
+                              .scale(xRange)
+                              .orient("bottom")
+                              .ticks(8)
+                              .tickFormat(d3.time.format("%m-%d"));
+                //.tickFormat(d3.time.format("%b-%d"));
 
-                    var yAxis = d3.svg.axis()
-                                  .scale(yRange)
-                                  .orient("left")
-                                  .ticks(5);
+                var yAxis = d3.svg.axis()
+                              .scale(yRange)
+                              .orient("left")
+                              .ticks(5);
 
-                    xRange.domain(myData.map(function (d) { return d.Date; }));
-                    yRange.domain([0, d3.max(myData, function (d) { return d.Value; })]);
+                xRange.domain(myData.map(function (d) { return d.Date; }));
+                yRange.domain([0, d3.max(myData, function (d) { return d.Value; })]);
 
-                    chart.append("g")
-                        .attr("class", "x axis")
-                        .attr("transform", "translate(0," + height + ")")
-                        .call(xAxis)
-                        .selectAll("text")
-                        .style("text-anchor", "end")
-                        .attr("dx", "-.8em")
-                        .attr("dy", "-.55em")
-                        .attr("transform", "rotate(-90)");
+                chart.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                    .selectAll("text")
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", "-.55em")
+                    .attr("transform", "rotate(-90)");
 
-                    chart.append("g")
-                        .attr("class", "y axis")
-                        .call(yAxis)
-                        .append("text")
-                        .attr("transform", "rotate(-90)")
-                        .attr("y", 6)
-                        .attr("dy", ".71em")
-                        .style("text-anchor", "end")
-                        .text(sFeature);
+                chart.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text(sFeature);
 
-                    var div = d3.select(section).append("div")
-                                .attr("class", "tooltip-timeseries")
-                                .style("opacity", 0);
+                var div = d3.select(section).append("div")
+                            .attr("class", "tooltip-timeseries")
+                            .style("opacity", 0);
 
-                    var formatTime = d3.time.format("%b %e");
+                var formatTime = d3.time.format("%b %e");
 
-                    chart.selectAll("rect")
-                         .data(myData)
-                         .enter().append("rect")
-                         .attr("class", "bar")
-                         .attr("x", function (d) { return xRange(d.Date); })
-                         .attr("width", xRange.rangeBand())
-                         .attr("y", function (d) { return yRange(d.Value); })
-                         .attr("height", function (d) { return (height - yRange(d.Value)); })
-                         //.attr("fill", "#0000ff")
-                         .attr("fill", function (d) {
-                             if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
-                                 //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                             else if (mark == "MinutesAsleep" && (d.Value < 8.0)) { return red; } // 20170213 Pandita: a proper threshold for teenageer
-                             else if (mark == "MinutesAsleep" && (d.Value > 10.0)) { return red; }
-                             else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
-                             else return blue;
-                         })
-                         .on("mouseover", function (d) {
-                             var matrix = this.getScreenCTM()
-                                .translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
+                chart.selectAll("rect")
+                      .data(myData)
+                      .enter().append("rect")
+                      .attr("class", "bar")
+                      .attr("x", function (d) { return xRange(d.Date); })
+                      .attr("width", xRange.rangeBand())
+                      .attr("y", function (d) { return yRange(d.Value); })
+                      .attr("height", function (d) { return (height - yRange(d.Value)); })
+                      //.attr("fill", "#0000ff")
+                      .attr("fill", function (d) {
+                          if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                              //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                          else if (mark == "MinutesAsleep" && (d.Value < 8.0)) { return red; } // 20170213 Pandita: a proper threshold for teenageer
+                          else if (mark == "MinutesAsleep" && (d.Value > 10.0)) { return red; }
+                          else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                          else return blue;
+                      })
+                      .on("mouseover", function (d) {
+                          var matrix = this.getScreenCTM()
+                             .translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
 
-                             d3.select(this)
-                               .attr("fill", "#747F97");
+                          d3.select(this)
+                            .attr("fill", "#747F97");
 
-                             div.transition()
-                                .duration(200)
-                                .style("opacity", 0.9);
+                          div.transition()
+                             .duration(200)
+                             .style("opacity", 0.9);
 
-                             if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                             else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
-                             else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
+                          if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
+                          else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
+                          else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
 
+                          div.html(tooltiptext)
+                             //.style("left", (d3.event.pageX - 34) + "px")
+                             //.style("top", (d3.event.pageY - 12) + "px");
+                             .style("left", (window.pageXOffset + matrix.e + 15) + "px")
+                             .style("top", (window.pageYOffset + matrix.f - 30) + "px");
+                          // Need a better solution here!!
+                      })
+                      .on("mouseout", function (d) {
+                          d3.select(this)
+                            //.attr("fill", "#bdbdbd");
+                            .attr("fill", function (d) {
+                                if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                                    //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                                else if (mark == "MinutesAsleep" && ((d.Value > 10.0) || (d.Value < 8.0))) { return red; }
+                                else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                                else return blue;
+                            });
+                          div.transition()
+                             .duration(500)
+                             .style("opacity", 0);
+                      });
 
+                // yPos is the y-position of the divide line; xBox and yBox are the position coordinates of rectangular; xText and yText are the position coordinates of the text box. 
+                function divideLine(yPos, xBox, yBox, wBox, xText, yText, threshold) {
+                    chart.append("line")
+                        .style("stroke", "white")
+                        //.style("stroke-width", "2.5px")
+                        .style("stroke-dasharray", "5,5")
+                        .attr("x1", 0)
+                        .attr("y1", yRange(yPos))
+                        .attr("x2", width)
+                        .attr("y2", yRange(yPos));
 
-                             div.html(tooltiptext)
-                                //.style("left", (d3.event.pageX - 34) + "px")
-                                //.style("top", (d3.event.pageY - 12) + "px");
-                                .style("left", (window.pageXOffset + matrix.e + 15) + "px")
-                                .style("top", (window.pageYOffset + matrix.f - 30) + "px");
-                             // Need a better solution here!!
+                   chart.append("rect")
+                        .attr("x", xBox)
+                        .attr("y", yRange(yBox))
+                    .attr("width", wBox)
+                    .attr("height", margin.top)
+                    .attr("color", "white")
+                   .attr("opacity", 0.5);
 
-
-
-                         })
-                         .on("mouseout", function (d) {
-                             d3.select(this)
-                               //.attr("fill", "#bdbdbd");
-                               .attr("fill", function (d) {
-                                   if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
-                                       //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
-                                   else if (mark == "MinutesAsleep" && ((d.Value > 10.0) || (d.Value < 8.0))) { return red; }
-                                   else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
-                                   else return blue;
-                               });
-                             div.transition()
-                                .duration(500)
-                                .style("opacity", 0);
-                         });
+                    chart.append("text")
+                    .attr("x", xText)
+                    .attr("y", yRange(yBox-yText))
+                    .attr("dy", ".35em")
+                    .text(threshold);
                 }
+
+                if (mark == "MinutesAsleep") {
+
+                    xBox = width - width / 4;
+                    wBox = width / 4;
+                    xText = width - width / 5;
+                    yText = 0.5;
+
+                    divideLine(8, xBox, 8, wBox, xText, yText, "8 Hours");
+                    divideLine(10, xBox, 10, wBox, xText, yText, "10 Hours");
+
+                } else if (mark == "SleepEfficiency") {
+
+                    xBox = width - width / 4;
+                    wBox = width / 4;
+                    xText = width - width / 5;
+                    yText = 5;
+
+                    divideLine(90, xBox, 90, wBox, xText, yText, "90%");
+
+                } else if (mark == "AwakeningsCount") {
+
+                    xBox = width - width / 4;
+                    wBox = width / 4;
+                    xText = width - width / 5;
+                    yText = 0.5;
+
+                    divideLine(8, xBox, 8, wBox, xText, yText, "8 awakenings");
+
+                }
+
+            }
+
                         </script>
     </div>
 

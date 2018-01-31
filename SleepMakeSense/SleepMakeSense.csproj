@@ -252,6 +252,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alglib\alglibinternal.cs" />
+    <Compile Include="Alglib\alglibmisc.cs" />
+    <Compile Include="Alglib\ap.cs" />
+    <Compile Include="Alglib\dataanalysis.cs" />
+    <Compile Include="Alglib\diffequations.cs" />
+    <Compile Include="Alglib\fasttransforms.cs" />
+    <Compile Include="Alglib\integration.cs" />
+    <Compile Include="Alglib\interpolation.cs" />
+    <Compile Include="Alglib\linalg.cs" />
+    <Compile Include="Alglib\optimization.cs" />
+    <Compile Include="Alglib\solvers.cs" />
+    <Compile Include="Alglib\specialfunctions.cs" />
+    <Compile Include="Alglib\statistics.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -318,6 +331,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Alglib\nuget.exe" />
     <Content Include="CSSfiles\bootstrap-theme.css" />
     <Content Include="CSSfiles\bootstrap-theme.min.css" />
     <Content Include="CSSfiles\font-awesome.css" />
@@ -375,6 +389,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Alglib\Alglib2.csproj" />
+    <Content Include="Alglib\alglib2.dll.3.10.4.nupkg" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -447,6 +463,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\ALGLIBstatistics\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

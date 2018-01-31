@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
+//using System.Net;
+//using System.Web;
 using System.Web.Mvc;
-using System.Data.Sql;
+//using System.Data.Sql;
 
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
 
 //Refer to Fitbit Library
 using Fitbit.Models;
@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 
 //Refer to MathNet.Numerics Library for statistical analysis
 using MathNet.Numerics.Statistics;
+using SleepMakeSense.Alglib;
 
 
 namespace SleepMakeSense.Controllers
@@ -1625,7 +1626,10 @@ namespace SleepMakeSense.Controllers
             }*/
 
             // MinutesAsleep
-            double rMinutesSedentary = Correlation.Pearson(MinutesAsleep, MinutesSedentary);
+            //double rMinutesSedentary = Correlation.Pearson(MinutesAsleep, MinutesSedentary);
+            double rMinutesSedentary = alglib.spearmancorr2(MinutesAsleep, MinutesSedentary);
+            //double pMinutesSedentary = alglib.correlationtests.spearmanrankcorrelationsignificance(rMinutesSedentary, MinutesAsleep.Length, ref +0.05, ref 0, ref 0); 
+
             if (Math.Abs(rMinutesSedentary) >= 0.3)
             {
                 if (rMinutesSedentary > 0)
@@ -1638,7 +1642,9 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            double rMinutesLightlyActive = Correlation.Pearson(MinutesAsleep, MinutesLightlyActive);
+            //double rMinutesLightlyActive = Correlation.Pearson(MinutesAsleep, MinutesLightlyActive);
+            double rMinutesLightlyActive = alglib.spearmancorr2(MinutesAsleep, MinutesLightlyActive);
+
             if (Math.Abs(rMinutesLightlyActive) >= 0.3)
             {
                 if (rMinutesLightlyActive > 0)
@@ -1651,7 +1657,10 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            double rMinutesFairlyActive = Correlation.Pearson(MinutesAsleep, MinutesFairlyActive);
+            //double rMinutesFairlyActive = Correlation.Pearson(MinutesAsleep, MinutesFairlyActive);
+            double rMinutesFairlyActive = alglib.spearmancorr2(MinutesAsleep, MinutesFairlyActive);
+            
+
             if (Math.Abs(rMinutesFairlyActive) >= 0.3)
             {
                 if (rMinutesFairlyActive > 0)
@@ -1664,7 +1673,9 @@ namespace SleepMakeSense.Controllers
                 }
             }
 
-            double rMinutesVeryActive = Correlation.Pearson(MinutesAsleep, MinutesVeryActive);
+            //double rMinutesVeryActive = Correlation.Pearson(MinutesAsleep, MinutesVeryActive);
+            double rMinutesVeryActive = alglib.spearmancorr2(MinutesAsleep, MinutesVeryActive);
+
             if (Math.Abs(rMinutesVeryActive) >= 0.3)
             {
                 if (rMinutesVeryActive > 0)

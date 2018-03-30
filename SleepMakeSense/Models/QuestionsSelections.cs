@@ -152,5 +152,24 @@ namespace SleepMakeSense.Models
             yield return new SelectListItem { Text = "11:00 PM", Value = "2300" };
 
         }
+
+        public IEnumerable<SelectListItem> Temperature()
+        {
+            yield return new SelectListItem { Text = "Very cold", Value = "1" };
+            yield return new SelectListItem { Text = "Cold", Value = "2" };
+            yield return new SelectListItem { Text = "just right", Value = "3" };
+            yield return new SelectListItem { Text = "Warm", Value = "4" };
+            yield return new SelectListItem { Text = "Too warm", Value = "5" };
+
+        }
+
+        public IEnumerable<SelectListItem> Medication()
+        {
+            yield return new SelectListItem { Text = "No", Value = "0" };
+            yield return new SelectListItem { Text = "Yes as usual", Value = "1" };
+            yield return new SelectListItem { Text = "Yes but different from my usual medication", Value = "2" };
+
+        }
+
     }
 }

@@ -100,7 +100,23 @@ namespace SleepMakeSense.Controllers
                 entry.WorkQuestions = diaryDataSetupData.userQuestions.WorkQuestions;
                 entry.ExersiseQuestions = diaryDataSetupData.userQuestions.ExersiseQuestions;
                 entry.FoodQuestions = diaryDataSetupData.userQuestions.FoodQuestions;
-                entry.GenderHormoneQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion; // 20170214 Pandita: this one not appear on UI, too sensitive?
+                entry.GenderHormoneQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+
+                //Pandita: added new factors on 2018/3/30
+                entry.TempQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.LightQuestion = diaryDataSetupData.userQuestions.LightQuestion;
+                entry.NoiseQuestion = diaryDataSetupData.userQuestions.NoiseQuestion;
+                entry.CleanlinessQuestion = diaryDataSetupData.userQuestions.CleanlinessQuestion;
+                entry.MedicationQuestion = diaryDataSetupData.userQuestions.MedicationQuestion;
+                entry.PerFactor1Question = diaryDataSetupData.userQuestions.PerFactor1Question;
+                    /*
+                entry.PerFactor2Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.PerFactor3Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.PerFactor4Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.PerFactor5Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.PerFactor6Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                */
+
                 }
             }
 
@@ -282,6 +298,20 @@ namespace SleepMakeSense.Controllers
                 query.ExerciseIntensity = model.DiaryData.ExerciseIntensity;
                 query.DinnerTime = model.DiaryData.DinnerTime;
                 query.SnackTime = model.DiaryData.SnackTime;
+
+                query.AmbientTemp = model.DiaryData.AmbientTemp;
+                query.Light = model.DiaryData.Light;
+                query.Noise = model.DiaryData.Noise;
+                query.Cleanliness = model.DiaryData.Cleanliness;
+                query.Medication = model.DiaryData.Medication;
+
+                query.PerFactor1 = model.DiaryData.PerFactor1;
+                query.PerFactor2 = model.DiaryData.PerFactor2;
+                query.PerFactor3 = model.DiaryData.PerFactor3;
+                query.PerFactor4 = model.DiaryData.PerFactor4;
+                query.PerFactor5 = model.DiaryData.PerFactor5;
+                query.PerFactor6 = model.DiaryData.PerFactor6;
+
 
                 //Db.DiaryDatas.DeleteOnSubmit(query);
                 //Db.SubmitChanges();

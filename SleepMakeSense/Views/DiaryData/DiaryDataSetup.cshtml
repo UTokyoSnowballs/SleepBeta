@@ -61,28 +61,28 @@
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Mood</span></td>
-                    <td class="diaryquestion">Asked Question - How was your moode before bed? (1 very bad - 5 very good)</td>
+                    <td class="diaryquestion">Asked Question - How was your mood before bed? (1 very bad - 5 very good)</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.Mood)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>School Questions</span></td>
-                    <td class="diaryquestion">Asked Question - How anxious/stressed were you in regards to school exams and assignements yesterday?  (1 not at all - 5 very)</td>
+                    <td class="diaryquestion">Asked Question - How anxious/stressed were you in regards to school exams and assignments yesterday?  (1 not at all - 5 very)</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.SchoolQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Coffees Questions</span></td>
-                    <td class="diaryquestion">Asked Question - How many caffinated beverages & Time of the last caffinated beverages</td>
+                    <td class="diaryquestion">Asked Question - How many caffeinated beverages & Time of the last caffeinated beverage </td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.CoffeeQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol Questions</span></td>
-                    <td class="diaryquestion">Asked Question - How many Alcoholic beverages & Time of the last Alcoholic beverages</td>
+                    <td class="diaryquestion">Asked Question - How many alcoholic beverages & Time of the last alcoholic beverage</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.AlcoholQuestions)
                     </td>
@@ -110,14 +110,14 @@
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-gamepad fa-2x"></i><span>Games Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did you spend on Video Games for after 6pm last night?</td>
+                    <td class="diaryquestion">Asked Question - How long did you spend on video games for after 6pm last night?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.GameDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-facebook fa-2x"></i><span>Social Media Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did you spend on Social Media for after 6pm last night?</td>
+                    <td class="diaryquestion">Asked Question - How long did you spend on social media for after 6pm last night?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.SocialMediaDurationQuestion)
                     </td>
@@ -131,32 +131,78 @@
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>TV Question</span></td>
-                    <td class="diaryquestion">Asked Question - How long did spend Watching TV after 6pm last night?</td>
+                    <td class="diaryquestion">Asked Question - How long did spend watching TV after 6pm last night?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.TVDurationQuestion)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work Questions</span></td>
-                    <td class="diaryquestion">Asked Question - When Did you start work yesterday? & How long were you at work?</td>
+                    <td class="diaryquestion">Asked Question - When did you start work yesterday? & How long were you at work?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.WorkQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Excersise Questions</span></td>
-                    <td class="diaryquestion">Asked Question - How long was your workout today? & How instense was your workout?</td>
+                    <td class="diaryquestion">Asked Question - How long & how intense & How instense was your workout?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.ExersiseQuestions)
                     </td>
                 </tr>
                 <tr>
                     <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Food Questions</span></td>
-                    <td class="diaryquestion">Asked Question - When was dinner last night? & What time did you snack last night?</td>
+                    <td class="diaryquestion">Asked Question - When was your dinner last night? & What time did you snack last night?</td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.FoodQuestions)
                     </td>
                 </tr>
+
+                @*Pandita: added on 2018/3/30*@
+                <tr>
+                    <td class="diaryfactor"><i class=""></i><span>Temperature Questions</span></td>
+                    <td class="diaryquestion">Asked Question - How warm or cold was your room when you fell asleep?</td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.TempQuestion)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="diaryfactor"><i class=""></i><span>Light Questions</span></td>
+                    <td class="diaryquestion">Asked Question - How much light was visible in your room before falling asleep? </td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.LightQuestion)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="diaryfactor"><i class="fa fa-2x"></i><span>Noise Questions</span></td>
+                    <td class="diaryquestion">Asked Question - How much noise was present before falling asleep?</td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.NoiseQuestion)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="diaryfactor"><i class="fa fa-2x"></i><span>Cleanliness Questions</span></td>
+                    <td class="diaryquestion">Asked Question - Last night, how clean was your room? </td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.CleanlinessQuestion)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="diaryfactor"><i class="fa fa-2x"></i><span>Medication Questions</span></td>
+                    <td class="diaryquestion">Asked Question - Did you take your medication today? </td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.MedicationQuestion)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="diaryfactor"><i class="fa fa-2x"></i><span>Personal Factor</span></td>
+                    <td class="diaryquestion">Asked Question - How would you rate your personal factor? </td>
+                    <td>
+                        @Html.CheckBoxFor(Model => Model.userQuestions.PerFactor1Question)
+                    </td>
+                </tr>
+
 
                 <tr class="tr-nobg">
                     <td></td>

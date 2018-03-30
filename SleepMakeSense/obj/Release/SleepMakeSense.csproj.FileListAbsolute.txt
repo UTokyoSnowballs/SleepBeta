@@ -999,3 +999,7 @@ C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\bin\ja\System.Web.O
 C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Release\SleepMakeSense.csprojResolveAssemblyReference.cache
 C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Release\SleepMakeSense.dll
 C:\Users\snowballs\Source\Repos\SleepCreative\SleepMakeSense\obj\Release\SleepMakeSense.pdb
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.Migrations.ApplicationDbContext.test1.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.Migrations.SleepbetaDbContext.test2.resources
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.csproj.GenerateResource.Cache
+C:\Users\Liang\Desktop\SleepExplorer_Development\SleepBeta_QUT\v1\SleepMakeSense\obj\Release\SleepMakeSense.Migrations.SleepbetaDbContext.test21.resources

@@ -48,12 +48,24 @@ namespace SleepMakeSense.Models
         public string ExerciseIntensity { get; set; }
         public string DinnerTime { get; set; }
         public string SnackTime { get; set; }
-        public string AmbientTemp { get; set; }
         public string AmbientHumd { get; set; }
-        public string Light { get; set; }
         public string SunRiseTime { get; set; }
         public string SunSetTime { get; set; }
         public string SocialMedia { get; set; }
+
+        public string AmbientTemp { get; set; }
+        public string Light { get; set; }
+        public string Noise { get; set; }
+        public string Cleanliness { get; set; }
+        public string Medication { get; set; }
+
+        // customizable factors
+        public string PerFactor1 { get; set; }
+        public string PerFactor2 { get; set; }
+        public string PerFactor3 { get; set; }
+        public string PerFactor4 { get; set; }
+        public string PerFactor5 { get; set; }
+        public string PerFactor6 { get; set; }
 
         /*public void Add(Models.DiaryData diaryData)
         {

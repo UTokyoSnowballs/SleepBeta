@@ -103,7 +103,7 @@ namespace SleepMakeSense.Controllers
                 entry.GenderHormoneQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
 
                 //Pandita: added new factors on 2018/3/30
-                entry.TempQuestion = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
+                entry.TempQuestion = diaryDataSetupData.userQuestions.TempQuestion;
                 entry.LightQuestion = diaryDataSetupData.userQuestions.LightQuestion;
                 entry.NoiseQuestion = diaryDataSetupData.userQuestions.NoiseQuestion;
                 entry.CleanlinessQuestion = diaryDataSetupData.userQuestions.CleanlinessQuestion;

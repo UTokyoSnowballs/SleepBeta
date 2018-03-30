@@ -320,7 +320,7 @@ else
                              .style("opacity", 0.9);
 
                           if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
-                          else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
+                          else if (mark == "MinutesAwake") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " Minutes Awake"; }
                           else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
 
                           div.html(tooltiptext)

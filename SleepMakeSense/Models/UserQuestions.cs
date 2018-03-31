@@ -46,11 +46,21 @@ namespace SleepMakeSense.Models
         public bool CleanlinessQuestion { get; set; }
         public bool MedicationQuestion { get; set; }
         public bool PerFactor1Question { get; set; }
+        public string PerFactor1Name { get; set; }
         public bool PerFactor2Question { get; set; }
+        public string PerFactor2Name { get; set; }
         public bool PerFactor3Question { get; set; }
+        public string PerFactor3Name { get; set; }
+
         public bool PerFactor4Question { get; set; }
+        public string PerFactor4Name { get; set; }
+
         public bool PerFactor5Question { get; set; }
+        public string PerFactor5Name { get; set; }
+
         public bool PerFactor6Question { get; set; }
+        public string PerFactor6Name { get; set; }
+
 
     }
 }

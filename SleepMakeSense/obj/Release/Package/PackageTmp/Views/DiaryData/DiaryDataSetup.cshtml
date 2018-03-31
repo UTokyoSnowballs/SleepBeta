@@ -195,12 +195,17 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr class="tr-noborder">
                     <td class="diaryfactor"><i class="fa fa-user-plus fa-2x"></i><span>Personal Factor</span></td>
                     <td class="diaryquestion">Asked Question - How would you rate your personal factor? </td>
                     <td>
                         @Html.CheckBoxFor(Model => Model.userQuestions.PerFactor1Question)
                     </td>
+                </tr>
+                <tr >
+                    <td></td>
+                    <td> Please enter the name for the personal factor @Html.TextBoxFor(Model => Model.userQuestions.PerFactor1Name)</td>
+                    <td></td>
                 </tr>
 
 

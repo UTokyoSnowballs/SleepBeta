@@ -3,7 +3,7 @@ namespace SleepMakeSense.Migrations.SleepbetaDbContext
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class test21 : DbMigration
+    public partial class check : DbMigration
     {
         public override void Up()
         {

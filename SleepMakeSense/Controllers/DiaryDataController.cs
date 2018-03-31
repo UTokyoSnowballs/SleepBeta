@@ -109,6 +109,7 @@ namespace SleepMakeSense.Controllers
                 entry.CleanlinessQuestion = diaryDataSetupData.userQuestions.CleanlinessQuestion;
                 entry.MedicationQuestion = diaryDataSetupData.userQuestions.MedicationQuestion;
                 entry.PerFactor1Question = diaryDataSetupData.userQuestions.PerFactor1Question;
+                entry.PerFactor1Name = diaryDataSetupData.userQuestions.PerFactor1Name;
                     /*
                 entry.PerFactor2Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;
                 entry.PerFactor3Question = diaryDataSetupData.userQuestions.GenderHormoneQuestion;

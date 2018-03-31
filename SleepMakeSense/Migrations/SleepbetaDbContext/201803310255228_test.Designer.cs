@@ -7,13 +7,13 @@ namespace SleepMakeSense.Migrations.SleepbetaDbContext
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class test21 : IMigrationMetadata
+    public sealed partial class test : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(test21));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(test));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803300921138_test21"; }
+            get { return "201803310255228_test"; }
         }
         
         string IMigrationMetadata.Source

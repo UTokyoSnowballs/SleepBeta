@@ -267,7 +267,7 @@
                 </tr>
 
                 <tr class="" style="@((bool)Model.UserQuestion.PerFactor1Question ? "display:" : "display:none")">
-                    <td class="diaryfactor"><i class="fa fa-user-plus fa-2x"></i><span>Personal Factor</span></td>
+                    <td class="diaryfactor"><i class="fa fa-user-plus fa-2x"></i><span> @Model.UserQuestion.PerFactor1Name </span></td>
                     <td class="diaryquestion">How would you rate your personal factor? (1 not at all – 5 very)</td>
                     <td>
                         @Html.DropDownListFor(model => model.DiaryData.PerFactor1, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })

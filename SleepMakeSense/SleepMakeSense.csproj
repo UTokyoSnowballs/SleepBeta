@@ -302,22 +302,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\ApplicationDbContext\201803300836294_test1.cs" />
-    <Compile Include="Migrations\ApplicationDbContext\201803300836294_test1.Designer.cs">
-      <DependentUpon>201803300836294_test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ApplicationDbContext\201803310315183_test.cs" />
-    <Compile Include="Migrations\ApplicationDbContext\201803310315183_test.Designer.cs">
-      <DependentUpon>201803310315183_test.cs</DependentUpon>
+    <Compile Include="Migrations\ApplicationDbContext\201804240046261_test.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201804240046261_test.Designer.cs">
+      <DependentUpon>201804240046261_test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationDbContext\ConfigApplicationDbContext.cs" />
-    <Compile Include="Migrations\SleepbetaDbContext\201803310255228_test.cs" />
-    <Compile Include="Migrations\SleepbetaDbContext\201803310255228_test.Designer.cs">
-      <DependentUpon>201803310255228_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SleepbetaDbContext\201803310322445_check.cs" />
-    <Compile Include="Migrations\SleepbetaDbContext\201803310322445_check.Designer.cs">
-      <DependentUpon>201803310322445_check.cs</DependentUpon>
+    <Compile Include="Migrations\SleepbetaDbContext\201804240047085_test2.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201804240047085_test2.Designer.cs">
+      <DependentUpon>201804240047085_test2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\SleepbetaDbContext\ConfigSleepbetaDbContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -496,17 +488,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\ApplicationDbContext\201803300836294_test1.resx">
-      <DependentUpon>201803300836294_test1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201804240046261_test.resx">
+      <DependentUpon>201804240046261_test.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ApplicationDbContext\201803310315183_test.resx">
-      <DependentUpon>201803310315183_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201803310255228_test.resx">
-      <DependentUpon>201803310255228_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201803310322445_check.resx">
-      <DependentUpon>201803310322445_check.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201804240047085_test2.resx">
+      <DependentUpon>201804240047085_test2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

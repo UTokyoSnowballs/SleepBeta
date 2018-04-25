@@ -3,7 +3,7 @@ namespace SleepMakeSense.Migrations.SleepbetaDbContext
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class test : DbMigration
+    public partial class test2 : DbMigration
     {
         public override void Up()
         {
@@ -60,7 +60,6 @@ namespace SleepMakeSense.Migrations.SleepbetaDbContext
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.AspNetUserId)
                 .Index(t => t.AspNetUserId);
-                
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -175,13 +174,12 @@ namespace SleepMakeSense.Migrations.SleepbetaDbContext
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.AspNetUserId)
-                .Index(t => t.AspNetUserId);
-            */
+                .Index(t => t.AspNetUserId);*/
+            
         }
         
         public override void Down()
         {
-            /*
             DropForeignKey("dbo.DiaryDatas", "AspNetUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UserQuestions", "AspNetUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TokenManagements", "AspNetUserId", "dbo.AspNetUsers");
@@ -195,7 +193,6 @@ namespace SleepMakeSense.Migrations.SleepbetaDbContext
             DropTable("dbo.FitbitDatas");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.DiaryDatas");
-            */
         }
     }
 }

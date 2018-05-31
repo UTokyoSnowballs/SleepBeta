@@ -202,6 +202,7 @@ namespace SleepMakeSense.Controllers
             }
             else
             {
+                //throw new Exception("Session Fitbit Client ID is empty")};
                 return (FitbitClient)Session["FitbitClient"];
             }
         }
@@ -210,7 +211,7 @@ namespace SleepMakeSense.Controllers
         {
             // Pandita 20170824: going back too many days cause Gateway Timeout error? Then let's just go back 40 days
             // DateTime dateStop = DateTime.UtcNow.Date.AddDays(-365);
-            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-60);
+            DateTime dateStop = DateTime.UtcNow.Date.AddDays(-40);
 
 
             IEnumerable<FitbitData> lastSyncedData = from table in Db.FitbitData
@@ -272,7 +273,7 @@ namespace SleepMakeSense.Controllers
                 var timeEnteredBed = await client.GetTimeSeriesAsync(TimeSeriesResourceType.TimeEnteredBed, dateStop, dateNow);
                 var weight = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Weight, dateStop, dateNow);
                 var bmi = await client.GetTimeSeriesAsync(TimeSeriesResourceType.BMI, dateStop, dateNow);
-                var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, dateNow);
+                //var fat = await client.GetTimeSeriesAsync(TimeSeriesResourceType.Fat, dateStop, dateNow);
 
                 foreach (Fitbit.Models.TimeSeriesDataList.Data data in minutesAsleep.DataList)
                 {
@@ -304,7 +305,7 @@ namespace SleepMakeSense.Controllers
                             TimeEnteredBed = null,
                             Weight = null,
                             BMI = null,
-                            Fat = null,
+                            //Fat = null,
                             AspNetUserId = userId
                         });
                     }
@@ -416,10 +417,10 @@ namespace SleepMakeSense.Controllers
                         fitbitInputData.BMI = data.Value;
                     }
 
-                    foreach (Fitbit.Models.TimeSeriesDataList.Data data in fat.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
+                    /*foreach (Fitbit.Models.TimeSeriesDataList.Data data in fat.DataList.Where(data => data.DateTime == fitbitInputData.DateStamp))
                     {
                         fitbitInputData.Fat = data.Value;
-                    }
+                    }*/
                 }
                 //Comparing Saved data with new data
 
@@ -535,7 +536,7 @@ namespace SleepMakeSense.Controllers
 
                     Weight = Convert.ToDouble(fitbitData.Weight),
                     BMI = Convert.ToDouble(fitbitData.BMI),
-                    Fat = Convert.ToDouble(fitbitData.Fat)
+                    //Fat = Convert.ToDouble(fitbitData.Fat)
                 });
             }
             foreach (Userdata userdata in userDatas)
@@ -579,6 +580,7 @@ namespace SleepMakeSense.Controllers
                     userdata.SunSetTime = diaryData.DateStamp.AddHours(Convert.ToInt32(diaryData.SunSetTime));
                 }
             }
+            Console.Write(userDatas);
             return userDatas;
         }
 
@@ -608,7 +610,7 @@ namespace SleepMakeSense.Controllers
             //Fitbit Data Counters
             int CNTSteps = 0, CNTDistance = 0, CNTMinutesSedentary = 0, CNTMinutesLightlyActive = 0,
                 CNTMinutesFairlyActive = 0, CNTMinutesVeryActive = 0, CNTWater = 0,
-                CNTCaloriesOut = 0, CNTActivityCalories = 0, CNTWeight = 0, CNTBMI = 0, CNTFat = 0, CNTCaloriesIn = 0;
+                CNTCaloriesOut = 0, CNTActivityCalories = 0, CNTWeight = 0, CNTBMI = 0, /*CNTFat = 0,*/ CNTCaloriesIn = 0;
 
 
             //Diary Data Counters
@@ -637,7 +639,7 @@ namespace SleepMakeSense.Controllers
                 if (userData.ActivityCalories > 0) CNTActivityCalories++;
                 if (userData.Weight > 0) CNTWeight++;
                 if (userData.BMI > 0) CNTBMI++;
-                if (userData.Fat > 0) CNTFat++;
+                //if (userData.Fat > 0) CNTFat++;
 
                 //Diary Data Counter
                 if (userData.WakeUpFreshness > 0) CNTWakeUpFreshness++;
@@ -701,101 +703,102 @@ namespace SleepMakeSense.Controllers
             // should correlate to all tracked factors, including the ones tracked using diary  
 
             //No idea what this is ment to do :/ - Sean
-            double[] WakeUpFreshnessSteps = new double[CNTSteps];
-            double[] WakeUpFreshnessDistance = new double[CNTDistance];
-            double[] WakeUpFreshnessMinutesSedentary = new double[CNTMinutesSedentary];
-            double[] WakeUpFreshnessMinutesLightlyActive = new double[CNTMinutesLightlyActive];
-            double[] WakeUpFreshnessMinutesFairlyActive = new double[CNTMinutesFairlyActive];
-            double[] WakeUpFreshnessMinutesVeryActive = new double[CNTMinutesVeryActive];
-            double[] WakeUpFreshnessWater = new double[CNTWater];
-            double[] WakeUpFreshnessCaloriesIn = new double[CNTCaloriesIn];
-            double[] WakeUpFreshnessCaloriesOut = new double[CNTCaloriesOut];
-            double[] WakeUpFreshnessActivityCalories = new double[CNTActivityCalories];
-            double[] WakeUpFreshnessWeight = new double[CNTWeight];
-            double[] WakeUpFreshnessBMI = new double[CNTBMI];
-            double[] WakeUpFreshnessFat = new double[CNTFat];
+            // Pandita 2018/05/31: fixed the array range
+            double[] WakeUpFreshnessSteps = new double[countOfDaysData];
+            double[] WakeUpFreshnessDistance = new double[countOfDaysData];
+            double[] WakeUpFreshnessMinutesSedentary = new double[countOfDaysData];
+            double[] WakeUpFreshnessMinutesLightlyActive = new double[countOfDaysData];
+            double[] WakeUpFreshnessMinutesFairlyActive = new double[countOfDaysData];
+            double[] WakeUpFreshnessMinutesVeryActive = new double[countOfDaysData];
+            double[] WakeUpFreshnessWater = new double[countOfDaysData];
+            double[] WakeUpFreshnessCaloriesIn = new double[countOfDaysData];
+            double[] WakeUpFreshnessCaloriesOut = new double[countOfDaysData];
+            double[] WakeUpFreshnessActivityCalories = new double[countOfDaysData];
+            double[] WakeUpFreshnessWeight = new double[countOfDaysData];
+            double[] WakeUpFreshnessBMI = new double[countOfDaysData];
+            double[] WakeUpFreshnessFat = new double[countOfDaysData];
 
-            double[] WakeUpFreshnessMood = new double[CNTMood];
-            double[] WakeUpFreshnessStress = new double[CNTStress];
-            double[] WakeUpFreshnessTiredness = new double[CNTTiredness];
-            double[] WakeUpFreshnessDream = new double[CNTDream];
-            double[] WakeUpFreshnessBodyTemp = new double[CNTBodyTemp];
-            double[] WakeUpFreshnessHormone = new double[CNTHormone];
-            double[] WakeUpFreshnessSchoolStress = new double[CNTHormone];
-            double[] WakeUpFreshnessCoffeeAmt = new double[CNTCoffeeAmt];
-            double[] WakeUpFreshnessCoffeeTime = new double[CNTCoffeeTime];
-            double[] WakeUpFreshnessAlcoholAmt = new double[CNTAlcoholAmt];
-            double[] WakeUpFreshnessAlcoholTime = new double[CNTAlcoholTime];
-            double[] WakeUpFreshnessNapTime = new double[CNTNapTime];
-            double[] WakeUpFreshnessNapDuration = new double[CNTNapDuration];
-            double[] WakeUpFreshnessDigDeviceDuration = new double[CNTDigDeviceDuration];
-            double[] WakeUpFreshnessGamesDuration = new double[CNTGamesDuration];
-            double[] WakeUpFreshnessSocialFriend = new double[CNTSocialFriend];
-            double[] WakeUpFreshnessSocialFamily = new double[CNTSocialFamily];
-            double[] WakeUpFreshnessSocialMedia = new double[CNTSocialMedia];
-            double[] WakeUpFreshnessMusicDuration = new double[CNTMusicDuration];
-            double[] WakeUpFreshnessTVDuration = new double[CNTTVDuration];
-            double[] WakeUpFreshnessWorkTime = new double[CNTWorkTime];
-            double[] WakeUpFreshnessWorkDuration = new double[CNTWorkDuration];
-            double[] WakeUpFreshnessExerciseDuration = new double[CNTExerciseDuration];
-            double[] WakeUpFreshnessExerciseIntensity = new double[CNTExerciseIntensity];
-            double[] WakeUpFreshnessDinnerTime = new double[CNTDinnerTime];
-            double[] WakeUpFreshnessSnackTime = new double[CNTSnackTime];
-            double[] WakeUpFreshnessAmbientTemp = new double[CNTAmbientTemp];
-            double[] WakeUpFreshnessAmbientHumd = new double[CNTAmbientHumd];
-            double[] WakeUpFreshnessLight = new double[CNTLight];
-            double[] WakeUpFreshnessSunRiseTime = new double[CNTSunRiseTime];
-            double[] WakeUpFreshnessSunSetTime = new double[CNTSunSetTime];
+            double[] WakeUpFreshnessMood = new double[countOfDaysData];
+            double[] WakeUpFreshnessStress = new double[countOfDaysData];
+            double[] WakeUpFreshnessTiredness = new double[countOfDaysData];
+            double[] WakeUpFreshnessDream = new double[countOfDaysData];
+            double[] WakeUpFreshnessBodyTemp = new double[countOfDaysData];
+            double[] WakeUpFreshnessHormone = new double[countOfDaysData];
+            double[] WakeUpFreshnessSchoolStress = new double[countOfDaysData];
+            double[] WakeUpFreshnessCoffeeAmt = new double[countOfDaysData];
+            double[] WakeUpFreshnessCoffeeTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessAlcoholAmt = new double[countOfDaysData];
+            double[] WakeUpFreshnessAlcoholTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessNapTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessNapDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessDigDeviceDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessGamesDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessSocialFriend = new double[countOfDaysData];
+            double[] WakeUpFreshnessSocialFamily = new double[countOfDaysData];
+            double[] WakeUpFreshnessSocialMedia = new double[countOfDaysData];
+            double[] WakeUpFreshnessMusicDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessTVDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessWorkTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessWorkDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessExerciseDuration = new double[countOfDaysData];
+            double[] WakeUpFreshnessExerciseIntensity = new double[countOfDaysData];
+            double[] WakeUpFreshnessDinnerTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessSnackTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessAmbientTemp = new double[countOfDaysData];
+            double[] WakeUpFreshnessAmbientHumd = new double[countOfDaysData];
+            double[] WakeUpFreshnessLight = new double[countOfDaysData];
+            double[] WakeUpFreshnessSunRiseTime = new double[countOfDaysData];
+            double[] WakeUpFreshnessSunSetTime = new double[countOfDaysData];
 
 
             //Temp Values
             //Fitbit
-            double[] tmpSteps = new double[CNTSteps];
-            double[] tmpDistance = new double[CNTDistance];
-            double[] tmpMinutesSedentary = new double[CNTMinutesSedentary];
-            double[] tmpMinutesLightlyActive = new double[CNTMinutesLightlyActive];
-            double[] tmpMinutesFairlyActive = new double[CNTMinutesFairlyActive];
-            double[] tmpMinutesVeryActive = new double[CNTMinutesVeryActive];
-            double[] tmpWater = new double[CNTWater];
-            double[] tmpCaloriesIn = new double[CNTCaloriesIn];
-            double[] tmpCaloriesOut = new double[CNTCaloriesOut];
-            double[] tmpActivityCalories = new double[CNTActivityCalories];
-            double[] tmpWeight = new double[CNTWeight];
-            double[] tmpBMI = new double[CNTBMI];
-            double[] tmpFat = new double[CNTFat];
+            double[] tmpSteps = new double[countOfDaysData];
+            double[] tmpDistance = new double[countOfDaysData];
+            double[] tmpMinutesSedentary = new double[countOfDaysData];
+            double[] tmpMinutesLightlyActive = new double[countOfDaysData];
+            double[] tmpMinutesFairlyActive = new double[countOfDaysData];
+            double[] tmpMinutesVeryActive = new double[countOfDaysData];
+            double[] tmpWater = new double[countOfDaysData];
+            double[] tmpCaloriesIn = new double[countOfDaysData];
+            double[] tmpCaloriesOut = new double[countOfDaysData];
+            double[] tmpActivityCalories = new double[countOfDaysData];
+            double[] tmpWeight = new double[countOfDaysData];
+            double[] tmpBMI = new double[countOfDaysData];
+            double[] tmpFat = new double[countOfDaysData];
 
             //Diary 
-            double[] tmpMood = new double[CNTMood];
-            double[] tmpStress = new double[CNTStress];
-            double[] tmpTiredness = new double[CNTTiredness];
-            double[] tmpDream = new double[CNTDream];
-            double[] tmpBodyTemp = new double[CNTBodyTemp];
-            double[] tmpHormone = new double[CNTHormone];
-            double[] tmpSchoolStress = new double[CNTSchoolStress];
-            double[] tmpCoffeeAmt = new double[CNTCoffeeAmt];
-            double[] tmpCoffeeTime = new double[CNTCoffeeTime];
-            double[] tmpAlcoholAmt = new double[CNTAlcoholAmt];
-            double[] tmpAlcoholTime = new double[CNTAlcoholTime];
-            double[] tmpNapTime = new double[CNTNapTime];
-            double[] tmpNapDuration = new double[CNTNapDuration];
-            double[] tmpDigDeviceDuration = new double[CNTDigDeviceDuration];
-            double[] tmpGamesDuration = new double[CNTGamesDuration];
-            double[] tmpSocialFriend = new double[CNTSocialFriend];
-            double[] tmpSocialFamily = new double[CNTSocialFamily];
-            double[] tmpSocialMedia = new double[CNTSocialMedia];
-            double[] tmpMusicDuration = new double[CNTMusicDuration];
-            double[] tmpTVDuration = new double[CNTTVDuration];
-            double[] tmpWorkTime = new double[CNTWorkTime];
-            double[] tmpWorkDuration = new double[CNTWorkDuration];
-            double[] tmpExerciseDuration = new double[CNTExerciseDuration];
-            double[] tmpExerciseIntensity = new double[CNTExerciseIntensity];
-            double[] tmpDinnerTime = new double[CNTDinnerTime];
-            double[] tmpSnackTime = new double[CNTSnackTime];
-            double[] tmpAmbientTemp = new double[CNTAmbientTemp];
-            double[] tmpAmbientHumd = new double[CNTAmbientHumd];
-            double[] tmpLight = new double[CNTLight];
-            double[] tmpSunRiseTime = new double[CNTSunRiseTime];
-            double[] tmpSunSetTime = new double[CNTSunSetTime];
+            double[] tmpMood = new double[countOfDaysData];
+            double[] tmpStress = new double[countOfDaysData];
+            double[] tmpTiredness = new double[countOfDaysData];
+            double[] tmpDream = new double[countOfDaysData];
+            double[] tmpBodyTemp = new double[countOfDaysData];
+            double[] tmpHormone = new double[countOfDaysData];
+            double[] tmpSchoolStress = new double[countOfDaysData];
+            double[] tmpCoffeeAmt = new double[countOfDaysData];
+            double[] tmpCoffeeTime = new double[countOfDaysData];
+            double[] tmpAlcoholAmt = new double[countOfDaysData];
+            double[] tmpAlcoholTime = new double[countOfDaysData];
+            double[] tmpNapTime = new double[countOfDaysData];
+            double[] tmpNapDuration = new double[countOfDaysData];
+            double[] tmpDigDeviceDuration = new double[countOfDaysData];
+            double[] tmpGamesDuration = new double[countOfDaysData];
+            double[] tmpSocialFriend = new double[countOfDaysData];
+            double[] tmpSocialFamily = new double[countOfDaysData];
+            double[] tmpSocialMedia = new double[countOfDaysData];
+            double[] tmpMusicDuration = new double[countOfDaysData];
+            double[] tmpTVDuration = new double[countOfDaysData];
+            double[] tmpWorkTime = new double[countOfDaysData];
+            double[] tmpWorkDuration = new double[countOfDaysData];
+            double[] tmpExerciseDuration = new double[countOfDaysData];
+            double[] tmpExerciseIntensity = new double[countOfDaysData];
+            double[] tmpDinnerTime = new double[countOfDaysData];
+            double[] tmpSnackTime = new double[countOfDaysData];
+            double[] tmpAmbientTemp = new double[countOfDaysData];
+            double[] tmpAmbientHumd = new double[countOfDaysData];
+            double[] tmpLight = new double[countOfDaysData];
+            double[] tmpSunRiseTime = new double[countOfDaysData];
+            double[] tmpSunSetTime = new double[countOfDaysData];
 
 
 
@@ -828,7 +831,7 @@ namespace SleepMakeSense.Controllers
 
             int iWakeUpFreshnessSteps = 0, iWakeUpFreshnessDistance = 0, iWakeUpFreshnessMinutesSedentary = 0, iWakeUpFreshnessMinutesLightlyActive = 0,
                 iWakeUpFreshnessMinutesFairlyActive = 0, iWakeUpFreshnessMinutesVeryActive = 0, iWakeUpFreshnessWater = 0,
-                iWakeUpFreshnessCaloriesOut = 0, iWakeUpFreshnessActivityCalories = 0, iWakeUpFreshnessWeight = 0, iWakeUpFreshnessBMI = 0, iWakeUpFreshnessFat = 0, iWakeUpFreshnessCaloriesIn = 0;
+                iWakeUpFreshnessCaloriesOut = 0, iWakeUpFreshnessActivityCalories = 0, iWakeUpFreshnessWeight = 0, iWakeUpFreshnessBMI = 0,iWakeUpFreshnessFat = 0,iWakeUpFreshnessCaloriesIn = 0;
 
             //Diary Data incruments
             int iWakeUpFreshnessMood = 0, iWakeUpFreshnessStress = 0, iWakeUpFreshnessTiredness = 0,
@@ -882,6 +885,7 @@ namespace SleepMakeSense.Controllers
                         tmpDistance[iWakeUpFreshnessDistance] = Convert.ToDouble(daysData.Distance);
                         iWakeUpFreshnessDistance++;
                     }
+
                     if (Convert.ToDouble(daysData.MinutesSedentary) > 0)
                     {
                         WakeUpFreshnessMinutesSedentary[iWakeUpFreshnessMinutesSedentary] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -918,12 +922,13 @@ namespace SleepMakeSense.Controllers
                         tmpCaloriesIn[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(daysData.CaloriesIn);
                         iWakeUpFreshnessCaloriesIn++;
                     }
+                    /* Pandita 2018/05/31 this array was not declared ! 
                     if (Convert.ToDouble(daysData.CaloriesOut) >= 0)
                     {
                         WakeUpFreshnessCaloriesOut[iWakeUpFreshnessCaloriesOut] = Convert.ToDouble(daysData.WakeUpFreshness);
                         tmpCaloriesOut[iWakeUpFreshnessCaloriesIn] = Convert.ToDouble(daysData.CaloriesIn);
                         iWakeUpFreshnessCaloriesIn++;
-                    }
+                    }*/
                     if (Convert.ToDouble(daysData.ActivityCalories) >= 0)
                     {
                         WakeUpFreshnessActivityCalories[iWakeUpFreshnessActivityCalories] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -942,6 +947,7 @@ namespace SleepMakeSense.Controllers
                         tmpFat[iWakeUpFreshnessFat] = Convert.ToDouble(daysData.Fat);
                         iWakeUpFreshnessFat++;
                     }
+
                     if (Convert.ToDouble(daysData.Fat) > 0)
                     {
                         WakeUpFreshnessBMI[iWakeUpFreshnessBMI] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -991,18 +997,21 @@ namespace SleepMakeSense.Controllers
                         tmpCoffeeAmt[iWakeUpFreshnessCoffeeAmt] = Convert.ToDouble(daysData.CoffeeAmt);
                         iWakeUpFreshnessCoffeeAmt++;
                     }
+                    /* Pandita: 2018/05/31 Not able to convert DateTime to double
                     if (Convert.ToDouble(daysData.CoffeeTime) >= 0)
                     {
                         WakeUpFreshnessCoffeeTime[iWakeUpFreshnessCoffeeTime] = Convert.ToDouble(daysData.WakeUpFreshness);
                         tmpCoffeeTime[iWakeUpFreshnessCoffeeTime] = Convert.ToDouble(daysData.CoffeeTime);
                         iWakeUpFreshnessCoffeeTime++;
-                    }
+                    }*/
                     if (Convert.ToDouble(daysData.AlcoholAmt) >= 0)
                     {
                         WakeUpFreshnessAlcoholAmt[iWakeUpFreshnessAlcoholAmt] = Convert.ToDouble(daysData.WakeUpFreshness);
                         tmpAlcoholAmt[iWakeUpFreshnessAlcoholAmt] = Convert.ToDouble(daysData.AlcoholAmt);
                         iWakeUpFreshnessAlcoholAmt++;
                     }
+
+                    /* Pandita: 2018/05/31 Not able to convert DateTime to double
                     if (Convert.ToDouble(daysData.AlcoholTime) >= 0)
                     {
                         WakeUpFreshnessAlcoholTime[iWakeUpFreshnessAlcoholTime] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1015,6 +1024,7 @@ namespace SleepMakeSense.Controllers
                         tmpNapTime[iWakeUpFreshnessNapTime] = Convert.ToDouble(daysData.NapTime);
                         iWakeUpFreshnessNapTime++;
                     }
+                    */
                     if (Convert.ToDouble(daysData.NapDuration) >= 0)
                     {
                         WakeUpFreshnessNapDuration[iWakeUpFreshnessNapDuration] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1067,12 +1077,13 @@ namespace SleepMakeSense.Controllers
                         tmpTVDuration[iWakeUpFreshnessTVDuration] = Convert.ToDouble(daysData.TVDuration);
                         iWakeUpFreshnessTVDuration++;
                     }
+                    /* Pandita: 2018/05/31 Not able to convert DateTime to double
                     if (Convert.ToDouble(daysData.WorkTime) > 0)
                     {
                         WakeUpFreshnessWorkTime[iWakeUpFreshnessWorkTime] = Convert.ToDouble(daysData.WakeUpFreshness);
                         tmpWorkTime[iWakeUpFreshnessWorkTime] = Convert.ToDouble(daysData.WorkTime);
                         iWakeUpFreshnessWorkTime++;
-                    }
+                    }*/
                     if (Convert.ToDouble(daysData.WorkDuration) > 0)
                     {
                         WakeUpFreshnessWorkDuration[iWakeUpFreshnessWorkDuration] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1091,6 +1102,7 @@ namespace SleepMakeSense.Controllers
                         tmpExerciseIntensity[iWakeUpFreshnessExerciseIntensity] = Convert.ToDouble(daysData.ExerciseIntensity);
                         iWakeUpFreshnessExerciseIntensity++;
                     }
+                    /* Pandita: 2018/05/31 Not able to convert DateTime to double
                     if (Convert.ToDouble(daysData.DinnerTime) > 0)
                     {
                         WakeUpFreshnessDinnerTime[iWakeUpFreshnessDinnerTime] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1103,6 +1115,7 @@ namespace SleepMakeSense.Controllers
                         tmpSnackTime[iWakeUpFreshnessSnackTime] = Convert.ToDouble(daysData.SnackTime);
                         iWakeUpFreshnessSnackTime++;
                     }
+                    */
                     if (Convert.ToDouble(daysData.AmbientTemp) > 0)
                     {
                         WakeUpFreshnessAmbientTemp[iWakeUpFreshnessAmbientTemp] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1121,6 +1134,7 @@ namespace SleepMakeSense.Controllers
                         tmpLight[iWakeUpFreshnessLight] = Convert.ToDouble(daysData.Light);
                         iWakeUpFreshnessLight++;
                     }
+                    /* Pandita: 2018/05/31 Not able to convert DateTime to double
                     if (Convert.ToDouble(daysData.SunRiseTime) > 0)
                     {
                         WakeUpFreshnessSunRiseTime[iWakeUpFreshnessSunRiseTime] = Convert.ToDouble(daysData.WakeUpFreshness);
@@ -1132,7 +1146,7 @@ namespace SleepMakeSense.Controllers
                         WakeUpFreshnessSunSetTime[iWakeUpFreshnessSunSetTime] = Convert.ToDouble(daysData.WakeUpFreshness);
                         tmpSunSetTime[iWakeUpFreshnessSunSetTime] = Convert.ToDouble(daysData.SunSetTime);
                         iWakeUpFreshnessSunSetTime++;
-                    }
+                    }*/
                 }
 
             }
@@ -1625,9 +1639,9 @@ namespace SleepMakeSense.Controllers
                 }
             }*/
 
-            // MinutesAsleep
-            //double rMinutesSedentary = Correlation.Pearson(MinutesAsleep, MinutesSedentary);
-            double rMinutesSedentary = alglib.spearmancorr2(MinutesAsleep, MinutesSedentary);
+                    // MinutesAsleep
+                    //double rMinutesSedentary = Correlation.Pearson(MinutesAsleep, MinutesSedentary);
+                    double rMinutesSedentary = alglib.spearmancorr2(MinutesAsleep, MinutesSedentary);
             //double pMinutesSedentary = alglib.correlationtests.spearmanrankcorrelationsignificance(rMinutesSedentary, MinutesAsleep.Length, ref +0.05, ref 0, ref 0); 
 
             if (Math.Abs(rMinutesSedentary) >= 0.3)
@@ -1861,10 +1875,11 @@ namespace SleepMakeSense.Controllers
             double pearson = 0, tempValue = 0;
             if (CNTCaloriesIn > 4)
             {
-                double[] CaloriesIn = new double[CNTCaloriesIn];
-                double[] tempMinutesAsleepCalariesIn = new double[CNTCaloriesIn];
-                double[] tempMinutesAwakeCalariesIn = new double[CNTCaloriesIn];
-                double[] tempSleepEfficiencyCalariesIn = new double[CNTCaloriesIn];
+                // pandita 2018/05/31 fix the array range issue
+                double[] CaloriesIn = new double[countOfDaysData];
+                double[] tempMinutesAsleepCalariesIn = new double[countOfDaysData];
+                double[] tempMinutesAwakeCalariesIn = new double[countOfDaysData];
+                double[] tempSleepEfficiencyCalariesIn = new double[countOfDaysData];
 
                 foreach (SleepMakeSense.Models.Userdata daysData in userDatas)
                 {
@@ -1927,10 +1942,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTCaloriesOut > 4)
             {
-                double[] CaloriesOut = new double[CNTCaloriesOut];
-                double[] tempMinutesAsleepCalariesOut = new double[CNTCaloriesOut];
-                double[] tempMinutesAwakeCalariesOut = new double[CNTCaloriesOut];
-                double[] tempSleepEfficiencyCalariesOut = new double[CNTCaloriesOut];
+                double[] CaloriesOut = new double[countOfDaysData];
+                double[] tempMinutesAsleepCalariesOut = new double[countOfDaysData];
+                double[] tempMinutesAwakeCalariesOut = new double[countOfDaysData];
+                double[] tempSleepEfficiencyCalariesOut = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -1996,10 +2011,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTWater > 4)
             {
-                double[] Water = new double[CNTWater];
-                double[] tempMinutesAsleepWater = new double[CNTWater];
-                double[] tempMinutesAwakeWater = new double[CNTWater];
-                double[] tempSleepEfficiencyWater = new double[CNTWater];
+                double[] Water = new double[countOfDaysData];
+                double[] tempMinutesAsleepWater = new double[countOfDaysData];
+                double[] tempMinutesAwakeWater = new double[countOfDaysData];
+                double[] tempSleepEfficiencyWater = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2065,10 +2080,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTSteps > 4)
             {
-                double[] Steps = new double[CNTSteps];
-                double[] tempMinutesAsleepSteps = new double[CNTSteps];
-                double[] tempMinutesAwakeSteps = new double[CNTSteps]; ;
-                double[] tempSleepEfficiencySteps = new double[CNTSteps];
+                double[] Steps = new double[countOfDaysData];
+                double[] tempMinutesAsleepSteps = new double[countOfDaysData];
+                double[] tempMinutesAwakeSteps = new double[countOfDaysData]; ;
+                double[] tempSleepEfficiencySteps = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2135,10 +2150,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTWeight > 4)
             {
-                double[] Weight = new double[CNTWeight];
-                double[] tempMinutesAsleepWeight = new double[CNTWeight];
-                double[] tempMinutesAwakeWeight = new double[CNTWeight];
-                double[] tempSleepEfficiencyWeight = new double[CNTWeight];
+                double[] Weight = new double[countOfDaysData];
+                double[] tempMinutesAsleepWeight = new double[countOfDaysData];
+                double[] tempMinutesAwakeWeight = new double[countOfDaysData];
+                double[] tempSleepEfficiencyWeight = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2203,6 +2218,7 @@ namespace SleepMakeSense.Controllers
             }
 
             // Fat -- DONE YEAH!!
+            /*
 
             if (CNTFat > 4)
             {
@@ -2248,7 +2264,7 @@ namespace SleepMakeSense.Controllers
                     sleepEffiencyCorrList.Add(new CorrList() { Name = "Fat", Coefficient = pearson, Picture = "fa fa-child fa-2" });
                 }
 
-            }
+            }*/
 
 
 
@@ -2256,10 +2272,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTCoffeeAmt > 4)
             {
-                double[] Coffee = new double[CNTCoffeeAmt];
-                double[] tempMinutesAsleepCoffee = new double[CNTCoffeeAmt];
-                double[] tempMinutesAwakeCoffee = new double[CNTCoffeeAmt];
-                double[] tempSleepEfficiencyCoffee = new double[CNTCoffeeAmt];
+                double[] Coffee = new double[countOfDaysData];
+                double[] tempMinutesAsleepCoffee = new double[countOfDaysData];
+                double[] tempMinutesAwakeCoffee = new double[countOfDaysData];
+                double[] tempSleepEfficiencyCoffee = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2327,6 +2343,7 @@ namespace SleepMakeSense.Controllers
 
 
             // CoffeeTime -- DONE YEAH!!
+            /* Pandata 2018/05/31: not able to convert time to numbers 
 
             if (CNTCoffeeTime > 4)
             {
@@ -2400,15 +2417,16 @@ namespace SleepMakeSense.Controllers
                 }
 
             }
+            */
 
             // Alcohol -- DONE YEAH!!
 
             if (CNTAlcoholAmt > 4)
             {
-                double[] Alcohol = new double[CNTAlcoholAmt];
-                double[] tempMinutesAsleepAlcohol = new double[CNTAlcoholAmt];
-                double[] tempMinutesAwakeAlcohol = new double[CNTAlcoholAmt];
-                double[] tempSleepEfficiencyAlcohol = new double[CNTAlcoholAmt];
+                double[] Alcohol = new double[countOfDaysData];
+                double[] tempMinutesAsleepAlcohol = new double[countOfDaysData];
+                double[] tempMinutesAwakeAlcohol = new double[countOfDaysData];
+                double[] tempSleepEfficiencyAlcohol = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2481,10 +2499,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTMood > 4)
             {
-                double[] Mood = new double[CNTMood];
-                double[] tempMinutesAsleepMood = new double[CNTMood];
-                double[] tempMinutesAwakeMood = new double[CNTMood];
-                double[] tempSleepEfficiencyMood = new double[CNTMood];
+                double[] Mood = new double[countOfDaysData];
+                double[] tempMinutesAsleepMood = new double[countOfDaysData];
+                double[] tempMinutesAwakeMood = new double[countOfDaysData];
+                double[] tempSleepEfficiencyMood = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2556,10 +2574,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTStress > 4)
             {
-                double[] Stress = new double[CNTStress];
-                double[] tempMinutesAsleepStress = new double[CNTStress];
-                double[] tempMinutesAwakeStress = new double[CNTStress];
-                double[] tempSleepEfficiencyStress = new double[CNTStress];
+                double[] Stress = new double[countOfDaysData];
+                double[] tempMinutesAsleepStress = new double[countOfDaysData];
+                double[] tempMinutesAwakeStress = new double[countOfDaysData];
+                double[] tempSleepEfficiencyStress = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2628,10 +2646,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTTiredness > 4)
             {
-                double[] Tiredness = new double[CNTTiredness];
-                double[] tempMinutesAsleepTiredness = new double[CNTTiredness];
-                double[] tempMinutesAwakeTiredness = new double[CNTTiredness];
-                double[] tempSleepEfficiencyTiredness = new double[CNTTiredness];
+                double[] Tiredness = new double[countOfDaysData];
+                double[] tempMinutesAsleepTiredness = new double[countOfDaysData];
+                double[] tempMinutesAwakeTiredness = new double[countOfDaysData];
+                double[] tempSleepEfficiencyTiredness = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2703,10 +2721,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTDream > 4)
             {
-                double[] Dream = new double[CNTDream];
-                double[] tempMinutesAsleepDream = new double[CNTDream];
-                double[] tempMinutesAwakeDream = new double[CNTDream];
-                double[] tempSleepEfficiencyDream = new double[CNTDream];
+                double[] Dream = new double[countOfDaysData];
+                double[] tempMinutesAsleepDream = new double[countOfDaysData];
+                double[] tempMinutesAwakeDream = new double[countOfDaysData];
+                double[] tempSleepEfficiencyDream = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2775,10 +2793,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTDigDeviceDuration > 4)
             {
-                double[] DigitalDev = new double[CNTDigDeviceDuration];
-                double[] tempMinutesAsleepDigitalDev = new double[CNTDigDeviceDuration];
-                double[] tempMinutesAwakeDigitalDev = new double[CNTDigDeviceDuration];
-                double[] tempSleepEfficiencyDigitalDev = new double[CNTDigDeviceDuration];
+                double[] DigitalDev = new double[countOfDaysData];
+                double[] tempMinutesAsleepDigitalDev = new double[countOfDaysData];
+                double[] tempMinutesAwakeDigitalDev = new double[countOfDaysData];
+                double[] tempSleepEfficiencyDigitalDev = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2847,10 +2865,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTNapDuration > 4)
             {
-                double[] NapDuration = new double[CNTNapDuration];
-                double[] tempMinutesAsleepNapDuration = new double[CNTNapDuration];
-                double[] tempMinutesAwakeNapDuration = new double[CNTNapDuration];
-                double[] tempSleepEfficiencyNapDuration = new double[CNTNapDuration];
+                double[] NapDuration = new double[countOfDaysData];
+                double[] tempMinutesAsleepNapDuration = new double[countOfDaysData];
+                double[] tempMinutesAwakeNapDuration = new double[countOfDaysData];
+                double[] tempSleepEfficiencyNapDuration = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -2897,6 +2915,7 @@ namespace SleepMakeSense.Controllers
 
             // NapTime -- DONE YEAH!!
 
+            /* Pandita 2018/05/31 
             if (CNTNapTime > 4)
             {
                 double[] NapTime = new double[CNTNapTime];
@@ -2944,16 +2963,16 @@ namespace SleepMakeSense.Controllers
                     sleepEffiencyCorrList.Add(new CorrList() { Name = "NapTime", Coefficient = pearson, Picture = "fa fa-bed fa-2" });
                 }
 
-            }
+            }*/
 
             // SocialFamily -- DONE YEAH!!
 
             if (CNTSocialFamily > 4)
             {
-                double[] SocialFamily = new double[CNTSocialFamily];
-                double[] tempMinutesAsleepSocialFamily = new double[CNTSocialFamily];
-                double[] tempMinutesAwakeSocialFamily = new double[CNTSocialFamily];
-                double[] tempSleepEfficiencySocialFamily = new double[CNTSocialFamily];
+                double[] SocialFamily = new double[countOfDaysData];
+                double[] tempMinutesAsleepSocialFamily = new double[countOfDaysData];
+                double[] tempMinutesAwakeSocialFamily = new double[countOfDaysData];
+                double[] tempSleepEfficiencySocialFamily = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3003,10 +3022,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTSocialFriend > 4)
             {
-                double[] SocialFriend = new double[CNTSocialFriend];
-                double[] tempMinutesAsleepSocialFriend = new double[CNTSocialFriend];
-                double[] tempMinutesAwakeSocialFriend = new double[CNTSocialFriend];
-                double[] tempSleepEfficiencySocialFriend = new double[CNTSocialFriend];
+                double[] SocialFriend = new double[countOfDaysData];
+                double[] tempMinutesAsleepSocialFriend = new double[countOfDaysData];
+                double[] tempMinutesAwakeSocialFriend = new double[countOfDaysData];
+                double[] tempSleepEfficiencySocialFriend = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3056,10 +3075,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTSocialMedia > 4)
             {
-                double[] SocialMedia = new double[CNTSocialMedia];
-                double[] tempMinutesAsleepSocialMedia = new double[CNTSocialMedia];
-                double[] tempMinutesAwakeSocialMedia = new double[CNTSocialMedia];
-                double[] tempSleepEfficiencySocialMedia = new double[CNTSocialMedia];
+                double[] SocialMedia = new double[countOfDaysData];
+                double[] tempMinutesAsleepSocialMedia = new double[countOfDaysData];
+                double[] tempMinutesAwakeSocialMedia = new double[countOfDaysData];
+                double[] tempSleepEfficiencySocialMedia = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3106,7 +3125,7 @@ namespace SleepMakeSense.Controllers
             }
 
             // DinnerTime -- DONE YEAH!!
-
+            /* Pandita 2018/05/31
             if (CNTDinnerTime > 4)
             {
                 double[] DinnerTime = new double[CNTDinnerTime];
@@ -3155,15 +3174,16 @@ namespace SleepMakeSense.Controllers
                 }
 
             }
+            */
 
             // ExerciseTime -- DONE YEAH!!
 
             if (CNTExerciseDuration > 4)
             {
-                double[] ExerciseTime = new double[CNTExerciseDuration];
-                double[] tempMinutesAsleepExerciseTime = new double[CNTExerciseDuration];
-                double[] tempMinutesAwakeExerciseTime = new double[CNTExerciseDuration];
-                double[] tempSleepEfficiencyExerciseTime = new double[CNTExerciseDuration];
+                double[] ExerciseTime = new double[countOfDaysData];
+                double[] tempMinutesAsleepExerciseTime = new double[countOfDaysData];
+                double[] tempMinutesAwakeExerciseTime = new double[countOfDaysData];
+                double[] tempSleepEfficiencyExerciseTime = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3213,12 +3233,12 @@ namespace SleepMakeSense.Controllers
 
             if (CNTAmbientTemp > 4)
             {
-                double[] AmbientTemp = new double[CNTAmbientTemp];
-                double[] tempMinutesAsleepAmbientTemp = new double[CNTAmbientTemp];
-                double[] tempAwakeningsCountAmbientTemp = new double[CNTAmbientTemp];
-                double[] tempMinutesAwakeAmbientTemp = new double[CNTAmbientTemp];
-                double[] tempMinutesToFallAsleepAmbientTemp = new double[CNTAmbientTemp];
-                double[] tempSleepEfficiencyAmbientTemp = new double[CNTAmbientTemp];
+                double[] AmbientTemp = new double[countOfDaysData];
+                double[] tempMinutesAsleepAmbientTemp = new double[countOfDaysData];
+                double[] tempAwakeningsCountAmbientTemp = new double[countOfDaysData];
+                double[] tempMinutesAwakeAmbientTemp = new double[countOfDaysData];
+                double[] tempMinutesToFallAsleepAmbientTemp = new double[countOfDaysData];
+                double[] tempSleepEfficiencyAmbientTemp = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3269,10 +3289,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTAmbientHumd > 4)
             {
-                double[] AmbientHumd = new double[CNTAmbientHumd];
-                double[] tempMinutesAsleepAmbientHumd = new double[CNTAmbientHumd];
-                double[] tempMinutesAwakeAmbientHumd = new double[CNTAmbientHumd];
-                double[] tempSleepEfficiencyAmbientHumd = new double[CNTAmbientHumd];
+                double[] AmbientHumd = new double[countOfDaysData];
+                double[] tempMinutesAsleepAmbientHumd = new double[countOfDaysData];
+                double[] tempMinutesAwakeAmbientHumd = new double[countOfDaysData];
+                double[] tempSleepEfficiencyAmbientHumd = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3324,12 +3344,12 @@ namespace SleepMakeSense.Controllers
 
             if (CNTBodyTemp > 4)
             {
-                double[] BodyTemp = new double[CNTBodyTemp];
-                double[] tempMinutesAsleepBodyTemp = new double[CNTBodyTemp];
-                double[] tempMinutesAwakeBodyTemp = new double[CNTBodyTemp];
-                double[] tempAwakeningsCountBodyTemp = new double[CNTBodyTemp];
-                double[] tempMinutesToFallAsleepBodyTemp = new double[CNTBodyTemp];
-                double[] tempSleepEfficiencyBodyTemp = new double[CNTBodyTemp];
+                double[] BodyTemp = new double[countOfDaysData];
+                double[] tempMinutesAsleepBodyTemp = new double[countOfDaysData];
+                double[] tempMinutesAwakeBodyTemp = new double[countOfDaysData];
+                double[] tempAwakeningsCountBodyTemp = new double[countOfDaysData];
+                double[] tempMinutesToFallAsleepBodyTemp = new double[countOfDaysData];
+                double[] tempSleepEfficiencyBodyTemp = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3380,12 +3400,12 @@ namespace SleepMakeSense.Controllers
 
             if (CNTHormone > 4)
             {
-                double[] Hormone = new double[CNTHormone];
-                double[] tempMinutesAsleepHormone = new double[CNTHormone];
-                double[] tempMinutesAwakeHormone = new double[CNTHormone];
-                double[] tempAwakeningsCountHormone = new double[CNTHormone];
-                double[] tempMinutesToFallAsleepHormone = new double[CNTHormone];
-                double[] tempSleepEfficiencyHormone = new double[CNTHormone];
+                double[] Hormone = new double[countOfDaysData];
+                double[] tempMinutesAsleepHormone = new double[countOfDaysData];
+                double[] tempMinutesAwakeHormone = new double[countOfDaysData];
+                double[] tempAwakeningsCountHormone = new double[countOfDaysData];
+                double[] tempMinutesToFallAsleepHormone = new double[countOfDaysData];
+                double[] tempSleepEfficiencyHormone = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3458,10 +3478,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTTVDuration > 4)
             {
-                double[] WatchTV = new double[CNTTVDuration];
-                double[] tempMinutesAsleepWatchTV = new double[CNTTVDuration];
-                double[] tempMinutesAwakeWatchTV = new double[CNTTVDuration];
-                double[] tempSleepEfficiencyWatchTV = new double[CNTTVDuration];
+                double[] WatchTV = new double[countOfDaysData];
+                double[] tempMinutesAsleepWatchTV = new double[countOfDaysData];
+                double[] tempMinutesAwakeWatchTV = new double[countOfDaysData];
+                double[] tempSleepEfficiencyWatchTV = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3532,10 +3552,10 @@ namespace SleepMakeSense.Controllers
 
             if (CNTExerciseIntensity > 4)
             {
-                double[] ExerciseDuration = new double[CNTExerciseIntensity];
-                double[] tempMinutesAsleepExerciseDuration = new double[CNTExerciseIntensity];
-                double[] tempMinutesAwakeExerciseDuration = new double[CNTExerciseIntensity];
-                double[] tempSleepEfficiencyExerciseDuration = new double[CNTExerciseIntensity];
+                double[] ExerciseDuration = new double[countOfDaysData];
+                double[] tempMinutesAsleepExerciseDuration = new double[countOfDaysData];
+                double[] tempMinutesAwakeExerciseDuration = new double[countOfDaysData];
+                double[] tempSleepEfficiencyExerciseDuration = new double[countOfDaysData];
 
                 // counters back to zero
                 temp = 0;
@@ -3603,7 +3623,7 @@ namespace SleepMakeSense.Controllers
             }
 
             // SnackTime -- DONE YEAH!!
-
+            /* Pandita 2018/05/31 
             if (CNTSnackTime > 4)
             {
                 double[] SnackTime = new double[CNTSnackTime];
@@ -3676,7 +3696,7 @@ namespace SleepMakeSense.Controllers
 
             }
 
-            /*
+            
           // WorkTime -- DONE YEAH!!
 
           if (CNTWorkTime > 4)
@@ -3751,15 +3771,15 @@ namespace SleepMakeSense.Controllers
                   }
               }
 
-          }
+          }*/
           // Work Duration -- DONE YEAH!!
 
           if (CNTWorkDuration > 4)
           {
-              double[] WorkDuration = new double[CNTWorkDuration];
-              double[] tempMinutesAsleepWorkDuration = new double[CNTWorkDuration];
-              double[] tempMinutesAwakeWorkDuration = new double[CNTWorkDuration];
-              double[] tempSleepEfficiencyWorkDuration = new double[CNTWorkDuration];
+              double[] WorkDuration = new double[countOfDaysData];
+              double[] tempMinutesAsleepWorkDuration = new double[countOfDaysData];
+              double[] tempMinutesAwakeWorkDuration = new double[countOfDaysData];
+              double[] tempSleepEfficiencyWorkDuration = new double[countOfDaysData];
 
               // counters back to zero
               temp = 0;
@@ -3825,16 +3845,16 @@ namespace SleepMakeSense.Controllers
               }
 
           }
-          */
+          
 
             // Music -- DONE YEAH!!
 
             if (CNTMusicDuration > 4)
                 {
-                    double[] Music = new double[CNTMusicDuration];
-                    double[] tempMinutesAsleepMusic = new double[CNTMusicDuration];
-                    double[] tempMinutesAwakeMusic = new double[CNTMusicDuration];
-                    double[] tempSleepEfficiencyMusic = new double[CNTMusicDuration];
+                    double[] Music = new double[countOfDaysData];
+                    double[] tempMinutesAsleepMusic = new double[countOfDaysData];
+                    double[] tempMinutesAwakeMusic = new double[countOfDaysData];
+                    double[] tempSleepEfficiencyMusic = new double[countOfDaysData];
 
                     // counters back to zero
                     temp = 0;
@@ -3904,10 +3924,10 @@ namespace SleepMakeSense.Controllers
 
                 if (CNTSocialFriend > 4)
                 {
-                    double[] SocialMedia = new double[CNTSocialFriend];
-                    double[] tempMinutesAsleepSocialMedia = new double[CNTSocialFriend];
-                    double[] tempMinutesAwakeSocialMedia = new double[CNTSocialFriend];
-                    double[] tempSleepEfficiencySocialMedia = new double[CNTSocialFriend];
+                    double[] SocialMedia = new double[countOfDaysData];
+                    double[] tempMinutesAsleepSocialMedia = new double[countOfDaysData];
+                    double[] tempMinutesAwakeSocialMedia = new double[countOfDaysData];
+                    double[] tempSleepEfficiencySocialMedia = new double[countOfDaysData];
 
                     // counters back to zero
                     temp = 0;
@@ -3979,10 +3999,10 @@ namespace SleepMakeSense.Controllers
 
                 if (CNTGamesDuration > 4)
                 {
-                    double[] VideoGames = new double[CNTGamesDuration];
-                    double[] tempMinutesAsleepVideoGames = new double[CNTGamesDuration];
-                    double[] tempMinutesAwakeVideoGames = new double[CNTGamesDuration];
-                    double[] tempSleepEfficiencyVideoGames = new double[CNTGamesDuration];
+                    double[] VideoGames = new double[countOfDaysData];
+                    double[] tempMinutesAsleepVideoGames = new double[countOfDaysData];
+                    double[] tempMinutesAwakeVideoGames = new double[countOfDaysData];
+                    double[] tempSleepEfficiencyVideoGames = new double[countOfDaysData];
 
                     // counters back to zero
                     temp = 0;
@@ -4053,10 +4073,10 @@ namespace SleepMakeSense.Controllers
 
                 if (CNTSchoolStress > 4)
                 {
-                    double[] Assignments = new double[CNTSchoolStress];
-                    double[] tempMinutesAsleepAssignments = new double[CNTSchoolStress];
-                    double[] tempMinutesAwakeAssignments = new double[CNTSchoolStress];
-                    double[] tempSleepEfficiencyAssignments = new double[CNTSchoolStress];
+                    double[] Assignments = new double[countOfDaysData];
+                    double[] tempMinutesAsleepAssignments = new double[countOfDaysData];
+                    double[] tempMinutesAwakeAssignments = new double[countOfDaysData];
+                    double[] tempSleepEfficiencyAssignments = new double[countOfDaysData];
 
                     // counters back to zero
                     temp = 0;
